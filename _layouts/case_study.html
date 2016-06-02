@@ -1,0 +1,23 @@
+---
+layout: page
+---
+
+<div class="collection">
+  <div class="case-study">
+    <div class="case-subtitle">{{ page.subtitle }}</div>
+    <div class="message">
+      {{ page.article_title }}<br/>
+      <a href="{{ page.article_link }}">{{ page.article_reference }}</a>
+    </div>
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      {% include social.html %}
+      <li></li>
+      {% include download.html %}
+      </ul>
+    </div>
+    <hr/>
+    {{ content }}
+  </div>
+</div>

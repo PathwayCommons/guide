@@ -1,0 +1,45 @@
+#**************** Set site global variables ****************
+# Setup
+title:               Learn
+tagline:             'Training Resources'
+description:         'Learn'
+url:                 http://192.168.99.100:4000/learnweb_pages
+baseurl:             '/learnweb_pages'
+
+# About/contact
+author:
+  name:              Pathway Commons
+  url:               https://twitter.com/PathwayCommons
+  email:             https://groups.google.com/forum/#!forum/pathway-commons-help
+
+# Custom vars
+version:             1.0.0
+branch: gh-pages
+
+# Declare the path relative to <source> for media and static items
+media_root:          'media'
+static_root:         'public'
+
+#**************** Override defaults ****************
+sass:
+  sass_dir: _sass
+  # style: compressed
+
+# Plugins
+gems:                [jekyll-watch]
+
+# Outputting
+# post permalink style 'pretty' (/:categories/:year/:month/:day/:title/)
+permalink:     pretty
+
+# Markdown Processors
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+collections:
+  case_studies:
+    output: true
+    permalink: /case_studies/:path/
+    layout: case_study
+    index: /case_studies/archive/

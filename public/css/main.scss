@@ -1,0 +1,40 @@
+---
+# main.scss
+# Main styling
+---
+
+/*
+*
+* ___      _   _                       ___
+* | _ \__ _| |_| |___ __ ____ _ _  _   / __|___ _ __  _ __  ___ _ _  ___
+* |  _/ _` |  _| ' \ V  V / _` | || | | (__/ _ \ '  \| '  \/ _ \ ' \(_-<
+* |_| \__,_|\__|_||_\_/\_/\__,_|\_, |  \___\___/_|_|_|_|_|_\___/_||_/__/
+*                               |__/
+* https://github.com/PathwayCommons/
+*
+* main file
+*
+* Files @imported lower have access to variables defined above
+*/
+
+/* Modules and Variables
+  Sass code that doesn't cause Sass to actually output CSS.
+  Mixin declarations, functions, and variables.
+*/
+// @import "modules/variables";
+@import "modules/fonts";
+@import "modules/colors";
+@import "modules/theme_variables";
+/*
+ Third-party
+ Do not modify
+*/
+@import "vendor/theme/poole";
+@import "vendor/theme/lanyon";
+
+/*
+ Partials
+*/
+@import "partials/syntax";
+@import "partials/theme_overrides";
+@import "partials/learn";

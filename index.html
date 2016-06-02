@@ -1,0 +1,24 @@
+---
+layout: default
+title: Home
+---
+
+<div class="home">  
+  {% assign collection_list = site.collections | sort:"url" %}
+  <ul>
+  {% for collection in collection_list %}
+    <!-- List items with a valid title and page layout -->
+    {% if collection.index != null %}
+      {% if collection.label != null %}
+      <li class="list-inline">
+        {% assign pretty_label = collection.label | replace: "_", " " | capitalize %}
+        <a class="{% if page.url contains collection.label %} active{% endif %}"
+        href="{{site.baseurl}}{{ collection.index }}">{{ pretty_label }}
+        </a>
+      </li>
+
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  </ul>
+</div>
