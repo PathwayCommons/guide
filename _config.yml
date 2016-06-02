@@ -3,8 +3,8 @@
 title:               Learn
 tagline:             'Training Resources'
 description:         'Learn'
-url:                 http://192.168.99.100:4000/learnweb_pages
-baseurl:             '/learnweb_pages'
+url:                 http://192.168.99.100:4000/guide
+baseurl:             '/guide'
 
 # About/contact
 author:
