@@ -1,8 +1,8 @@
 #**************** Set site global variables ****************
 # Setup
-title:               Learn
+title:               Guide
 tagline:             'Training Resources'
-description:         'Learn'
+description:         'Guide'
 url:                 http://192.168.99.100:4000/guide
 baseurl:             '/guide'
 

@@ -11,6 +11,59 @@
 */
 
 /*
+ * layouts
+ *
+ */
+ .panelista {
+   background-color: $inverse;
+   position: relative;
+   margin-bottom: 3rem;
+   height: 12rem;
+   width: auto;
+
+   .panelista-shade {
+     position: absolute;
+     background: rgba(231, 76, 60, 0.85); //rgba(44, 62, 80, 0.85);
+
+     z-index: 1;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     padding: 2rem;
+     overflow: hidden;
+
+     h1 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: $clouds;
+     }
+     p {
+       font-size: 1rem;
+       font-weight: 400;
+       color: $clouds;
+     }
+   }
+ }
+ @media (min-width: 40em) {
+   .panelista {
+     height: 20rem;
+     margin-bottom: 4rem;
+
+     .panelista-shade {
+       padding: 5em 3em 5em;
+
+       h1 {
+        font-size: 1.8rem;
+       }
+       p {
+         font-size: 1.2rem;
+       }
+     }
+   }
+ }
+
+/*
  * List groups items in .archive
  *
  */
@@ -96,33 +149,9 @@
 }
 
 /*
- * misc
- *
- */
-
-
-/*
- * Home page: /
- *
- */
-
-
-
-/*
  * Collections
  *
  */
-.collection {
-  /* Meta data line below post title */
-  // .post-date {
-  //   display: block;
-  //   margin-top: -.5rem;
-  //   margin-bottom: 1rem;
-  //   color: #9a9a9a;
-  // }
-}
-/* END: Collections  */
-
 /* BEGIN case_study*/
 .case-study {
 
