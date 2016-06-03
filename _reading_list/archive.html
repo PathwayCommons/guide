@@ -1,0 +1,24 @@
+---
+title: Reading List
+subtitle: A curated set of publications
+layout: panelista
+---
+
+{% if site.reading_list %}
+{% assign sorted_docs = site.reading_list %}
+
+      {% for doc in sorted_docs %}
+      {% unless doc.url contains 'archive' %}
+        <div class="grid-element col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-6">
+          <div class="dummy"></div>
+          <a href="{{site.baseurl}}{{ doc.url }}">
+            <div class="grid-element-inner">
+              <p class="grid-element-title">{{ doc.title }}</p>
+              <span class="grid-element-subtitle">{{ doc.subtitle }}</span>
+            </div>
+          </a>
+        </div>
+      {% endunless %}
+      {% endfor %}
+
+{% endif %}

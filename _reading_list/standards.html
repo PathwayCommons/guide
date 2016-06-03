@@ -1,0 +1,10 @@
+---
+title: Standards
+subtitle: About standards
+layout: reading_list
+---
+
+{% if site.data.reading_list.standards.collection.items.size > 0 %}
+  {% assign sorted_docs = (site.data.reading_list.standards.collection.items[0].data | sort: "date" | reverse) %}
+  {% include article_panel_group.html %}
+{% endif %}

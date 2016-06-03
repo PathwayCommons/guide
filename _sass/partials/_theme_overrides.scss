@@ -69,21 +69,12 @@ p {
 /*
  * Container
  *
- * Center the page content.
+ * Center the page content. Override the width change behaviour.
  */
 
 .container {
-  max-width: 50rem;
-}
-@media (min-width: 38em) {
-  .container {
-    max-width: 50rem;
-  }
-}
-@media (min-width: 56em) {
-  .container {
-    max-width: 50rem;
-  }
+  max-width: $container-max-width;
+  min-width: $container-min-width;
 }
 
 img {

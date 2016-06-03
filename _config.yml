@@ -43,3 +43,9 @@ collections:
     permalink: /case_studies/:path/
     layout: case_study
     index: /case_studies/archive/
+
+  reading_list:
+    output: true
+    permalink: /reading_list/:path/
+    layout: reading_list
+    index: /reading_list/archive/

@@ -11,60 +11,117 @@
 */
 
 /*
- * layouts
+ * Modified Bootstrap views
+ * panelista - a jumbotron ripoff
+ * archive.listgroup - a modified list group
  *
  */
- .panelista {
-   background-color: $inverse;
-   position: relative;
-   margin-bottom: 3rem;
-   height: 12rem;
-   width: auto;
 
-   .panelista-shade {
-     position: absolute;
-     background: rgba(231, 76, 60, 0.85); //rgba(44, 62, 80, 0.85);
-
-     z-index: 1;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     padding: 2rem;
-     overflow: hidden;
-
-     h1 {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: $clouds;
-     }
-     p {
-       font-size: 1rem;
-       font-weight: 400;
-       color: $clouds;
-     }
-   }
- }
- @media (min-width: 40em) {
-   .panelista {
-     height: 20rem;
-     margin-bottom: 4rem;
-
-     .panelista-shade {
-       padding: 5em 3em 5em;
-
-       h1 {
-        font-size: 1.8rem;
-       }
-       p {
-         font-size: 1.2rem;
-       }
-     }
-   }
- }
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+/* Small devices (tablets, 768px and up) */
+// @media (min-width: @screen-sm-min) { ... }
+//
+/* Medium devices (desktops, 992px and up) */
+// @media (min-width: @screen-md-min) { ... }
+//
+/* Large devices (large desktops, 1200px and up) */
+// @media (min-width: @screen-lg-min) { ... }
 
 /*
- * List groups items in .archive
+* gridview -  a grid layout
+*
+*/
+
+.grid-element {
+  .dummy {
+    margin-top: 100%;
+  }
+  .grid-element-inner {
+    margin: 1em;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align:center;
+    padding-top:calc(50% - 3em);
+
+    color: $clouds;
+    background: rgba(44, 62, 80, 0.9);
+    .grid-element-title {
+      font-weight: 500;
+      font-size: 1.5em;
+      text-align: center;
+    }
+  }
+}
+
+
+@media (min-width: 768px) {
+  .grid-element {
+    .grid-element-inner {
+      margin: 2em;
+      padding-top:calc(50% - 5em);
+    }
+  }
+}
+
+ /*
+  * panelista -  a jumbotron rip-off
+  *
+  */
+.panelista {
+ background-color: $inverse;
+ position: relative;
+ margin-bottom: 3rem;
+ height: 12rem;
+ width: auto;
+
+ .panelista-shade {
+   position: absolute;
+   background: rgba(231, 76, 60, 0.9);
+
+   z-index: 1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   padding: 2rem 1rem;
+   overflow: hidden;
+
+   h1 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: $clouds;
+   }
+   p {
+     font-size: 1rem;
+     font-weight: 400;
+     color: $clouds;
+   }
+ }
+}
+@media (min-width: 768px) {
+ .panelista {
+   height: 18rem;
+   margin-bottom: 4rem;
+
+   .panelista-shade {
+     padding: 5em 3em 5em;
+
+     h1 {
+      font-size: 1.8rem;
+     }
+     p {
+       font-size: 1.2rem;
+     }
+   }
+ }
+}
+
+/*
+ * List groups items with class .archive
  *
  */
 .archive.list-group {
@@ -108,7 +165,7 @@
   }
 }
 
-@media (min-width: 40em) {
+@media (min-width: 768px) {
   .archive.list-group {
     .archive.list-group-item {
       .list-group-item-text {
@@ -156,7 +213,7 @@
 .case-study {
 
   /* Meta data line below post title */
-  .case-subtitle  {
+  .subtitle  {
     display: block;
     width: 100%;
     margin-bottom: 1rem;
@@ -166,17 +223,46 @@
     font-size: 1rem;
     margin: 1em auto 5em;
   }
+
+  img {
+    margin-top: 2rem;
+  }
 }
-@media (min-width: 40em) {
+@media (min-width: 768px) {
   .case-study {
 
-    /* Meta data line below post title */
-    .case-subtitle  {
+    .subtitle  {
       width: 80%;
     }
+    /* Meta data line below post title */
     .figure-legend {
       font-size: 0.9rem;
+    }
+    img {
+      margin-top: 5rem;
     }
   }
 }
 /* END case_study*/
+
+/* BEGIN reading_list */
+.reading-list.panel-group {
+  .reading-list.panel {
+    a {
+      text-decoration: none;
+    }
+    .reading-list.panel-heading {
+      padding: 1em;
+      background: $brand-primary;
+      color: $clouds;
+
+      .panel-title {
+        font-size: 1.2rem;
+      }
+      .panel-meta {
+        color: $gray;
+      }
+    }
+  }
+}
+/* END reading_list */
