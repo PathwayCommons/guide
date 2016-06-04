@@ -7,7 +7,6 @@ subtitle: Understand the basics or find more advanced techniques
 <div class="home">
   {% assign collection_list = site.collections | sort:"url" %}
 
-  <div class="row">
   {% for collection in collection_list %}
     {% if collection.index != null %}
       {% if collection.label != null %}
@@ -15,14 +14,15 @@ subtitle: Understand the basics or find more advanced techniques
       <div class="grid-element col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-6">
         <div class="dummy"></div>
         <a href="{{site.baseurl}}{{ collection.index }}">
+          <div class="grid-element-card"></div>
+          <p class="grid-element-title">{{ pretty_label }}</p>
           <div class="grid-element-inner">
-            <span class="grid-element-title">{{ pretty_label }}</span>
+            <span class="grid-element-subtitle"><em>{{ collection.description }}</em></span>
           </div>
         </a>
       </div>
       {% endif %}
     {% endif %}
   {% endfor %}
-  </div>
 
 </div>

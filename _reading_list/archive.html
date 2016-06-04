@@ -12,9 +12,10 @@ layout: panelista
         <div class="grid-element col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-6">
           <div class="dummy"></div>
           <a href="{{site.baseurl}}{{ doc.url }}">
+            <div class="grid-element-card"></div>
+            <p class="grid-element-title">{{ doc.title }}</p>
             <div class="grid-element-inner">
-              <p class="grid-element-title">{{ doc.title }}</p>
-              <span class="grid-element-subtitle">{{ doc.subtitle }}</span>
+              <span class="grid-element-subtitle"><em>{{ doc.subtitle }}</em></span>
             </div>
           </a>
         </div>

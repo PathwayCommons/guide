@@ -43,9 +43,11 @@ collections:
     permalink: /case_studies/:path/
     layout: case_study
     index: /case_studies/archive/
+    description: Deep dive into pathway analysis
 
   reading_list:
     output: true
     permalink: /reading_list/:path/
     layout: reading_list
     index: /reading_list/archive/
+    description: Carefully curated articles 

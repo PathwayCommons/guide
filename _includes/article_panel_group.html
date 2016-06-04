@@ -4,7 +4,7 @@
   <div class="reading-list panel">
     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ panel_id }}" aria-expanded="true" aria-controls="collapseOne">
       <div class="reading-list panel-heading" role="tab" id="headingOne">
-        <h2 class="panel-title">{{ doc.title }}</h2>
+        <h2 class="panel-title">{{ doc.title }}&nbsp<span class="badge">{{ doc.type }}</span></h2>
         <p class="panel-meta">{{ doc.author }}<br/>
           {{ doc.journal }} vol. {{ doc.volume }}, {{ doc.date | date: "%b %Y"}}</p>
       </div>
