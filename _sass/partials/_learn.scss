@@ -40,8 +40,8 @@
 
   float: none;
   margin: 0 auto;
-  width: 360px;
-  height: 280px;
+  width: 350px;
+  height: 270px;
   padding: 0;
 
 
@@ -87,17 +87,22 @@
 
 @media (min-width: 768px) {
   .grid-element {
-    $grid-margin: 2em;
+    $grid-margin: 1em;
+    $border-width: 0.25em;
     $label-height: 3em;
 
     float: left;
     width: 50%;
     height: 100%;
-    min-width: 50%;
     margin-left: 0;
 
     .dummy {
       margin-top: 90%;
+    }
+
+    .grid-element-card {
+      position: absolute;
+      margin: $grid-margin;
     }
 
     .grid-element-title {
@@ -106,6 +111,7 @@
 
     .grid-element-inner {
       padding-top:calc(50% - 5em);
+      margin: $grid-margin + $border-width;
       bottom: $label-height;
     }
   }
