@@ -297,6 +297,10 @@
 
 /* BEGIN reading_list */
 .reading-list.panel-group {
+  .reading-list.category {
+      margin-top: 2em;
+  }
+
   .reading-list.panel {
     a {
       text-decoration: none;

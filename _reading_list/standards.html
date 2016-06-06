@@ -6,7 +6,6 @@ custom_js:
   - reading_list/efetch.js
 ---
 
-{% if site.data.reading_list.standards.collection.items.size > 0 %}
-  {% assign sorted_docs = (site.data.reading_list.standards.collection.items[0].data | sort: "date" | reverse) %}
-  {% include article_panel_group.html %}
+{% if site.data.reading_list.standards.size > 0 %}
+  <div class="reading-list panel-group" id="accordion" role="tablist" aria-multiselectable="true"></div>
 {% endif %}
