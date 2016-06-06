@@ -50,30 +50,8 @@ Each reading list will be an entry in the `_reading_list` `archive.html` page.  
 1. Add a page to the `_reading_list` directory
   * Use the `reading_list` as layout
   * See the other pages for a simple template
-2. Add corresponding [collection+json](http://amundsen.com/media-types/collection/) formatted data to the `_data/reading_list` directory with the same name as in (1).
-  * Fill in the `author, title, etc` fields for each data item:
-```json
-{
-  "collection" :
-  {
-    "version" : "1.0",
-    "href" : "http://pathwaycommons.github.io/guide/reading_list/",
-
-    "items" : [
-      {
-        "href" : "http://pathwaycommons.github.io/guide/reading_list/standards/",
-        "data" : [
-          {
-            "author" : "Emek Demir",
-            "title" : "The BioPAX community standard for pathway data sharing",
-            "journal" : "Nature Biotechnology",
-            "volume": "28",
-            "issue": "9",
-            "page-range": "935-942",
-            "url": "http://www.nature.com/nbt/journal/v28/n9/full/nbt.1666.html",
-            "date" : "2010-09-09",
-            "abstract": "Biological Pathway Exchange (BioPAX) is a standard language to represent biological pathways at the molecular and cellular level and to facilitate the exchange of pathway data. The rapid growth of the volume of pathway data has spurred the development of databases and computational tools to aid interpretation; however, use of these data is hampered by the current fragmentation of pathway information across many databases with incompatible formats. BioPAX, which was created through a community process, solves this problem by making pathway data substantially easier to collect, index, interpret and share. BioPAX can represent metabolic and signaling pathways, molecular and genetic interactions and gene regulation networks. Using BioPAX, millions of interactions, organized into thousands of pathways, from many organisms are available from a growing number of databases. This large amount of pathway data in a computable form will support visualization, analysis and biological discovery.",
-            "comment": "",
-            "type": "Perspective"
-          }
+2. Add corresponding pubmed UIDs formatted in .yml to the `_data/reading_list` directory with the same name as in (1).
+  * Fill in the `category, uid` fields for each item:
+```yml
+-
 ```  
