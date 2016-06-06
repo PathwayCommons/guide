@@ -1,5 +1,8 @@
 # Learn
 
+## Local development
+For local development, there is a docker setup repository called   [guide_docker](https://github.com/jvwong/guide_Docker) that contains this Jekyll site repository as a submodule. Please see that repo for instructions on getting it up and running.    
+
 ## Getting Started
 
 ### URLs, Media and Static File locations
