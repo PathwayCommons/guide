@@ -7,6 +7,7 @@
   nmeshHeadings = 15,
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
   $panel_group = $('.reading-list.panel-group'),
+  // Need to pass the current page to this script...haaacck
   current_page = $panel_group.attr('data-parent'),
   raw = $.parseJSON('{{ site.data.reading_list | jsonify }}'),
   deferreds = [];

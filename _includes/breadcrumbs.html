@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+  {% assign query = (site.collections | where: 'label' , page.collection ) %}
+  {% if query.size == 1 %}
+    {% assign c = query.first %}
+    <li><a href="{{site.baseurl}}{{c.index}}">{{ page.collection | replace: "_", " " | capitalize }}</a></li>
+    <!-- something is missing here for nested -->
+    <li class="active">{{ page.title }}</li>
+  {% endif %}
+</ol>
