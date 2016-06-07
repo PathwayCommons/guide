@@ -27,12 +27,12 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
   <!-- Third-party javascript -->
-  <script src="{{ site.baseurl }}/{{ site.static_root }}/vendor/jquery/jquery-1.11.3.min.js"></script>
-  <script src="{{ site.baseurl }}/{{ site.static_root }}/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-  <script src="{{ site.baseurl }}/{{ site.static_root }}/js/main.js"></script>
+  <script src="{{ site.baseurl }}/{{ site.static_root }}/vendor/jquery/jquery-1.11.3.min.js" defer></script>
+  <script src="{{ site.baseurl }}/{{ site.static_root }}/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js" defer></script>
+  <script src="{{ site.baseurl }}/{{ site.static_root }}/js/boot.js" defer></script>
   {% if page.custom_js %}
     {% for jsfile in page.custom_js %}
-      <script src="{{ site.baseurl }}/{{ site.static_root }}/js/{{ jsfile }}"></script>
+      <script src="{{ site.baseurl }}/{{ site.static_root }}/js/{{ jsfile }}" defer></script>
     {% endfor %}
   {% endif %}
 </head>

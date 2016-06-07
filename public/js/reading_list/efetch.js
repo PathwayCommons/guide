@@ -2,23 +2,13 @@
 ---
 (function(){
 
-  // jQuery.ajaxSetup({
-  //   beforeSend: function() {
-  //      $('#ajax-spinner').show();
-  //   },
-  //   complete: function(){
-  //      $('#ajax-spinner').hide();
-  //   },
-  //   success: function() {}
-  // });
-
   var
+  nmeshHeadings = 15,
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
-  raw = $.parseJSON('{{ site.data.reading_list.standards | jsonify }}');
+  raw = $.parseJSON('{{ site.data.reading_list.standards | jsonify }}'),
+  $panel_group = $('.reading-list.panel-group');
 
   $.each(raw, function(index, value){
-    var category = value.category;
-
     $.ajax({
       type: "GET",
       url: endpoint + value.uids.join(','),
@@ -26,60 +16,49 @@
       dataType: "xml"
     })
     .done(function( data, textStatus, jqXHR ){
-      onResult(data, category, index);
+      makePanels( data, value.category, index, $panel_group );
     });
-
   });
 
-  function onResult( data, category, indy ) {
-
-    var $panel_group = $('.reading-list.panel-group');
-    $panel_group.append(['<h3 class="reading-list category">', category, '</h3>'].join(''));
+  function makePanels( data, category, indy, $parent ) {
+    var template =
+      '<div class="reading-list panel">' +
+        '<a class="panel-toggle" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">' +
+          '<div class="reading-list panel-heading" role="tab" id="headingOne">' +
+            '<h2 class="panel-title"></h2>' +
+            '<span class="panel-meta author">some author</span><br/>' +
+            '<span class="panel-meta journal">some meta data</span>' +
+            '<div class="panel-meta reading-list badge-list"></div>' +
+          '</div>' +
+        '</a>' +
+        '<div class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">' +
+          '<div class="panel-body">' +
+            '<p class="abstract-text"></p>' +
+            '<a class="article-link" target="_blank"><i class="fa fa-link fa-lg" aria-hidden="true"></i></a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    $parent.append(['<h3 class="reading-list category">', category, '</h3>'].join(''));
 
     $( data )
       .find( "PubmedArticle" )
       .each(function(index, element){
-        var panel =
-          '<div class="reading-list panel">' +
-            '<a class="panel-toggle" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">' +
-              '<div class="reading-list panel-heading" role="tab" id="headingOne">' +
-                '<h2 class="panel-title"><span class="badge"></span></h2>' +
-                '<span class="panel-meta author">some author</span><br/>' +
-                '<span class="panel-meta journal">some meta data</span>' +
-              '</div>' +
-            '</a>' +
-            '<div class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">' +
-              '<div class="panel-body">' +
-                '<p class="abstract-text"></p>' +
-                '<a class="article-link" target="_blank"><i class="fa fa-link fa-lg" aria-hidden="true"></i></a>' +
-              '</div>' +
-            '</div>' +
-          '</div>',
-        html = $($.parseHTML(panel));
+        var html = $($.parseHTML(template));
 
-        //Set the panel-id
-        html.find('.panel-toggle').attr("href", "#panel_id" + indy + index);
-        html.find('.panel-collapse.collapse').attr("id", "panel_id" + indy- + index);
-
-        //Set the link
+        /* Find the required XML elements*/
         $medlineCitation = $( this ).find('MedlineCitation');
         $pmid = $medlineCitation.children('PMID');
-
-        html.find('.panel-collapse.collapse .panel-body .article-link')
-            .attr("href", "http://www.ncbi.nlm.nih.gov/pubmed/" + $pmid.text());
-
         //Article
         $article = $medlineCitation.find('Article');
         $articleTitle = $article.find('ArticleTitle');
         $abstractText = $article.find('Abstract AbstractText');
-
         //AuthorList
         $author = $( this ).find('AuthorList Author').first();
         $afirst = $author.find('ForeName');
         $alast = $author.find('LastName');
-
-        //MeshHeadingList
-        $meshdescriptor = $medlineCitation.find('MeshHeadingList MeshHeading DescriptorName').first();
+        //MeshHeadingList - add up to 10 terms
+        var $badges = html.find('.reading-list.badge-list');
+        $meshdescriptor = $medlineCitation.find('MeshHeadingList MeshHeading DescriptorName');//.first();
 
         //JournalIssue
         $journal = $article.find('Journal');
@@ -87,16 +66,29 @@
         $jyear = $journal.find('JournalIssue PubDate Year');
         $jISOAbbreviation = $journal.find('ISOAbbreviation');
 
+        /* Insert into orphan panel */
+        //Set the panel-id required for bootstrap accordion function
+        html.find('.panel-toggle').attr("href", "#panel_id" + indy + index);
+        html.find('.panel-collapse.collapse').attr("id", "panel_id" + indy + index);
+        // Article info
         html.find('.panel-heading .panel-title').prepend( $articleTitle.text() );
-        html.find('.panel-heading .panel-title .badge').html( $meshdescriptor.text() );
         html.find('.panel-heading .panel-meta.author').html(
           [ $afirst.text(), $alast.text() ].join(' ')
         );
         html.find('.panel-heading .panel-meta.journal').html(
-          [ $jISOAbbreviation.text(), "v" + $jvolume.text(), $jyear.text() ].join(' ')
+          [ $jISOAbbreviation.text(), "vol. " + $jvolume.text(), "(" + $jyear.text() + ")" ].join(' ')
         );
         html.find('.panel-body .abstract-text').html( $abstractText.text() );
-        $panel_group.append( html );
+        // Mesh Heading badges
+        $meshdescriptor.slice(0, nmeshHeadings).each(function( index, element ){
+          $badges.append('<span class="badge">' + $( this ).text() + '</span>');
+        });
+        // Set the PubMed link
+        html.find('.panel-collapse.collapse .panel-body .article-link')
+            .attr("href", "http://www.ncbi.nlm.nih.gov/pubmed/" + $pmid.text());
+
+        /* Attach panel to parent  */
+        $parent.append( html );
       });
   };
 
