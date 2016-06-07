@@ -10,6 +10,21 @@
 * Learn customization
 */
 
+/* Spinner */
+#ajax-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 7em;
+  width: 7em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+
 /*
  * Modified Bootstrap views
  * panelista - a jumbotron ripoff
@@ -298,7 +313,7 @@
 /* BEGIN reading_list */
 .reading-list.panel-group {
   .reading-list.category {
-      margin-top: 3em;      
+      margin-top: 3em;
   }
 
   .reading-list.panel {

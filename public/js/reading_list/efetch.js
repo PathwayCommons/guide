@@ -2,6 +2,16 @@
 ---
 (function(){
 
+  // jQuery.ajaxSetup({
+  //   beforeSend: function() {
+  //      $('#ajax-spinner').show();
+  //   },
+  //   complete: function(){
+  //      $('#ajax-spinner').hide();
+  //   },
+  //   success: function() {}
+  // });
+
   var
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
   raw = $.parseJSON('{{ site.data.reading_list.standards | jsonify }}');
@@ -49,7 +59,7 @@
 
         //Set the panel-id
         html.find('.panel-toggle').attr("href", "#panel_id" + indy + index);
-        html.find('.panel-collapse.collapse').attr("id", "panel_id" + indy + index);
+        html.find('.panel-collapse.collapse').attr("id", "panel_id" + indy- + index);
 
         //Set the link
         $medlineCitation = $( this ).find('MedlineCitation');
