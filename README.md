@@ -53,8 +53,21 @@ Each reading list will be an entry in the `_reading_list` `archive.html` page.  
 1. Add a page to the `_reading_list` directory
   * Use the `reading_list` as layout
   * See the other pages for a simple template
-2. Add corresponding pubmed UIDs formatted in .yml to the `_data/reading_list` directory with the same name as in (1).
-  * Fill in the `category, uid` fields for each item:
+2. Add data
+  * Create a .yml file inside `_data/reading_list` directory with the same name as in (1).
+  * List each entry with the category and ordered list of PubMed IDs (uids):
+
 ```yml
--
+- category: Biological Pathways Exchange
+  uids:
+    - 26685306
+    - 24045775
+    - 24068901
+    - 20829833
+
+- category: Systems Biology Graphic Notation
+  uids:
+    - 22383037
+    - 19668183
+    - 12611808
 ```  

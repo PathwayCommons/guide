@@ -1,12 +1,17 @@
-- category: Biological Pathways Exchange
+- category: Biological Pathways Exchange (BioPAX)
   uids:
     - 26685306
     - 24045775
     - 24068901
     - 20829833
 
-- category: Systems Biology Graphic Notation
+- category: Systems Biology Graphic Notation (SBGN)
   uids:
     - 22383037
+    - 22581176
     - 19668183
+
+- category: Modelling
+  uids:
     - 12611808
+    - 15142756

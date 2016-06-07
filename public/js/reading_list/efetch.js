@@ -1,15 +1,18 @@
 ---
+# NLMMedline DTD: http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/nlmmedlinecitationset_150101.dtd
 ---
 (function(){
 
   var
   nmeshHeadings = 15,
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
-  raw = $.parseJSON('{{ site.data.reading_list.standards | jsonify }}'),
   $panel_group = $('.reading-list.panel-group'),
+  current_page = $panel_group.attr('data-parent'),
+  raw = $.parseJSON('{{ site.data.reading_list | jsonify }}'),
   deferreds = [];
 
-  $.each(raw, function(index, sitedata){
+  // Populate the array of ajax deferred objects + meta
+  $.each(raw[current_page], function(index, sitedata){
     deferreds.push({
       index: index,
       sitedata: sitedata,
@@ -22,7 +25,7 @@
     })
   });
 
-  /* Make ajax.done work serially so order doesn't depend on network */
+  /* Process the deferred objects serially so doesn't depend on network */
   function qNext() {
     var o = deferreds.shift(); //remove first element
     if(o) o.deferred.done(function( data, textStatus, jqXHR ){
@@ -75,6 +78,10 @@
         $journal = $article.find('Journal');
         $jvolume = $journal.find('JournalIssue Volume');
         $jyear = $journal.find('JournalIssue PubDate Year');
+        //Dumb edge case
+        if(!$jyear.text()){
+          $jyear = $journal.find('JournalIssue PubDate MedlineDate');
+        }
         $jISOAbbreviation = $journal.find('ISOAbbreviation');
 
         /* Insert into orphan panel */
@@ -101,7 +108,8 @@
         });
         // Set the PubMed link
         html.find('.panel-collapse.collapse .panel-body .article-link')
-            .attr("href", "http://www.ncbi.nlm.nih.gov/pubmed/" + $pmid.text());
+            .attr("href", "http://www.ncbi.nlm.nih.gov/pubmed/" + $pmid.text())
+            .append(" PubMed ID: " + $pmid.text());
 
         /* Attach panel to parent  */
         $parent.append( html );

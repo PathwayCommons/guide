@@ -1,12 +1,13 @@
 ---
 # Global setup for libraries etc
 ---
-// Show and hide the spinner  
-$.ajaxSetup({
-  beforeSend: function(){
-   $('#ajax-spinner').show()
-  },
-  complete: function(){
-   $('#ajax-spinner').hide();
-  }
-});
+//Show and hide the spinner for all ajax requests.
+(function(document){
+  $(document)
+  .ajaxStart(function(){
+      $("#ajax-spinner").show();
+  })
+  .ajaxStop(function(){
+      $("#ajax-spinner").hide();
+  });
+}(document));

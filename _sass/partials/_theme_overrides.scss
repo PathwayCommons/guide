@@ -104,6 +104,9 @@ img {
  *
  */
 /* Style and "hide" the sidebar */
+.sidebar-toggle {
+  z-index: 1000;
+}
 .sidebar {
   font-family: $font-family-base;
   font-size: 1rem;
