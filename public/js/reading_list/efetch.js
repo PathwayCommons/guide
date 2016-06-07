@@ -16,12 +16,12 @@
       dataType: "xml"
     })
     .done(function( data, textStatus, jqXHR ){
-      onResult(data, category);
+      onResult(data, category, index);
     });
 
   });
 
-  function onResult( data, category ) {
+  function onResult( data, category, indy ) {
 
     var $panel_group = $('.reading-list.panel-group');
     $panel_group.append(['<h3 class="reading-list category">', category, '</h3>'].join(''));
@@ -48,8 +48,8 @@
         html = $($.parseHTML(panel));
 
         //Set the panel-id
-        html.find('.panel-toggle').attr("href", "#panel_id" + index);
-        html.find('.panel-collapse.collapse').attr("id", "panel_id" + index);
+        html.find('.panel-toggle').attr("href", "#panel_id" + indy + index);
+        html.find('.panel-collapse.collapse').attr("id", "panel_id" + indy + index);
 
         //Set the link
         $medlineCitation = $( this ).find('MedlineCitation');
