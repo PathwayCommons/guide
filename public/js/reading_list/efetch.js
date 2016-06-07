@@ -6,19 +6,30 @@
   nmeshHeadings = 15,
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
   raw = $.parseJSON('{{ site.data.reading_list.standards | jsonify }}'),
-  $panel_group = $('.reading-list.panel-group');
+  $panel_group = $('.reading-list.panel-group'),
+  deferreds = [];
 
-  $.each(raw, function(index, value){
-    $.ajax({
-      type: "GET",
-      url: endpoint + value.uids.join(','),
-      cache: false,
-      dataType: "xml"
+  $.each(raw, function(index, sitedata){
+    deferreds.push({
+      index: index,
+      sitedata: sitedata,
+      deferred: $.ajax({
+        type: "GET",
+        url: endpoint + sitedata.uids.join(','),
+        cache: false,
+        dataType: "xml"
+      })
     })
-    .done(function( data, textStatus, jqXHR ){
-      makePanels( data, value.category, index, $panel_group );
-    });
   });
+
+  /* Make ajax.done work serially so order doesn't depend on network */
+  function qNext() {
+    var o = deferreds.shift(); //remove first element
+    if(o) o.deferred.done(function( data, textStatus, jqXHR ){
+        makePanels( data, o.sitedata.category, o.index, $panel_group );
+        qNext();
+      });
+  }
 
   function makePanels( data, category, indy, $parent ) {
     var template =
@@ -51,7 +62,7 @@
         //Article
         $article = $medlineCitation.find('Article');
         $articleTitle = $article.find('ArticleTitle');
-        $abstractText = $article.find('Abstract AbstractText');
+        $abstractText = $article.find('Abstract AbstractText'); //could be an array
         //AuthorList
         $author = $( this ).find('AuthorList Author').first();
         $afirst = $author.find('ForeName');
@@ -78,7 +89,12 @@
         html.find('.panel-heading .panel-meta.journal').html(
           [ $jISOAbbreviation.text(), "vol. " + $jvolume.text(), "(" + $jyear.text() + ")" ].join(' ')
         );
-        html.find('.panel-body .abstract-text').html( $abstractText.text() );
+        // abstract text - could be an array
+        $pabstract = html.find('.panel-body .abstract-text');
+        $abstractText.each(function( index, element ){
+          $pabstract.append( [$( this ).attr('Label'), $( this ).text(), '<br/>'].join('<br/>') );
+        });
+
         // Mesh Heading badges
         $meshdescriptor.slice(0, nmeshHeadings).each(function( index, element ){
           $badges.append('<span class="badge">' + $( this ).text() + '</span>');
@@ -91,5 +107,7 @@
         $parent.append( html );
       });
   };
+
+  qNext();
 
 }());
