@@ -4,25 +4,26 @@ title: Pathway Guide
 subtitle: Understand the basics or find more advanced techniques
 ---
 
-<div class="home">
   {% assign collection_list = site.collections | sort:"url" %}
 
+  <div class="grid-element-parent">
   {% for collection in collection_list %}
     {% if collection.index != null %}
       {% if collection.label != null %}
       {% assign pretty_label = collection.label | replace: "_", " " | capitalize %}
-      <div class="grid-element col-sm-6">
-        <div class="dummy"></div>
+      <div class="grid-element">
         <a href="{{site.baseurl}}{{ collection.index }}">
-          <div class="grid-element-card"></div>
-          <p class="grid-element-title">{{ pretty_label }}</p>
-          <div class="grid-element-inner">
-            <span class="grid-element-subtitle"><em>{{ collection.description }}</em></span>
+          <div class="grid-element-card">
+            <div class="grid-element-panel">
+              <p class="grid-element-text">{{ collection.description }}</p>
+            </div>
+            <div class="grid-element-label">
+              <span>{{ pretty_label }}</span>
+            </div>
           </div>
         </a>
       </div>
       {% endif %}
     {% endif %}
   {% endfor %}
-
-</div>
+  </div>

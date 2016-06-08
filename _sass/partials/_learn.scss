@@ -49,86 +49,50 @@
 *
 */
 
-.grid-element {
+.grid-element-parent {
+
   $grid-margin: 1em;
   $border-width: 0.25em;
-  $label-height: 2.5em;
+  $label-height: 3.5em;
+  $grid-element-width: 17em;
+  $aspect-ratio: 1.25; //width / height
+  $grid-element-height: $grid-element-width / $aspect-ratio;
 
-  float: none;
-  margin: 0 auto;
-  width: 350px;
-  height: 270px;
-  padding: 0;
+  display:                 flex;
+  flex-wrap:               wrap;
+  justify-content:         center;
 
-
-  .dummy {
-    margin-top: 0%;
-  }
-
-  .grid-element-card {
-    position: absolute;
-    margin: $grid-margin;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: $light-silver;
-  }
-
-  .grid-element-title {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    font-weight: 500;
-    font-size: 1.2em;
-    text-align: center;
-  }
-
-  .grid-element-inner {
-    position: absolute;
-    margin: $grid-margin + $border-width;
-    top: 0;
-    bottom: $label-height;
-    left: 0;
-    right: 0;
-    text-align:center;
-    padding-top:calc(50% - 5em);
-    color: $clouds;
-    background: rgba(44, 62, 80, 0.9);
-    overflow-y: hidden;
-  }
-}
-
-
-@media (min-width: 768px) {
   .grid-element {
-    $grid-margin: 1em;
-    $border-width: 0.25em;
-    $label-height: 3em;
+    margin: $grid-margin;
 
-    float: left;
-    width: 50%;
-    height: 100%;
-    margin-left: 0;
-
-    .dummy {
-      margin-top: 90%;
+    a {
+      text-decoration: none;
     }
 
     .grid-element-card {
-      position: absolute;
-      margin: $grid-margin;
-    }
+      text-align: center;
+      padding: $border-width;
+      width: $grid-element-width;
+      height: $grid-element-height;
+      background: $light-silver;
 
-    .grid-element-title {
-      font-size: 1.5em;
-    }
+      .grid-element-panel {
+        height: $grid-element-height - $label-height;
+        color: $clouds;
+        background: rgba(44, 62, 80, 0.9);
+        overflow-y: hidden;
 
-    .grid-element-inner {
-      padding-top:calc(50% - 5em);
-      margin: $grid-margin + $border-width;
-      bottom: $label-height;
+        .grid-element-text {
+          text-align: center;
+          margin-top: 25%;
+        }
+      }
+
+      .grid-element-label {
+        padding: 0.5em;
+        font-weight: 500;
+        font-size: 1.2em;
+      }
     }
   }
 }

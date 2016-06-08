@@ -6,20 +6,22 @@ layout: panelista
 
 {% if site.reading_list %}
 {% assign sorted_docs = site.reading_list %}
-
+    <div class="grid-element-parent">
       {% for doc in sorted_docs %}
       {% unless doc.url contains 'archive' %}
-        <div class="grid-element col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-6">
-          <div class="dummy"></div>
+        <div class="grid-element">
           <a href="{{site.baseurl}}{{ doc.url }}">
-            <div class="grid-element-card"></div>
-            <p class="grid-element-title">{{ doc.title }}</p>
-            <div class="grid-element-inner">
-              <span class="grid-element-subtitle"><em>{{ doc.subtitle }}</em></span>
+            <div class="grid-element-card">
+              <div class="grid-element-panel">
+                <p class="grid-element-text">{{ doc.subtitle }}</p>
+              </div>
+              <div class="grid-element-label">
+                <span>{{ doc.title }}</span>
+              </div>
             </div>
           </a>
         </div>
       {% endunless %}
       {% endfor %}
-
+    </div>
 {% endif %}
