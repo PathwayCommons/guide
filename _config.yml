@@ -52,4 +52,20 @@ collections:
     layout: reading_list
     index: /reading_list/archive/
     description: Curated article sets
-    icon: index/Book-2-512.png
+    icon: index/reading_list.png
+
+  hands_on:
+    output: true
+    permalink: /hands_on/:path/
+    layout: hands_on
+    index: /hands_on/archive/
+    description: Practical
+    icon: index/hands_on.png
+
+  primers:
+    output: true
+    permalink: /primers/:path/
+    layout: primers
+    index: /primers/archive/
+    description: Primers
+    icon: index/primers.png
