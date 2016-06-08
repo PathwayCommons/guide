@@ -1,10 +1,9 @@
 ---
-# NLMMedline DTD: http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/nlmmedlinecitationset_150101.dtd
 ---
 (function(){
 
   var
-  nmeshHeadings = 15,
+  nmeshHeadings = 5,
   endpoint = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=",
   $panel_group = $('.reading-list.panel-group'),
   // Need to pass the current page to this script...haaacck
@@ -59,6 +58,8 @@
       .find( "PubmedArticle" )
       .each(function(index, element){
         var html = $($.parseHTML(template));
+
+        // NLMMedline DTD: http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/nlmmedlinecitationset_150101.dtd
 
         /* Find the required XML elements*/
         $medlineCitation = $( this ).find('MedlineCitation');

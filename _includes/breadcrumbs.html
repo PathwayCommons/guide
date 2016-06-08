@@ -1,9 +1,23 @@
-<ol class="breadcrumb">
   {% assign query = (site.collections | where: 'label' , page.collection ) %}
   {% if query.size == 1 %}
     {% assign c = query.first %}
-    <li><a href="{{site.baseurl}}{{c.index}}">{{ page.collection | replace: "_", " " | capitalize }}</a></li>
-    <!-- something is missing here for nested -->
-    <li class="active">{{ page.title }}</li>
+    {% assign parts = (page.url | split: '/') %}
+    {% assign url = site.baseurl %}
+    <ol class="breadcrumb">
+    {% for path in parts %}
+      {% assign url = (url | append: path | append: '/') %}
+
+      {% if forloop.first %}
+        <li><a href="{{url}}">{{site.title}}</a></li>
+      {% elsif path == c.label %}
+        <li><a href="{{site.baseurl}}{{c.index}}">{{ c.label | replace: '_', ' ' | capitalize }}</a></li>
+      {% elsif forloop.last %}
+        {% if path != 'archive' %}
+          <li class="active">{{ page.title }}</li>
+        {% endif %}
+      {% else %}
+        <li><a href="{{url}}">{{ path }}</a></li>        
+      {% endif %}
+    {% endfor %}
+    </ol>
   {% endif %}
-</ol>
