@@ -1,7 +1,7 @@
 ---
 layout: panelista
 title: Pathway Guide
-subtitle: Understand the basics or find more advanced techniques
+subtitle: Basic to Advanced
 ---
 
   {% assign collection_list = site.collections | sort:"url" %}
@@ -15,11 +15,13 @@ subtitle: Understand the basics or find more advanced techniques
         <a href="{{site.baseurl}}{{ collection.index }}">
           <div class="grid-element-card">
             <div class="grid-element-panel">
-              <p class="grid-element-text">{{ collection.description }}</p>
+              <img class="img-responsive" src="{{ site.baseurl }}/{{ site.media_root }}/{{ collection.icon }}" />
             </div>
-            <div class="grid-element-label">
-              <span>{{ pretty_label }}</span>
+
+            <div class="box-label effect5">
+              <span class="grid-element-label">{{ pretty_label }}</span>
             </div>
+
           </div>
         </a>
       </div>
@@ -27,3 +29,8 @@ subtitle: Understand the basics or find more advanced techniques
     {% endif %}
   {% endfor %}
   </div>
+  <!-- <div class="box-wrapper">
+    <div class="box effect5">
+      <h3>some text</h3>
+    </div>
+  </div> -->

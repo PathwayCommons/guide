@@ -16,3 +16,12 @@ $container-min-width: 22rem;
 
 // Sidebar
 $side-bar-width: 18rem;
+
+
+//grid-elements
+$grid-margin: 1em;
+$border-width: 0.25em;
+$label-height: 3.5em;
+$grid-element-width: 17em;
+$grid-aspect-ratio: 1.25; //width / height
+$grid-element-height: $grid-element-width / $grid-aspect-ratio;

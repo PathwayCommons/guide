@@ -1,7 +1,8 @@
 ---
 title: Reading List
-subtitle: A curated set of publications
+subtitle: Curated article sets
 layout: panelista
+icon: reading_list/folder.png
 ---
 
 {% if site.reading_list %}
@@ -13,10 +14,10 @@ layout: panelista
           <a href="{{site.baseurl}}{{ doc.url }}">
             <div class="grid-element-card">
               <div class="grid-element-panel">
-                <p class="grid-element-text">{{ doc.subtitle }}</p>
+                <img class="img-responsive" src="{{ site.baseurl }}/{{ site.media_root }}/{{ page.icon }}" />
               </div>
-              <div class="grid-element-label">
-                <span>{{ doc.title }}</span>
+              <div class="box-label effect5">
+                <span class="grid-element-label">{{ doc.title }}</span>
               </div>
             </div>
           </a>

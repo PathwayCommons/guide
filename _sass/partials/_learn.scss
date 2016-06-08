@@ -51,13 +51,6 @@
 
 .grid-element-parent {
 
-  $grid-margin: 1em;
-  $border-width: 0.25em;
-  $label-height: 3.5em;
-  $grid-element-width: 17em;
-  $aspect-ratio: 1.25; //width / height
-  $grid-element-height: $grid-element-width / $aspect-ratio;
-
   display:                 -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
   display:                 -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
   display:                 -ms-flexbox;      /* TWEENER - IE 10 */
@@ -84,28 +77,67 @@
       text-align: center;
       padding: $border-width;
       width: $grid-element-width;
-      height: $grid-element-height;
-      background: $light-silver;
+      height: $grid-element-height * 1.2;
+      // background: $light-silver;
 
       .grid-element-panel {
         height: $grid-element-height - $label-height;
         color: $clouds;
-        background: rgba(44, 62, 80, 0.9);
+        // background: rgba(44, 62, 80, 0.7);
         overflow-y: hidden;
 
         .grid-element-text {
           text-align: center;
           margin-top: 25%;
         }
+
+        img {
+          margin: auto auto;
+          height: $grid-element-height - $label-height;
+        }
       }
 
       .grid-element-label {
-        padding: 0.5em;
-        font-weight: 500;
+        font-weight: bold;
         font-size: 1.2em;
       }
     }
   }
+}
+
+/*==================================================
+ * Label Effect
+ * ===============================================*/
+.box-label {
+  height: 4em;
+  background: $inverse;
+  border: 1px solid $clouds;
+  padding: 1em;
+  margin-top: 4px;
+}
+
+.effect5
+{
+  position: relative;
+}
+.effect5:before, .effect5:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 50%;
+  background: #777;
+  box-shadow: 0 35px 20px #777;
+  transform: rotate(-8deg);
+}
+.effect5:after
+{
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
 }
 
  /*
@@ -121,7 +153,7 @@
 
  .panelista-shade {
    position: absolute;
-   background: rgba(231, 76, 60, 0.9);
+   background: $panelista-background;
 
    z-index: 1;
    top: 0;
@@ -145,7 +177,7 @@
 }
 @media (min-width: 768px) {
  .panelista {
-   height: 18rem;
+   height: 16rem;
    margin-bottom: 3rem;
 
    .panelista-shade {
