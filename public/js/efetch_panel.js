@@ -204,7 +204,7 @@
   });
 
   $('.panel_group').each(function(element, index){
-      console.log($(this));
+      
       var
       $target = $(this),
       page = $target.attr('data-page'),
