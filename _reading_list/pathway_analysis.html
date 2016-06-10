@@ -3,10 +3,7 @@ title: Pathway Analysis
 subtitle: About pathway analysis
 layout: reading_list
 custom_js:
-  - reading_list/efetch.js
-data_parent: pathway_analysis
+  - reading_list/efetch_panel.js
 ---
 
-{% if site.data.reading_list.pathway_analysis.size > 0 %}
-  <div class="reading-list panel-group" data-parent="{{page.data_parent}}" id="accordion" role="tablist" aria-multiselectable="true"></div>
-{% endif %}
+<div id="panel_group" data-page="pathway_analysis" data-nheadings=5 data-collection="reading_list"></div>

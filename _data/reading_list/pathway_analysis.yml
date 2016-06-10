@@ -1,3 +1,13 @@
 - category: Reviews
   uids:
-    - 22383865    
+    - 22383865
+
+- category: Analysis Tools
+  uids:
+    - 17478515
+    - 16174746
+    - 18990722    
+
+- category: Visualization Tools
+  uids:
+    - 21085593

@@ -7,7 +7,7 @@
   </a>
 </li>
 <li>
-  <a href="http://twitter.com/intent/tweet?status={{ page.subtitle | truncate: 90 }}+{{ site.github.url }}{{ page.url }}"
+  <a href="http://twitter.com/intent/tweet?text={{ page.subtitle | truncate: 90 }}+{{ site.github.url | append: page.url }}&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >

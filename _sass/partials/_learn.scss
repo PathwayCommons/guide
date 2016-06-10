@@ -327,16 +327,15 @@
 /* END case_study*/
 
 /* BEGIN reading_list */
-.reading-list.panel-group {
-  .reading-list.category {
+.panel-group {
+  .category {
       margin-top: 3em;
   }
-
-  .reading-list.panel {
+  .panel {
     a {
       text-decoration: none;
     }
-    .reading-list.panel-heading {
+    .panel-heading {
       padding: 1em;
       background: $brand-primary;
       color: $clouds;
@@ -352,7 +351,6 @@
       .badge {
         font-weight: 200;
       }
-
     }
   }
 }

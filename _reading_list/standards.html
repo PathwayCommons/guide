@@ -3,10 +3,7 @@ title: Standards
 subtitle: About standards
 layout: reading_list
 custom_js:
-  - reading_list/efetch.js
-data_parent: standards
+  - reading_list/efetch_panel.js
 ---
 
-{% if site.data.reading_list.standards.size > 0 %}
-  <div class="reading-list panel-group" data-parent="{{page.data_parent}}" id="accordion" role="tablist" aria-multiselectable="true"></div>
-{% endif %}
+<div id="panel_group" data-page="standards" data-nheadings=5 data-collection="reading_list"></div>
