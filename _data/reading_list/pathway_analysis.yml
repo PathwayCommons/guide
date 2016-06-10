@@ -2,12 +2,15 @@
   uids:
     - 22383865
 
-- category: Analysis Tools
+- category: Analysis
   uids:
     - 18990722
     - 17478515
     - 16174746
+    - 25352553
+    - 23794635
+    - 
 
-- category: Visualization Tools
+- category: Visualization
   uids:
     - 21085593

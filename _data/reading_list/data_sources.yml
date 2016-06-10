@@ -1,10 +1,16 @@
-- category: Meta-Sources
+- category: Meta
   uids:
     - 26594663
     - 21071392
-    - 16381921
+    - 16381921    
 
-- category: Pathway Databases
+- category: Pathway & Interaction
   uids:
-    - 21071392
     - 26481357
+    - 24243840
+    - 16381927
+
+- category: Small Molecule
+  uids:
+    - 24203711
+    - 23180789

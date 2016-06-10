@@ -1,15 +1,15 @@
 ---
 title: Gene’s Addiction
 subtitle: Pathway Commons data links known human cancer driver genes to kinases whose function is required to sustain tumor cell viability
-article_title: Large-Scale Profiling of Kinase Dependencies in Cancer Cell Lines
-article_reference: Campbell et al. Cell Reports Volume 14, Issue 10, 2490-2501 (15 March 2016)
-article_link: http://www.cell.com/cell-reports/comments/S2211-1247(16)30126-7
+pmid: 26947069
 figure: campbell_figure.jpg
 cover: cover.jpg
 pdf: case_study_campbell.pdf
 date: 2016-03-15
 layout: case_study
 category: computational
+custom_js:
+  - efetch_panel.js
 ---
 
 ### Quick Summary
@@ -23,7 +23,7 @@ James Campbell and Christopher J. Lord investigate the genetic basis of breast c
 ### Context
 Cancer has been described as ‘a hundred diseases masquerading as one’. The diversity of cellular dysfunctions and ability to evolve are major obstacles for efforts to understand the disease or devise rationale therapies.  
 
-Bernard Weinstein was among the first to theorize “...because of their bizarre circuitry, cancer cells suffer from ‘gene addiction’ and ‘gene hypersensitivity’ that might be exploited in both cancer prevention and chemotherapy”[1]. A therapeutic strategy stems from the observation that that some tumors are particularly reliant on a single oncogenic pathway for continued survival[2].
+Bernard Weinstein was among the first to theorize “...because of their bizarre circuitry, cancer cells suffer from ‘gene addiction’ and ‘gene hypersensitivity’ that might be exploited in both cancer prevention and chemotherapy” (Weinstein 2000). A therapeutic strategy stems from the observation that that some tumors are particularly reliant on a single oncogenic pathway for continued survival (Sharma 2007).
 
 > “...cancer cells suffer from ‘gene addiction’ and ‘gene hypersensitivity’ that might be exploited in both cancer prevention and chemotherapy.”
 
@@ -31,14 +31,14 @@ Bernard Weinstein was among the first to theorize “...because of their bizarre
 Is there a way to find the mechanistic or ‘material’ basis of kinase genetic dependencies?
 
 ### Goals
-Kinases are of great interest in cancer because of their pervasiveness: Mutations in one-fifth of human kinases are believed to play an active role in tumorigenesis[3]. Moreover, their biochemical nature make them more amenable to inhibition by small molecules, that is, ‘druggable’. Delineating how kinases interact with well-characterized signaling subnetworks is critical to our understanding of their role in cancer progression and their potential as therapeutic  targets.  
+Kinases are of great interest in cancer because of their pervasiveness: Mutations in one-fifth of human kinases are believed to play an active role in tumorigenesis (Greenman 2007). Moreover, their biochemical nature make them more amenable to inhibition by small molecules, that is, ‘druggable’. Delineating how kinases interact with well-characterized signaling subnetworks is critical to our understanding of their role in cancer progression and their potential as therapeutic  targets.  
 
-Campbell et al.[4] integrate experimental inhibition of kinases with previous knowledge of gene interactions build a compendium of kinases and their associated subnetworks that sustain viability in human tumor-derived cell lines.
+Campbell et al. (Campbell 2016) integrate experimental inhibition of kinases with previous knowledge of gene interactions build a compendium of kinases and their associated subnetworks that sustain viability in human tumor-derived cell lines.
 
 ### Approach
 A kinase genetic dependency (KGD) is defined by a reduction of cell viability after introduction of a silencing RNA (siRNA). In this way, 714 kinases were screened in 117 cell lines of which more than 500 protein kinases. The resulting compendium of kinase dependencies across cell types is itself useful, but the authors went further by associating KGDs with important biomarkers then attempting to provide a mechanistic link between them. From a therapeutic perspective, this represents a means to first identify (biomarker) then disable (KGD) a given tumor type.  
 
-The important set of biomarkers examined in this study were 21 mutations representing ‘key’ cancer drivers mutated in at least seven of the cell lines[5]. Driver mutations are recurrent alterations that directly affect growth and survival and their presence in cell lines was inferred from previous exome sequencing (COSMIC cell line project) and copy number profiling (Cancer Cell Line Encyclopedia) efforts. Another way of looking at the interaction with driver genes is to say that mutation in a driver potentiates the sensitivity to or reliance upon a kinase. From a therapeutic standpoint, knowledge of whether a tumor harbors a specific driver mutation could inform the choice of the kinase inhibitor applied to reduce tumor burden.  
+The important set of biomarkers examined in this study were 21 mutations representing ‘key’ cancer drivers mutated in at least seven of the cell lines (Vogelstein 2013). Driver mutations are recurrent alterations that directly affect growth and survival and their presence in cell lines was inferred from previous exome sequencing (COSMIC cell line project) and copy number profiling (Cancer Cell Line Encyclopedia) efforts. Another way of looking at the interaction with driver genes is to say that mutation in a driver potentiates the sensitivity to or reliance upon a kinase. From a therapeutic standpoint, knowledge of whether a tumor harbors a specific driver mutation could inform the choice of the kinase inhibitor applied to reduce tumor burden.  
 
 This approach revealed over 1 100 putative driver-KGD associations. To link drivers and KGDs with enough information to inform follow-up experiments, Campbell et al. gathered interaction information concerning protein interactions (HINT, BioGRID and KEA) and kinase-substrate targets (HINT and PhosphoSitePlus). This analysis identified 95 previously identified direct links. A number of the 21 key driver genes are known to function as transcriptional activators, for example TP53, MYC, and SMAD4. A benefit of Pathway Commons is that it gathers and explicitly represents gene regulatory relationships from source databases. Using this information, an additional 18 associations were established (Fig. 1, left), for example, a regulatory link was identified between the long known cancer driver c-Myc and the kinases CDKL5 and PRKCH. A re-examination of the KGD data revealed that indeed, c-Myc amplification was associated with increased sensitivity to inhibition of both kinases. Pathway Commons provided key regulatory links between driver genes and kinases that would have been missed by relying solely on databases housing physical interactions.  
 
@@ -58,8 +58,4 @@ By using experimental observations supplemented with interaction data Campbell e
 ---
 
 ### References
-1. Weinstein, I. B. Disorders in cell circuitry during multistage carcinogenesis: the role of homeostasis. Carcinogenesis 21, 857–864 (2000).
-2. Sharma, S. V. & Settleman, J. Oncogene addiction: setting the stage for molecularly targeted cancer therapy. Genes & Development 21, 3214–3231 (2007).
-3. Greenman, C. et al. Patterns of somatic mutation in human cancer genomes. Nature 446, 153–158 (2007).
-4. Campbell, J. et al. Large-Scale Profiling of Kinase Dependencies in Cancer Cell Lines. CellReports 0, 1–13 (2016).
-5. Vogelstein, B. et al. Cancer genome landscapes. Science 339, 1546–1558 (2013).
+<div class="panel_group" data-inline="10783304,18079171,17344846,26947069,23539594"></div>

@@ -82,12 +82,15 @@
           var subpanel = $( value.xml )
             .find( "PubmedArticle" )
             .map(function(j, article){
-              return (<PanelGroup.Panel data={article} nHeadings={self.props.nHeadings} id={ ['identifier',i,j].join('-') } key={j} />);
+              var d = Date.now();
+              return (<PanelGroup.Panel data={article} nHeadings={self.props.nHeadings} id={ ['identifier', i, j, d].join('-') } key={j} />);
             });
 
           return (
             <div className="subpanel" key={i}>
-              <h3 className="category">{value.category}</h3>
+              {(() => {
+                if (value.category) return (<h3 className="category">{value.category}</h3>);
+              })()}
               {subpanel}
             </div>
           );
@@ -200,16 +203,26 @@
     }
   });
 
-  var
-    $target = $('#panel_group'),
-    page = $('#panel_group').attr('data-page'),
-    collection = $('#panel_group').attr('data-collection'),
-    raw = $.parseJSON('{{ site.data | jsonify }}'),
-    headings = $('#panel_group').attr('data-nheadings');
+  $('.panel_group').each(function(element, index){
+      console.log($(this));
+      var
+      $target = $(this),
+      page = $target.attr('data-page'),
+      collection = $target.attr('data-collection'),
+      headings = $target.attr('data-nheadings') || 5,
+      raw = $.parseJSON('{{ site.data | jsonify }}') || {},
+      inline = $target.attr('data-inline'),
+      input = [];
 
-  ReactDOM.render(
-    <PanelGroup input={raw[collection][page]} nHeadings={headings} />,
-    $target[0]
-  );
+      if (raw && page && collection){
+        input = raw[collection][page];
+      }  else if (inline) {
+        input = [{ category: '', uids: [inline]}];
+      }
 
+      ReactDOM.render(
+        <PanelGroup input={input} nHeadings={headings} />,
+        $target[0]
+      );
+  });
 }());

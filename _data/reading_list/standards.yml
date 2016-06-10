@@ -11,6 +11,10 @@
     - 22581176
     - 19668183
 
+- category: Gene Ontology
+  uids:
+    - 10802651
+
 - category: Modelling
   uids:
     - 12611808
