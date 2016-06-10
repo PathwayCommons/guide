@@ -26,15 +26,21 @@
 
       // Populate the array of ajax deferred objects + metadata
       $.each(this.props.input, function(index, value){
+
+        // Protect against missing data fields
+        var uid_list = value.uids || [],
+        category = value.category || '';
+
+        // This will hang if value.x is null
         deferreds.push({
           deferred: $.ajax({
             type: "GET",
-            url: endpoint + value.uids.join(','),
+            url: endpoint + uid_list.join(','),
             cache: false,
             dataType: "xml"
           }),
           index: index,
-          category: value.category
+          category: category
         })
       });
 
@@ -101,7 +107,7 @@
     render: function() {
 
       var
-        $pubmedArticle
+        $pubmedArticle, $pmcID
       , $medlineCitation, $pmid
       , $article, $articleTitle
       , $abstractText
@@ -113,7 +119,11 @@
       /* Find the required XML elements*/
       $pubmedArticle = $(this.props.data);
       $medlineCitation = $pubmedArticle.find('MedlineCitation');
+
+      // link info
       $pmid = $medlineCitation.children('PMID');
+      $pmcID = $pubmedArticle.find('PubmedData ArticleIdList ArticleId[IdType="pmc"]');
+
       //Article
       $article = $medlineCitation.find('Article');
       $articleTitle = $article.find('ArticleTitle');
@@ -166,10 +176,23 @@
           <div id={this.props.id} className="panel-collapse collapse" role="tabpanel">
             <div className="panel-body">
               <p className="abstract-text" dangerouslySetInnerHTML={this.rawMarkup(abstract)} />
-              <a className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('')}>
-                <i className="fa fa-link fa-lg"></i>
-                {[" PubMed ID:", $pmid.text()].join('')}
-              </a>
+              {(() => {
+                var record;
+                if ($pmcID.text()) {
+
+                  record = <a className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('')}>
+                    <i className="fa fa-link fa-lg"></i>
+                    {[" PubMed Central: ", $pmcID.text()].join('')}
+                  </a>
+
+                } else {
+                  record = <a className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('')}>
+                    <i className="fa fa-link fa-lg"></i>
+                    {[" PubMed: ", $pmid.text()].join('')}
+                  </a>
+                }
+                return record;
+              })()}
             </div>
           </div>
         </div>
