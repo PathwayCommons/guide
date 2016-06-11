@@ -200,6 +200,7 @@
       input = [{ category: '', uids: [inline] }];
     }
 
+    console.log(input);
 
     ReactDOM.render(
       <PanelGroup input={input} />,
