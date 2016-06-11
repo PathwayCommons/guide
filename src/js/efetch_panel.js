@@ -201,6 +201,7 @@
     }
 
     console.log(input);
+    
 
     ReactDOM.render(
       <PanelGroup input={input} />,
