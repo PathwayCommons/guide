@@ -199,6 +199,7 @@
     } else if (inline) {
       input = [{ category: '', uids: [inline] }];
     }
+
     
     ReactDOM.render(
       <PanelGroup input={input} />,
