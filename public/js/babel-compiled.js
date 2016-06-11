@@ -74,13 +74,13 @@
         return React.createElement(
           "div",
           { className: "subpanel", key: i },
-          (() => {
+          function () {
             if (value.category) return React.createElement(
               "h3",
               { className: "category" },
               value.category
             );
-          })(),
+          }(),
           subpanel
         );
       });
@@ -177,7 +177,7 @@
             "div",
             { className: "panel-body" },
             React.createElement("p", { className: "abstract-text", dangerouslySetInnerHTML: this.rawMarkup(abstract) }),
-            (() => {
+            function () {
               var record;
               if ($pmcID.text()) {
 
@@ -196,7 +196,7 @@
                 );
               }
               return record;
-            })()
+            }()
           )
         )
       );

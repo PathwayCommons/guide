@@ -72,9 +72,9 @@
 
           return (
             <div className="subpanel" key={i}>
-              {(() => {
+              {(function(){
                 if (value.category) return (<h3 className="category">{value.category}</h3>);
-              })()}
+              }())}
               {subpanel}
             </div>
           );
@@ -163,7 +163,7 @@
           <div id={this.props.id} className="panel-collapse collapse" role="tabpanel">
             <div className="panel-body">
               <p className="abstract-text" dangerouslySetInnerHTML={this.rawMarkup(abstract)} />
-              {(() => {
+              {(function(){
                 var record;
                 if ($pmcID.text()) {
 
@@ -179,7 +179,7 @@
                   </a>
                 }
                 return record;
-              })()}
+              }())}
             </div>
           </div>
         </div>
@@ -200,10 +200,11 @@
       input = [{ category: '', uids: [inline] }];
     }
 
-    
+
     ReactDOM.render(
       <PanelGroup input={input} />,
       $target[0]
     );
   });
+
 }());
