@@ -216,8 +216,6 @@
       input = [{ category: '', uids: [inline] }];
     }
 
-    console.log(input);
-
     ReactDOM.render(React.createElement(PanelGroup, { input: input }), $target[0]);
   });
 })();
