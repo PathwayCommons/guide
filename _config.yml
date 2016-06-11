@@ -19,6 +19,7 @@ branch: gh-pages
 # Declare the path relative to <source> for media and static items
 media_root:          'media'
 static_root:         'public'
+src_root:            'src'
 
 #**************** Override defaults ****************
 sass:

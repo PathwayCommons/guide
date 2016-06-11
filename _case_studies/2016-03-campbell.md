@@ -8,8 +8,6 @@ pdf: case_study_campbell.pdf
 date: 2016-03-15
 layout: case_study
 category: computational
-custom_js:
-  - efetch_panel.js
 ---
 
 ### Quick Summary

@@ -1,20 +1,3 @@
----
----
-/*
- *
- * ___      _   _                       ___
- * | _ \__ _| |_| |___ __ ____ _ _  _   / __|___ _ __  _ __  ___ _ _  ___
- * |  _/ _` |  _| ' \ V  V / _` | || | | (__/ _ \ '  \| '  \/ _ \ ' \(_-<
- * |_| \__,_|\__|_||_\_/\_/\__,_|\_, |  \___\___/_|_|_|_|_|_\___/_||_/__/
- *                               |__/
- * https://github.com/PathwayCommons/
- *
- * efetch_react.js
- * These components render a Bootstrap Panel of PubMed articles
- * based on XML data returned from the Entrez efetch_react
- * at https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi
- */
-
 (function(){
 
   var PanelGroup = React.createClass({
@@ -44,10 +27,9 @@
         })
       });
 
-      /*
-       * function qNext
-       * Process the deferred objects array serially
-       */
+
+      // function qNext
+      // Process the deferred objects array serially
       function qNext() {
         var o = deferreds.shift(); //remove first element
         if(o){
@@ -83,7 +65,9 @@
             .find( "PubmedArticle" )
             .map(function(j, article){
               var d = Date.now();
-              return (<PanelGroup.Panel data={article} nHeadings={self.props.nHeadings} id={ ['identifier', i, j, d].join('-') } key={j} />);
+              return (
+                <PanelGroup.Panel data={article} nHeadings={self.props.nHeadings} id={ ['identifier', i, j, d].join('-') } key={j} />
+              );
             });
 
           return (
@@ -119,7 +103,7 @@
       , $journal, $journalVolume, $journalYear, $journalISOAbbreviation
       ;
 
-      /* Find the required XML elements*/
+      // Find the required XML elements
       $pubmedArticle = $(this.props.data);
       $medlineCitation = $pubmedArticle.find('MedlineCitation');
 
@@ -148,20 +132,20 @@
       }
       $journalISOAbbreviation = $journal.find('ISOAbbreviation');
 
-      /* Format text  */
-      /* Article info */
+
+      // Article info
       var articleJournal = [
          $journalISOAbbreviation.text(),
          "vol. " + $journalVolume.text(),
           "(" + $journalYear.text() + ")"
         ].join(' ');
 
-      /* abstract text - could be an array */
+      // abstract text - could be an array
       var abstract =  $abstractText.map(function(){
         return [ $( this ).attr('Label'), $( this ).text(), '<br/>' ].join('<br/>');
       }).get().join('');
 
-      /* Mesh Heading badges */
+      // Mesh Heading badges 
       var meshes = $meshdescriptor.slice(0, this.props.nHeadings).map(function(){
         return ['<span class="badge">', $( this ).text(), '</span>'].join('');
       }).get().join('');
@@ -204,18 +188,17 @@
   });
 
   $('.panel_group').each(function(element, index){
-      
+
       var
       $target = $(this),
       page = $target.attr('data-page'),
       collection = $target.attr('data-collection'),
       headings = $target.attr('data-nheadings') || 5,
-      raw = $.parseJSON('{{ site.data | jsonify }}') || {},
       inline = $target.attr('data-inline'),
       input = [];
 
-      if (raw && page && collection){
-        input = raw[collection][page];
+      if (sitedata && page && collection){
+        input = sitedata[collection][page];
       }  else if (inline) {
         input = [{ category: '', uids: [inline]}];
       }

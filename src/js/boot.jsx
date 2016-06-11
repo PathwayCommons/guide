@@ -1,6 +1,3 @@
----
-# Global setup for libraries etc
----
 //Show and hide the spinner for all ajax requests.
 (function(document){
   $(document)

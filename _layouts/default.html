@@ -18,6 +18,8 @@
               {{ site.tagline }}
               {% if jekyll.environment == "development" %}
                 <span class="text-danger">-- Development Mode</span>
+              {% elsif jekyll.environment == "testing" %}
+                <span class="bg-warning">-- Testing Mode</span>
               {% endif %}
             </small>
           </h3>
@@ -27,7 +29,7 @@
 
       <div class="container content">
         <div id='ajax-spinner'><img src="{{ site.baseurl }}/{{ site.media_root }}/spinner.gif"/></div>
-        {% include breadcrumbs.html %}  
+        {% include breadcrumbs.html %}
         {{ content }}
       </div>
     </div>
