@@ -66,7 +66,7 @@
             .map(function(j, article){
               var d = Date.now();
               return (
-                <PanelGroup.Panel data={article} nHeadings={self.props.nHeadings} id={ ['identifier', i, j, d].join('-') } key={j} />
+                <PanelGroup.Panel data={article} id={ ['identifier', i, j, d].join('-') } key={j} />
               );
             });
 
@@ -145,8 +145,8 @@
         return [ $( this ).attr('Label'), $( this ).text(), '<br/>' ].join('<br/>');
       }).get().join('');
 
-      // Mesh Heading badges 
-      var meshes = $meshdescriptor.slice(0, this.props.nHeadings).map(function(){
+      // Mesh Heading badges
+      var meshes = $meshdescriptor.slice(0, 5).map(function(){
         return ['<span class="badge">', $( this ).text(), '</span>'].join('');
       }).get().join('');
 
@@ -189,23 +189,21 @@
 
   $('.panel_group').each(function(element, index){
 
-      var
-      $target = $(this),
-      page = $target.attr('data-page'),
-      collection = $target.attr('data-collection'),
-      headings = $target.attr('data-nheadings') || 5,
-      inline = $target.attr('data-inline'),
-      input = [];
+    var $target = $(this),
+        pagedata = $target.data('page'),
+        inline = $target.data('inline'),
+        input = [];
 
-      if (sitedata && page && collection){
-        input = sitedata[collection][page];
-      }  else if (inline) {
-        input = [{ category: '', uids: [inline]}];
-      }
+    if (pagedata) {
+      input = pagedata;
+    } else if (inline) {
+      input = [{ category: '', uids: [inline] }];
+    }
 
-      ReactDOM.render(
-        <PanelGroup input={input} nHeadings={headings} />,
-        $target[0]
-      );
+
+    ReactDOM.render(
+      <PanelGroup input={input} />,
+      $target[0]
+    );
   });
 }());
