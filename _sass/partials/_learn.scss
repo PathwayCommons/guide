@@ -327,31 +327,4 @@
 /* END case_study*/
 
 /* BEGIN reading_list */
-.panel-group {
-  .category {
-      margin-top: 3em;
-  }
-  .panel {
-    a {
-      text-decoration: none;
-    }
-    .panel-heading {
-      padding: 1em;
-      background: $brand-primary;
-      color: $clouds;
-
-      .panel-title {
-        font-size: 1.2rem;
-      }
-
-      .panel-meta {
-        color: $gray;
-      }
-
-      .badge {
-        font-weight: 200;
-      }
-    }
-  }
-}
 /* END reading_list */

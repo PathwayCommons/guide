@@ -55,13 +55,13 @@ collections:
     description: Curated article sets
     icon: index/reading_list.png
 
-  hands_on:
-    output: true
-    permalink: /hands_on/:path/
-    layout: hands_on
-    index: /hands_on/archive/
-    description: Practical
-    icon: index/hands_on.png
+  # hands_on:
+  #   output: true
+  #   permalink: /hands_on/:path/
+  #   layout: hands_on
+  #   index: /hands_on/archive/
+  #   description: Practical
+  #   icon: index/hands_on.png
 
   primers:
     output: true
@@ -70,3 +70,11 @@ collections:
     index: /primers/archive/
     description: Primers
     icon: index/primers.png
+
+  workflows:
+    output: true
+    permalink: /workflows/:path/
+    layout: workflows
+    index: /workflows/archive/
+    description: Workflows
+    icon: index/workflows.png

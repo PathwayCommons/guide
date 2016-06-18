@@ -58,7 +58,13 @@
       this.loadArticleSets();
     },
     render: function() {
-      var self = this,
+      var
+      self = this,
+      styles = {
+        category: {
+          marginTop: '3em'
+        }
+      },
       panelNodes =
         this.state.data.map(function(value, i){
           var subpanel = $( value.xml )
@@ -73,7 +79,7 @@
           return (
             <div className="subpanel" key={i}>
               {(function(){
-                if (value.category) return (<h3 className="category">{value.category}</h3>);
+                if (value.category) return (<h3 style={styles.category} className="category">{value.category}</h3>);
               }())}
               {subpanel}
             </div>
@@ -150,14 +156,38 @@
         return ['<span class="badge">', $( this ).text(), '</span>'].join('');
       }).get().join('');
 
+      var styles = {
+        panel: {
+          a: {
+            textDecoration: 'none'
+          },
+          panelHeading: {
+            div: {
+              padding: '1em',
+              background: '#34495e',
+              color: '#ecf0f1'
+            },
+            panelTitle: {
+              fontSize: '1.2rem'
+            },
+            panelMeta: {
+              color: '#95a5a6'
+            },
+            badge: {
+              fontWeight: '200'
+            }
+          }
+        }
+      };
+
       return (
         <div className="panel">
-          <a className="panel-toggle" href={["#", this.props.id].join('')} role="button" data-toggle="collapse" data-parent="#accordion">
-            <div className="reading-list panel-heading" role="tab" id="headingOne">
-              <h2 className="panel-title">{$articleTitle.text()}</h2>
-              <span className="panel-meta author">{[$authorfirst.text(), $authorlast.text()].join(' ')}</span><br/>
-              <span className="panel-meta journal">{ articleJournal }</span>
-              <div className="panel-meta reading-list badge-list" dangerouslySetInnerHTML={this.rawMarkup(meshes)} />
+          <a style={styles.panel.a} className="panel-toggle" href={["#", this.props.id].join('')} role="button" data-toggle="collapse" data-parent="#accordion">
+            <div style={styles.panel.panelHeading.div} className="reading-list panel-heading" role="tab" id="headingOne">
+              <h2 style={styles.panel.panelHeading.panelTitle} className="panel-title">{$articleTitle.text()}</h2>
+              <span style={styles.panel.panelHeading.panelMeta} className="panel-meta author">{[$authorfirst.text(), $authorlast.text()].join(' ')}</span><br/>
+              <span style={styles.panel.panelHeading.panelMeta} className="panel-meta journal">{ articleJournal }</span>
+              <div style={styles.panel.panelHeading.badge} className="panel-meta reading-list badge-list" dangerouslySetInnerHTML={this.rawMarkup(meshes)} />
             </div>
           </a>
           <div id={this.props.id} className="panel-collapse collapse" role="tabpanel">
@@ -167,13 +197,13 @@
                 var record;
                 if ($pmcID.text()) {
 
-                  record = <a className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('')}>
+                  record = <a style={styles.panel.a} className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('')}>
                     <i className="fa fa-link fa-lg"></i>
                     {[" PubMed Central: ", $pmcID.text()].join('')}
                   </a>
 
                 } else {
-                  record = <a className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('')}>
+                  record = <a style={styles.panel.a} className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('')}>
                     <i className="fa fa-link fa-lg"></i>
                     {[" PubMed: ", $pmid.text()].join('')}
                   </a>

@@ -65,6 +65,11 @@
     },
     render: function () {
       var self = this,
+          styles = {
+        category: {
+          marginTop: '3em'
+        }
+      },
           panelNodes = this.state.data.map(function (value, i) {
         var subpanel = $(value.xml).find("PubmedArticle").map(function (j, article) {
           var d = Date.now();
@@ -77,7 +82,7 @@
           function () {
             if (value.category) return React.createElement(
               "h3",
-              { className: "category" },
+              { style: styles.category, className: "category" },
               value.category
             );
           }(),
@@ -142,32 +147,56 @@
         return ['<span class="badge">', $(this).text(), '</span>'].join('');
       }).get().join('');
 
+      var styles = {
+        panel: {
+          a: {
+            textDecoration: 'none'
+          },
+          panelHeading: {
+            div: {
+              padding: '1em',
+              background: '#34495e',
+              color: '#ecf0f1'
+            },
+            panelTitle: {
+              fontSize: '1.2rem'
+            },
+            panelMeta: {
+              color: '#95a5a6'
+            },
+            badge: {
+              fontWeight: '200'
+            }
+          }
+        }
+      };
+
       return React.createElement(
         "div",
         { className: "panel" },
         React.createElement(
           "a",
-          { className: "panel-toggle", href: ["#", this.props.id].join(''), role: "button", "data-toggle": "collapse", "data-parent": "#accordion" },
+          { style: styles.panel.a, className: "panel-toggle", href: ["#", this.props.id].join(''), role: "button", "data-toggle": "collapse", "data-parent": "#accordion" },
           React.createElement(
             "div",
-            { className: "reading-list panel-heading", role: "tab", id: "headingOne" },
+            { style: styles.panel.panelHeading.div, className: "reading-list panel-heading", role: "tab", id: "headingOne" },
             React.createElement(
               "h2",
-              { className: "panel-title" },
+              { style: styles.panel.panelHeading.panelTitle, className: "panel-title" },
               $articleTitle.text()
             ),
             React.createElement(
               "span",
-              { className: "panel-meta author" },
+              { style: styles.panel.panelHeading.panelMeta, className: "panel-meta author" },
               [$authorfirst.text(), $authorlast.text()].join(' ')
             ),
             React.createElement("br", null),
             React.createElement(
               "span",
-              { className: "panel-meta journal" },
+              { style: styles.panel.panelHeading.panelMeta, className: "panel-meta journal" },
               articleJournal
             ),
-            React.createElement("div", { className: "panel-meta reading-list badge-list", dangerouslySetInnerHTML: this.rawMarkup(meshes) })
+            React.createElement("div", { style: styles.panel.panelHeading.badge, className: "panel-meta reading-list badge-list", dangerouslySetInnerHTML: this.rawMarkup(meshes) })
           )
         ),
         React.createElement(
@@ -183,14 +212,14 @@
 
                 record = React.createElement(
                   "a",
-                  { className: "article-link", target: "_blank", href: ["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('') },
+                  { style: styles.panel.a, className: "article-link", target: "_blank", href: ["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('') },
                   React.createElement("i", { className: "fa fa-link fa-lg" }),
                   [" PubMed Central: ", $pmcID.text()].join('')
                 );
               } else {
                 record = React.createElement(
                   "a",
-                  { className: "article-link", target: "_blank", href: ["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('') },
+                  { style: styles.panel.a, className: "article-link", target: "_blank", href: ["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('') },
                   React.createElement("i", { className: "fa fa-link fa-lg" }),
                   [" PubMed: ", $pmid.text()].join('')
                 );

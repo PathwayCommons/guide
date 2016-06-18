@@ -2,15 +2,17 @@
   uids:
     - 22383865
 
-- category: Analysis
+- category: Pathway Analysis Software
   uids:
-    - 18990722
     - 17478515
-    - 16174746
+    - 16199517
+    - 12808457
+
+- category: Gene Prediction Software
+  uids:
     - 25352553
     - 23794635
-    - 
 
-- category: Visualization
+- category: Visualization Software
   uids:
     - 21085593
