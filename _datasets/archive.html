@@ -1,0 +1,14 @@
+---
+title: Data Sets
+subtitle: Study data used in this site
+layout: panelista
+---
+
+
+{% if site.datasets %}
+{% assign sorted_docs = (site.datasets | sort: 'date' | reverse) %}
+
+  <div class="dataset">
+    {% include archive_list.html %}
+  </div>
+{% endif %}
