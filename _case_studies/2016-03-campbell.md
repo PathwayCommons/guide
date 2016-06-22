@@ -6,7 +6,7 @@ figure: campbell_figure.jpg
 cover: cover.jpg
 pdf: case_study_campbell.pdf
 date: 2016-03-15
-layout: case_study
+layout: document
 category: computational
 ---
 
@@ -44,11 +44,13 @@ This approach revealed over 1 100 putative driver-KGD associations. To link driv
 
 What of the remaining KGDs where no direct/regulatory interaction could be identified? Here the authors attempted to reuse and extend their interaction data further by integrating the different sources (Fig. 1, right). Specifically, Campbell et al. created a master network composed of kinase-substrate data alongside a subset of Pathway Commons pathway data that described directional links between genes (e.g. expression, phosphorylation, transport). Querying the network for paths limited to length 2 or less provided an additional set of 163 driver-KGD links. For example, the sensitivity of NEK9 and MASTL kinases in ERBB2-amplified cells was not previously recorded however, this approach found that CDK1 is an intermediary. Overall, integration of a priori knowledge into this workflow identified over 270 putative links.
 
+<br/>
   ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figure }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Linking kinase genetic dependencies (KGD) and driver gene mutations.</strong>KGDs were tested for association with a set of twenty-one ‘key’ cancer driver mutations in various cell lines. (Left) Direct links were identified using prior knowledge from interaction databases. Pathway Commons data used to identify cases where drivers regulate KGD expression. (Right) Indirect links (max path length = 2) were inferred from a ‘master’ network built from Pathway Commons and other interaction databases.
 </div>
+<br/><br/>
 
 ### Summary
 By using experimental observations supplemented with interaction data Campbell et al. provide a useful compendium of KGDs across multiple cells types. Linking driver genes and KGD mechanistically provides a rational explanation for sensitivity to inhibition. From a therapeutic point of view, kinase dependencies might be identified de novo by extending networks originating from driver genes in the same way.

@@ -104,7 +104,7 @@
       , $medlineCitation, $pmid
       , $article, $articleTitle
       , $abstractText
-      , $author, $authorfirst, $authorlast
+      , $author, $authorfirst, $authorlast, $collectiveName, authorText
       , $meshdescriptor
       , $journal, $journalVolume, $journalYear, $journalISOAbbreviation
       ;
@@ -122,9 +122,14 @@
       $articleTitle = $article.find('ArticleTitle');
       $abstractText = $article.find('Abstract AbstractText'); //could be an array
       //AuthorList
-      $author = $pubmedArticle.find('AuthorList Author').first();
+      $author = $pubmedArticle.find('AuthorList Author').first(); // could be <CollectiveName>
       $authorfirst = $author.find('ForeName');
       $authorlast = $author.find('LastName');
+      $collectiveName = $author.find('CollectiveName');
+      authorText = $authorlast.text() ?
+        [$authorfirst.text(), $authorlast.text()].join(' ') :
+        $collectiveName.text();
+
       //MeshHeadingList - add up to 10 terms
       $meshdescriptor = $medlineCitation.find('MeshHeadingList MeshHeading DescriptorName');
 
@@ -185,7 +190,9 @@
           <a style={styles.panel.a} className="panel-toggle" href={["#", this.props.id].join('')} role="button" data-toggle="collapse" data-parent="#accordion">
             <div style={styles.panel.panelHeading.div} className="reading-list panel-heading" role="tab" id="headingOne">
               <h2 style={styles.panel.panelHeading.panelTitle} className="panel-title">{$articleTitle.text()}</h2>
-              <span style={styles.panel.panelHeading.panelMeta} className="panel-meta author">{[$authorfirst.text(), $authorlast.text()].join(' ')}</span><br/>
+              <span style={styles.panel.panelHeading.panelMeta} className="panel-meta author">
+                {authorText}
+              </span><br/>
               <span style={styles.panel.panelHeading.panelMeta} className="panel-meta journal">{ articleJournal }</span>
               <div style={styles.panel.panelHeading.badge} className="panel-meta reading-list badge-list" dangerouslySetInnerHTML={this.rawMarkup(meshes)} />
             </div>

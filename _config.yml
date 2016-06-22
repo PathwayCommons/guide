@@ -42,7 +42,7 @@ collections:
   case_studies:
     output: true
     permalink: /case_studies/:path/
-    layout: case_study
+    layout: document
     index: /case_studies/archive/
     description: Deep-dive into pathway analysis
     icon: index/case_study.png

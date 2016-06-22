@@ -103,7 +103,7 @@
     },
     render: function () {
 
-      var $pubmedArticle, $pmcID, $medlineCitation, $pmid, $article, $articleTitle, $abstractText, $author, $authorfirst, $authorlast, $meshdescriptor, $journal, $journalVolume, $journalYear, $journalISOAbbreviation;
+      var $pubmedArticle, $pmcID, $medlineCitation, $pmid, $article, $articleTitle, $abstractText, $author, $authorfirst, $authorlast, $collectiveName, authorText, $meshdescriptor, $journal, $journalVolume, $journalYear, $journalISOAbbreviation;
 
       // Find the required XML elements
       $pubmedArticle = $(this.props.data);
@@ -118,9 +118,12 @@
       $articleTitle = $article.find('ArticleTitle');
       $abstractText = $article.find('Abstract AbstractText'); //could be an array
       //AuthorList
-      $author = $pubmedArticle.find('AuthorList Author').first();
+      $author = $pubmedArticle.find('AuthorList Author').first(); // could be <CollectiveName>
       $authorfirst = $author.find('ForeName');
       $authorlast = $author.find('LastName');
+      $collectiveName = $author.find('CollectiveName');
+      authorText = $authorlast.text() ? [$authorfirst.text(), $authorlast.text()].join(' ') : $collectiveName.text();
+
       //MeshHeadingList - add up to 10 terms
       $meshdescriptor = $medlineCitation.find('MeshHeadingList MeshHeading DescriptorName');
 
@@ -188,7 +191,7 @@
             React.createElement(
               "span",
               { style: styles.panel.panelHeading.panelMeta, className: "panel-meta author" },
-              [$authorfirst.text(), $authorlast.text()].join(' ')
+              authorText
             ),
             React.createElement("br", null),
             React.createElement(
