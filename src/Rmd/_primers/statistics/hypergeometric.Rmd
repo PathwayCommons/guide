@@ -6,7 +6,7 @@ output: html_document
 layout: markdown
 ---
 
-This summation expression $\sum_{i=1}^n X_i$ appears inline as well.
+This summation expression $$\sum_{i=1}^n X_i$$ appears inline as well.
 
 ## Hypergeometric
 This is the code for the Fisher's Exact example:
