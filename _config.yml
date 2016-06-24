@@ -4,7 +4,7 @@ title:               Guide
 tagline:             'Training Resources'
 description:         'Guide'
 url:                 http://192.168.99.100:4000/guide
-baseurl:             '/guide'
+baseurl:             /guide
 
 # About/contact
 author:
@@ -17,10 +17,13 @@ version:             1.0.0
 branch: gh-pages
 
 # Declare the path relative to <source> for media and static items
-media_root:          'media'
-static_root:         'public'
-src_root:            'src'
+media_root:          media
+static_root:         public
+src_root:            src
 
+exclude:
+  - src/Rmd
+  - docs
 #**************** Override defaults ****************
 sass:
   sass_dir: _sass

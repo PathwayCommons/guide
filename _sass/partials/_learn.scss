@@ -11,13 +11,15 @@
 */
 
 /* images */
+img {
+  margin: auto auto;
+}
 img.slim {
   max-width: 100%;
 }
 @media (min-width: 768px) {
   img.slim {
     max-width: 70%;
-    margin: auto auto;
   }
 }
 
