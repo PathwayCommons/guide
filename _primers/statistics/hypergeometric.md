@@ -17,10 +17,10 @@ This is the code for the Fisher's Exact example:
 ## Required libraries
 library(ggplot2)
 
-## Consider a hypergeometric ~ N = 32, S = 15, x = 12
-
+## Consider a hypergeometric ~ N = 32, nSucess = 15, draws = 15 
+N <- 32
 nSuccess <- 15 # total successes available
-nFailure <- 17 # total failures available
+nFailure <- N - nSuccess # total failures available
 draws  <- 15 # number actually drawn
 
 # Create the domain of nomimal success values
@@ -36,4 +36,4 @@ ggplot(dat0, aes(x=factor(x), y=y)) +
   geom_bar(stat="identity", fill= "#2c3e50", colour="black")
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-1](/guide/media/primers/statistics/unnamed-chunk-1-1.png)
+![Figure 1. Distribution of probabilities for the hypergeometric distribution](/guide/media/primers/statistics/unnamed-chunk-1-1.png)

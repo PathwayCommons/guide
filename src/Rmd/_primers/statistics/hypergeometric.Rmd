@@ -10,16 +10,16 @@ This summation expression $$\sum_{i=1}^n X_i$$ appears inline as well.
 
 ## Hypergeometric
 This is the code for the Fisher's Exact example:
-```{r}
+```{r fig.cap="Figure 1. Distribution of probabilities for the hypergeometric distribution"}
 ## A hypergeometric distribution example
 
 ## Required libraries
 library(ggplot2)
 
-## Consider a hypergeometric ~ N = 32, S = 15, x = 12
-
+## Consider a hypergeometric ~ N = 32, nSucess = 15, draws = 15 
+N <- 32
 nSuccess <- 15 # total successes available
-nFailure <- 17 # total failures available
+nFailure <- N - nSuccess # total failures available
 draws  <- 15 # number actually drawn
 
 # Create the domain of nomimal success values
