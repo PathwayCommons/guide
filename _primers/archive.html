@@ -6,6 +6,15 @@ icon: reading_list/document.png
 ---
 
 {% if site.primers %}
+{% for x in site.primers %}
+  <h3>{{x.title}}</h3>
+  <ul>
+    <li>path: {{x.path}}</li>
+    <li>url: {{x.url}}</li>
+  </ul>
+  <br/>
+{% endfor %}
+
 {% assign sorted_docs = site.primers %}
     <div class="grid-element-parent">
       {% for doc in sorted_docs %}

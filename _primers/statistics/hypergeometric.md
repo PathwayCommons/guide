@@ -1,18 +1,18 @@
 ---
+title: "Fisher's Exact Test"
+author: jvwong
+date: June 24, 2016
+output: html_document
 layout: markdown
 ---
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This summation expression $\sum_{i=1}^n X_i$ appears inline as well.
 
 ## Hypergeometric
 This is the code for the Fisher's Exact example:
 
 {% highlight r %}
 ## A hypergeometric distribution example
-## author: jvwong
-## date: 06/24/2016
-## updated: 06/24/2016
 
 ## Required libraries
 library(ggplot2)
@@ -36,6 +36,4 @@ ggplot(dat0, aes(x=factor(x), y=y)) +
   geom_bar(stat="identity", fill= "#2c3e50", colour="black")
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-1](/guide/media/primers/unnamed-chunk-1-1.png)
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+![plot of chunk unnamed-chunk-1](/guide/media/primers/statistics/unnamed-chunk-1-1.png)
