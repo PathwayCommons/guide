@@ -1,5 +1,5 @@
 ---
-title: TCGA Ovarian Cancer
+title: Ovarian Cancer
 subtitle: The Cancer Genome Atlas Research Network characterizes high-grade serous ovarian adenocarcinoma
 pmid: 21720365
 cover: cover.jpg
