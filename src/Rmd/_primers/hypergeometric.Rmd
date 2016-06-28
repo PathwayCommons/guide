@@ -1,5 +1,5 @@
 ---
-title: "Fisher's Exact Test"
+title: The Hypergeometric Distribution 
 author: jvwong
 date: June 24, 2016
 output: html_document
@@ -10,13 +10,13 @@ This summation expression $$\sum_{i=1}^n X_i$$ appears inline as well.
 
 ## Hypergeometric
 This is the code for the Fisher's Exact example:
-```{r fig.cap="Figure 1. Distribution of probabilities for the hypergeometric distribution"}
+```{r}
 ## A hypergeometric distribution example
 
 ## Required libraries
 library(ggplot2)
 
-## Consider a hypergeometric ~ N = 32, nSucess = 15, draws = 15 
+## Consider a hypergeometric ~ N = 32, nSucess = 15, draws = 15
 N <- 32
 nSuccess <- 15 # total successes available
 nFailure <- N - nSuccess # total failures available
@@ -33,4 +33,8 @@ dat0 <- data.frame( x = x0, y = probs )
 # Convert the x variable to a factor, so that it is treated as discrete
 ggplot(dat0, aes(x=factor(x), y=y)) +
   geom_bar(stat="identity", fill= "#2c3e50", colour="black")
+```
+
+```{r echo=FALSE}
+knitr::kable(dat0, digits = 7, align='l', caption = 'A table produced by printr.')
 ```

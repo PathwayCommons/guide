@@ -10,30 +10,30 @@ layout: document
 category: computational
 ---
 
-### Quick Summary
+## Quick Summary
 * Cell viability contingent on a kinase defines a Kinase Genetic Dependency(KGD)
 * Driver gene mutations may expose KGD
 * Pathway Commons used to link driver gene and KGD mechanistically
 
-### Author Profile
+## Author Profile
 James Campbell and Christopher J. Lord investigate the genetic basis of breast cancer at The Institute of Cancer Research, London.
 
-### Context
+## Context
 Cancer has been described as ‘a hundred diseases masquerading as one’. The diversity of cellular dysfunctions and ability to evolve are major obstacles for efforts to understand the disease or devise rationale therapies.  
 
 Bernard Weinstein was among the first to theorize “...because of their bizarre circuitry, cancer cells suffer from ‘gene addiction’ and ‘gene hypersensitivity’ that might be exploited in both cancer prevention and chemotherapy” (Weinstein 2000). A therapeutic strategy stems from the observation that that some tumors are particularly reliant on a single oncogenic pathway for continued survival (Sharma 2007).
 
 > “...cancer cells suffer from ‘gene addiction’ and ‘gene hypersensitivity’ that might be exploited in both cancer prevention and chemotherapy.”
 
-### Question
+## Question
 Is there a way to find the mechanistic or ‘material’ basis of kinase genetic dependencies?
 
-### Goals
+## Goals
 Kinases are of great interest in cancer because of their pervasiveness: Mutations in one-fifth of human kinases are believed to play an active role in tumorigenesis (Greenman 2007). Moreover, their biochemical nature make them more amenable to inhibition by small molecules, that is, ‘druggable’. Delineating how kinases interact with well-characterized signaling subnetworks is critical to our understanding of their role in cancer progression and their potential as therapeutic  targets.  
 
 Campbell et al. (Campbell 2016) integrate experimental inhibition of kinases with previous knowledge of gene interactions build a compendium of kinases and their associated subnetworks that sustain viability in human tumor-derived cell lines.
 
-### Approach
+## Approach
 A kinase genetic dependency (KGD) is defined by a reduction of cell viability after introduction of a silencing RNA (siRNA). In this way, 714 kinases were screened in 117 cell lines of which more than 500 protein kinases. The resulting compendium of kinase dependencies across cell types is itself useful, but the authors went further by associating KGDs with important biomarkers then attempting to provide a mechanistic link between them. From a therapeutic perspective, this represents a means to first identify (biomarker) then disable (KGD) a given tumor type.  
 
 The important set of biomarkers examined in this study were 21 mutations representing ‘key’ cancer drivers mutated in at least seven of the cell lines (Vogelstein 2013). Driver mutations are recurrent alterations that directly affect growth and survival and their presence in cell lines was inferred from previous exome sequencing (COSMIC cell line project) and copy number profiling (Cancer Cell Line Encyclopedia) efforts. Another way of looking at the interaction with driver genes is to say that mutation in a driver potentiates the sensitivity to or reliance upon a kinase. From a therapeutic standpoint, knowledge of whether a tumor harbors a specific driver mutation could inform the choice of the kinase inhibitor applied to reduce tumor burden.  
@@ -52,10 +52,10 @@ What of the remaining KGDs where no direct/regulatory interaction could be ident
 </div>
 <br/><br/>
 
-### Summary
+## Summary
 By using experimental observations supplemented with interaction data Campbell et al. provide a useful compendium of KGDs across multiple cells types. Linking driver genes and KGD mechanistically provides a rational explanation for sensitivity to inhibition. From a therapeutic point of view, kinase dependencies might be identified de novo by extending networks originating from driver genes in the same way.
 
 ---
 
-### References
+## References
 <div class="panel_group" data-inline="10783304,18079171,17344846,26947069,23539594"></div>
