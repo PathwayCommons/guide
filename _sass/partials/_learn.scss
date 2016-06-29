@@ -129,6 +129,9 @@ img.slim {
   padding: 1em;
   margin-top: 4px;
 }
+.box-label.long {
+  height: 5.5em;
+}
 
 .effect5
 {
@@ -249,6 +252,8 @@ img.slim {
         font-size: 0.9rem;
         line-height: 1.5em;
         font-weight: lighter;
+        margin-top: 0;
+        margin-bottom: 0.25rem;
       }
     }
     .list-group-item-meta {
@@ -276,6 +281,8 @@ img.slim {
           text-align: left;
           line-height: 1.5rem;
           font-size: 1rem;
+          margin-top: 1rem;
+          margin-bottom: 1.0rem;
         }
       }
 

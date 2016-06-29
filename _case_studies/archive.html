@@ -6,7 +6,7 @@ layout: panelista
 
 
 {% if site.case_studies %}
-{% assign sorted_docs = (site.case_studies | sort: 'date' | reverse) %}
+{% assign docs = (site.case_studies | sort: 'date' | reverse) %}
 
   <div class="case-list">
     {% include archive_list.html %}

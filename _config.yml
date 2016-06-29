@@ -66,13 +66,13 @@ collections:
     description: Datasets
     icon: index/datasets.png
 
-  # hands_on:
-  #   output: true
-  #   permalink: /hands_on/:path/
-  #   layout: hands_on
-  #   index: /hands_on/archive/
-  #   description: Practical
-  #   icon: index/hands_on.png
+  documents:
+    output: true
+    permalink: /documents/:path/
+    layout: page
+    index: /documents/archive/
+    description: Documents
+    icon: index/documents.png
 
   primers:
     output: true

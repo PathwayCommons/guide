@@ -7,9 +7,10 @@
       <div class="list-group-item-text">
         <p class="list-group-item-title">{{ doc.title }}</p>
         <p>{{ doc.subtitle }}</p>
+        <p>{{ doc.date | date: "%F" }} | {{ doc.location }}</p>
       </div>
       <div class="list-group-item-meta">
-        <span class="label label-default">{{ doc.category }}</span>
+        <span class="label label-default">{{ doc.label }}</span>
       </div>
       <div class="list-group-item-media">
         {% if doc.cover  %}
