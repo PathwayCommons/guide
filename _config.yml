@@ -66,12 +66,12 @@ collections:
     description: Datasets
     icon: index/datasets.png
 
-  documents:
+  communications:
     output: true
-    permalink: /documents/:path/
+    permalink: /communications/:path/
     layout: page
-    index: /documents/archive/
-    description: Documents
+    index: /communications/archive/
+    description: Communications
     icon: index/documents.png
 
   primers:

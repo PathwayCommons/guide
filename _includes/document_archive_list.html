@@ -7,7 +7,7 @@
       <div class="list-group-item-text">
         <p class="list-group-item-title">{{ doc.title }}</p>
         <p>{{ doc.subtitle }}</p>
-        <p>{{ doc.date | date: "%F" }} | {{ doc.location }}</p>
+        <p>{% if doc.location %}{{ doc.date | date: "%F" }} | {{ doc.location }} {% endif %}</p>
       </div>
       <div class="list-group-item-meta">
         <span class="label label-default">{{ doc.label }}</span>
