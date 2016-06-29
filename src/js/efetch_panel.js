@@ -79,7 +79,16 @@
           return (
             <div className="subpanel" key={i}>
               {(function(){
-                if (value.category) return (<h3 style={styles.category} className="category">{value.category}</h3>);
+                if (value.category) {
+                  var name = String(value.category)
+                              .replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '')
+                              .replace(/\s/g,'');
+                  return (
+                    <a href={["#", name].join('')} name={name}>
+                      <h3 style={styles.category} className="category">{value.category}</h3>
+                    </a>
+                  );
+                }
               }())}
               {subpanel}
             </div>

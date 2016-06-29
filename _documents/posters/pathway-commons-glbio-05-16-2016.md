@@ -7,7 +7,7 @@ label: Pathway Commons
 category: posters
 cover: cover.jpg
 layout: document
-figure: pathway-commons-glbio-05-16-2016-page-001.jpg
+figure: pathway-commons-glbio-05-16-2016.jpg
 pdf: pathway-commons-glbio-05-16-2016.pdf
 ---
 

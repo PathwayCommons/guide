@@ -80,11 +80,18 @@
           "div",
           { className: "subpanel", key: i },
           function () {
-            if (value.category) return React.createElement(
-              "h3",
-              { style: styles.category, className: "category" },
-              value.category
-            );
+            if (value.category) {
+              var name = String(value.category).replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(/\s/g, '');
+              return React.createElement(
+                "a",
+                { href: ["#", name].join(''), name: name },
+                React.createElement(
+                  "h3",
+                  { style: styles.category, className: "category" },
+                  value.category
+                )
+              );
+            }
           }(),
           subpanel
         );
