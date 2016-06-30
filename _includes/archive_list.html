@@ -1,7 +1,7 @@
 <div class="archive list-group">
 
   {% for doc in docs %}
-  {% unless doc.url contains 'archive' %}
+  {% unless doc.url contains 'archive' or doc.draft %}
   <div class="archive list-group-item">
     <a href="{{ site.baseurl }}{{ doc.url }}">
       <div class="list-group-item-text">
