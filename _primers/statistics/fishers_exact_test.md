@@ -35,7 +35,6 @@ Concretely, suppose we undertake a gene expression analysis comparing cells from
 
 <br/>
 **Table 1. Contingency table for HGS-OvCa gene expression data**
-production code
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_1 }}){: .img-responsive.slim.left }
 
 <!-- ```{r, out.width = 500, fig.retina = NULL, echo=FALSE, fig.align="left"}
