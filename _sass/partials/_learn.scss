@@ -17,7 +17,9 @@ img {
 img.slim {
   max-width: 100%;
 }
-
+img.left {
+  margin-left: 0;
+}
 @media (min-width: 768px) {
   img.slim {
     max-width: 70%;
