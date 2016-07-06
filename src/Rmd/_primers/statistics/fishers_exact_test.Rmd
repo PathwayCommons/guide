@@ -126,7 +126,7 @@ $$
 \end{equation*}
 $$
 
-Some of you may recognize the expression on the left as the probability function for the [hypergeometric distribution]({{ site.baseurl }}/primers/statistics/hypergeometric_distribution/).
+Some of you may recognize the expression on the left as the probability function for the [hypergeometric distribution]({{ site.baseurl }}/primers/statistics/distributions/#hypergeometric).
 
 <br/>
 
@@ -177,7 +177,7 @@ $$
 This result is just under double the one-sided p-value, resulting from an 'uneven' distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.
 
 ## Summary
-This primer has described the context and rationale for Fisher's Exact Test as a basis for determining gene set enrichment in gene expression data. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions and limitations of this class of procedures (Khatri 2005, Goeman 2007) which we leave to the reader.
+This primer has described the context and rationale for Fisher's Exact Test as a basis for determining gene set enrichment in gene expression data. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up ons.
 
 <hr/>
 ## References
