@@ -10,41 +10,41 @@ category: statistics
 layout: markdown
 ---
 
-## <a href="#hypergeometric" name="hypergeometric">Hypergeometric
-Distribution</a> We provide a generic description of a physical context for
+## <a href="#hypergeometric" name="hypergeometric">Hypergeometric Distribution</a>
+We provide a generic description of a physical context for
 which the hypergeometric distribution applies.
 
-### A Physical Setup Suppose we have a collection of $$N$$ objects which can be
+### A Physical Setup Suppose we have a collection of $N$ objects which can be
 classified into two distinct categories or two types. Denote the categories:
 
-1. Success ($$S$$) 2. Failure ($$F$$)
+1. Success ($S$) 2. Failure ($F$)
 
-Suppose that within these $$N$$ objects there exist $$r$$ of type $$S$$ and therefore
-$$N-r$$ of type $$F$$. We choose $$n$$ objects *without replacement*, that is, we
-remove items in succession from the original set of $$N$$. Let $$X$$ be a random
-variable representing the number of successes obtained. Then $$X$$ has a
+Suppose that within these $N$ objects there exist $r$ of type $S$ and therefore
+$N-r$ of type $F$. We choose $n$ objects *without replacement*, that is, we
+remove items in succession from the original set of $N$. Let $X$ be a random
+variable representing the number of successes obtained. Then $X$ has a
 **hypergeometric distribution**.
 
 ### Probability Function We require three values with which to construct this
 function. Refer to the primer on [combinations](//TODO) for a discussion on
 counting rules and notation.
 
-First, we require the total possible number of ways that $$n$$ distinct items can
-be chosen from $$N$$ without replacement and where order does not matter. This is
-simply '$$N$$ Choose $$n$$' or
+First, we require the total possible number of ways that $n$ distinct items can
+be chosen from $N$ without replacement and where order does not matter. This is
+simply '$N$ Choose $n$' or
 
 $$\binom{N}{n}$$
 
-Second, we wish to know the number of ways that $$x$$ successes can be drawn from
-the available $$r$$
+Second, we wish to know the number of ways that $x$ successes can be drawn from
+the available $r$
 
 $$\binom{r}{x}$$
 
-Third, this leaves us to select $$n-x$$ failures from a total of $$N-r$$
+Third, this leaves us to select $n-x$ failures from a total of $N-r$
 
 $$\binom{N-r}{n-x}$$
 
-Then the probability of selecting $$x$$ successes is
+Then the probability of selecting $x$ successes is
 
 $$f(x) = \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}}$$
 
