@@ -59,9 +59,9 @@ Fisher's exact test is a statistical procedure developed by R. A. Fisher in the 
   1. The marginal values are fixed
   2. There is no association between categorical values
 
-These assumptions constitute the 'null hypothesis' ($$H_0$$): We take the *a priori* stance that the categories are independent. We simply don't know the ground truth of whether a relationship between HGS-OvCa gene expression and genes involved in 'translation initiation'. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are referred to as a 'p-value'.
+These assumptions constitute the 'null hypothesis' ($$H_0$$): We take the *a priori* stance that the categories are independent. We simply don't know the ground truth of whether there exists a relationship between HGS-OvCa gene expression and genes involved in 'translation initiation'. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are 'p-values'.
 
-> Smaller p-values point to a remarkable result only if all of the assumptions used to compute the p-value are valid
+> Smaller p-values point to an interesting result only if all of the assumptions used to compute the p-value are valid
 
 ### The possibilities are not endless
 Let us return to the HGS-OvCa gene expression analysis example. Fisher's Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are **in relation to all possible ones that could have given those same marginal totals given no association between categories**. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).
@@ -176,10 +176,15 @@ $$
 
 This result is just under double the one-sided p-value, resulting from an 'uneven' distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.
 
+## Summary
+This primer has described the context and rationale for Fisher's Exact Test as a basis for determining gene set enrichment in gene expression data. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions and limitations of this class of procedures (Khatri 2005, Goeman 2007) which we leave to the reader.
+
 <hr/>
 ## References
   - Ashburner M. et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nature Genetics v25 pp. 22-29, 2000.
-  - Fisher, R. A. The logic of inductive inference. J. Roy. Statist. Soc. 98, 39-82 (1935).
+  - Fisher, R. A. The logic of inductive inference. J. Roy. Statist. Soc. 98, pp. 39-82, 1935.
   - Greenland S. et al. Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations. European Journal of Epidemiology, v31(4) pp. 337-350, 2016.
-  - Khatri P et al. Ten years of pathway analysis: current approaches and outstanding challenges. 2012.
+  - Goeman et al. Analyzing gene expression data in terms of gene sets: methodological issues. Bioinformatics v23(8) pp. 980-987, 2007.
+  - Khatri P et al. Ontological analysis of gene expression data: current tools, limitations, and open problems. Bioinformatics v21(18) pp. 3587-3595, 2005.
+  - Khatri P et al. Ten years of pathway analysis: current approaches and outstanding challenges. PLoS Comp. Bio. v8(2) e1002375, 2012.
   - Rivals et al. Enrichment or depletion of a GO category within a class of genes: which test? Bioinformatics v23(4) pp. 401-407, 2006.
