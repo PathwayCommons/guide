@@ -1,5 +1,6 @@
 <div class="grid-element-parent">
 {% for doc in docs %}
+{% unless doc.url contains 'archive' or doc.draft %}
     <div class="grid-element">
         <a href="{{site.baseurl}}{{ doc.url }}">
           <div class="grid-element-card">
@@ -13,5 +14,6 @@
           </div>
         </a>
       </div>
+{% endunless %}
 {% endfor %}
 </div>

@@ -11,8 +11,6 @@ layout: markdown
 ---
 
 ## <a href="#hypergeometric" name="hypergeometric">Hypergeometric Distribution</a>
-We provide a generic description of a physical context for
-which the hypergeometric distribution applies.
 
 ### A Physical Setup
 Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
@@ -27,21 +25,21 @@ variable representing the number of successes obtained. Then $$X$$ has a
 **hypergeometric distribution**.
 
 ### Probability Function
-We require three values with which to construct this function. Refer to the primer on [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/) for a discussion on
+We require three values. Refer to the primer on [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/) for a discussion on
 counting rules and notation.
 
 First, we require the total possible number of ways that $$n$$ distinct items can
 be chosen from $$N$$ without replacement and where order does not matter. This is
-simply '$$N$$ Choose $$n$$' or
+'$$N$$ Choose $$n$$'
 
 $$\binom{N}{n}$$
 
 Second, we wish to know the number of ways that $$x$$ successes can be drawn from
-the available $$r$$
+a total of $$r$$
 
 $$\binom{r}{x}$$
 
-Third, this leaves us to select $$n-x$$ failures from a total of $$N-r$$
+Third, we are left to select $$n-x$$ failures from a total of $$N-r$$
 
 $$\binom{N-r}{n-x}$$
 
