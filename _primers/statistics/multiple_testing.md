@@ -14,6 +14,20 @@ figures:
   table_2: table_2.jpg
   figure_3: figure_3.jpg
 ---
+-   [I. Introduction](#introduction)
+    -   Errors and 'omics
+    -   Overview
+-   [II. Hypothesis testing errors](#hypothesisTestingErrors)
+    -   Example: A coin flip
+    -   When does multiple testing apply?
+-   [III. Multiple testing control](#multipleTestingControl)
+    -   Type I errors increase with the number of tests
+    -   Controlling the Family-Wise Error Rate (FWER)
+    -   Controlling the false discovery rate
+-   [IV. References](#references)
+---
+
+<br/>
 
 ## <a href="#introduction" name="introduction">I. Introduction</a>
 
@@ -338,7 +352,7 @@ Since the original publication of the BH procedure in 1995, there have been a nu
 
 ******
 
-## IV. References
+## <a href="#references" name="references">IV. References</a>
   - Benjamini Y and Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Roy. Stat. Soc., v57(1) pp289-300, 1995.
   - Glickman ME et al. False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.
   - Goeman JJ and Solari A. Multiple hypothesis testing in genomics. Stat. Med., 33(11) pp1946-1978, 2014.

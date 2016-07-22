@@ -3,8 +3,7 @@
 title:               Guide
 tagline:             'Training Resources'
 description:         'Guide'
-url:                 http://192.168.99.100:4000/guide
-baseurl:             /guide
+baseurl:             #'/guide'
 
 # About/contact
 author:
@@ -22,11 +21,11 @@ static_root:         public
 src_root:            src
 
 exclude:
-  - src/Rmd
+  - src
   - docs
 #**************** Override defaults ****************
-sass:
-  sass_dir: _sass
+# sass:
+#   sass_dir: _sass
   # style: compressed
 
 # Plugins

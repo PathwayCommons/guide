@@ -6,7 +6,7 @@ figure: campbell_figure.jpg
 cover: cover.jpg
 pdf: case_study_campbell.pdf
 date: 2016-03-15
-layout: document
+layout: case_study
 category: computational
 ---
 
