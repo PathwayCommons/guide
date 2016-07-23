@@ -19,6 +19,7 @@ branch: gh-pages
 media_root:          media
 static_root:         public
 src_root:            src
+site_root:           _site
 
 exclude:
   - src

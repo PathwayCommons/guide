@@ -2,14 +2,13 @@
   {% if query.size == 1 %}
     {% assign c = query.first %}
 
-    <!-- we can only handle 1 nesting -->
     {% assign parts = (page.url | split: '/') %}
-
     {% assign url = site.baseurl %}
     <ol class="breadcrumb">
     {% for path in parts %}
       {% assign url = (url | append: path | append: '/') %}
 
+      <!-- we can only handle 1 nesting -->
       {% if forloop.first %}
         <li><a href="{{url}}">{{site.title}}</a></li>
       {% elsif path == c.label %}
@@ -18,8 +17,6 @@
         {% if path != 'archive' %}
           <li class="active">{{ page.title }}</li>
         {% endif %}
-      {% else %}
-        <!-- <li><a href="{{url}}">{{ path }}</a></li> -->
       {% endif %}
     {% endfor %}
     </ol>
