@@ -1,7 +1,10 @@
   {% assign query = (site.collections | where: 'label' , page.collection ) %}
   {% if query.size == 1 %}
     {% assign c = query.first %}
+
+    <!-- we can only handle 1 nesting -->
     {% assign parts = (page.url | split: '/') %}
+
     {% assign url = site.baseurl %}
     <ol class="breadcrumb">
     {% for path in parts %}
@@ -16,7 +19,7 @@
           <li class="active">{{ page.title }}</li>
         {% endif %}
       {% else %}
-        <li><a href="{{url}}">{{ path }}</a></li>        
+        <!-- <li><a href="{{url}}">{{ path }}</a></li> -->
       {% endif %}
     {% endfor %}
     </ol>
