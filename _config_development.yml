@@ -3,7 +3,7 @@
 title:               Guide
 tagline:             'Training Resources'
 description:         'Guide'
-baseurl:             '/guide'
+baseurl:
 
 # About/contact
 author:

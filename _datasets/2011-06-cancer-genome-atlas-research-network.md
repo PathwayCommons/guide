@@ -5,7 +5,7 @@ pmid: 21720365
 cover: cover.jpg
 pdf: nihms-313090.pdf
 date: 2014-02-27
-layout: document
+layout: publication
 category: RNA sequencing
 ---
 

@@ -25,13 +25,14 @@ figures:
     -   Controlling the Family-Wise Error Rate (FWER)
     -   Controlling the false discovery rate
 -   [IV. References](#references)
----
+
+<hr/>
 
 <br/>
 
 ## <a href="#introduction" name="introduction">I. Introduction</a>
 
-### Errors and 'omics
+### Errors in 'omics
 
 Large-scale approaches enable routine tracking of the entire mRNA complement of a cell, its methylation patterns across all promoters and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose aim is to help unearth recurrent themes within the data that researchers may find relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.
 
