@@ -27,16 +27,15 @@ figures:
 -   [IV. References](#references)
 
 <hr/>
-
 <br/>
 
 ## <a href="#introduction" name="introduction">I. Introduction</a>
 
 ### Errors in 'omics
 
-Large-scale approaches enable routine tracking of the entire mRNA complement of a cell, its methylation patterns across all promoters and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose aim is to help unearth recurrent themes within the data that researchers may find relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.
+Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.
 
-The broad reach of large-scale approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a *[hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing)* and performing many tests simultaneously is referred to as *multiple testing* or *multiple comparisons*.
+The broad reach of these approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a *[hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing)* and performing many tests simultaneously is referred to as *multiple testing* or *multiple comparison*.
 
 Multiple testing arises in analyzing the results of microarray and RNA-sequencing experiments. For example, a test for differential analysis could entail 10 000 separate hypothesis tests, one for each gene observed after either treatment or control. Using the standard hypothesis testing criteria, we could erroneously deem 500 genes 'statistically significant' with respect to differential expression. Likewise, multiple testing arises in enrichment analyses which draw upon databases of annotated sets of genes with shared themes and determine if there is 'enrichment' or 'depletion' in the experimentally derived gene list following perturbation. Performing tests across many gene sets increases the chance of mistaking noise as true signals.
 
