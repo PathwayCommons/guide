@@ -1,0 +1,13 @@
+---
+title: Tools
+subtitle: Pathway analysis software tools
+layout: panelista
+---
+
+{% if site.tools %}
+{% assign docs = (site.tools | sort: 'date' | reverse) %}
+
+  <div class="dataset">
+    {% include archive_list.html %}
+  </div>
+{% endif %}

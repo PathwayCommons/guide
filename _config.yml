@@ -83,10 +83,10 @@ collections:
     description: Primers
     icon: index/primers.png
 
-  # workflows:
-  #   output: true
-  #   permalink: /workflows/:path/
-  #   layout: workflows
-  #   index: /workflows/archive/
-  #   description: Workflows
-  #   icon: index/workflows.png
+  tools:
+    output: true
+    permalink: /tools/:path/
+    layout: tools
+    index: /tools/archive/
+    description: Tools
+    icon: index/tools.png
