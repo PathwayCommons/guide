@@ -18,7 +18,8 @@ figures:
     -   Errors and 'omics
     -   Overview
 -   [II. Hypothesis testing errors](#hypothesisTestingErrors)
-    -   Example: A coin flip
+    -   Example 1. A coin flip
+    -   Example 2. Gene set analysis
     -   When does multiple testing apply?
 -   [III. Multiple testing control](#multipleTestingControl)
     -   Type I errors increase with the number of tests
@@ -47,7 +48,7 @@ This primer introduces concepts related to attempts to quantify and control erro
 
 Hypothesis testing represents a gatekeeper of sorts for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in [section III](#multipleTestingControl).
 
-### Example: A coin flip
+### Example 1: A coin flip
 
 To illustrate errors incurred in hypothesis testing, suppose we wish to assess whether a five cent coin is fair. Fairness here is defined as an equal probability of heads and tails after a toss. Our hypothesis test involves an experiment (i.e. trial) whereby 20 identically minted nickels are tossed and the number of heads counted. We take the *a priori* position corresponding to the *null hypothesis*: The nickels are fair. The null hypothesis would be put into doubt if we observed trials where the number of heads was larger (or smaller) than some predefined threshold that we considered reasonable.
 
@@ -87,19 +88,30 @@ Consider an extension of our nickel flipping protocol whereby multiple trials ar
 
 Figure 2 should show that with increasing number of tests we see trials with 14 or more heads. This makes intuitive sense: Performing more tests boosts the chances that we are going to see rare events, purely by chance. Technically speaking, buying more lottery tickets does in fact increase the chances of a win (however slightly). This means that the errors start to pile up.
 
+### Example 2: Gene set analysis
+
+A typical gene set analysis. Describe the particulars of where this arises, namely, p-values from a [Fisher's Exact]({{ site.baseurl }}/primers/statistics/fishers_exact_test/) test.
+
+//TODO
+
 ### When does multiple testing apply?
 
 #### **Defining the family of hypotheses**
 
-Performing RNA-sequencing or microarrays to assess differential expression across many genes or enrichment analysis across many gene sets represent cases of multiple testing. In general, it can arise when may tests or models are applied to the same data set.
+In general, sources of multiplicity arise in cases where one considers using the same data to assess more than one:
 
-There are, however, other cases where the applicability of multiple testing may be less clear:
+- Outcome
+- Treatment
+- Time point
+- Group
+
+There are cases where the applicability of multiple testing may be less clear:
 
 - Multiple research groups work on the same problem and only those successful ones publish
 - One researcher tests differential expression of 1 000 genes while a thousand different researchers each test 1 of a possible 1 000 genes
 - One researcher performs 20 tests versus another performing 20 tests then an additional 80 tests for a total of 100
 
-In these cases identical data sets could be achieved in more than one way but the particular statistical procedure used could result in different claims of significance. A convention that has been proposed is that the collection or *family* of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014).   
+In these cases identical data sets are achieved in more than one way but the particular statistical procedure used could result in different claims regarding significance. A convention that has been proposed is that the collection or *family* of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014). For a family of hypotheses, it is meaningful to take into account some combined measure of error.  
 
 #### **The severity of errors**
 
@@ -267,10 +279,13 @@ Consider testing $$m$$ independent hypotheses $$H_1, H_2, \cdots, H_m$$ from the
 
   3. Then the significant hypotheses are $$H_1, H_2, \cdots, H_k$$
 
-We leave the rather involved proof and rationale for the BH procedure to the reader. Instead, let us note two important properties of FDR in relation to FWER.
+#### **Intuitive rational**
+
+We leave the rather complicated proof and rationale for the BH procedure to the reader. Rather, we suggest an intuitive explanation for the bound.
 
 #### **Two properties of FDR**
 
+Let us note two important properties of FDR in relation to FWER.
 First, consider the case where all the null hypotheses are true. Then $$m=m_0$$, $$s=0$$ and $$v=r$$ which means that any discovery is a false discovery. By convention, if $$v=0$$ then we set $$Q=0$$ otherwise $$Q=1$$.
 
 $$
@@ -285,7 +300,7 @@ $$
 \end{equation*}
 $$
 
-This last term is precisely the expression for FWER and means that when all null hypotheses are true FDR implies control of FWER.
+This last term is precisely the expression for FWER. This means that when all null hypotheses are true, FDR implies control of FWER. You will often see this referred to as control in the *weak sense* which is another way of referring to the case only when all null hypotheses are true.
 
 Second, consider the case where only a fraction of the null hypotheses are true. Then $$m_0 < m$$ and if $$v > 0$$ then $$Q =\frac{v}{r} \leq 1$$. The indicator function that takes the value 1 if there is at least one false rejection, $$\mathbb{1}_{V \geq 1}$$ will never be less than Q, that is $$\mathbb{1}_{V \geq 1} \geq Q$$. Now, take expectations
 
