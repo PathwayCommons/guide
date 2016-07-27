@@ -28,7 +28,6 @@ figures:
 -   [IV. References](#references)
 
 <hr/>
-<br/>
 
 ## <a href="#introduction" name="introduction">I. Introduction</a>
 
@@ -221,10 +220,6 @@ A common way to summarize the possible outcomes of multiple hypothesis tests is 
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_1 }}){: .img-responsive.slim }
 
-<!-- ```{r, out.width = 500, fig.retina = NULL, echo=FALSE, fig.align="left"}
-knitr::include_graphics("table_1.jpg")
-``` -->
-
 Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant ($$V$$). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.
 
 ### Controlling the Family-Wise Error Rate (FWER)
@@ -288,15 +283,7 @@ Alternatively, 'p-hacking' is the process of creatively organizing data sets in 
 
 Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m-m_0$$) null hypotheses.   
 
-<br/>
-
-
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
-
-<!-- ```{r, out.width = 500, fig.retina = NULL, echo=FALSE, fig.align="left"}
-knitr::include_graphics("figure_3.jpg")
-``` -->
-
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and non-true (m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
 </div>
@@ -450,10 +437,6 @@ To illustrate the BH procedure we adapt a trivial example presented by Glickman 
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_2 }}){: .img-responsive.slim }
 
-<!-- ```{r, out.width = 500, fig.retina = NULL, echo=FALSE, fig.align="left"}
-knitr::include_graphics("table_2.jpg")
-``` -->
-
 In this case, we examine the final column for the largest case in which $$p_i \leq \frac{i}{100}\cdot0.05$$ which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our $$q=0.05$$ we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.
 
 #### **Practical implications of BH compared to Bonferroni correction**
@@ -479,7 +462,6 @@ All hypotheses will be significant if we can find such a relation to hold for $$
 
 Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2012).
 
-<br/>
 
 ******
 

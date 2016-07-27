@@ -38,20 +38,16 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-base;
-  font-weight: 300;
+  font-weight: 600;
   color: $text-color;
-  letter-spacing: -.025rem;
+  letter-spacing: -.5px;
   margin-top: $h-margin;
   margin-bottom: $h-margin;
 }
 
-h3 {
-  font-family: $font-family-base;
-  font-weight: 600;
-  color: $text-color;
-  letter-spacing: -.5px;
-  margin-top: $h3-margin-top;
-  margin-bottom: $h3-margin-bottom;
+h2, h3 {
+  margin-top: $hx-margin-top;
+  margin-bottom: $hx-margin-bottom;
 }
 
 @media (min-width: 38em) {
@@ -153,6 +149,11 @@ img {
  .post-title {
    margin-top: 0;
  }
+
+ /* Tables */
+ table {
+   margin-bottom: 3rem;
+}
 
  /*
   * Themes
