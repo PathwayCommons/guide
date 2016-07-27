@@ -19,7 +19,7 @@ figures:
     -   Overview
 -   [II. Hypothesis testing errors](#hypothesisTestingErrors)
     -   Example 1. A coin flip
-    -   Example 2. Gene set analysis
+    -   Example 2. Pathway analyses
     -   When does multiple testing apply?
 -   [III. Multiple testing control](#multipleTestingControl)
     -   Type I errors increase with the number of tests
@@ -88,11 +88,14 @@ Consider an extension of our nickel flipping protocol whereby multiple trials ar
 
 Figure 2 should show that with increasing number of tests we see trials with 14 or more heads. This makes intuitive sense: Performing more tests boosts the chances that we are going to see rare events, purely by chance. Technically speaking, buying more lottery tickets does in fact increase the chances of a win (however slightly). This means that the errors start to pile up.
 
-### Example 2: Gene set analysis
+### Example 2: Pathway analyses
 
-A typical gene set analysis. Describe the particulars of where this arises, namely, p-values from a [Fisher's Exact]({{ site.baseurl }}/primers/statistics/fishers_exact_test/) test.
+Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we detail the use of [g:Profiler]({{ site.baseurl }}/tools/archive/g-profiler) and [Gene Set Enrichment Analysis]({{ site.baseurl }}/tools/archive/gene-set-enrichment-analysis).
 
-//TODO
+In [g:Profiler](http://biit.cs.ut.ee/gprofiler/), the g:GOSt tool uses [Fisher's exact test]({{ site.baseurl }}/primers/statistics/fishers_exact_test/) as the p-value measuring the randomness of the occurred intersection between an input gene list of interest and a previously defined set of related genes, for example, those associated with a [Gene Ontology](http://geneontology.org/) term. Every analysis of a gene list in g:GOSt involves a series of comparisons, as the intersection and corresponding p-value is calculated for a large number of terms from GO, KEGG, TRANSFAC, and other data sources. g:GOSt uses multiple algorithms (see Bonferroni correction and Benjamini-Hochberg False Discovery rate below) for adjusting significance.
+
+Likewise, [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/) derives p-values associated with an [enrichment score](//TODO) which reflects the degree to which a gene set is overrepresented at the top or bottom of a ranked list of genes. The nominal p-value estimates the statistical significance of the enrichment score for a single gene set. However, evaluating multiple gene sets requires correction for gene set size and multiple testing. Significance levels are adjusted using a similar algorithm available in g:Profiler (see Benjamini-Hochberg False Discovery rate below).
+
 
 ### When does multiple testing apply?
 
@@ -279,9 +282,56 @@ Consider testing $$m$$ independent hypotheses $$H_1, H_2, \cdots, H_m$$ from the
 
   3. Then the significant hypotheses are $$H_1, H_2, \cdots, H_k$$
 
-#### **Intuitive rational**
+#### **A sketch(y) proof**
 
-We leave the rather complicated proof and rationale for the BH procedure to the reader. Rather, we suggest an intuitive explanation for the bound.
+We leave the rather tedious proof and rationale for the BH procedure to the reader (Benjamini 1995). Rather, we provide an intuitive explanation for the choice of the bound.
+
+Consider testing $$m$$ independent null hypotheses $$H_{0, i}$$ from the associated p-values $$P_i$$ where $$i=1, 2, \cdots, m$$. Let $$i_0$$ define the indices for those $$m_0$$ true null hypotheses $$I_0=\{i: 1 \leq i \leq m_0 \}$$.
+
+Then the overall goal is to determine the largest cut-off $$T_q$$ so that the expected value of $$Q$$ is bound by $$q$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+      E\left[Q \right] &\leq q\\
+      E\left[\frac{V}{R} \right] &\leq q\\
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q
+    \end{split}
+  \end{equation*}
+$$
+
+For large $$m$$, suppose that the number of false discoveries $$V=m_0 \cdot T_q$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
+      \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
+    \end{split}
+  \end{equation*}
+$$
+
+The largest cut-off $$T_q$$ will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index $$i$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+       \frac{m_0 \cdot p_i}{i} &\leq q
+    \end{split}
+  \end{equation*}
+$$
+
+Since $$m_0$$ will not be known, choose the larger option $$m$$ and find the largest index $$i$$ so that
+
+$$
+  \begin{equation*}
+    \begin{split}
+       \frac{m \cdot p_i}{i} &\leq q\\
+       p_i &\leq \frac{i}{m} \cdot q
+    \end{split}
+  \end{equation*}
+$$
+
 
 #### **Two properties of FDR**
 
