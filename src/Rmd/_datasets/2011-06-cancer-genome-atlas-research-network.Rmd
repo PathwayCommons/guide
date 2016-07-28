@@ -74,19 +74,19 @@ Three microarray platforms were utilized to interrogate mRNA expression across t
 
 #### Data unification: Factor analysis
 
-A regression-like approach called *Factor Analysis* was employed to integrate expression measurements for each gene represented on all three platforms. Combining measures has the benefits of mitigating platform-specific measurements and simplifying the downstream measurements with a single set of measures rather than many (Wang 2011). In essence, factor analysis provides a unified expression measure corresponding to each gene which is composed of weighted contributions from each platform.
+A statistical method called *Factor Analysis* was employed to create a unified expression measure for each gene and each patient sample represented on all three platforms (Wang 2011). Combining measures in this way tends to mitigate platform-specific contributions and simplifies the downstream measurements compared to dealing with many data sets. In essence, the unified expression measure for each gene/sample is a weighted contribution from each platform.
 
-Let us adopt the notation by Wang et al. (Wang 2011). Let $$y_{gij}$$ be the observed expression for gene $$g$$ in sample $$i$$ for microarray platform $$j$$. Then factor analysis describes a true but latent (unobservable) factor $$x_{gi}$$ that represents the underlying gene expression along with a platform-specific term $$\epsilon_{ij}$$. The factor model describing the observed expression for a given gene is
+Let $$x_{gij}$$ be the observed expression for gene $$g$$ in sample $$s$$ for microarray platform $$p$$. This observed measurement arises from a platform-independent, underlying factor $$f_{gs}$$ representing the unobserved gene expression and a platform-specific contribution $$u_{sp}$$ or noise. A coefficient $$\lambda_{p}$$ is called a 'loading' and represents the correlation between the factor and observed expression variable. The factor model describing the observed expression (omitting gene symbol $$g$$) is
 
 $$
 \begin{equation*}
   \begin{split}
-      y_{ij} &= \beta_{j}x_{i}+\epsilon_{ij}
+      x_{sp} &= \lambda_{p}f_{s} + u_{sp}      
   \end{split}
 \end{equation*}
 $$
 
-The coefficient $$\beta_{j}$$ is called a 'factor loading' and represents the correlation between the observed expression variable and the factor. The goal then is to determine the value of this unified expression measure of a gene in a sample $$x_{gi}$$ using observed data from the various platforms.
+Under some mild assumptions about $$f$$ and $$u$$, the goal is to determine the value of this unified expression measure of a gene in a sample $$f_{s}$$ using observed expression data.
 
 The unified gene expression for each gene was then rescaled by an estimate of the standard deviation across patient samples. In particular, the median absolute deviation for each platform was calculated and averaged to derive a single estimate for the standard deviation for each gene which was used to rescale each gene's expression. The result is unified expression data for 11 864 genes. **Some kind of z-score?**
 
