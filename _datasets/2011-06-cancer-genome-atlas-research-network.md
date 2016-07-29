@@ -7,21 +7,23 @@ pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
 category: RNA sequencing
+figures:
+  figure_1: figure_1.jpg
+  figure_2: figure_2.jpg
+  figure_3: figure_3.jpg
+  figure_4: figure_4.jpg
 ---
 
 -   [I. Data Description](#dataDescription)
     - Background
-    - Methods for mRNA expression analysis
-    - Summary
+    - Study goals
+    - Methods
 -   [II. Data retrieval](#dataRetrieval)
-    - Microarray data
-    - RNA-sequencing data
+    - GDC Data transfer
 -   [III. Data processing](#dataProcessing)
 -   [IV. References](#references)
 
 <hr/>
-
-> To obtain the raw TCGA HGS-OvCa microarray data, proceed directly to [Retrieve the Data](#retrieveTheData).
 
 ## <a href="#dataDescription" name="dataDescription">I. Data Description</a>
 [The Cancer Genome Atlas](http://cancergenome.nih.gov/) (TCGA) is a collaboration between the [National Cancer Institute](http://www.cancer.gov/) (NCI) and the [National Human Genome Research Institute](https://www.genome.gov/) (NHGRI) that has generated comprehensive, multi-dimensional maps of the key genomic changes in 33 types of cancer. The TCGA dataset, comprising more than two petabytes of genomic data, has been made publically available, and this genomic information helps the cancer research community to improve the prevention, diagnosis, and treatment of cancer.
@@ -32,7 +34,7 @@ The majority of deaths (~70%) from ovarian cancer are attributed to high-grade s
 It is now appreciated that ovarian cancers arise in varying anatomical locations and possess modest similarity to one another with regards to epidemiology and molecular alterations. In particular, a substantial proportion of HGS-OvCa are believed to arise in the distal fallopian tubes (Figure 1).
 
 <br/>
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/bowtell_natrevcan_2011_figure2.jpg){: .img-responsive }
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Clinical and molecular features of HGS-OvCa.</strong> <strong>a |</strong> Different stages of HGS-OvCa development in the human fallopian tube marked by p53 staining and cellular morphology. A substantial proportion of HGS-OvCa arises from the fallopian tube, most likely PAX8-positive fallopian tube secretory epithelial cells (FTSECs). p53 staining marks clonal expansion of cells (signatures) in the absence of morphological transformation of the fallopian tube epithelium. Piling up of cells and loss of epithelial architecture occurs in early lesions (tubal intraepithelial carcinoma (TIC)), finally leading to invasive cancer. *Adapted from Bowtell et al. 2011*.
 </div>
@@ -47,73 +49,50 @@ From the TCGA report:
 
 > The lack of successful treatment strategies led the Cancer Genome Atlas (TCGA) researchers to measure  comprehensively genomic and epigenomic abnormalities on clinically annotated HGS-OvCa samples to identify molecular abnormalities that influence pathophysiology, affect outcome and constitute therapuetic targets.
 
-### Methods for mRNA expression analysis
+### Methods
 
-Figure 1 summarizes the overall methodology for interrogating mRNA expression levels on microarrays for  HGS-OvCa samples compared to matched normal controls. The data processing steps integrated data from three array platforms and resulted in a 'Unified' expression dataset for 11 864 genes. Subsequent processing distilled a set of 1 500 genes used in a clustering algorithm to derive four expression subtypes.
+#### Tissue samples
+Stage II-IV, clinically annotated HGS-OvCa and matched normal samples were retrieved. Patients were selected to match the demographic and epidemiological attributes of the typical population diagnosed with disease. Patients had all been treated with platinum and most with taxane prior to surgery.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/figure_1.jpg){: .img-responsive .slim }
+#### Data generation overview
+On June 6, 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/newsannouncements/genomic-data-commons-launch) that their data would be housed under the [Genomic Data Commons](https://gdc.nci.nih.gov/) in an attempt to centralize and harmonize access to large-scale biological data generation efforts. The GDC website provides extensive documentation on the [datasets](https://gdc.nci.nih.gov/about-gdc/contributed-genomic-data-cancer-research) they make available and ways that users can narrow their search and [access](https://gdc.nci.nih.gov/access-data) the data.
 
+As of July 2016, the TCGA data at the Genomic Data Commons was not providing microarray data from the publication. Instead, the GDC is providing RNA-sequencing data for (376) patient samples which we focus on for the remainder of this discussion.
+
+The pipeline from patient sample to data file consists of a constellation of partners, participants and analysis protocols. We refer the reader to the [TCGA site](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow) for a full description. Figure 2 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process.
+
+> *The GDC draws upon the expertise of collaborators in the development of pipelines supporting data harmonization including the standardization of biospecimen and clinical data, the re-alignment of DNA and RNA sequence data against a common reference genome build, and the generation of derived data. GDC pipelines are implemented using data processing software and algorithms selected in consultation with the expert genomics community.* - [NCI Genomic Data Commons](https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/introduction)
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Overview of mRNA expression analysis.</strong> Patient tumor and matched normal tissue samples were interrogated on three microarray platforms (numbers in parentheses indicate number of genes with resulting expression values). Normalized data for each platform was used in a computational workflow whereby a single 'unified' expression value was calculated for each gene. After filtering, a set of four gene clusters was identified. The 'Immunoreactive','Differentiated', 'Mesenchymal' and 'Proliferative' groups were named based on work by Tothill et al. (Tothill 2010) and also by inspection.   
+  <strong>Figure 2. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between projects, cases, clinical data and molecular data and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. <em>Adapted from the <a href="https://gdc.nci.nih.gov/submit-data/gdc-data-harmonization/">GDC website</a></em>.
 </div>
 
-#### Tissue Sources
-Stage II-IV, clinically annotated HGS-OvCa and matched normal samples were retrieved (Table I). Patients were selected to match the demographic and epidemiological attributes of the typical population diagnosed with disease. Patients had all been treated with platinum and most with taxane prior to surgical
+The GDC data model administrative elements (blue nodes) represent the key criteria we will use in [section II](#dataRetrieval) to filter for HGS-OvCa data in the GDC data portal.
 
-#### Platforms
-Three microarray platforms were utilized to interrogate mRNA expression across tumor samples (Table I). Though experimental protocols were specific to each microarray platform, in general, total mRNA for each tumor/matched normal pair were assayed to derive normalized gene expression differences.  
+#### RNA-Sequencing
 
-**Table I. Characterization platforms used and data produced**  
+The GDC mRNA-Seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [STAR](https://github.com/alexdobin/STAR) (Dobin 2013) alignment standard operating procedures (Figure 3). 
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.super-slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Overview of RNA-Seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC web page on <a href="https://gdc.nci.nih.gov/">Data Harmonization and Generation</a>.
+</div>
 
-| Data Type                   | Platforms                   | Cases  |
- ---------------------------- | --------------------------- | -------
-| mRNA expression             | [Affymetrix HT-HG-U133A](http://www.affymetrix.com/catalog/131441/AFFY/HT+Human+Genome+U133+Array+Plate+Set#1_1)      |  516   |
-|       			                | [Affymetrix Exon 1.0](http://www.affymetrix.com/catalog/131452/AFFY/Human+Exon+ST+Array#1_1)         |  517   |
-|       			                | Agilent 244K (Custom)   |  540   |
-| Integrated mRNA Expression  | -                |  489   |
+The GDC generates gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (UQ-FPKM) values and raw mapping count (Figure 4).
 
-#### Data unification: Factor analysis
-
-A regression-like approach called *Factor Analysis* was employed to integrate expression measurements for each gene represented on all three platforms. Combining measures has the benefits of mitigating platform-specific measurements and simplifying the downstream measurements with a single set of measures rather than many (Wang 2011). In essence, factor analysis provides a unified expression measure corresponding to each gene which is composed of weighted contributions from each platform.
-
-Let us adopt the notation by Wang et al. (Wang 2011). Let $$y_{gij}$$ be the observed expression for gene $$g$$ in sample $$i$$ for microarray platform $$j$$. Then factor analysis describes a true but latent (unobservable) factor $$x_{gi}$$ that represents the underlying gene expression along with a platform-specific term $$\epsilon_{ij}$$. The factor model describing the observed expression for a given gene is
-
-$$
-\begin{equation*}
-  \begin{split}
-      y_{ij} &= \beta_{j}x_{i}+\epsilon_{ij}
-  \end{split}
-\end{equation*}
-$$
-
-The coefficient $$\beta_{j}$$ is called a 'factor loading' and represents the correlation between the observed expression variable and the factor. The goal then is to determine the value of this unified expression measure of a gene in a sample $$x_{gi}$$ using observed data from the various platforms.
-
-The unified gene expression for each gene was then rescaled by an estimate of the standard deviation across patient samples. In particular, the median absolute deviation for each platform was calculated and averaged to derive a single estimate for the standard deviation for each gene which was used to rescale each gene's expression. The result is unified expression data for 11 864 genes. **Some kind of z-score?**
-
-#### Data filtering
-
-From the unified expression levels for 11 864 genes, a filtering procedure extracted 1 500 genes based on the level and consistency of their expression characteristics. Finally, clustering analysis applied to this filtered set revealed the presence of four groups, consistent with a previous HGS-OvCa expression analysis effort (Tothill 2010).       
-
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.super-slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Overview of RNA-seq quantification.</strong> This figure was adapted from the GDC web page on <a href="https://gdc.nci.nih.gov/">Data Harmonization and Generation</a>.
+</div>
 
 ## <a name="dataRetrieval">II. Data retrieval</a>
-On June 6, 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/newsannouncements/genomic-data-commons-launch) that the TCGA data would be housed under the [Genomic Data Commons](https://gdc.nci.nih.gov/) in an attempt to centralize and harmonize access to large-scale biological data generation efforts. The GDC website provides extensive documentation on the [datasets](https://gdc.nci.nih.gov/about-gdc/contributed-genomic-data-cancer-research) they make available and ways that users can narrow their search and [access](https://gdc.nci.nih.gov/access-data) the data.  
 
-### Microarray data
-As of July 2016, the TCGA data at the Genomic Data Commons was not providing microarray data from the publication. However, the TCGA [data portal](https://tcga-data.nci.nih.gov/docs/publications//tcga/) still provides a link to a list of [publications](https://tcga-data.nci.nih.gov/docs/publications/) and associated data. Access the site for the [Integrated Genomic Analyses of Ovarian Carcinoma](https://tcga-data.nci.nih.gov/docs/publications//ov_2011/) study and here you can download:
+Below we provide a step-by-step instructions to retrieve the HGS-OvCa RNA-seq data files to your computer. To accomplish this, we will be using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
 
-- [Ovarian Sample Lists](https://tcga-data.nci.nih.gov/docs/publications/ov_2011/TCGA_489_samples_batches.txt)
-  - List of samples for the two sets of batches
-- [Unified Expression](https://tcga-data.nci.nih.gov/docs/publications/ov_2011/TCGA_489_UE.zip)
-  - All batches, 489 cases
-
-//TODO - this needs a lot more detail. What is this?
-
-### RNA-sequencing data
-
-Below we provide a step-by-step recipe to download the HGS-OvCa data described herein. To accomplish this, we will be using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
+### Using the GDC transfer tool
 
 #### 1. Download the GDC Data Transfer Tool
-The GDC Data Transfer Tool for can be downloaded from the GDC [site](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool) and is available for Linux (Ubuntu 14.x or later), OS X (10.9 Mavericks or later), or Windows (7 or later). Save the file to a convenient location on your computer. For the purposes of this recipe, we will assume the `gdc-client` is unzipped and available at `/opt/gdc/gdc-client` on OSX v10.11.4.
+Download the [GDC Data Transfer Tool](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool) which is available for Linux (Ubuntu 14.x or later), OS X (10.9 Mavericks or later) and Windows (7 or later). Save the file to a convenient location on your computer. For the purposes of this recipe, we will assume the `gdc-client` is unzipped and available at `/opt/gdc/gdc-client` on OSX v10.11.4.
 
 Access the built-in help by using the `-h` option:
 
@@ -138,33 +117,77 @@ commands:
 ```
 
 #### 2. Prepare for Data Download
-The goal of this step is to obtain a 'manifest' text file that represents instructions informing the gdc-client of the files we wish to download. There is a very detailed [description](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/) of how to navigate the [GDC Data Portal](https://gdc-portal.nci.nih.gov/) to obtain a manifest file for the data set of interest.
+The goal of this step is to obtain a 'manifest' file describing the RNA-Seq files that the gdc-client should download. There is a detailed [description](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/) of how to navigate the GDC Data Portal to obtain a manifest file for the data set of interest.
 
-*Narrow down your data search*. Use the [faceted search](https://gdc-portal.nci.nih.gov/search/s) interface to view all the available data. Narrow down to our data of interest by 'Primary Site' (Ovary), 'Cancer Program' (TCGA), 'Project' (TCGA-Ov), 'Disease Type' (Ovarian Serous Cystadenocarcinoma) by selecting the appropriate boxes on the search panel. We have performed this search that can be viewed [here](https://gdc-portal.nci.nih.gov/search/s?filters=%7B%22op%22:%22and%22,%22content%22:%5B%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_category%22,%22value%22:%5B%22Transcriptome%20Profiling%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_format%22,%22value%22:%5B%22TXT%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.program.name%22,%22value%22:%5B%22TCGA%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.project_id%22,%22value%22:%5B%22TCGA-OV%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.primary_site%22,%22value%22:%5B%22Ovary%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.disease_type%22,%22value%22:%5B%22Ovarian%20Serous%20Cystadenocarcinoma%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.demographic.gender%22,%22value%22:%5B%22female%22%5D%7D%7D%5D%7D). You should see that we have narrowed our search down to 1 137 RNA-seq data files for 376 cases.
+*Narrow down your data search*. Use the [faceted search](https://gdc-portal.nci.nih.gov/search/s) interface to view all the available data. Narrow down to our data of interest: From the 'Cases' tab select 'Primary Site' (Ovary) and 'Cancer Program' (TCGA); From the 'Files' tab select 'Workflow Type' (HT-Seq FKPM-UQ). You should see that we have narrowed our search down to 379 RNA-Seq data files for 376 cases.
+
+> To go directly to a page filtered for the TCGA HGS-OvCa RNA-seq data, simply visit this [link](https://gdc-portal.nci.nih.gov/search/s?filters=%7B%22op%22:%22and%22,%22content%22:%5B%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_category%22,%22value%22:%5B%22Transcriptome%20Profiling%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_format%22,%22value%22:%5B%22TXT%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.program.name%22,%22value%22:%5B%22TCGA%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.project_id%22,%22value%22:%5B%22TCGA-OV%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.primary_site%22,%22value%22:%5B%22Ovary%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.disease_type%22,%22value%22:%5B%22Ovarian%20Serous%20Cystadenocarcinoma%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.demographic.gender%22,%22value%22:%5B%22female%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.analysis.workflow_type%22,%22value%22:%5B%22HTSeq%20-%20FPKM-UQ%22%5D%7D%7D%5D%7D).  
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/TCGAOv_search.gif)
 
 *Add files to cart.* This step tells the GDC portal what files you wish to place in the manifest for eventual download. On the GDC Data Portal Search site Summary tab, you can click the 'Add all files to the Cart'; The 'Cases' and 'Files' tabs allows you to restrict your download to individual data sets. We will select 'Add all files to the Cart'.
 
-*Download the manifest.* Download the manifest file named `gdc_manifest_XXX_XXX.txt` where `X` is some identifier for this manifest to your computer. For the purposes of this recipe, we assume the manifest is downloaded to the path `/Users/username/Downloads/TCGAOV_data/gdc_manifest_XXX_XXX.txt`. This is also where your raw data files will be placed by the gdc client.
-
+*Download the manifest.* Download the manifest file named `gdc_manifest_XXX_XXX.txt` where `X` is some identifier for this manifest to your computer. For the purposes of this recipe, we assume the manifest is downloaded to the path `/Users/username/Downloads/TCGAOV_data/gdc_manifest_XXX_XXX.txt`. This is also where your raw data files will be placed by the gdc-client.
 
 #### 3. Download Data
-After obtaining the manifest for the desired files, we simply hand over the work to the gdc client application downloaded in the first step. At a terminal, navigate to directory where you downloaded your manifest file:
+After obtaining the manifest for the desired files, simply hand over the work to the gdc-client. Navigate to directory where you downloaded your manifest
 
 ```
 $ cd /Users/username/Downloads/TCGAOV_data/
 $ /opt/gdc/gdc-client download -m gdc_manifest_XXX_XXX.txt
 ```
 
-You should see some status information indicating what files are being downloaded to your computer.
+You should see some status information indicating what directories are being downloaded to your computer.
+
+```shell
+Downloading 065393c7-9928-4fdc-9dbf-68ba9c708561.htseq.counts.gz (UUID 44b78a11-dfad-46f5-a203-599dc26ff876):
+100% [########################################################################################] Time: 0:00:00 374.29 kB/s
+Validating checksum...
+Downloading 0045a228-1dad-4ced-9bc6-5067aeee0518.htseq.counts.gz (UUID 7525f3b0-b416-49d5-b839-40eaee3a42e4):
+100% [########################################################################################] Time: 0:00:00 409.22 kB/s
+Validating checksum...
+Downloading f6a67523-d202-4ce7-af2e-b2cc4d8db20a.FPKM-UQ.txt.gz (UUID 743d5d0f-7515-41d9-b78a-af15dee6311f):
+100% [########################################################################################] Time: 0:00:00 599.99 kB/s
+Validating checksum...
+
+...
+
+SUMMARY:
+Successfully downloaded: 379
+```
+
+Be patient, depending on the number of files the download can take a few seconds to many minutes. If any errors occur, make a note of the UUID and download them using an analogous procedure as described above. 
 
 <hr/>
 
 ## <a href="#dataProcessing" name="dataProcessing">III. Data processing</a>
-You text here.
+
+If your download is successful, you will have a set of directories each named according to the case UUID. Within each case directory you will find a compressed file (`<UUID>.FPKM-UQ.txt.gz`) and a `logs` directory. 
+
+```shell
+TCGAOV_data
+│
+└─── 0eb57c2f-10bc-4bfa-a810-dc774ff72e40
+│   │	84e6af70-0c66-410c-9fad-6188151ef356.FPKM-UQ.txt.gz
+│   │
+│   ├───logs
+│   	84e6af70-0c66-410c-9fad-6188151ef356.FPKM-UQ.txt.gz.parcel
+│    
+│
+├─── 0afefdcb-0c8e-4106-a803-7799a3badb8d   
+│   │	0afefdcb-0c8e-4106-a803-7799a3badb8d.FPKM-UQ.txt.gz
+...
+```
+
+//TODO snippets here?
+
+<script src="https://gist.github.com/jvwong/37fb4c6632681e69b5f387971c180ec1.js"></script>
+
+- [FKPM](http://www.ncbi.nlm.nih.gov/pubmed/18516045)
+- [GDC](https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/high-level-data-generation/rna-seq-quantification)
+- [upper-quartile](http://www.ncbi.nlm.nih.gov/pubmed/20167110)
 
 <hr/>
 
 ## <a href="#references" name="references">III. References</a>
-<div class="panel_group" data-inline="21720365,21941283,26493647,20229506,18698038,21436879"></div>
+<div class="panel_group" data-inline="21720365,21941283,26493647,20229506,18698038,21436879,23104886"></div>

@@ -177,7 +177,7 @@
           },
           panelHeading: {
             div: {
-              padding: '1em',
+              padding: '0.8em',
               background: '#34495e',
               color: '#ecf0f1'
             },
