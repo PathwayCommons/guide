@@ -52,7 +52,7 @@ h2, h3 {
 
 @media (min-width: 38em) {
   html, body {
-    font-size: 18px;
+    font-size: $font-size-base;
   }
 }
 
@@ -132,6 +132,7 @@ img {
           transform: translateX($side-bar-width);
 }
 
+/* Misc */
 /*
  * Posts and pages
  *
@@ -153,6 +154,14 @@ img {
  /* Tables */
  table {
    margin-bottom: 3rem;
+}
+
+/* Quotes */
+blockquote {
+  font-size: $font-size-base;
+}
+@media (min-width: 30em) {
+  font-size: $font-size-base;
 }
 
  /*
