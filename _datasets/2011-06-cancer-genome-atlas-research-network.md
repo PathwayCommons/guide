@@ -16,15 +16,15 @@ figures:
   figure_6: TCGAOv_search.gif
 ---
 
--   [I. Goals](#goals)
--   [II. Data Description](#dataDescription)
+- {:.list-unstyled}  [I. Goals](#goals)
+- {:.list-unstyled}  [II. Data Description](#dataDescription)
     - Background
     - Study goals
     - Methods
--   [III. Data retrieval](#dataRetrieval)
+- {:.list-unstyled}  [III. Data retrieval](#dataRetrieval)
     - GDC Data transfer
--   [IV. Data processing](#dataProcessing)
--   [V. References](#references)
+-  {:.list-unstyled} [IV. Data processing](#dataProcessing)
+-  {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -61,9 +61,9 @@ The lack of successful treatment strategies led the Cancer Genome Atlas (TCGA) r
 Stage II-IV, clinically annotated HGS-OvCa and matched normal samples were retrieved. Patients were selected to match the demographic and epidemiological attributes of the typical population diagnosed with disease. Patients had all been treated with platinum and most with taxane prior to surgery.
 
 #### Microarray analysis
-Three microarray platforms were utilized to interrogate mRNA expression across tumor samples (Table I). Though experimental protocols were specific to each microarray platform, in general, total mRNA for each tumor/matched normal pair were assayed to derive normalized gene expression differences.  
+Three microarray platforms were utilized to interrogate mRNA expression across tumor samples (Table 1). Though experimental protocols were specific to each microarray platform, in general, total mRNA for each tumor/matched normal pair were assayed to derive normalized gene expression differences.  
 
-**Table I. Characterization platforms used and data produced**  
+**Table 1. Characterization platforms used and data produced**  
 
 | Data Type                   | Platforms                   | Cases  |
  ---------------------------- | --------------------------- | -------
@@ -109,7 +109,9 @@ The GDC mRNA-Seq alignment workflow follows the [International Cancer Genome Con
   <strong>Figure 4. Overview of RNA-Seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/genomic-data-alignment/rna-seq-pipeline">Data Harmonization and Generation</a>.
 </div>
 
-The GDC portal makes available raw counts ('Counts'). Also, there are  normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 5).
+The GDC portal makes available raw counts ('Counts'). Also, there are  normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 5). You will also see a reference to newer version 2 data (RNASeqV2, since May 2012) which uses a combination of MapSplice (Wang 2010) and RSEM (Li 2010) to determine expression levels.
+
+Data derived from the sequencing of RNA is one of the sources of gene expression data collected by TCGA. Currently, the Level 3 data is created using two distinct methods. The original method followed the RPKM (Reads Per Kilobase of exon model per Million mapped reads) method of quantiation. The newer version 2 data (RNASeqV2, introduced in May 2012) used a combination of MapSplice and RSEM to determine expression levels. In the near future, this data will also be used to identify variants such as SNPs or indels.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
@@ -122,32 +124,32 @@ Below we provide a step-by-step instructions to retrieve the HGS-OvCa RNA-seq da
 
 ### Using the GDC transfer tool
 
-#### 1. Download the GDC Data Transfer Tool
+#### i. Download the GDC Data Transfer Tool
   Download the [GDC Data Transfer Tool](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool) which is available for Linux (Ubuntu 14.x or later), OS X (10.9 Mavericks or later) and Windows (7 or later). Save the file to a convenient location on your computer. For the purposes of this recipe, we will assume the `gdc-client` is unzipped and available at `/opt/gdc/gdc-client`.
 
   Access the built-in help by using the `-h` option:
 
-  ```shell
-    $ /opt/gdc/gdc-client -h
+```shell
+  $ /opt/gdc/gdc-client -h
 
-    usage: gdc-client [-h] [--version] {download,upload,interactive} ...
+  usage: gdc-client [-h] [--version] {download,upload,interactive} ...
 
-    The Genomic Data Commons Command Line Client
+  The Genomic Data Commons Command Line Client
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      --version             show programs version number and exit
+  optional arguments:
+    -h, --help            show this help message and exit
+    --version             show programs version number and exit
 
-    commands:
-      {download,upload,interactive}
-                            for more information, specify -h after a command
-        download            download data from the GDC
-        upload              upload data to the GDC
-        interactive         run in interactive mode
+  commands:
+    {download,upload,interactive}
+                          for more information, specify -h after a command
+      download            download data from the GDC
+      upload              upload data to the GDC
+      interactive         run in interactive mode
 
-  ```
+```
 
-#### 2. Prepare for Data Download
+#### ii. Prepare for Data Download
 The goal of this step is to obtain a 'manifest' file describing the RNA-Seq files that the gdc-client should download. For more information see the detailed discussion of [how to navigate the GDC Data Portal to obtain a manifest file](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/) for the data set of interest.
 
 *Narrow down your data search*. Use the [faceted search](https://gdc-portal.nci.nih.gov/search/s) interface to view all the available data and narrow down your search results:
@@ -157,9 +159,11 @@ The goal of this step is to obtain a 'manifest' file describing the RNA-Seq file
   - 'Files' tab
     - 'WorkflowType' select 'HT-Seq FKPM-UQ'
 
-    The main summary panel should show that you have narrowed the search down to 379  files for 376 cases. To go directly to a faceted search already filtered for the TCGA HGS-OvCa RNA-seq data, simply visit this [link](https://gdc-portal.nci.nih.gov/search/s?filters=%7B%22op%22:%22and%22,%22content%22:%5B%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_category%22,%22value%22:%5B%22Transcriptome%20Profiling%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_format%22,%22value%22:%5B%22TXT%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.program.name%22,%22value%22:%5B%22TCGA%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.project_id%22,%22value%22:%5B%22TCGA-OV%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.primary_site%22,%22value%22:%5B%22Ovary%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.disease_type%22,%22value%22:%5B%22Ovarian%20Serous%20Cystadenocarcinoma%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.demographic.gender%22,%22value%22:%5B%22female%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.analysis.workflow_type%22,%22value%22:%5B%22HTSeq%20-%20FPKM-UQ%22%5D%7D%7D%5D%7D).  
+    >The main summary panel should show that you have narrowed the search down to 379  files for 376 cases. To go directly to a faceted search already filtered for the TCGA HGS-OvCa RNA-seq data, simply visit this [link](https://gdc-portal.nci.nih.gov/search/s?filters=%7B%22op%22:%22and%22,%22content%22:%5B%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_category%22,%22value%22:%5B%22Transcriptome%20Profiling%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_format%22,%22value%22:%5B%22TXT%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.program.name%22,%22value%22:%5B%22TCGA%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.project_id%22,%22value%22:%5B%22TCGA-OV%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.primary_site%22,%22value%22:%5B%22Ovary%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.disease_type%22,%22value%22:%5B%22Ovarian%20Serous%20Cystadenocarcinoma%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.demographic.gender%22,%22value%22:%5B%22female%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.analysis.workflow_type%22,%22value%22:%5B%22HTSeq%20-%20FPKM-UQ%22%5D%7D%7D%5D%7D).  
 
 *Add files to cart.* This step tells the GDC portal what files you wish to place in the manifest for eventual download. On the GDC Data Portal Search site Summary tab, you can click the 'Add all files to the Cart'.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.figures.figure_6 }})
 
 *Download the manifest and additional metadata.* From the cart, the following download options are available to the end user:
 
@@ -169,82 +173,118 @@ The goal of this step is to obtain a 'manifest' file describing the RNA-Seq file
   - Biospecimen: GDC harmonized biospecimen data associated with the cases in the cart.
   - File Metadata: Metadata of the files in the cart (file properties, associated entities and workflow information if applicable).
 
-  Download the manifest file named `gdc_manifest_XXX_XXX.txt` where `X` is some identifier for this manifest to your computer. Also download the Biospecimen file named something like `biospecimen.cart.YYYY-MM-DDTXX-XX-XX.XXXXXX.json` which will allow us to match GDC case UUIDs with TCGA barcodes.
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.figures.figure_6 }})
-
-#### 3. Download Data
-After obtaining the manifest for the desired files, simply hand over the work to the gdc-client. Navigate to directory where you downloaded your manifest
+  Download the manifest file named `gdc_manifest_XXX_XXX.txt` where `X` is some identifier for this manifest to your computer. Also download the Metadata file named something like `metadata.cart.YYYY-MM-DDTXX-XX-XX.XXXXXX.json`. If we peer inside the manifest, we will be able to see a tab-delimited file where each row describes a single file we wish to download.
 
 ```shell
-$ cd /Users/username/Downloads/TCGAOV_data/
-$ /opt/gdc/gdc-client download -m gdc_manifest_XXX_XXX.txt
+id	filename	md5	size	state
+d9cf9bb2-65b9-455e-a49a-0e6639248687	65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt.gz	808e3d1e5df5d84fcc3d3623500f3950	505563	submitted
+1f604c88-45b7-4963-a0ce-fe6f73e737cc	fd638406-d933-47da-ba38-8ffc5046d49e.FPKM-UQ.txt.gz	0639179ce5cf71e53efb45ad8cdc5eb3	559120	submitted
+538f9b86-6dda-4e65-be30-53c2a078ba7f	7024891a-6a74-45d1-813d-7199707c45c5.FPKM-UQ.txt.gz	67d1d41365e9256a4060d92599bd5b1b	557880	submitted
+9ac70594-08c8-4a61-b105-f74eae472a5b	ce511378-d8f8-494e-a07d-2e0dbed68bf8.FPKM-UQ.txt.gz	e5041bdcdda50bc57e41cd5464831a80	562586	submitted
+...
 ```
 
-You should see some status information indicating what directories are being downloaded to your computer.
+#### iii. Download Data
+After obtaining the manifest for the desired files, simply hand over the work to the gdc-client. Navigate to directory where you downloaded your manifest, create a new directory where your downloads will be placed `gdc_download_20160803` then feed the manifest to the client.  
 
 ```shell
-Downloading 065393c7-9928-4fdc-9dbf-68ba9c708561.htseq.counts.gz (UUID 44b78a11-dfad-46f5-a203-599dc26ff876):
-100% [########################################################################################] Time: 0:00:00 374.29 kB/s
-Validating checksum...
-Downloading 0045a228-1dad-4ced-9bc6-5067aeee0518.htseq.counts.gz (UUID 7525f3b0-b416-49d5-b839-40eaee3a42e4):
-100% [########################################################################################] Time: 0:00:00 409.22 kB/s
-Validating checksum...
-Downloading f6a67523-d202-4ce7-af2e-b2cc4d8db20a.FPKM-UQ.txt.gz (UUID 743d5d0f-7515-41d9-b78a-af15dee6311f):
-100% [########################################################################################] Time: 0:00:00 599.99 kB/s
-Validating checksum...
+$ mkdir /Users/username/Downloads/TCGAOV_data/gdc_download_20160803
+$ cd /Users/username/Downloads/TCGAOV_data/gdc_download_20160803
+$ /opt/gdc/gdc-client download -m /Users/username/Downloads/TCGAOV_data/gdc_manifest_XXX_XXX.txt
+```
 
+You should see some status information indicating what directories and files are being downloaded to your computer.
+
+```shell
+Downloading 65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt.gz (UUID d9cf9bb2-65b9-455e-a49a-0e6639248687):
+100% [###########################################################################] Time: 0:00:02 254.10 kB/s
+Validating checksum...
+Downloading fd638406-d933-47da-ba38-8ffc5046d49e.FPKM-UQ.txt.gz (UUID 1f604c88-45b7-4963-a0ce-fe6f73e737cc):
+100% [###########################################################################] Time: 0:00:00 802.07 kB/s
+Validating checksum...
 ...
 
 SUMMARY:
 Successfully downloaded: 379
 ```
 
-Be patient, depending on the number of files the download can take a few seconds to many minutes. If any errors occur, make a note of the UUID and download them using an analogous procedure as described above.
+Be patient, depending on the number of files the download can take many minutes or even hours. If any errors occur, make a note of the file UUID and resume a failed download using an analogous procedure as described above:
+
+```shell
+$ /opt/gdc/gdc-client download <file UUID>
+```
+
+If your download is successful, you will have a set of directories each named with a UUID and containing files declared in the manifest.
+
+```shell
+TCGAOV_data
+|
+|--- gdc_manifest_20160803_160400.txt
+|--- metadata.cart.2016-08-03T16-04-06.289487.json
+|
+|--- gdc_download_20160803
+    |
+    |--- 1f604c88-45b7-4963-a0ce-fe6f73e737cc
+    |   |--- fd638406-d933-47da-ba38-8ffc5046d49e.FPKM-UQ.txt.gz
+    |   |
+    |   |--- logs
+    |    
+    |
+    |--- d9cf9bb2-65b9-455e-a49a-0e6639248687
+    |   |--- 65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt.gz
+    |   |
+    |   |--- logs
+...
+```
+
+We can unzip the files all in one shot and take a look at the contents of one of them.
+
+```shell
+$ cd /Users/username/Downloads/TCGAOV_data
+$ gunzip --keep --recursive gdc_download_20160803
+$ head -n 10 ./gdc_download_20160803/d9cf9bb2-65b9-455e-a49a-0e6639248687/65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt
+ENSG00000242268.2	0.0
+ENSG00000270112.3	1065.41203745
+ENSG00000167578.15	96931.6580378
+ENSG00000273842.1	0.0
+ENSG00000078237.5	114645.454424
+ENSG00000146083.10	385830.498773
+ENSG00000225275.4	0.0
+ENSG00000158486.12	1665.91700401
+ENSG00000198242.12	26192658.83
+ENSG00000259883.1	0.0
+
+$ wc ./gdc_download_20160803/d9cf9bb2-65b9-455e-a49a-0e6639248687/65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt
+60483  120966 1638665 ...
+```
+
+This listing shows that each `<UUID>.FPKM-UQ.txt` file contains rows of an [Ensembl stable identifier for genes (ENSG)](http://useast.ensembl.org/info/genome/genebuild/genome_annotation.html) and its corresponding RNA-Seq normalized counts (FPKM-UQ). The final output show that there are 60 483 lines in this file.
 
 <hr/>
 
 ## <a href="#dataProcessing" name="dataProcessing">IV. Data processing</a>
 
-If your download is successful, you will have a set of directories each named according to the case UUID. Within each case directory you will find a compressed file (`<UUID>.FPKM-UQ.txt.gz`) and a `logs` directory.
+Ultimately, our goal in this section is to obtain a file with each row representing the gene expression counts across different cases.
 
-```shell
-TCGAOV_data
-│
-└─── 0eb57c2f-10bc-4bfa-a810-dc774ff72e40
-│   │	84e6af70-0c66-410c-9fad-6188151ef356.FPKM-UQ.txt.gz
-│   │
-│   ├───logs
-│   	84e6af70-0c66-410c-9fad-6188151ef356.FPKM-UQ.txt.gz.parcel
-│    
-│
-├─── 0afefdcb-0c8e-4106-a803-7799a3badb8d   
-│   │	0afefdcb-0c8e-4106-a803-7799a3badb8d.FPKM-UQ.txt.gz
-...
-```
+| Gene ID  | case_1   | case_2   | case_3   |
+|----------|----------|----------|----------|
+| gene_1   |  0.0     |  200.0   |   150.0  |
+| gene_2   |  15.0    |  10.0    |    0.0   |
+| gene_3   |  10.0    |  0.0     |   250.0  |
 
 Here's a list of the tasks we need to accomplish to get the data ready for our analyses.
 
-1. Data extraction  
-2. TCGA barcodes and mapping to UUID
-3. Map gene IDs
-4. Concatenate FKPM values
-5. Extract Immunoreactive and Mesenchymal
+- {:.list-unstyled} i. Combine files
+- {:.list-unstyled} ii. Map TCGA barcodes  
+- {:.list-unstyled} iii. Map gene IDs
+- {:.list-unstyled} iv. Extract Immunoreactive and Mesenchymal  
 
-### Data extraction  
+### 1. Combine files
 
-> The TCGA barcode was the primary identifier of biospecimen data since the pilot project began. However, since for any one sample, the barcode can change as the meta-data associated with it changes, the TCGA project transitioned to using UUIDs as the primary identifier.
-> <footer><a href="https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode">TCGA barcode</a></footer>
+<script src="https://gist.github.com/jvwong/d8e76f57a9d79cad5b1ab422fae91ef8.js"></script>
 
-What we desire is a single text file containing a data layout
-
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
 
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="21720365,20229506,23104886,26493647,21436879,18698038,21941283"></div>
+<div class="panel_group" data-inline="21720365,20229506,23104886,26493647,21436879,18698038,21941283,20022975,20802226"></div>

@@ -14,18 +14,18 @@ figures:
   table_2: table_2.jpg
   figure_3: figure_3.jpg
 ---
--   [I. Introduction](#introduction)
+- {:.list-unstyled}  [I. Introduction](#introduction)
     -   Errors and 'omics
     -   Overview
--   [II. Hypothesis testing errors](#hypothesisTestingErrors)
+- {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
     -   Example 1. A coin flip
     -   Example 2. Pathway analyses
     -   When does multiple testing apply?
--   [III. Multiple testing control](#multipleTestingControl)
+- {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
     -   Type I errors increase with the number of tests
     -   Controlling the Family-Wise Error Rate (FWER)
     -   Controlling the false discovery rate
--   [IV. References](#references)
+- {:.list-unstyled}  [IV. References](#references)
 
 <hr/>
 
@@ -98,7 +98,7 @@ Likewise, [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea
 
 ### When does multiple testing apply?
 
-#### **Defining the family of hypotheses**
+#### Defining the family of hypotheses
 
 In general, sources of multiplicity arise in cases where one considers using the same data to assess more than one:
 
@@ -115,7 +115,7 @@ There are cases where the applicability of multiple testing may be less clear:
 
 In these cases identical data sets are achieved in more than one way but the particular statistical procedure used could result in different claims regarding significance. A convention that has been proposed is that the collection or *family* of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014). For a family of hypotheses, it is meaningful to take into account some combined measure of error.  
 
-#### **The severity of errors**
+#### The severity of errors
 
 The use of microarrays, enrichment analyses or other large-scale approaches are most often performed under the auspices of exploratory investigations. In such cases, the results are typically used as a first step upon which to justify more detailed investigations to corroborate or validate any significant results. The penalty for being wrong in such multiple testing scenarios is minor assuming the time and effort required to dismiss it is minimal or if claims that extend directly from such a result are conservative.
 
@@ -166,7 +166,7 @@ $$
  \end{equation*}
 $$
 
-#### **The Bonferroni Correction**
+#### The Bonferroni Correction
 The most intuitive way to control for the FWER is to make the significance level lower as the number of tests increase. Ensuring that the FWER is maintained at $$\alpha$$ across $$m$$ independent tests
 
 $$P(V \gt 0) \leq \alpha$$
@@ -189,7 +189,7 @@ $$
 \end{equation*}
 $$
 
-#### **Caveats, concerns, and objections**
+#### Caveats, concerns, and objections
 The Bonferroni correction is a very strict form of type I error control in the sense that it controls for the probability of even a single erroneous rejection of the null hypothesis (i.e. $$P(V\gt0)$$). One practical argument against this form of correction is that it is overly conservative and impinges upon statistical power (Whitley 2002b).
 
 **Definition** The **statistical power** of a test is the probability of rejecting a null hypothesis when the alternative is true
@@ -198,13 +198,13 @@ $$\text{Power}=P(\text{reject null hypothesis} \mid \text{ alternative hypothesi
 
 Indeed our discussion above would indicate that large-scale experiments are exploratory in nature and that we should be assured that testing errors are of minor consequence. We could accept more potential errors as a reasonable trade-off for identifying more significant genes. There are many other arguments made over the past few decades against using such control procedures, some of which border on the philosophical (Goodman 1998, Savitz 1995). Some even have gone as far as to call for the abandonment of correction procedures altogether (Rothman 1990). At least two arguments are relevant to the context of multiple testing involving large-scale experimental data.
 
-**1. The composite "universal" null hypothesis is irrelevant**
+##### 1. The composite "universal" null hypothesis is irrelevant
 
 The origin of the Bonferroni correction is predicated on the universal hypothesis that only purely random processes govern all the variability of all the observations in hand. The omnibus alternative hypothesis is that some associations are present in the data. Rejection of the null hypothesis amounts to a statement merely that at least one of the assumptions underlying the null hypothesis is invalid, however, it does not specify exactly what aspect.
 
 Concretely, testing a multitude of genes for differential expression in treatment and control cells on a microarray could be grounds for Bonferroni correction. However, rejecting the composite null hypothesis that purely random processes governs expression of all genes represented on the array is not very interesting. Rather, researchers are more interested in which genes or subsets demonstrate these non-random expression patterns following treatment.
 
-**2. Penalty for peeking and 'p hacking'**
+##### 2. Penalty for peeking and 'p hacking'
 
 This argument boils down to the argument: Why should one independent test result impact the outcome of another?
 
@@ -224,7 +224,7 @@ Let us revisit the set of null hypotheses declared significant as shown in the r
 
 In an exploratory analysis, we are happy to sacrifice are strict control on type I errors for a wider net of discovery. This is the underlying rationale behind the second control procedure.
 
-#### **Benjamini-Hochberg control**
+#### Benjamini-Hochberg control
 A landmark paper by Yoav Benjamini and Yosef Hochberg (Benjamini 1995) rationalized an alternative view of the errors associated with multiple testing:
 
 > In this work we suggest a new point of view on the problem of multiplicity. In many multiplicity problems the number of erroneous rejections should be taken into account and not only the question of whether any error was made. Yet, at the same time, the seriousness of the loss incurred by erroneous rejections is inversely related to the number of hypotheses rejected. From this point of view, a desirable error rate to control may be the expected proportion of errors among the rejected hypotheses, which we term the false discovery rate (FDR).
@@ -257,7 +257,7 @@ The Benjamini-Hochberg (BH) procedure then attempts to place an upper bound ($$q
 
 $$FDR=E \left[ Q \right] \leq \frac{m_0}{m}q \leq q$$
 
-#### **The Benjamini-Hochberg procedure**
+#### The Benjamini-Hochberg procedure
 
 Consider testing $$m$$ independent hypotheses $$H_1, H_2, \cdots, H_m$$ from the associated p-values $$P_1, P_2, \cdots, P_m$$.
 
@@ -269,7 +269,7 @@ Consider testing $$m$$ independent hypotheses $$H_1, H_2, \cdots, H_m$$ from the
 
   3. Then the significant hypotheses are $$H_1, H_2, \cdots, H_k$$
 
-#### **A sketch(y) proof**
+#### A sketch(y) proof
 
 We leave the rather tedious proof and rationale for the BH procedure to the reader (Benjamini 1995). Rather, we provide an intuitive explanation for the choice of the bound.
 
@@ -320,7 +320,7 @@ $$
 $$
 
 
-#### **Two properties of FDR**
+#### Two properties of FDR
 
 Let us note two important properties of FDR in relation to FWER.
 First, consider the case where all the null hypotheses are true. Then $$m=m_0$$, $$s=0$$ and $$v=r$$ which means that any discovery is a false discovery. By convention, if $$v=0$$ then we set $$Q=0$$ otherwise $$Q=1$$.
@@ -363,7 +363,7 @@ $$
 
 This implies that $$\text{FWER} \geq \text{FDR}$$ and so FWER provides an upper bound to the FDR. When these error rates are quite different as in the case where $$S$$ is large, the stringency is lower and a gain in power can be expected.
 
-#### **Example of BH procedure**
+#### Example of BH procedure
 
 To illustrate the BH procedure we adapt a trivial example presented by Glickman et al. (Glickman 2014). Suppose a researcher performs an experiments examining differential expression of 10 genes in response to treatment relative to control. Ten corresponding p-values result, one for each test: $$0.52, 0.07, 0.013, 0.0001, 0.26, 0.04, 0.01, 0.15, 0.03 \text{ and } 0.002$$. The researcher decides to bound the FDR at 5% ($$q=0.05$$). Table 2 summarizes the ordered p-values and corresponding BH procedure calculations.
 
@@ -373,7 +373,7 @@ To illustrate the BH procedure we adapt a trivial example presented by Glickman 
 
 In this case, we examine the final column for the largest case in which $$p_i \leq \frac{i}{100}\cdot0.05$$ which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our $$q=0.05$$ we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.
 
-#### **Practical implications of BH compared to Bonferroni correction**
+#### Practical implications of BH compared to Bonferroni correction
 
 The BH procedure overcomes some of the caveats associated with FWER control procedures.
 
@@ -392,7 +392,7 @@ $$
 
 All hypotheses will be significant if we can find such a relation to hold for $$p_{100}$$. This is true for $$k=100$$ such that $$p_m=0.001 \leq \frac{100}{100} \cdot 0.05=0.05$$.
 
-#### **Caveats and limitations**
+#### Caveats and limitations
 
 Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2012).
 
