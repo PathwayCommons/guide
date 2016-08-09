@@ -14,6 +14,7 @@ figures:
   figure_4: rna_alignment.jpg
   figure_5: rna_quantification.jpg
   figure_6: TCGAOv_search.gif
+  figure_7: tcga_barcode.png
 ---
 
 - {:.list-unstyled}  [I. Goals](#goals)
@@ -28,10 +29,16 @@ figures:
 
 <hr/>
 
+**If you simply wish to access the data files then do this here.**
+
 ## <a href="#goals" name="goals">Goals</a>
+In this section you will be able to:
+
 1. Understand the rationale for The Cancer Genome Atlas (TCGA) effort to molecularly characterize high-grade serous ovarian cancer (HGS-OvCa) on a molecular level
-2. How to download TCGA HGS-OvCa RNA-Seq data from the Genomic Data Commons (GDC)
-3. How to process the TCGA RNA-Seq data into a format suitable for further analysis described elsewhere in this Guide
+2. Download TCGA HGS-OvCa RNA-Seq data from the Genomic Data Commons (GDC)
+3. Process TCGA RNA-Seq data into a format suitable for further analysis
+
+**Image here?**
 
 
 ## <a href="#dataDescription" name="dataDescription">II. Data Description</a>
@@ -66,7 +73,7 @@ Three microarray platforms were utilized to interrogate mRNA expression across t
 **Table 1. Characterization platforms used and data produced**  
 
 | Data Type                   | Platforms                   | Cases  |
- ---------------------------- | --------------------------- | -------
+|---------------------------- | --------------------------- | -------
 | mRNA expression             | Affymetrix HT-HG-U133A      |  516   |
 |       			                | Affymetrix Exon 1.0]       |  517   |
 |       			                | Agilent 244K (Custom)      |  540   |
@@ -150,7 +157,7 @@ Below we provide a step-by-step instructions to retrieve the HGS-OvCa RNA-seq da
 ```
 
 #### ii. Prepare for Data Download
-The goal of this step is to obtain a 'manifest' file describing the RNA-Seq files that the gdc-client should download. For more information see the detailed discussion of [how to navigate the GDC Data Portal to obtain a manifest file](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/) for the data set of interest.
+The goal of this step is to obtain a manifest describing the files the gdc-client should download. For more information see the detailed discussion of [how to navigate the GDC Data Portal to obtain a manifest file](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/) for the data set of interest.
 
 *Narrow down your data search*. Use the [faceted search](https://gdc-portal.nci.nih.gov/search/s) interface to view all the available data and narrow down your search results:
 
@@ -161,14 +168,14 @@ The goal of this step is to obtain a 'manifest' file describing the RNA-Seq file
 
     >The main summary panel should show that you have narrowed the search down to 379  files for 376 cases. To go directly to a faceted search already filtered for the TCGA HGS-OvCa RNA-seq data, simply visit this [link](https://gdc-portal.nci.nih.gov/search/s?filters=%7B%22op%22:%22and%22,%22content%22:%5B%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_category%22,%22value%22:%5B%22Transcriptome%20Profiling%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.data_format%22,%22value%22:%5B%22TXT%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.program.name%22,%22value%22:%5B%22TCGA%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.project_id%22,%22value%22:%5B%22TCGA-OV%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.primary_site%22,%22value%22:%5B%22Ovary%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.project.disease_type%22,%22value%22:%5B%22Ovarian%20Serous%20Cystadenocarcinoma%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22cases.demographic.gender%22,%22value%22:%5B%22female%22%5D%7D%7D,%7B%22op%22:%22in%22,%22content%22:%7B%22field%22:%22files.analysis.workflow_type%22,%22value%22:%5B%22HTSeq%20-%20FPKM-UQ%22%5D%7D%7D%5D%7D).  
 
-*Add files to cart.* This step tells the GDC portal what files you wish to place in the manifest for eventual download. On the GDC Data Portal Search site Summary tab, you can click the 'Add all files to the Cart'.
+*Add files to cart.* This step tells the GDC portal what files you wish to place in the manifest for eventual download. On the GDC Data Portal Search site Summary tab, you can click the 'Add all files to the Cart'. To view your cart click the button on the top right of the screen.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.figures.figure_6 }})
 
 *Download the manifest and additional metadata.* From the cart, the following download options are available to the end user:
 
   - Manifest: Manifest used by the GDC Data Transfer Tool to download the files.
-  - Cart: All the files in the Cart downloaded directly through the browser. Users have to be cautious of the amount of data in the cart since this option will not optimize bandwidth neither provide resume capabilities.
+  - Cart: All the files in the Cart downloaded directly through the browser.
   - Clinical: GDC harmonized clinical data associated with the cases in the cart.
   - Biospecimen: GDC harmonized biospecimen data associated with the cases in the cart.
   - File Metadata: Metadata of the files in the cart (file properties, associated entities and workflow information if applicable).
@@ -185,7 +192,7 @@ d9cf9bb2-65b9-455e-a49a-0e6639248687	65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-U
 ```
 
 #### iii. Download Data
-After obtaining the manifest for the desired files, simply hand over the work to the gdc-client. Navigate to directory where you downloaded your manifest, create a new directory where your downloads will be placed `gdc_download_20160803` then feed the manifest to the client.  
+After obtaining the manifest for the desired files, simply hand over the work to the gdc-client. Navigate to directory where you wish to download your data (we create a new directory `gdc_download_20160803`) then feed the manifest to the client.  
 
 ```shell
 $ mkdir /Users/username/Downloads/TCGAOV_data/gdc_download_20160803
@@ -214,7 +221,7 @@ Be patient, depending on the number of files the download can take many minutes 
 $ /opt/gdc/gdc-client download <file UUID>
 ```
 
-If your download is successful, you will have a set of directories each named with a UUID and containing files declared in the manifest.
+If your download is successful, you will have a set of directories each named with a universally unique identifier (UUID) and containing files declared in the manifest.
 
 ```shell
 TCGAOV_data
@@ -237,51 +244,70 @@ TCGAOV_data
 ...
 ```
 
-We can unzip the files all in one shot and take a look at the contents of one of them.
-
-```shell
-$ cd /Users/username/Downloads/TCGAOV_data
-$ gunzip --keep --recursive gdc_download_20160803
-$ head -n 10 ./gdc_download_20160803/d9cf9bb2-65b9-455e-a49a-0e6639248687/65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt
-ENSG00000242268.2	0.0
-ENSG00000270112.3	1065.41203745
-ENSG00000167578.15	96931.6580378
-ENSG00000273842.1	0.0
-ENSG00000078237.5	114645.454424
-ENSG00000146083.10	385830.498773
-ENSG00000225275.4	0.0
-ENSG00000158486.12	1665.91700401
-ENSG00000198242.12	26192658.83
-ENSG00000259883.1	0.0
-
-$ wc ./gdc_download_20160803/d9cf9bb2-65b9-455e-a49a-0e6639248687/65d87c44-cb1f-4889-bdfa-4788f7183ae1.FPKM-UQ.txt
-60483  120966 1638665 ...
-```
-
-This listing shows that each `<UUID>.FPKM-UQ.txt` file contains rows of an [Ensembl stable identifier for genes (ENSG)](http://useast.ensembl.org/info/genome/genebuild/genome_annotation.html) and its corresponding RNA-Seq normalized counts (FPKM-UQ). The final output show that there are 60 483 lines in this file.
-
 <hr/>
 
 ## <a href="#dataProcessing" name="dataProcessing">IV. Data processing</a>
 
-Ultimately, our goal in this section is to obtain a file with each row representing the gene expression counts across different cases.
+### Desired files & formats
 
-| Gene ID  | case_1   | case_2   | case_3   |
-|----------|----------|----------|----------|
-| gene_1   |  0.0     |  200.0   |   150.0  |
-| gene_2   |  15.0    |  10.0    |    0.0   |
-| gene_3   |  10.0    |  0.0     |   250.0  |
+Our goal in this section is to obtain a tab-delimited file where columns represent a different case identified by the case ID and each row the RNA-Seq expression counts for a given gene (Table 2).
+
+**Table 2. Desired layout for RNA-Seq data**  
+
+| Gene ID  |  case 1  |  case 2  |  case 3  |
+|:--------:|:--------:|:--------:|:--------:|
+| gene 1   |  0.0     |  200.0   |   150.0  |
+| gene 2   |  15.0    |  10.0    |    0.0   |
+| gene 3   |  10.0    |  0.0     |   250.0  |
+
+We are not interested in all these cases. Indeed, the TCGA ovarian cases have been classified according to subtype elsewhere and we will be interested in comparing relative gene expression between the 'Mesenchymal' and 'Immunoreactive' subtypes. Therefore, our analysis will require us to have a table describing which cases correspond to which subtypes (Table 3).
+
+**Table 3. Desired layout for subtype designations**  
+
+| Case     |  Subtype        |
+|:--------:|:---------------:|
+| case 1   |  Mesenchymal    |
+| case 2   |  Mesenchymal    |
+| case 3   |  Immunoreactive |
+
+The key obstacles in using the GDC RNA-Seq data are:
+
+- {:.list-unstyled}  a. RNA-Seq data files for each case are in separate, compressed files (Table 2)
+- {:.list-unstyled}  b. Gene IDs: The GDC uses the [ensembl namespace (ENSG)](http://useast.ensembl.org/index.html) whereas the original publication uses a [HGNC namespace](http://www.genenames.org/) (Table 2)
+- {:.list-unstyled}  c. The original assignment of subtypes to study participants () utilized a now defunct 'TCGA barcode' identifier () rather than the GDC case ID we desire (Table 3)
+
+Thankfully, the metadata file available on the GDC data portal contains enough information to reconcile all of these issues. Although some of the following descriptions are quite technical, we view this as a good opportunity to illustrate how to 'munge' data into the desired format using real-world data.
+
+### A brief interlude on barcodes
+
+Recall the GDC data model (Figure 3) defines Programs (TCGA) that runs Projects (TCGA-Ov) to which Cases are associated.  
+
+> A case is the unit used to describe a participant.
+
+The GDC uses a UUID to label files and cases. However, at the time of publication, the TCGA [Biospecimen Core Resource (BCR)](https://wiki.nci.nih.gov/display/TCGA/Biospecimen+Core+Resource) was responsible for receiving participant samples and assigning identifiers in the form of a human-readable TCGA barcode to track aliquots.
+
+> An aliquot is a fractional part of an analyte. The aliquot is the unit of analysis for TCGA genomic data. Aliquots are the products shipped by the BCRs to analysis centers.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.super-slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 7. TCGA barcode.</strong> An example of a TCGA barcode shows how it can be broken down into its components and translated into its metadata. This figure was adapted from the GDC document on <a href="https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode">TCGA barcodes</a>.
+</div>
+
+Our goal moving forward is to identify participants via their corresponding case UUID.
+
+### Data munging tasks
 
 Here's a list of the tasks we need to accomplish to get the data ready for our analyses.
 
-- {:.list-unstyled} i. Combine files
-- {:.list-unstyled} ii. Map TCGA barcodes  
-- {:.list-unstyled} iii. Map gene IDs
-- {:.list-unstyled} iv. Extract Immunoreactive and Mesenchymal  
+- {:.list-unstyled} i. Merge RNA-Seq data into a single file
+- {:.list-unstyled} ii. Assign case UUID for each TCGA barcode/subtype assignment made previously ()  
+- {:.list-unstyled} iii. Filter cases and genes  
 
-### 1. Combine files
+You can view and clone the code snippets presented below along with supporting information in the following [GitHub gist](https://gist.github.com/jvwong/3982dad461eb508d11fe60c7b9e59311).
 
-<script src="https://gist.github.com/jvwong/d8e76f57a9d79cad5b1ab422fae91ef8.js"></script>
+
+#### i. Combine files
+
 
 
 <hr/>
