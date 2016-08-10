@@ -38,8 +38,6 @@ In this section you will be able to:
 2. Download TCGA HGS-OvCa RNA-Seq data from the Genomic Data Commons (GDC)
 3. Process TCGA RNA-Seq data into a format suitable for further analysis
 
-**Image here?**
-
 
 ## <a href="#dataDescription" name="dataDescription">II. Data Description</a>
 [The Cancer Genome Atlas](http://cancergenome.nih.gov/) (TCGA) is a collaboration between the [National Cancer Institute](http://www.cancer.gov/) (NCI) and the [National Human Genome Research Institute](https://www.genome.gov/) (NHGRI) that has generated comprehensive, multi-dimensional maps of the key genomic changes in 33 types of cancer. The TCGA dataset, comprising more than two petabytes of genomic data, has been made publicly available, and this genomic information is intended to aid the cancer research community.
@@ -249,7 +247,7 @@ TCGAOV_data
 
 ### Desired files & formats
 
-Our goal in this section is to obtain a tab-delimited file where columns represent a different case identified by the case ID and each row the RNA-Seq expression counts for a given gene (Table 2).
+Our goal in this section is obtain two datasets using our raw data. Table 2 describes the first, where each column represents a particular case ID and rows are the respective RNA-Seq counts for a gene. We are not interested in all cases.
 
 **Table 2. Desired layout for RNA-Seq data**  
 
@@ -259,7 +257,7 @@ Our goal in this section is to obtain a tab-delimited file where columns represe
 | gene 2   |  15.0    |  10.0    |    0.0   |
 | gene 3   |  10.0    |  0.0     |   250.0  |
 
-We are not interested in all these cases. Indeed, the TCGA ovarian cases have been classified according to subtype elsewhere and we will be interested in comparing relative gene expression between the 'Mesenchymal' and 'Immunoreactive' subtypes. Therefore, our analysis will require us to have a table describing which cases correspond to which subtypes (Table 3).
+ Indeed, the TCGA ovarian cases have been classified by subtype by Verhaak et al. (Verhaak 2013). For the purposes of this guide we restrict our attention to the relative gene expression between the 'Mesenchymal' and 'Immunoreactive' subtypes. Therefore, our analysis requires a second dataset that aligns cases and subtypes (Table 3).
 
 **Table 3. Desired layout for subtype designations**  
 
@@ -271,9 +269,9 @@ We are not interested in all these cases. Indeed, the TCGA ovarian cases have be
 
 The key obstacles in using the GDC RNA-Seq data are:
 
-- {:.list-unstyled}  a. RNA-Seq data files for each case are in separate, compressed files (Table 2)
-- {:.list-unstyled}  b. Gene IDs: The GDC uses the [ensembl namespace (ENSG)](http://useast.ensembl.org/index.html) whereas the original publication uses a [HGNC namespace](http://www.genenames.org/) (Table 2)
-- {:.list-unstyled}  c. The original assignment of subtypes to study participants () utilized a now defunct 'TCGA barcode' identifier () rather than the GDC case ID we desire (Table 3)
+- {:.list-unstyled}  a. The case files are separate
+- {:.list-unstyled}  b. The GDC uses the [ensembl namespace (ENSG)](http://useast.ensembl.org/index.html) whereas Verhaak et al. and the TCGA publication use [HGNC namespace](http://www.genenames.org/)
+- {:.list-unstyled}  c. Study participants were originally assigned a now-outdated 'TCGA barcode' rather UUID
 
 Thankfully, the metadata file available on the GDC data portal contains enough information to reconcile all of these issues. Although some of the following descriptions are quite technical, we view this as a good opportunity to illustrate how to 'munge' data into the desired format using real-world data.
 
@@ -312,4 +310,4 @@ You can view and clone the code snippets presented below along with supporting i
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="21720365,20229506,23104886,26493647,21436879,18698038,21941283,20022975,20802226"></div>
+<div class="panel_group" data-inline="21720365,20229506,23104886,26493647,21436879,18698038,21941283,20022975,20802226,23257362"></div>
