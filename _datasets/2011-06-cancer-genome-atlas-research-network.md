@@ -7,6 +7,8 @@ pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
 category: RNA sequencing
+data:
+  subtype: Verhaak_JCI_2013_tableS1.txt
 figures:
   figure_1: hgsovca_bowtell_2011.jpg
   figure_2: microarray_overview.jpg
@@ -17,16 +19,18 @@ figures:
   figure_7: tcga_barcode.png
 ---
 
-- {:.list-unstyled}  [I. Overview & Goals](#goals)
-- {:.list-unstyled}  [II. Data Description](#dataDescription)  
-- {:.list-unstyled}  [III. Data retrieval](#dataRetrieval)
--  {:.list-unstyled} [IV. Data processing](#dataProcessing)
--  {:.list-unstyled} [V. References](#references)
+- {:.list-unstyled} Table of Contents
+  - {:.list-unstyled}  [I. Overview & Goals](#goals)
+  - {:.list-unstyled}  [II. Data description](#dataDescription)  
+  - {:.list-unstyled}  [III. Data retrieval](#dataRetrieval)
+  - {:.list-unstyled} [IV. Data processing](#dataProcessing)
+  - {:.list-unstyled} [V. TCGA ovarian cancer RNA-seq data](#rnaSeqData)
+  - {:.list-unstyled} [VI. References](#references)
 
 <hr/>
 
 <div class="alert alert-warning" role="alert">
-  If you are merely interested in obtaining the final formatted TCGA Ovarian cancer data set then go directly ?here?.
+  To download the final TCGA Ovarian cancer data set go directly to <a href="#rnaSeqData">V. TCGA ovarian cancer RNA-seq data</a>.
 </div>
 
 ## <a href="#overviewGoals" name="overviewGoals">I. Summary & Goals</a>
@@ -39,7 +43,7 @@ This guide describes a path spanning basic background on the disease to detailed
 2. Be able to download data from the Genomic Data Commons (GDC)
 3. Be able to process TCGA HGS-OvCa RNA-Seq data towards differential expression analysis between cancer subtypes
 
-## <a href="#dataDescription" name="dataDescription">II. Data Description</a>
+## <a href="#dataDescription" name="dataDescription">II. Data description</a>
 The Cancer Genome Atlas (TCGA) is a collaboration between the [National Cancer Institute](http://www.cancer.gov/) (NCI) and the [National Human Genome Research Institute](https://www.genome.gov/) (NHGRI) that has generated comprehensive, multi-dimensional maps of the key genomic changes in 33 types of cancer. The TCGA dataset, comprising more than two petabytes of genomic data, has been made publicly available, and this genomic information is intended to aid the cancer research community.
 
 ### Background and rationale
@@ -131,7 +135,7 @@ The GDC portal makes available files of raw counts (filename 'Counts'). Also, th
 ## <a name="dataRetrieval">III. Data retrieval</a>
 
 <div class="alert alert-warning" role="alert">
-  If you are merely interested in obtaining the final formatted TCGA Ovarian cancer data set then go directly ?here?.
+  If you are merely interested in obtaining the final formatted TCGA Ovarian cancer data set then go directly to section <a href="#rnaSeqData">V. TCGA ovarian cancer RNA-seq data</a>.
 </div>
 
 Below we provide a step-by-step instructions to retrieve the HGS-OvCa RNA-seq data files to your computer. To accomplish this, we will be using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
@@ -255,31 +259,28 @@ TCGAOV_data
 
 ## <a href="#dataProcessing" name="dataProcessing">IV. Data processing</a>
 
-### Desired files & formats
-
-Our goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-Seq counts for a gene.
+Our first goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-Seq counts for a gene (Table 2). This is described in the following 'Obtain data' section below.
 
 **Table 2. Desired layout for RNA-Seq data**  
 
-| Gene ID  |  case 1  |  case 2  |  case 3  |
-|:--------:|:--------:|:--------:|:--------:|
-| gene 1   |  0.0     |  200.0   |   150.0  |
-| gene 2   |  15.0    |  10.0    |    0.0   |
-| gene 3   |  10.0    |  0.0     |   250.0  |
+| Gene ID  |  case 1  |  case 2  |  case 3  |  case 4  |
+|:--------:|:--------:|:--------:|:--------:|:--------:|
+| gene 1   |  0.0     |  200.0   |   150.0  |  0.0     |
+| gene 2   |  15.0    |  10.0    |    0.0   |  2.0     |
+| gene 3   |  10.0    |  0.0     |   250.0  |  0.0     |
 
-There are just a couple of tasks we must perform to get the downloaded GDC RNA-Seq data into shape:
+Our second goal is to obtain a dataset that assigns a subtype to each of the cases (Table 3). Luckily, this assignment has already been done elsewhere (Verhaak 2013) but we will need to update that data to include our case UUIDs. This is described in the 'Obtain subtypes' section.
 
-- {:.list-unstyled} i. Merge
-  - The RNA-Seq cases are each in their own directory/file
-- {:.list-unstyled} ii. Convert
-  - Change the gene IDs from [ENSG](http://useast.ensembl.org/info/genome/genebuild/genome_annotation.html) to the more readable [HGNC](http://www.genenames.org/about/faq#Do%20I%20have%20to) namespace
-- {:.list-unstyled} iii. Filter
-  - Remove those genes not associated with an HGNC symbol
+**Table 3. Desired layout for subtype assignments data**  
 
-Below, we provide python code to accomplish these data munging tasks. The code is available as a [GitHub gist] for easy download and reuse. We will be making use of the indispensible [Python Data Analysis (pandas)](http://pandas.pydata.org/) library. For information on how to setup python for these tasks please see our guide on [python setup](//TODO).
+| Case ID  |  Subtype         |
+|:--------:|:----------------:|
+| case 1   |  mesenchymal     |
+| case 2   |  proliferative   |
+| case 3   |  immunoreactive  |
+| case 4   |  differentiated  |
 
-#### i. Merge
-The metadata file we downloaded (`metadata.cart.YYYY-MM-DDTXX-XX-XX.XXXXXX.json`) contains some key information about each data file downloaded from the GDC. A peek inside the meta data file reveals an array of json objects, one for each file:
+The metadata file we downloaded (`metadata.cart.YYYY-MM-DDTXX-XX-XX.XXXXXX.json`) contains some key information about each data file downloaded from the GDC and will be indispensible in generating our final output data. A peek inside the meta data file reveals an array of json objects, one for each file:
 
 ```json
 [
@@ -314,67 +315,25 @@ The metadata file we downloaded (`metadata.cart.YYYY-MM-DDTXX-XX-XX.XXXXXX.json`
 ]
 ```
 
-We are particularly interested in the following key-value pairs:
+We are particularly interested in just a few of the fields.
 
-- "file_name": This is our target file with expression data
-- "file_id": The directory name for the file
-- "case_id": The case UUID as described in the GDC data model
-- "entity_submitter_id": The ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode) used previously to identify study participants
+  - "file_name": This is our target file with expression data
+  - "file_id": The directory name for the file
+  - "case_id": The case UUID for this data
+  - "entity_submitter_id": The legacy identifier or 'barcode' for the case
 
-With this information in hand, let us merge the data files using the function `merge_data`.
+To format our download data (Table 2) we will use the `file_name` and `file_id` metadata fields to construct a path to the data files; The `case_id` will be the label for the data column. To format our subtype data (Table 3) we will use the `entity_submitter_id` field to find the correct case and add our updated `case_id`.  
 
-```python
-def merge_data(metadata_file, downloads_dir):
-    """
-        Merge the data files declared in the metadata
-        Cleans out the ENSG index gene ids for suffixes
-        Return a single dataframe
-    """
-    with open(metadata_file, 'r') as f:
-        metadatas = json.load(f)
-        df_combined = pd.DataFrame()
+We will be making use of the indispensible [Python Data Analysis (pandas)](http://pandas.pydata.org/) library to aid in our data munging tasks. For information on how to setup python for these tasks please see our guide on [python setup](//TODO).
 
-        # Loop over each file metadata record
-        for idx, metadata in enumerate(metadatas):
-            # Retrieve case ID so that we can name the output column
-            if not metadata["associated_entities"]:
-                continue
-            case_id = metadata["associated_entities"][0]["case_id"]
-            # Construct the path to the FPKM gzipped (*FKPM-UQ.gz) file
-            fkpmzip_path = os.path.join(downloads_dir,
-                                        metadata["file_id"],
-                                        metadata["file_name"])
-            # unzip and read in as dataframe
-            df_case = pd.read_table(fkpmzip_path,
-                                    compression='gzip',
-                                    header = None)
-            # set ENSG ID column (0) as index
-            df_case.set_index(0, inplace=True)
-            # set the column name
-            df_case.columns=[case_id]
-            # merge on ENSG as common; perform a union
-            ## initialize the df_combined if not already
-            if idx == 0:
-                df_combined = df_case.copy(deep=True)
-                df_combined.index.name = 'gene_id'
-                df_combined.columns.name = 'case_id'
-                continue
+### Obtain data
+Let us merge the individual data files.
 
-            df_combined = pd.merge(df_case,
-                                   df_combined,
-                                   how='outer',
-                                   left_index=True,
-                                   right_index=True)
+<script src="https://gist.github.com/jvwong/1a46e9f6c967834c68f5ed99dd2fb77d.js"></script>
 
-    ## Remove any trailing decimal digits in the ENSG gene id index
-    df_combined.index = df_combined.index.map(lambda x: x.split('.')[0])
+The main if statement initializes variables that store the path to the metadata file (`metadata_file`) and the directory enclosing our GDC data downloads (`downloads_dir`). You'll need to modify these to fit your case.
 
-    return df_combined
-```
-
-The function arguments `metadata_file` is a String path to the metadata file (e.g. `.../metadata.cart.2016-08-03T16-04-06.289487.json`) and `downloads_dir` is where your data files reside (e.g. (e.g.`.../TCGAOV_data/gdc_download_20160803/`).
-
-We import the metadata json array and loop over each entry. We'll need the `case_id` UUID to name the column in the output table so we get this from the first object in the `associated_entities` array, making sure it exists.
+This information is passed to the `merge_data` function. We import the metadata json array and loop over each entry corresponding to each download. We'll need the `case_id` UUID to name the column in the output table so we get this from the first object in the `associated_entities` array, making sure it exists.
 
 ```python
 if not metadata["associated_entities"]:
@@ -412,7 +371,7 @@ df_combined = pd.merge(df_case,
                        right_index=True)
 ```
 
-After some fancy cleanup of the ENSG gene ids, the resultant DataFrame `df_combined` should look like the following.
+After some fancy cleanup of the ENSG gene ids, the resultant DataFrame should look like the following.
 
 ```shell
   02d9aa2e-b16a-48ea-a420-5daed9fd51a6  02594e5e-8751-47c1-9245-90c66984b665  ...
@@ -424,13 +383,48 @@ ENSG00000078237 72702.686001  74478.208556  ...
 ...
 ```
 
-#### ii. Convert
-As shown above, the merged data uses the ENSG namespace for genes. We would like to use the more readable HGNC namespace.
+The final call to the `writeout` function dumps this to a tab-deliminted text file on your system at the location specified by argument `output_file_data`.
 
-#### iii. Filter
+### Obtain subtypes
+Verhaak et al. (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype ('mesenchymal', 'immunoreactive', 'proliferative' or ''). Unfortunately, rather than using UUIDs the data providers instead used an outdated ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode) to identify each case. Our goal here is to obtain the original data and update it accordingly.
 
+Obtain the data in Supplemental Table 1 filtered for the TCGA discovery cohort. We provide you this filtered data in a file named <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>. With this in hand, the following code will take up our metadata file and assign a case UUID to a subtype.
+
+<script src="https://gist.github.com/jvwong/9b88d29f6882df79ae84527da11149ad.js"></script>
+
+The algorithm inside the function `assign_subtype_ids` is similar to that used to obtain the data. We read in the original subtyping data inside `Verhaak_JCI_2013_tableS1.txt`. For each metadata entry we extract a TCGA barcode and corresponding case ID then append this to a DataFrame `df_gdc`.
+
+```python
+df_gdc.ix[barcode] = case_id
+```
+
+Finally, we merge the query data stored in `df_gdc` with the publication assignments stored in `df_subtypes` and extract the intersection of the two using the pandas merge option `how='inner'`.
+
+```python
+df_assigned = pd.merge(df_subtypes, df_gdc, how='inner', left_index=True, right_index=True)
+```
+
+The file is written to a tab-delimited file. This data will contain a subset of the 489 cases declared in the Supplemental Table 1 because the RNA-Seq data is limited to 376 cases.
+
+## <a href="#rnaSeqData" name="rnaSeqData">V. TCGA ovarian cancer RNA-seq data</a>
+
+We provide a single text file containing the TCGA ovarian cancer RNA-Seq data sourced from the GDC data portal. (//TODO link to file or repo)
+
+- RNA-Seq data
+  - File name: `TCGAOv_data.txt`
+  - Format: tab-delimited
+  - Cancer Program: TCGA
+  - Project: TCGA-Ov
+  - Workflow Type: HTSeq - FPKM-UQ
+  - Cases: 376
+  - Gene identifiers (rows): ENSG namespace
+  - Case identifiers (columns): GDC case UUID
+- Subtype assignments
+  - File name: `TCGAOv_subtypes.txt`
+  - Format: tab-delimited
+  - Cases: 376
 
 <hr/>
 
-## <a href="#references" name="references">V. References</a>
+## <a href="#references" name="references">VI. References</a>
 <div class="panel_group" data-inline="21720365,12529460,20229506,23104886,26493647,21436879,18698038,21941283,20022975,20802226,23257362"></div>
