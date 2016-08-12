@@ -143,9 +143,10 @@ $$
 This result is just under double the one-sided p-value, resulting from an 'uneven' distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.
 
 ## <a href="#summary" name="summary">IV. Summary</a>
-This primer has described the context and rationale for Fisher's Exact Test as a basis for determining gene set enrichment in gene expression data. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up ons.
+This primer has described the rationale for Fisher's Exact Test as a basis for determining  enrichment and depletion of a gene set. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up ons.
 
 <hr/>
+
 ## <a href="#references" name="references">V. References</a>
   - Ashburner M. et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nature Genetics v25 pp. 22-29, 2000.
   - Fisher, R. A. The logic of inductive inference. J. Roy. Statist. Soc. 98, pp. 39-82, 1935.

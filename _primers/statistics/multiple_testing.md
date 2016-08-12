@@ -14,18 +14,12 @@ figures:
   table_2: table_2.jpg
   figure_3: figure_3.jpg
 ---
-- {:.list-unstyled}  [I. Introduction](#introduction)
-    -   Errors and 'omics
-    -   Overview
-- {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
-    -   Example 1. A coin flip
-    -   Example 2. Pathway analyses
-    -   When does multiple testing apply?
-- {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
-    -   Type I errors increase with the number of tests
-    -   Controlling the Family-Wise Error Rate (FWER)
-    -   Controlling the false discovery rate
-- {:.list-unstyled}  [IV. References](#references)
+
+- {:.list-unstyled} Table of Contents
+  - {:.list-unstyled}  [I. Introduction](#introduction)
+  - {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
+  - {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
+  - {:.list-unstyled}  [IV. References](#references)
 
 <hr/>
 
@@ -45,7 +39,7 @@ This primer introduces concepts related to attempts to quantify and control erro
 
 ## <a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a>
 
-Hypothesis testing represents a gatekeeper of sorts for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in [section III](#multipleTestingControl).
+For better or worse, hypothesis testing as it is known today represents a gatekeeper for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in [section III](#multipleTestingControl).
 
 ### Example 1: A coin flip
 
@@ -59,7 +53,6 @@ Conveniently, we can use the [binomial distribution]({{ site.baseurl }}/primers/
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
 </div>
-<br/>
 
 In an attempt to standardize our decision making, we arbitrarily set a threshold of doubt: Observing 14 or more heads in a test will cause us to label that test as 'significant' and worthy of further consideration. In modern hypothesis testing terms, we would 'reject' the null hypothesis beyond this threshold in favour of some alternative, which in this case would be that the coin was unfair. Note that in principle we should set a lower threshold in the case that the coin is unfairly weighted towards tails but omit this for simplicity.
 
@@ -75,7 +68,7 @@ Recall that the calculations underlying the distribution in Figure 1 assumes an 
 
 **Definition** A **type II error** is the incorrect failure to reject a false null hypothesis.
 
-Typically, type I errors are considered more harmful than type II errors where one fails to reject a false null hypothesis. This is because type I errors are associated with 'discoveries' that are scientifically more interesting and worthy of further time and consideration. In hypothesis tests, researchers bound the probability of making a type I error by $$\alpha$$, which represents an 'acceptable' but nevertheless arbitrary level of risk. Problems arise however, when researchers perform not one but many hypothesis tests.
+Typically, type I errors are considered more harmful than type II errors where one fails to reject a false null hypothesis. This is because type I errors are associated with discoveries that are scientifically more interesting and worthy of further time and consideration. In hypothesis tests, researchers bound the probability of making a type I error by $$\alpha$$, which represents an acceptable but nevertheless arbitrary level of risk. Problems arise however, when researchers perform not one but many hypothesis tests.
 
 Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.
 
@@ -121,11 +114,10 @@ The use of microarrays, enrichment analyses or other large-scale approaches are 
 
 On the other hand, there are numerous examples were errors can have profound negative consequences. Consider a clinical test applied to determine the presence of HIV infection or any other life-threatening affliction that might require immediate and potentially injurious medical intervention. Control for any errors in testing is important for those patients tested.
 
-The take home message is that there is no substitute for considered and careful thought on the part of researchers who must interpret experimental results in the context of their wider understanding of the field. We conclude this section with a quote from R. A. Fisher who cautioned those in favour of automated decision making based on statistical tests (Goodman 1998):
+The take home message is that there is no substitute for considered and careful thought on the part of researchers who must interpret experimental results in the context of their wider understanding of the field.
 
-<blockquote>
-  The concept that the scientific worker can regard himself as an inert item in a vast co-operative concern working according to accepted rules, is encouraged by directing attention away from his duty to form correct scientific conclusions, to summarize them and to communicate them to his scientific colleagues, and by stressing his supposed duty mechanically to make a succession of automatic 'decisions'...The idea that this responsibility can be delegated to a giant computer programmed with Decision Functions belongs to a phantasy of circles rather remote from scientific research.  
-</blockquote>
+> *The concept that the scientific worker can regard himself as an inert item in a vast co-operative concern working according to accepted rules, is encouraged by directing attention away from his duty to form correct scientific conclusions, to summarize them and to communicate them to his scientific colleagues, and by stressing his supposed duty mechanically to make a succession of automatic 'decisions'...The idea that this responsibility can be delegated to a giant computer programmed with Decision Functions belongs to a phantasy of circles rather remote from scientific research.*
+> <footnote class="pull-right">-R. A. Fisher (Goodman 1998)</footnote>
 
 
 ## <a href="#multipleTestingControl" name="multipleTestingControl">III. Multiple testing control</a>
@@ -227,7 +219,7 @@ In an exploratory analysis, we are happy to sacrifice are strict control on type
 #### Benjamini-Hochberg control
 A landmark paper by Yoav Benjamini and Yosef Hochberg (Benjamini 1995) rationalized an alternative view of the errors associated with multiple testing:
 
-> In this work we suggest a new point of view on the problem of multiplicity. In many multiplicity problems the number of erroneous rejections should be taken into account and not only the question of whether any error was made. Yet, at the same time, the seriousness of the loss incurred by erroneous rejections is inversely related to the number of hypotheses rejected. From this point of view, a desirable error rate to control may be the expected proportion of errors among the rejected hypotheses, which we term the false discovery rate (FDR).
+> *In this work we suggest a new point of view on the problem of multiplicity. In many multiplicity problems the number of erroneous rejections should be taken into account and not only the question of whether any error was made. Yet, at the same time, the seriousness of the loss incurred by erroneous rejections is inversely related to the number of hypotheses rejected. From this point of view, a desirable error rate to control may be the expected proportion of errors among the rejected hypotheses, which we term the false discovery rate (FDR).*
 
 **Definition** The **false discovery proportion (Q)** is the proportion of false discoveries among the null hypotheses declared significant
 

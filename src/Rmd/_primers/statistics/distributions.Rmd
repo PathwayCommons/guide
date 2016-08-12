@@ -12,10 +12,10 @@ layout: markdown
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric Distribution](#hypergeometric)
-  
+
 <hr/>
 
-## <a href="#hypergeometric" name="hypergeometric">Hypergeometric Distribution</a>
+## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric Distribution</a>
 
 ### A Physical Setup
 Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
