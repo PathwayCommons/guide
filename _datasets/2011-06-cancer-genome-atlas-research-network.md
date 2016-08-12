@@ -406,6 +406,8 @@ This data will only contain a subset of the 489 cases declared in the Supplement
   <strong>Figure 8. RNA-Seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
 </div>
 
+<hr/>
+
 - {:.list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(28 KB)
   - Format: tab-delimited
   - Cases: 369

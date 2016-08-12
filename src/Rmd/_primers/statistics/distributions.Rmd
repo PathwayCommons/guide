@@ -10,6 +10,11 @@ category: statistics
 layout: markdown
 ---
 
+- {:.list-unstyled} Table of Contents
+  - {:.list-unstyled} [I. Hypergeometric Distribution](#hypergeometric)
+  
+<hr/>
+
 ## <a href="#hypergeometric" name="hypergeometric">Hypergeometric Distribution</a>
 
 ### A Physical Setup
