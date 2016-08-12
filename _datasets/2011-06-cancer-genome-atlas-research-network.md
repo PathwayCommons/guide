@@ -19,7 +19,8 @@ figures:
   figure_5: rna_quantification.jpg
   figure_6: TCGAOv_search.gif
   figure_7: tcga_barcode.png
-  figure_8: file_schemas.jpg
+  figure_8: rnaseqdata_layout.jpg
+  figure_9: subtypes_layout.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -395,18 +396,24 @@ This data will only contain a subset of the 489 cases declared in the Supplement
 
 ## <a href="#datasets" name="datasets">V. TCGA ovarian cancer datasets</a>
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive.super-slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. Overview of data file layout.</strong> The RNA-Seq data contains expression sets for 376 cases referenced by their GDC case UUID. Genes are referred to using their ENSG gene ID. The subtype assignments data contains additional metadata (Subtype, Grade, Recurrence) for 369 cases.
-</div>
-
-- RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_data }}" download>`TCGAOv_data.txt.zip`</a>(97.7 MB)
+- {:.list-unstyled} RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_data }}" download>`TCGAOv_data.txt.zip`</a>(97.7 MB)
   - Format: tab-delimited  
   - Cases: 376
   - Workflow Type: HTSeq - FPKM-UQ  
-- Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(28 KB)
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 8. RNA-Seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
+</div>
+
+- {:.list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(28 KB)
   - Format: tab-delimited
   - Cases: 369
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 9. Subtype assignments file layout.</strong> Columns include addtional metadata and row labels are case UUIDs.
+</div>
 
 <hr/>
 
