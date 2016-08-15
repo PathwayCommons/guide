@@ -317,7 +317,7 @@ We will be making use of the [Python Data Analysis (pandas)](http://pandas.pydat
 ### Obtain data
 Let us merge the individual data files. We present the full code followed by a brief explanation.
 
-<script src="https://gist.github.com/jvwong/48f9195db3d73009e8b93ed1de94a52d.js"></script>
+<script src="https://gist.github.com/jvwong/1a46e9f6c967834c68f5ed99dd2fb77d.js"></script>
 
 - Note 1: `merge_data` transforms out data. It takes two parameters: A path to the metadata (`metadata_file`) and the directory where your downloads reside (`downloads_dir`). The script loops over each metadata entry corresponding a download, extracts the target file and merges it into a [DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) as a column with case UUID (`case_id`) as a header.
 - Note 2: The `case_id` is an object within the `associated_entities` array so we first check that the latter exists or non-empty then get the first object.
