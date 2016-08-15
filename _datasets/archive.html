@@ -2,13 +2,16 @@
 title: Data Sets
 subtitle: Study data used in this site
 layout: panelista
+categories:
+  - TCGA_Ovarian_Cancer
 ---
 
+{% for category in page.categories %}
+  {% assign docs = (site.datasets | where: 'category' , category ) %}
 
-{% if site.datasets %}
-{% assign docs = (site.datasets | sort: 'date' | reverse) %}
-
+  <h2 class="page-category">{{ category | replace: '_', ' ' }}</h2>
+  <hr/>
   <div class="dataset">
     {% include archive_list.html %}
   </div>
-{% endif %}
+{% endfor %}

@@ -1,15 +1,16 @@
 ---
-title: Ovarian Cancer
-subtitle: The Cancer Genome Atlas Research Network characterizes high-grade serous ovarian adenocarcinoma
+title: Get Expression Data
+subtitle: Learn how to use the Genomic Data Commons data portal to retrieve the TCGA ovarian cancer project RNA expression data
 pmid: 21720365
 cover: cover.jpg
 pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
-category: RNA sequencing
+category: TCGA_Ovarian_Cancer
+badge: RNA-Seq
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
-  tcgaov_data: TCGAOv_data.txt.zip
+  tcgaov_fpkmuq_data: TCGAOv_FPKMUQ_data.txt.zip
   tcgaov_subtypes: TCGAOv_subtypes.txt.zip
 figures:
   figure_overview: overview.jpg
@@ -49,9 +50,10 @@ This guide spans background on the ovarian cancer to detailed instructions on so
 2. Be able to obtain the TCGA HGS-OvCa RNA sequencing data
 3. Be able to transform the data into a format suitable for expression analysis
 
+<br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Summary and Goals.</strong> This guide provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-Seq data cases into a single file. We also show how to obtain a file describing the subtype of each case. Subtype analysis was performed elsewhere by Tothill et al. (Tothill 2013). Downstream differential expression analysis will involve comparison across subtypes.
+  <strong>Summary and Goals.</strong> This guide provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-Seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill et al. (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -347,11 +349,12 @@ This data will only contain a subset of the 489 cases declared in the Supplement
 
 ## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
 
-- {:.list-unstyled} RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_data }}" download>`TCGAOv_data.txt.zip`</a>(97.7 MB)
+- {:.list-unstyled} RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_fpkmuq_data }}" download>`TCGAOv_FPKMUQ_data.txt.zip`</a>(97.7 MB)
   - Format: tab-delimited  
-    - Columns: GDC case UUID
-      - Cases: 376
-    - Rows: ENSG gene identifier  
+    - Columns
+      - GDC case UUID (376 cases)      
+    - Rows
+      - ENSG gene identifier  
   - Workflow Type: HTSeq - FPKM-UQ  
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
@@ -364,10 +367,12 @@ This data will only contain a subset of the 489 cases declared in the Supplement
 - {:.list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(28 KB)
   - Format: tab-delimited
     - Columns
-        - GDC case UUID (case_id)
-        - TCGA barcode (barcode)
-        - SUBTYPE
-    - Rows: 369 cases
+      - GDC case UUID (case_id)
+      - TCGA barcode (barcode)
+      - SUBTYPE
+      - Other
+    - Rows
+      - 369 cases
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
