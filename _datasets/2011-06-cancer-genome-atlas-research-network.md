@@ -317,80 +317,24 @@ We will be making use of the [Python Data Analysis (pandas)](http://pandas.pydat
 ### Obtain data
 Let us merge the individual data files. We present the full code followed by a brief explanation.
 
-<script src="https://gist.github.com/jvwong/1a46e9f6c967834c68f5ed99dd2fb77d.js"></script>
+<script src="https://gist.github.com/jvwong/48f9195db3d73009e8b93ed1de94a52d.js"></script>
 
-The main if statement initializes variables that store the path to the metadata file (`metadata_file`) and the directory enclosing our GDC data downloads (`downloads_dir`). You'll need to modify these to fit your case.
-
-This information is passed to the `merge_data` function. We import the metadata json array and loop over each entry corresponding to each download. We'll need the `case_id` UUID to name the column in the output table so we get this from the first object in the `associated_entities` array, making sure it exists.
-
-```python
-if not metadata["associated_entities"]:
-    continue
-case_id = metadata["associated_entities"][0]["case_id"]
-```  
-
-We create the path to the data file `fkpmzip_path` from the metadata fields and extract it into a [DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html).
-
-```python
-df_case = pd.read_table(fkpmzip_path,
-                        compression='gzip',
-                        header = None)
-```
-
-The ENSG gene identifiers in the first column are set as the DataFrame index.
-
-```python
-df_case.set_index(0, inplace=True)
-```
-
-Then set the name of the column to the case id.
-
-```python
-df_case.columns=[case_id]
-```
-
-Finally, append the new case by merging with any DataFrame from a previous iteration. The option `how='outer'` tells pandas to align the two data sets using the ENSG gene ids in the indices and use the union (rather than the interection) of the two.
-
-```python
-df_combined = pd.merge(df_case,
-                       df_combined,
-                       how='outer',
-                       left_index=True,
-                       right_index=True)
-```
-
-After some fancy cleanup of the ENSG gene ids, the resultant DataFrame should look like the following.
-
-```shell
-  02d9aa2e-b16a-48ea-a420-5daed9fd51a6  02594e5e-8751-47c1-9245-90c66984b665  ...
-ENSG00000242268 2772.086018 1220.825140 ...
-ENSG00000270112 1282.119128 465.831754  ...
-ENSG00000167578 63822.991349  124337.645067 ...   
-ENSG00000273842 0.000000  0.000000  ...
-ENSG00000078237 72702.686001  74478.208556  ...
-...
-```
-
-The final call to the `writeout` function dumps this to a tab-deliminted text file on your system at the location specified by argument `output_file_data`.
+- Note 1: `merge_data` transforms out data. It takes two parameters: A path to the metadata (`metadata_file`) and the directory where your downloads reside (`downloads_dir`). The script loops over each metadata entry corresponding a download, extracts the target file and merges it into a [DataFrame](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) as a column with case UUID (`case_id`) as a header.
+- Note 2: The `case_id` is an object within the `associated_entities` array so we first check that the latter exists or non-empty then get the first object.
+- Note 3: Merge with the growing DataFrame `df_combined`. The option `how='outer'` tells pandas to align the two data sets using the ENSG gene ids in the indices and use the union (rather than the intersection) of the two.
+- Note 4: `writeout` dumps to a tab-delimited text file specified by argument `output_file_data`.
+- Note 5: Set up the path variables pointing to data files. You should modify to suit your set up.
 
 ### Obtain subtypes
 Verhaak et al. (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype ('mesenchymal', 'immunoreactive', 'proliferative' or 'differentiated'). Unfortunately, rather than using UUIDs the data providers instead used an outdated ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode) to identify each case. Our goal here is to obtain the original data and update it accordingly.
 
 Obtain the data in Supplemental Table 1 filtered for the TCGA discovery cohort. We provide you this filtered data in a file named <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>. With this in hand, the following code will take up our metadata file and assign a case UUID to a subtype.
 
-<script src="https://gist.github.com/jvwong/9b88d29f6882df79ae84527da11149ad.js"></script>
+<script src="https://gist.github.com/jvwong/48f9195db3d73009e8b93ed1de94a52d.js"></script>
 
-The algorithm inside the function `assign_subtype_ids` is similar to that used to obtain the data. Read in the original subtyping data and for each metadata entry we extract a TCGA barcode and corresponding case ID then append this to a DataFrame `df_gdc`.
-
-```python
-df_gdc.ix[barcode] = case_id
-```
-
-Finally, we merge the query data stored in `df_gdc` with the publication assignments stored in `df_subtypes` and extract the intersection of the two using the pandas merge option `how='inner'`.
-
-```python
-df_assigned = pd.merge(df_subtypes, df_gdc, how='inner', left_index=True, right_index=True)
-```
+- Note 1:  `assign_subtype_ids` reads in the original subtyping data and for each metadata entry we extract a TCGA barcode and corresponding case ID then append this to a DataFrame.
+- Note 2: We're only interested in matching the project (TCGA), tissue source site (two digits) and the participant id (four digits)
+- Note 3: Finally, we merge the query data stored in `df_gdc` with the publication assignments stored in `df_subtypes` and extract the intersection of the two using the pandas merge option `how='inner'`.
 
 This data will only contain a subset of the 489 cases declared in the Supplemental Table 1 because the RNA-Seq data is limited to 376 cases.
 
