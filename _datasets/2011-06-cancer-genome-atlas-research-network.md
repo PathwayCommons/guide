@@ -12,6 +12,7 @@ data:
   tcgaov_data: TCGAOv_data.txt.zip
   tcgaov_subtypes: TCGAOv_subtypes.txt.zip
 figures:
+  figure_overview: overview.jpg
   figure_1: hgsovca_bowtell_2011.jpg
   figure_2: microarray_overview.jpg
   figure_3: gdc_data_model.jpg
@@ -24,12 +25,13 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled}  [I. Overview & Goals](#goals)
-  - {:.list-unstyled}  [II. Background](#background)  
-  - {:.list-unstyled}  [III. TCGA-Ov Project](#tcgaovProject)
-  - {:.list-unstyled} [IV. Data processing](#dataProcessing)
-  - {:.list-unstyled} [V. TCGA ovarian cancer datasets](#datasets)
-  - {:.list-unstyled} [VI. References](#references)
+  - {:.list-unstyled} [I. Summary & Goals](#goals)
+  - {:.list-unstyled} [II. Background](#background)  
+  - {:.list-unstyled} [III. TCGA-Ov Project](#tcgaovProject)
+  - {:.list-unstyled} [IV. Data Retrieval](#dataRetrieval)
+  - {:.list-unstyled} [V. Data processing](#dataProcessing)
+  - {:.list-unstyled} [VI. TCGA ovarian cancer datasets](#datasets)
+  - {:.list-unstyled} [VII. References](#references)
 
 <hr/>
 
@@ -46,6 +48,11 @@ This guide spans background on the ovarian cancer to detailed instructions on so
 2. Be familiar with the expression subtypes of ovarian cancer  
 2. Be able to obtain the TCGA HGS-OvCa RNA sequencing data
 3. Be able to transform the data into a format suitable for expression analysis
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Summary and Goals.</strong> This guide provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-Seq data cases into a single file. We also show how to obtain a file describing the subtype of each case. Subtype analysis was performed elsewhere by Tothill et al. (Tothill 2013). Downstream differential expression analysis will involve comparison across subtypes.
+</div>
 
 ## <a href="#background" name="background">II. Background</a>
 Nearly 70% of deaths from ovarian cancer are attributed to high-grade serous ovarian cancer (HGS-OvCa) (Vaughan 2011). Therapy and survival rates for ovarian cancers in general have not appreciably changed over the last 40 years:  HGS-OvCa are treated with aggressive surgery and taxane-platinum therapy. Approximately a quarter of naive patients will relapse within a year with 80-90% showing resistance to therapy. The five-year survival rate remains poor at only 31%.
@@ -71,7 +78,7 @@ Subsequent genomic characterization of HGS-OvCa tumor samples has found a near u
 
 It is clear that one of the most pressing challenges for the management and treatment of HGS-OvCa is a better  understanding of the nature of cellular and molecular deregulation that underlie the genesis, progression, and resistance of this cancer to therapy.
 
-## <a href="#tcgaovProject" name="tcgaovProject">II. TCGA-Ov project</a>
+## <a href="#tcgaovProject" name="tcgaovProject">III. TCGA-Ov project</a>
 
 The lack of successful treatment strategies prompted TCGA to measure genomic and epigenomic abnormalities on clinically annotated HGS-OvCa samples to identify molecular abnormalities that might influence pathophysiology, affect outcomes and identify rational therapeutic targets.
 
@@ -123,7 +130,7 @@ The GDC portal makes available files of raw counts ('Gene Count') along with  no
   <strong>Figure 5. Overview of RNA-seq quantification.</strong> The grey boxes represent data types that are available throught the GDC data portal. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/high-level-data-generation/rna-seq-quantification">Data Harmonization and Generation</a>.
 </div>
 
-## <a name="dataRetrieval">III. Data retrieval</a>
+## <a name="dataRetrieval">IV. Data retrieval</a>
 
 Below we provide step-by-step instructions to download the HGS-OvCa RNA-seq dataset to your computer. We recommend using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
 
@@ -245,7 +252,7 @@ TCGAOV_data
 
 <hr/>
 
-## <a href="#dataProcessing" name="dataProcessing">IV. Data processing</a>
+## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
 
 Our first goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-Seq counts for a gene (Table 1). This is described in the following 'Obtain data' section below.
 
@@ -338,11 +345,13 @@ Obtain the data in Supplemental Table 1 filtered for the TCGA discovery cohort. 
 
 This data will only contain a subset of the 489 cases declared in the Supplemental Table 1 because the RNA-Seq data is limited to 376 cases.
 
-## <a href="#datasets" name="datasets">V. TCGA ovarian cancer datasets</a>
+## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
 
 - {:.list-unstyled} RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_data }}" download>`TCGAOv_data.txt.zip`</a>(97.7 MB)
   - Format: tab-delimited  
-  - Cases: 376
+    - Columns: GDC case UUID
+      - Cases: 376
+    - Rows: ENSG gene identifier  
   - Workflow Type: HTSeq - FPKM-UQ  
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
@@ -354,7 +363,11 @@ This data will only contain a subset of the 489 cases declared in the Supplement
 
 - {:.list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(28 KB)
   - Format: tab-delimited
-  - Cases: 369
+    - Columns
+        - GDC case UUID (case_id)
+        - TCGA barcode (barcode)
+        - SUBTYPE
+    - Rows: 369 cases
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -363,5 +376,5 @@ This data will only contain a subset of the 489 cases declared in the Supplement
 
 <hr/>
 
-## <a href="#references" name="references">VI. References</a>
+## <a href="#references" name="references">VII. References</a>
 <div class="panel_group" data-inline="21720365,12529460,20229506,23104886,26493647,21436879,18698038,21941283,20022975,20802226,23257362"></div>
