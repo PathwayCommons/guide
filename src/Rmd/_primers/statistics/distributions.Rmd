@@ -12,7 +12,9 @@ layout: markdown
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric Distribution](#hypergeometric)
-
+  - {:.list-unstyled} [II. Binomial Distribution](#binomial)
+  - {:.list-unstyled} [III. Poisson Distribution](#poisson)
+  - {:.list-unstyled} [IV. Negative Binomial](#negativeBinomial)  
 <hr/>
 
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric Distribution</a>
@@ -84,3 +86,12 @@ ggplot(data, aes(x=factor(x), y=y)) +
   geom_bar(stat="identity", fill= "#2c3e50", colour="black") +
   labs(x = "Number of Aces", y = "Probability")
 ```
+
+## <a href="#binomial" name="binomial">II. Binomial Distribution</a>
+//TODO
+
+## <a href="#poisson" name="poisson">III. Poisson Distribution</a>
+//TODO
+
+## <a href="#negativeBinomial" name="negativeBinomial">IV. Negative Binomial</a>
+//TODO

@@ -136,7 +136,7 @@
       $authorlast = $author.find('LastName');
       $collectiveName = $author.find('CollectiveName');
       authorText = $authorlast.text() ?
-        [$authorfirst.text(), $authorlast.text()].join(' ') :
+        [$authorlast.text(), $authorfirst.text()[0]].join(' ') :
         $collectiveName.text();
 
       //MeshHeadingList - add up to 10 terms

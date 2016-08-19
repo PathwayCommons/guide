@@ -12,7 +12,9 @@ layout: markdown
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric Distribution](#hypergeometric)
-
+  - {:.list-unstyled} [II. Binomial Distribution](#binomial)
+  - {:.list-unstyled} [III. Poisson Distribution](#poisson)
+  - {:.list-unstyled} [IV. Negative Binomial](#negativeBinomial)  
 <hr/>
 
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric Distribution</a>
@@ -87,3 +89,12 @@ ggplot(data, aes(x=factor(x), y=y)) +
 {% endhighlight %}
 
 <img src="/guide/media/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" />
+
+## <a href="#binomial" name="binomial">II. Binomial Distribution</a>
+//TODO
+
+## <a href="#poisson" name="poisson">III. Poisson Distribution</a>
+//TODO
+
+## <a href="#negativeBinomial" name="negativeBinomial">IV. Negative Binomial</a>
+//TODO
