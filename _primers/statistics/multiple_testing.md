@@ -357,7 +357,7 @@ This implies that $$\text{FWER} \geq \text{FDR}$$ and so FWER provides an upper 
 
 #### Example of BH procedure
 
-To illustrate the BH procedure we adapt a trivial example presented by Glickman et al. (Glickman 2014). Suppose a researcher performs an experiments examining differential expression of 10 genes in response to treatment relative to control. Ten corresponding p-values result, one for each test: $$0.52, 0.07, 0.013, 0.0001, 0.26, 0.04, 0.01, 0.15, 0.03 \text{ and } 0.002$$. The researcher decides to bound the FDR at 5% ($$q=0.05$$). Table 2 summarizes the ordered p-values and corresponding BH procedure calculations.
+To illustrate the BH procedure we adapt a trivial example presented by Glickman *et al.* (Glickman 2014). Suppose a researcher performs an experiments examining differential expression of 10 genes in response to treatment relative to control. Ten corresponding p-values result, one for each test: $$0.52, 0.07, 0.013, 0.0001, 0.26, 0.04, 0.01, 0.15, 0.03 \text{ and } 0.002$$. The researcher decides to bound the FDR at 5% ($$q=0.05$$). Table 2 summarizes the ordered p-values and corresponding BH procedure calculations.
 
 **Table 2. Example BH calculations**
 
@@ -393,7 +393,7 @@ Since the original publication of the BH procedure in 1995, there have been a nu
 
 ## <a href="#references" name="references">IV. References</a>
   - Benjamini Y and Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Roy. Stat. Soc., v57(1) pp289-300, 1995.
-  - Glickman ME et al. False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.
+  - Glickman ME *et al.* False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.
   - Goeman JJ and Solari A. Multiple hypothesis testing in genomics. Stat. Med., 33(11) pp1946-1978, 2014.
   - Goodman SN. Multiple Comparisons, Explained. Amer. J. Epid., v147(9) pp807-812, 1998.
   - Rothman KJ. No Adjustments Are Needed for Multiple Comparisons. Epidemiology, v1(1) pp. 43-46, 1990.

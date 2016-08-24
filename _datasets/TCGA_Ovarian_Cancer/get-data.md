@@ -7,7 +7,7 @@ pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
 category: TCGA_Ovarian_Cancer
-badge: RNA-Seq
+badge: RNA-seq
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
   tcgaov_counts: TCGAOv_counts.txt.zip
@@ -53,7 +53,7 @@ This section spans background on ovarian cancer to detailed instructions on sour
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Summary and Goals.</strong> This section provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-Seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill et al. (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes in the 'Process Data' follow-up section.
+  <strong>Summary and Goals.</strong> This section provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill *et al.* (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes in the 'Process Data' follow-up section.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -63,11 +63,11 @@ It is now appreciated that ovarian cancers arise in varying anatomical locations
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Clinical and molecular features of HGS-OvCa.</strong>  Different stages of HGS-OvCa development in the human fallopian tube marked by p53 staining and cellular morphology. A substantial proportion of HGS-OvCa arises from the fallopian tube. p53 staining marks clonal expansion of cells (signatures) in the absence of morphological transformation of the fallopian tube epithelium. Piling up of cells and loss of epithelial architecture occurs in early lesions (tubal intraepithelial carcinoma (TIC)), finally leading to invasive cancer. <em>Adapted from Bowtell et al. 2011</em>.
+  <strong>Figure 1. Clinical and molecular features of HGS-OvCa.</strong>  Different stages of HGS-OvCa development in the human fallopian tube marked by p53 staining and cellular morphology. A substantial proportion of HGS-OvCa arises from the fallopian tube. p53 staining marks clonal expansion of cells (signatures) in the absence of morphological transformation of the fallopian tube epithelium. Piling up of cells and loss of epithelial architecture occurs in early lesions (tubal intraepithelial carcinoma (TIC)), finally leading to invasive cancer. <em>Adapted from Bowtell *et al.* 2011</em>.
 </div>
 
 ### Expression subtypes
-An early effort by Tothill et al. (Tothill 2008) was aimed at performing molecular subtype analysis of 285 well-annotated invasive ovarian, fallopian tube and peritoneal cancers. An unsupervised clustering analysis of gene expression revealed the presence of six robust molecular subtypes (C1 to C6) with discernible differences in malignant potential and grade.
+An early effort by Tothill *et al.* (Tothill 2008) was aimed at performing molecular subtype analysis of 285 well-annotated invasive ovarian, fallopian tube and peritoneal cancers. An unsupervised clustering analysis of gene expression revealed the presence of six robust molecular subtypes (C1 to C6) with discernible differences in malignant potential and grade.
 
 - {:.list-unstyled} **Stromal.** Subtype C1 and C4 were designated with a 'high' and 'low' stromal response, respectively, based on their expression of genes associated with activated myofibroblasts, vascular endothelial cells and pericytes. The C1 subtype demonstrated the poorest overall survival.
 
@@ -94,16 +94,16 @@ Figure 2 summarizes the overall methodology for interrogating mRNA expression le
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Overview of microarray mRNA expression analysis.</strong> Patient tumor and matched normal tissue samples were interrogated on three microarray platforms (parentheses indicate number of genes). Normalized data for each platform was used in a computational workflow whereby a single 'unified' expression value was calculated for each gene. After filtering, a set of four subtypes were identified: The 'differentiated', 'immunoreactive', 'mesenchymal' and 'proliferative' subtypes were named based on work by Tothill et al. (Tothill 2010) and also by 'inspection'.  
+  <strong>Figure 2. Overview of microarray mRNA expression analysis.</strong> Patient tumor and matched normal tissue samples were interrogated on three microarray platforms (parentheses indicate number of genes). Normalized data for each platform was used in a computational workflow whereby a single 'unified' expression value was calculated for each gene. After filtering, a set of four subtypes were identified: The 'differentiated', 'immunoreactive', 'mesenchymal' and 'proliferative' subtypes were named based on work by Tothill *et al.* (Tothill 2010) and also by 'inspection'.  
 </div>
 
-Three microarray platforms were utilized to interrogate mRNA expression across tumor samples were assayed to derive normalized gene expression differences between tumor/matched normal pairs. The data processing steps integrated data from three array platforms and resulted in a 'Unified' expression dataset for 11 864 genes. Subsequent processing distilled a set of 1 500 genes used in a clustering algorithm to derive four expression subtypes: 'differentiated', 'immunoreactive',  'mesenchymal' and 'Proliferative'. The 'immunoreactive' and 'mesenchymal' names were taken from a previous analysis performed by Tothill et al. (Tothill 2010).  
+Three microarray platforms were utilized to interrogate mRNA expression across tumor samples were assayed to derive normalized gene expression differences between tumor/matched normal pairs. The data processing steps integrated data from three array platforms and resulted in a 'Unified' expression dataset for 11 864 genes. Subsequent processing distilled a set of 1 500 genes used in a clustering algorithm to derive four expression subtypes: 'differentiated', 'immunoreactive',  'mesenchymal' and 'Proliferative'. The 'immunoreactive' and 'mesenchymal' names were taken from a previous analysis performed by Tothill *et al.* (Tothill 2010).  
 
-### RNA-Sequencing
+### RNA-sequencing
 
 On June 6, 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/newsannouncements/genomic-data-commons-launch) that their data would be housed under the [Genomic Data Commons](https://gdc.nci.nih.gov/) (GDC) in an attempt to centralize and harmonize access to large-scale biological data generation efforts. The GDC website provides extensive documentation on the growing body of [datasets](https://gdc.nci.nih.gov/about-gdc/contributed-genomic-data-cancer-research) and make available documentation on ways to [narrow searches and access data](https://gdc.nci.nih.gov/access-data).
 
-> *The GDC Data Portal provides access to the subset of TCGA data that has been harmonized by the GDC using its data generation and harmonization pipelines. TCGA data in the GDC Data Portal includes BAM files aligned to the latest human genome build, VCF files containing variants called by the GDC, and RNA-Seq expression data harmonized by the GDC.*
+> *The GDC Data Portal provides access to the subset of TCGA data that has been harmonized by the GDC using its data generation and harmonization pipelines. TCGA data in the GDC Data Portal includes BAM files aligned to the latest human genome build, VCF files containing variants called by the GDC, and RNA-seq expression data harmonized by the GDC.*
 > <footer class="text-right"><a href="https://gdc.nci.nih.gov/gdc-tcga-data-access-matrix-users">GDC for TCGA Data Access Matrix Users</a></footer>
 
 At the time of writing, the Genomic Data Commons was not providing microarray data associated with the TCGA ovarian cancer study. Instead, the GDC is providing RNA-sequencing data for 376 patient samples (i.e. 'cases') which we focus on moving forward.
@@ -117,14 +117,14 @@ The pipeline from study participant to data consists of a complex constellation 
 </div>
 
 
-#### RNA-Seq data workflow
+#### RNA-seq data workflow
 Even a cursory discussion of RNA sequencing is well beyond the scope of this guide. Instead, we refer the reader to the [RNA-seqlopedia](http://rnaseq.uoregon.edu/) which is a very detailed web resource authored by the laboratory of [William A. Cresko](http://creskolab.uoregon.edu/) ([University of Oregon](http://uoregon.edu/)).
 
-The GDC mRNA-Seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR) alignment standard operating procedures (Dobin 2013) (Figure 4).
+The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR) alignment standard operating procedures (Dobin 2013) (Figure 4).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Overview of RNA-Seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/genomic-data-alignment/rna-seq-pipeline">Data Harmonization and Generation</a>.
+  <strong>Figure 4. Overview of RNA-seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/genomic-data-alignment/rna-seq-pipeline">Data Harmonization and Generation</a>.
 </div>
 
 The GDC portal makes available files of RNA sequencing count data ('Gene Count') along with normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 5).
@@ -279,9 +279,9 @@ TCGAOV_data
 
 ## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
 
-Our first goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-Seq counts for a gene (Table 1). This is described in the following 'Get data' section.
+Our first goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-seq counts for a gene (Table 1). This is described in the following 'Get data' section.
 
-**Table 1. Desired layout for RNA-Seq data**  
+**Table 1. Desired layout for RNA-seq data**  
 
 | Gene ID  |  case 1  |  case 2  |  case 3  |  case 4  |
 |:--------:|:--------:|:--------:|:--------:|:--------:|
@@ -337,7 +337,7 @@ The metadata file we downloaded contains some key information about each data fi
           "data_category": "Raw Sequencing Data",
           "file_size": 13228457415,
           "file_state": "processed",
-          "experimental_strategy": "RNA-Seq"
+          "experimental_strategy": "RNA-seq"
         }
       ]
     },
@@ -354,7 +354,7 @@ The metadata file we downloaded contains some key information about each data fi
 ]
 ```
 
-We are particularly interested in the `analysis` and `associated_entities` fields. For the `analysis` field  we will retrieve the `submitter_id` whose prefix represents the UUID (e.g. `871da002-8649-42bc-8ce4-9d2a8ff66213`) of the corresponding downloaded RNA-Seq data file (e.g. `871da002-8649-42bc-8ce4-9d2a8ff66213.htseq.counts.gz`). For the `associated_entities` field we'll want the `case_id` which is the case UUID for this data assigned by the GDC and will serve as the output column header.
+We are particularly interested in the `analysis` and `associated_entities` fields. For the `analysis` field  we will retrieve the `submitter_id` whose prefix represents the UUID (e.g. `871da002-8649-42bc-8ce4-9d2a8ff66213`) of the corresponding downloaded RNA-seq data file (e.g. `871da002-8649-42bc-8ce4-9d2a8ff66213.htseq.counts.gz`). For the `associated_entities` field we'll want the `case_id` which is the case UUID for this data assigned by the GDC and will serve as the output column header.
 
 > *Beware: Different data file types are accompanied by different metadata schemas*
 
@@ -374,7 +374,7 @@ Let us extract and combine the individual data files and label the columns with 
 - Note 7: The data files may contain extract status text so only keep indices that use the Ensembl ID namespace prefix `ENSG`.
 
 ### Get subtypes
-Verhaak et al. (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype ('mesenchymal', 'immunoreactive', 'proliferative' or 'differentiated'). Unfortunately, rather than UUIDs they instead identified cases with a now outdated ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode). Our goal here is to obtain the original data and update it accordingly.
+Verhaak *et al.* (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype ('mesenchymal', 'immunoreactive', 'proliferative' or 'differentiated'). Unfortunately, rather than UUIDs they instead identified cases with a now outdated ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode). Our goal here is to obtain the original data and update it accordingly.
 
 Obtain the original data in Supplemental Table 1 filtered for the TCGA discovery cohort. We provide this filtered data in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>. With this in hand, the following code will take up our metadata file and assign a case UUIDs to the corresponding subtype.
 
@@ -386,7 +386,7 @@ Obtain the original data in Supplemental Table 1 filtered for the TCGA discovery
 
 ## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
 
-- {:.list-unstyled} RNA-Seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_counts }}" download>`TCGAOv_counts.txt.zip`</a>(21 MB)
+- {:.list-unstyled} RNA-seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_counts }}" download>`TCGAOv_counts.txt.zip`</a>(21 MB)
   - Format: tab-delimited  
     - Columns
       - GDC case UUID (376 cases)      
@@ -396,7 +396,7 @@ Obtain the original data in Supplemental Table 1 filtered for the TCGA discovery
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. RNA-Seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
+  <strong>Figure 8. RNA-seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
 </div>
 
 <hr/>
