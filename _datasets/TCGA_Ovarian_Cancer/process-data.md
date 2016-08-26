@@ -7,21 +7,28 @@ layout: document
 category: TCGA_Ovarian_Cancer
 badge: RNA-seq
 data:
+videos:
+  video_1: https://www.youtube.com/embed/HMyCqWhwB8E
+  video_2: https://www.youtube.com/embed/pfZp5Vgsbw0
 figures:
   figure_overview: overview.jpg
   figure_1: wang_nrg_v10_2009_fig1.png
-  figure_2: figure_2.jpg
-  figure_3: figure_3.jpg
+  figure_2: illumina_flowcell.png
+  figure_3: figure_reads_layout.jpg
+  figure_4: figure_correction_overview.jpg
+  figure_5: figure_correction_totalCount.jpg
+  figure_6: figure_TMM_trim.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#goals)
+  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
   - {:.list-unstyled} [II. Opportunities and challenges](#opportunitiesChallenges)
-  - {:.list-unstyled} [III. Variability and normalization](#variabilityNormalization)
-  - {:.list-unstyled} [IV. Differential expression](#differentialExpression)
-  - {:.list-unstyled} [V. Data processing ](#geneLists)
-  - {:.list-unstyled} [VI. Datasets](#datasets)
-  - {:.list-unstyled} [VII. References](#references)
+  - {:.list-unstyled} [III. RNA Sequencing](#rnaSequencing)
+  - {:.list-unstyled} [IV. Normalization](#normalization)
+  - {:.list-unstyled} [V. Differential expression](#differentialExpression)
+  - {:.list-unstyled} [VI. Data processing ](#geneLists)
+  - {:.list-unstyled} [VII. Datasets](#datasets)
+  - {:.list-unstyled} [VIII. References](#references)
 
 <hr/>
 
@@ -39,7 +46,7 @@ figures:
   </ol>
 </div>
 
-## <a href="#overviewGoals" name="overviewGoals">I. Summary & goals</a>
+## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 This section follows ['Get Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get-data/) describing how to source RNA sequencing data from [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) effort to characterize high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
 
 In this section we will identify differentially expressed genes (DEGs) between case subtypes. Our over-overarching goal is to generate DEG lists that are suitable for downstream enrichment analysis using  [g:Profiler](http://biit.cs.ut.ee/gprofiler/) and [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/index.jsp). By then end of this discussion you should:
@@ -69,14 +76,13 @@ RNA-seq appeared in research workflows starting in the latter-half of the 2000s 
 
 Our overarching goal is to assess genes for differential expression. Statistical concepts are introduced into this process in order to provide a more explicit and rigorous basis for modeling variability and [hypothesis testing]({{ site.baseurl }}/primers/statistics/multiple_testing/#hypothesisTestingErrors/). Unlike microarrays which provide continuous measures of light intensity associated with labelled nucleic acids, deep sequencing produces discrete or 'digital' counts of mapped reads and are better described by a set of statistical models distinct from those continuous data that arise from microarrays. We focus our discussion on the statistical models and approaches relevant to differential expression testing.
 
+## <a href="#rnaSequencing" name="rnaSequencing">III. RNA sequencing</a>
 
-## <a href="#normalization" name="normalization">III. Normalization</a>
-
-### RNA-sequencing concepts
-
-We briefly review some RNA-seq terminology and concepts we will use in a detailed discussion of RNA data normalization procedures. Figure 1 shows a typical RNA sequencing run in which an mRNA sample is converted into a set of corresponding counts.
+We briefly review some RNA-seq concepts and terminology that will be helpful in a detailed discussion of data normalization. The TCGA ovarian cancer RNA-seq data was generated using an Illumina platform and so for that reason we gear technical portions of our discussion towards their technology.
 
 > *A detailed discussion of RNA-seq is beyond the scope of this section. We refer the reader to the [RNA-seqlopedia](http://rnaseq.uoregon.edu/), a rich web resource for all things RNA-sequencing related.*
+
+#### Terminology
 
 **Definition** A **sequencing library** is the collection of cDNA sequences flanked by sequencing adaptors generated from an RNA template.
 
@@ -84,18 +90,51 @@ We briefly review some RNA-seq terminology and concepts we will use in a detaile
 
 **Definition** An **aligned read** or **mapped sequence read** refers to a sequencing result that has been unambiguously assigned to a reference genome or transcriptome.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. A typical RNA-seq experiment.</strong> mRNAs are converted into a library of cDNA fragments typically following RNA fragmentation. Sequencing adaptors (blue) are subsequently added to each cDNA fragment and a short sequence is obtained from each cDNA using high-throughput sequencing technology. The resulting sequence reads are aligned with the reference genome or transcriptome, and classified as three types: exonic reads, junction reads and poly(A) end-reads. These three types are used to generate a base-resolution expression profile for each gene (bottom). <em>Adapted from Wang *et al.* (2009)</em>
-</div>
+#### Notation
 
-- {:.list-unstyled} **Notation**
+To make our discussion more precise and concise, we will be using some mathematical notation in the following section on normalization and differential expression data analysis approaches.
+
   - {:.list-unstyled} $$i$$: index of gene for $$i=1,2,\cdots,I$$
-  - {:.list-unstyled} $$j$$: index of gene for $$j=1,2,\cdots,J$$
+  - {:.list-unstyled} $$j$$: index of sample for $$j=1,2,\cdots,J$$
   - {:.list-unstyled} $$Y_{ij}$$: Observed read count for gene $$i$$ and sample $$j$$
   - {:.list-unstyled} $$N_{j}$$ = $$\sum\limits_{i \in I}Y_{ij}$$: Total sample read counts
   - {:.list-unstyled} $$C_{j}$$: Sample normalization factor
 
+#### Sequencing experimental workflow
+
+Figure 1 shows a typical RNA sequencing run in which an mRNA sample is converted into a set of corresponding counts.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. A typical RNA-seq experiment.</strong> mRNAs are converted into a library of cDNA fragments typically following RNA fragmentation. Sequencing adaptors (blue) are subsequently added to each cDNA fragment and a short sequence is obtained from each cDNA using high-throughput sequencing technology. The resulting sequence reads are aligned with the reference genome or transcriptome, and classified as three types: exonic reads, junction reads and poly(A) end-reads. These three types are used to generate a base-resolution expression profile for each gene (bottom). <em>Adapted from Wang et al. (2009)</em>
+</div>
+
+For those more curious about the process by which the short sequence reads in Figure 1 are generated, Illumina has made available an animated tutorial summarizing their sequencing by synthesis (SBS) technology.
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="{{ page.videos.video_1 }}"></iframe>
+</div>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Video 1. Illumina sequencing by synthesis (SBS) technology.</strong>
+</div>
+
+#### Sequencing multiple libraries
+
+The sequencing workflow described in Figure 1 shows a single sequencing run in which an RNA sample is converted into a cDNA library, sequenced and mapped to a reference. More often, RNA sourced from distinct biological entities will be compared. Also, the same cDNA library may be sequenced multiple times. Figure 2 shows a typical sequencing flow cell consisting of lanes in which sequencing samples (libraries) can be loaded and sequenced in parallel. Correcting for technical bias between different samples and/or sequencing 'runs' will be an important aspect of normalization.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.super-slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Typical sequencing flow cell apparatus.</strong> Several samples can be loaded onto the eight-lane flow cell for simultaneous analysis on an Illumina Sequencing System. <em>Adapted from <a href="http://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf"> Illumina Tech Spotlight on Sequencing</a></em>
+</div>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="{{ page.videos.video_2 }}"></iframe>
+</div>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Video 2. Illumina patterned flow cell technology.</strong>
+</div>
+
+## <a href="#normalization" name="normalization">III. Normalization</a>
 
 ### Variation
 
@@ -106,56 +145,261 @@ RNA-sequencing data is variable. Variability can broadly be divided into two typ
 
 The path to understanding what underlies a disease pathology or the effect of a drug often begins with determining how they differ from an unperturbed state. In an ideal world we would directly observe those changes. In reality, our observations are indirect and represent inferences upon data that result from many experimental and analysis steps. The aim of normalization is to remove systematic technical effects that occur during data creation to ensure that technical bias has minimal impact on the results.
 
-The overall goal for RNA-seq normalization is to provide a basis upon which an accurate comparison of RNA species can be made. The need for normalization often arises when we wish to compare different sequencing runs. Figure 1 shows the process of performing a single measurement from an RNA source. Differential expression analysis involves comparing at least two distinct types (Figure 2). In each case, a library must be created and sequenced to a particular depth. Moreover, it is often desirable to measure many members of the same type, for example, TCGA HGS-OvCa cases assigned to the same subtype. Such 'biological replicates' are often used to boost the power to detect a signal between types and average-out minor differences amongst types.
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (I in light and II in dark blue) whose gene expression are being contrasted. Samples (I in total) are arranged in columns and genes (J in total) in rows. A cDNA library for each sample is created and sequenced to a given depth. The total number of aligned reads from each library (i.e. column sums) are invariably unique. In this section, expression between TCGA HGS-OvCa 'mesenchymal' and 'immunoreactive' subtypes are compared.
-</div>
-
-### Normalization
-
-Our overarching goal is to determine a way to make a fair comparison between two RNA sequencing data sets. Such data could arise from sequencing samples from distinct types, the same type and perhaps even sequencing the same sample multiple times.  Here we describe global normalization factors which are constants that are applied to an entire set of mapped read counts (Figure 3).
+The overall goal for RNA-seq normalization is to provide a basis upon which an accurate comparison of RNA species can be made. The need for normalization often arises when we wish to compare different sequencing runs. Figure 1 shows the process of performing a single measurement from an RNA source. Differential expression analysis involves comparing at least two distinct types (Figure 3). In each case, a library must be created and sequenced to a particular depth. Moreover, it is often desirable to measure many members of the same type, for example, TCGA HGS-OvCa cases assigned to the same subtype. Such 'biological replicates' are often used to boost the power to detect a signal between types and average-out minor differences amongst types.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Global normalization.</strong> (Above) Hypothetical mapped read counts for 6 samples of two types (columns) and 4 genes (rows). Counts for each sample arise from  a separate cDNA library and sequencing run as in Figure 1. (Middle) For each sample or sequencing result (i) a correction factor (Ci) is calculated. (Below) The normalized data results from dividing each raw mapped read count by the respective sample correction factor.    
+  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (light and dark blue) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. A cDNA library for each sample is created and sequenced to a given depth. The total number of aligned reads from each library (i.e. column sums) are invariably unique. In this section, expression between TCGA HGS-OvCa 'mesenchymal' and 'immunoreactive' subtypes are compared.
 </div>
 
-Several different normalization schemes have been suggested in the literature from the very simple to the more complex. Nevertheless, each results in the calculation of a global correction factor ($$C_i$$) that is applied to each read count of a sequencing result. Which normalization scheme is the best is still an ongoing debate and we discuss those that are relevant to differential expression analysis. We will be describing a normalization protocol using the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package and focus on the methods used therein.
+### Correction factors
+
+> We reference capabilities of the  [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package.
+
+> Much of this section is inspired by Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse, November 2014)
+
+Our overarching goal is to determine a way to make a fair comparison between two RNA sequencing data sets. Such data could arise from sequencing samples from distinct types, the same type and perhaps even sequencing the same sample multiple times.  Here we describe global normalization whereby a correction factor is applied to an entire set of mapped read counts (Figure 4).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Global normalization.</strong> (Above) Hypothetical mapped read counts for samples of two types. Counts for each sample arise from a corresponding cDNA library and sequencing run. (Middle) For each sample (j) a correction factor (Cj) is calculated. (Below) The normalized data results from dividing each raw mapped read count by the respective sample correction factor.    
+</div>
+
+Several different normalization schemes have been suggested in the literature but all result in a global correction factor ($$C_j$$) applied to each read count of a sequencing result. Which normalization scheme is the 'best' is an ongoing debate and we discuss those relevant to differential expression analysis. We will be describing a normalization protocol using the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package and focus on the methods used therein.
 
 #### Total count
 
-The simplest way to account for differences in mapped read counts between sequencing results is via total read counts. This approach can be attributed to Mortazavi *et al.* (Mortazavi 2008):
+> Available in edgeR:`cpm(..., normalized.lib.sizes = TRUE)`
 
-> *The sensitivity of RNA-Seq will be a function of both molar concentration and transcript length. We therefore quantified transcript levels in reads per kilobase of exon model per million mapped reads (RPKM).*
+In this approach, variations in sequencing depth are directly proportional to total mapped read counts. This is the most intuitive scheme: Sequencing library A to half the depth of B should result in A having approximately half of the read counts of B for any arbitrary mapped RNA species.   
 
-The correction factor $$C_j$$ is just the total mapped read counts for a given sample $$N_j$$
+This approach can be attributed to Mortazavi *et al.* (Mortazavi 2008) who claimed  *'The sensitivity of RNA-Seq will be a function of both molar concentration and transcript length. We therefore quantified transcript levels in reads per kilobase of exon model per million mapped reads (RPKM).'*
+
+The correction factor $$C_j$$ is just the total mapped read counts for a given sample $$N_j$$ divided by one million
+
+$$
+\begin{equation}
+  \begin{split}
+    C_{j}& = \frac{N_{j}}{10^6}  
+  \end{split}
+\end{equation}
+$$
+
+The 'kilobase of exon model' correction is necessary to correct for comparison of different species *within* the same sample. This arises due to the RNA fragmentation step performed prior to library creation: Longer loci generate more fragments and hence more reads. This is not required when comparing the same RNA species *between* samples such as in differential expression analysis.
+
+#### Trimmed mean of M-values
+
+> Available in edgeR:`calcNormFactors(..., method = "TMM")`
+
+Let us consider the rationale underlying total count correction. Strictly speaking, the method rests on the assumption that the relative abundance of RNA species in different samples are identical and that differences in counts reflects differences in sampling depth. A more realistic assumption is that the relative expression of *most* genes in every sample is similar and that any particular RNA species represents a small proportion of total read counts.
+
+Of course, there are situations in which these assumptions are violated and total count normalization can skew the desired correction (Figure 5). Consider a case where samples express at a high level RNA species that are absent in others. Consider a similar situation where a small number of genes in a sample may generate a large proportion of the reads.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Total count normalization is limited when RNA composition is important.</strong> Applying total count normalization to RNA sequencing samples can obscure the true mapped read counts in certain cases where RNA composition is important. Samples 1 and 2 differ only in their sequencing depth and are valid under total count normalization. Sample 3 illustrates the case where a sample highly expresses a gene (5) that is not otherwise represented. Sample 5 illustrates a case where one gene (4) is highly expressed. Note that in both cases, the result is that genes in samples 3 and 4 are over-corrected or under-sampled.  
+</div>
+
+Robinson and Oshlack (Robinson 2010) formalized this potential discrepancy and proposed that the number of reads assigned to any particular gene will depend on the composition of the RNA population being sampled. More generally, the proportion of reads attributed to a gene in a library depends on the expression properties of the whole sample rather than merely the gene of interest. This factor can manifest in erroneous under- and oversampling of RNA species whose true expression is otherwise identical and declaring a constitutive gene DEG when in fact it is not.
+
+In both cases considered in Figure 5, the presence of a highly expressed gene underlies an elevated total RNA output that reduces the sequencing 'real estate' for genes that are otherwise not differentially expressed. To this end, Robinson and Oshlack proposed the Trimmed mean of M-values (TMM) normalization method. In simple terms, the method makes the relatively safe assumption that most genes are not differentially expressed. It then infers a 'total RNA production' for a sample relative to a reference from the data. This factor corrects for the cases where increased total RNA output reduces the fractional representation of genes whose expression has not changed but are under-sampled (lower read counts) during sequencing. A more rigorous description of TMM follows.
+
+##### TMM notation
+
+Suppose that we observe some number of read counts $$Y_{ij}$$ for a gene $$i$$ in a given sample/library $$j$$. The expected value or average counts will equal the fraction of the total RNA output attributed to this RNA species, multiplied by the total number of mapped read counts $$N_j$$. The fraction of total RNA is equal to the product of the unknown expression level (number of transcripts) $$\mu_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$ .
+
+$$
+\begin{equation}
+  \begin{split}
+    E[Y_{ij}] &= \frac{\mu_{ij}L_i}{S_j}N_j\\
+    \text{where } S_j &= \sum\limits_{i \in  I} \mu_{ij}L_i
+  \end{split}
+\end{equation}
+$$
+
+It is desirable to calculate the total RNA output $$S_j$$ as we could use this as our correction factor. However, RNA output is unknown. Instead, we estimate the ratio $$f$$ between sample $$j=k$$ relative to $$j=r$$.
+
+$$
+\begin{equation}
+  \begin{split}
+    f_k^r &= \frac{S_k}{S_{r}}    
+  \end{split}
+\end{equation}
+$$
+
+The proposed strategy attempts to estimate this ratio from the data. The assumption is that most genes are expressed at similar levels, then $$\mu_{ik}L_i=\mu_{ir}L_i$$. So we estimate output accordingly:
 
 $$
 \begin{equation*}
   \begin{split}
-    C_{j}& = N_{j}  
+    \frac{S_{r}}{S_{k}} &= \frac{E[Y_{ik}]/N_k}{E[Y_{ir}] / N_r} \approx \frac{Y_{ik}/N_k}{Y_{ir}/N_r}
   \end{split}
 \end{equation*}
 $$
 
-Correcting for the RNA length or 'kilobase of exon model' is not necessary for comparisons of the same RNA between samples such as in differential expression analysis. This factor is necessary to correct for comparison of different species *within* the same sample. This arises due to the RNA fragmentation step performed prior to library creation: Longer loci generate more fragments.  
+Note that $$Y_{ij}/N_j$$ represents the fraction of total RNA represented by the RNA species so that the last two terms are the fold-difference between samples. Then define the per-gene log fold-difference $$M_{ik}^r$$
+
+$$
+\begin{equation}
+  \begin{split}
+    M_{ik}^r &= log_2{\left( \frac{Y_{ik}}{N_k} \right)} - log_2{\left( \frac{Y_{ir}}{N_r} \right)}\\    
+        &= log_2{\left( \frac{Y_{ik}/N_k}{Y_{ir}/N_r} \right)}\\
+    \text{where } Y_{i\cdot} &\neq 0
+  \end{split}
+\end{equation}
+$$
+
+and likewise, the absolute expression levels $$A_{ik}^r$$
+
+$$
+\begin{equation}
+  \begin{split}
+    A_{ik}^r &= \frac{1}{2} \left[ log_2{\left(\frac{Y_{ik}}{N_k} \right)} + log_2{\left(\frac{Y_{ir}}{N_r}\right)} \right]\\
+          &= \frac{1}{2} log_2{\left(\frac{Y_{ik}}{N_k} \cdot \frac{Y_{ir}}{N_r}\right)}\\   
+    \text{where } Y_{i\cdot} &\neq 0
+  \end{split}
+\end{equation}
+$$
+
+##### Step 1. Trim data
+
+Towards our goal of a robust estimate of total RNA outputs, we remove any genes with expression differences beyond a threshold that would skew our estimates. Oshlack and Robinson trim off the upper and lower 30% of $$M$$ and the outer 5% of $$A$$ values. Implicit in the calculation of $$M$$ and $$A$$ is the removal of genes with zero counts.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 6. Trimming.</strong> Hypothetical RNA sequencing data where per-gene log fold-difference (M) is plotted against absolute expression (A). Thin box (dashed) restricts the data along the vertical axis omitting the outer 30% of values; Large (dashed-dot) box restricts the data along the horizontal axis omitting the outer 5%. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+</div>
+
+##### Step 2. Calculate per-gene weights
+
+We could go ahead and simply calculate the mean $$M_k^r$$ over all genes. Let us pause a moment and notice in Figure 6 the near universal trend where genes with lower counts (A) have a much wider range of fold-difference (M) and *vice versa*.
+
+Oshlack and Robinson suggested that to rescue a fairer representation of the mean, those with lower variance should contribute more than those with higher variance. This is the rationale for taking a weighted mean with precision - the inverse of the variance - as weights.
+
+Formally, the weighted mean $$\bar{M_k^r}$$ of a non-empty set of data
+
+$$\{ M_{1k}^r, M_{2k}^r, \cdots, M_{ik}^r, \cdots, M_{Ik}^r\}$$
+
+with non-negative weights $$w_{ik}^r$$ is
+
+$$
+\begin{equation}
+  \begin{split}
+    \bar{M_k^r} &= \frac{ \sum\limits_{i=1}^I w_{ik}^r M_{ik}^r}{ \sum\limits_{i=1}^I w_{ik}^r } \\
+    &:= log_2{(TMM_k^r)}
+  \end{split}
+\end{equation}
+$$
+
+Recall the definition of $$M_k^r$$ as a log of a ratio, thus exponentiating the weighted mean recovers the original ratio.
+
+$$
+\begin{equation*}
+  \begin{split}
+    2^{\bar{M_k^r}} &= TMM_k^r \\
+    &\approx \frac{S_r}{S_{k}}
+  \end{split}
+\end{equation*}
+$$
+
+#### Aside: Estimating variances via the delta method
+
+The delta method is a statistical procedure used to estimate the variance of a function of a random variable based on an approximation of of the function about its mean value. We will use it to derive an expression for the
+inverse of the variance, the precision or weights $$w_{ik}^r$$.
+
+Consider an interval $$I$$ containing the point $$\mu_Y$$. Suppose that a function $$f$$ with first derivative $$f'$$ is defined on $$I$$ and that with continuous first derivative. Then by Taylor's theorem, the linear approximation of $$f$$ for any $$Y$$ about $$\mu_Y$$ is
+
+$$
+\begin{equation}
+    f(Y) \approx f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)  
+\end{equation}
+$$
+
+We will use equality for this relationship moving forward. The expectation of $$f$$ is
+
+$$
+\begin{equation}
+  \begin{split}
+    E[f(Y)] &= E[f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)] \\
+            &= f(\mu_Y) + f'(\mu_Y)(E[Y]-\mu_Y) \text{  since }E[Y] = \mu_Y  \\
+            &= f(\mu_Y) \\
+  \end{split}
+\end{equation}
+$$
+
+Likewise, the variance can be estimated
+
+$$
+\begin{equation}
+  \begin{split}
+    Var(f(Y)) &= E[( f(Y) - f(\mu_Y) )^2]  \\
+              &= E[(f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y) - f(\mu_Y))^2] \\
+              &= f'(\mu_Y)^2E[(Y-\mu_Y)^2]\\
+              &= f'(\mu_Y)^2Var(Y)
+  \end{split}
+\end{equation}
+$$
+
+This is a pretty powerful result. It says that the variance of a function of a variable about the mean can be estimated from the variance of the variable and the squared first derivative evaluated at the mean. Notice that our definition of $$M_k^r$$ is a function of observed read counts $$Y_{ij}$$. If we treat the total read counts $$N_j$$ as a constant then we can estimate the variance takes the form
+
+$$
+\begin{equation}
+  \begin{split}
+    Var(M_k^r) &= Var\left(log_2{\frac{Y_{ik}}{N_k}} - log_2{\frac{Y_{ir}}{N_r}}\right) \\
+              &= Var\left(log_2{\frac{Y_{ik}}{N_k}}\right) + Var\left(log_2{\frac{Y_{ir}}{N_r}}\right) \\
+  \end{split}
+\end{equation}
+$$
+
+Now consider just one of the variance terms above. We can use our result for estimating the variance we derived previously
+
+$$
+\begin{equation}
+  \begin{split}
+    Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
+  \end{split}
+\end{equation}
+$$
+
+Consider now when the total read counts are relatively large, then the observed read counts $$Y_{ij}$$ is a random variable whose realizations follow a [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/#binomial)
+
+$$
+\begin{equation}
+  \begin{split}
+    Y &\sim Binom(N, p)\\    
+    \text{where }p&= Y/N\\
+    \text{with }\mu_Y&= Np = Y\\
+    \text{and }Var(Y)&= Np(1-p) = Y\left(\frac{N - Y}{N}\right)\\
+  \end{split}
+\end{equation}
+$$
+
+Let us revisit our variance estimate using the results for binomial distribution in $$Y_ij$$.
+
+$$
+\begin{equation}
+  \begin{split}
+    Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
+    &=  \frac{1}{Y_{ij}^2 ln^22} Y_{ij}\left(\frac{N_j - Y_{ij}}{N_j}\right) \\
+  \end{split}
+\end{equation}
+$$
+
+If the total read counts are large then we can ignore the constant $$ln^22$$. Now we are ready to state the estimated variance for the log fold-difference.
+
+$$
+\begin{equation}
+  \begin{split}
+    Var(M_k^r) &\approx \left(\frac{N_k - Y_{ik}}{N_kY_{ik}}\right) + \left(\frac{N_r - Y_{ir}}{N_rY_{ir}}\right)\\
+    &:= 1/w_{ik}^r
+  \end{split}
+\end{equation}
+$$
 
 
-#### Trimmed mean of M-values
-Robinson and Oshlack (Robinson 2010) proposed that the number of reads assigned to any particular gene will depend on the composition of the RNA population being sampled. More generally, the proportion of reads attributed to a gene in a library depends on the expression properties of the whole sample rather than merely the gene of interest. This factor can manifest in erroneous under- and oversampling of RNA species whose true expression is otherwise identical and declaring a constitutive gene DEG when in fact it is not.
-Is it the case that normalizing by the total read counts is strictly valid only when the only difference between samples is the read count. Problem is when the total read count is not merely a consequence of differences in sequencing depth. In the first case, a small number of genes may generate a large proportion of reads. In another case, there may be a different composition of RNA species between samples. The TMM - trimmed mean of M-values, effectively gets rid of those outsized responses and relies on the assumption that a majority of genes with little to no changes in expression should be used in correction for differences in RNA output.  
+##### Step 3. Calculate the correction
 
-#### Quantile
- - don't talk about this. just mention it as another method.
-What is the best way to test differential expression in RNA-seq data? A variety of statistical tests and normalization methods were compared by Bullard *et al.* (Bullard 2010). These methods were tested using references from the MicroArray Quality Control Project including quantitive RT-PCR for nearly 1 000 genes. They discovered that normalizing by the total counts in each library - the sequencing depth - was substandard primarily because a small proportion (5%) of genes account for a large proportion (50%) of the counts. Furthermore, these genes are not guaranteed to have similar expression across biological conditions. Indeed, this normalization procedure led to similar or poorer performance compared to microarrays with regards to sensitivity. In response, the authors proposed quantile normalization between lanes. For example, scaling by upper-quartile (75th-percentile) after excluding genes with zero reads across all lanes.  They found that the normalization procedure plays a more important role than the statistical approach (Fisher's Exact vs likelihood ratio/t-statistic)
-
-### Other issues
-
-#### Transcript length bias
-
-In RNA sequencing, longer genes are expected to generate more reads than a shorter gene expressed at the same level as a consequence of RNA fragmentation that precedes sequencing library creation for an RNA sample. To correct for this length bias, mapped read counts are divided by gene length. Oshlack *et al.* (Oshlack 2009) describe a bias introduced in differential expression testing by this correction. In brief, they demonstrate both theoretically and experimentally that normalizing RNA-seq counts by gene length leads to a variance inflation inversely proportional. This effectively reduces the power to detect differential expression. They go on to show that this propagates to gene set testing in that some sets with length bias will be over- or underrepresented commensurate with the length of genes in the set.  
+One of the advantages of TMM is that the RNA-seq data themselves are not transformed using the TMM normalization procedure. This leaves the data free from ambiguity and in its raw form. Rather, correction is applied during differential expression testing. This is discussed in the following section.
 
 ## <a href="#differentialExpression" name="differentialExpression">IV. Differential expression</a>
 
@@ -165,6 +409,13 @@ In RNA sequencing, longer genes are expected to generate more reads than a short
 
 ### Biological variability
 > We develop tests using the negative binomial distribution to model overdispersion relative to the Poisson, and use conditional weighted likelihood to moderate the level of overdispersion across genes.  - Robinson 2007
+
+
+### Caveats
+
+#### Transcript length bias
+
+In RNA sequencing, longer genes are expected to generate more reads than a shorter gene expressed at the same level as a consequence of RNA fragmentation that precedes sequencing library creation for an RNA sample. To correct for this length bias, mapped read counts are divided by gene length. Oshlack *et al.* (Oshlack 2009) describe a bias introduced in differential expression testing by this correction. In brief, they demonstrate both theoretically and experimentally that normalizing RNA-seq counts by gene length leads to a variance inflation inversely proportional. This effectively reduces the power to detect differential expression. They go on to show that this propagates to gene set testing in that some sets with length bias will be over- or underrepresented commensurate with the length of genes in the set.  
 
 ## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
 This is basically a copy of the EM-Protocol ipython notebook for [Scoring normalized expression data with edgeR](https://github.com/jvwong/EM-tutorials-docker/blob/master/notebooks/Supplementary%20Protocol%202.ipynb)
