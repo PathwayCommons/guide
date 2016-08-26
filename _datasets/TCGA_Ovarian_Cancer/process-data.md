@@ -206,12 +206,13 @@ In both cases considered in Figure 5, the presence of a highly expressed gene un
 
 ##### TMM notation
 
-Suppose that we observe some number of read counts $$Y_{ij}$$ for a gene $$i$$ in a given sample/library $$j$$. The expected value or average counts will equal the fraction of the total RNA output attributed to this RNA species, multiplied by the total number of mapped read counts $$N_j$$. The fraction of total RNA is equal to the product of the unknown expression level (number of transcripts) $$\mu_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$ .
+Suppose that we observe some number of read counts $$Y_{ij}$$ for a gene $$i$$ in a given sample/library $$j$$. The expected value or average counts will equal the fraction of the total RNA output attributed to this RNA species - the relative abundance $$\pi_{ij}$$ - multiplied by the total number of mapped read counts $$N_j$$. The relative abundance is equal to the product of the unknown expression level (number of transcripts) $$\mu_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$ .
 
 $$
 \begin{equation}
   \begin{split}
-    E[Y_{ij}] &= \frac{\mu_{ij}L_i}{S_j}N_j\\
+    E[Y_{ij}] &= \pi_{ij} N_j\\
+              &= \frac{\mu_{ij}L_i}{S_j}N_j\\
     \text{where } S_j &= \sum\limits_{i \in  I} \mu_{ij}L_i
   \end{split}
 \end{equation}
@@ -237,7 +238,7 @@ $$
 \end{equation*}
 $$
 
-Note that $$Y_{ij}/N_j$$ represents the fraction of total RNA represented by the RNA species so that the last two terms are the fold-difference between samples. Then define the per-gene log fold-difference $$M_{ik}^r$$
+Note that $$Y_{ij}/N_j$$ represents the relative abundance $$\pi_{ij}$$ so that the last two terms are the fold-difference between samples. Then define the per-gene log fold-difference $$M_{ik}^r$$
 
 $$
 \begin{equation}
@@ -402,6 +403,16 @@ $$
 One of the advantages of TMM is that the RNA-seq data themselves are not transformed using the TMM normalization procedure. This leaves the data free from ambiguity and in its raw form. Rather, correction is applied during differential expression testing. This is discussed in the following section.
 
 ## <a href="#differentialExpression" name="differentialExpression">IV. Differential expression</a>
+
+Our overarching goal in this section is gather evidence that a gene is expressed differently between two groups.
+
+Two important questions for DE testing.
+
+  - What is the hypothesis we are testing?
+  - How do we quantify the test statistic?
+
+
+Calculate the probability of the observed mapped read counts in each of the two sample types of interest. There are many similarities between this type of test and the [Fisher's Exact test]({{ site.baseurl }}/primers/statistics/fishers_exact_test/).
 
 ### Sampling variability
 
