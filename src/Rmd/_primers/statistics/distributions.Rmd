@@ -11,13 +11,14 @@ layout: markdown
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Hypergeometric Distribution](#hypergeometric)
-  - {:.list-unstyled} [II. Binomial Distribution](#binomial)
-  - {:.list-unstyled} [III. Poisson Distribution](#poisson)
-  - {:.list-unstyled} [IV. Negative Binomial](#negativeBinomial)  
+  - {:.list-unstyled} [I. Hypergeometric distribution](#hypergeometric)
+  - {:.list-unstyled} [II. Binomial distribution](#binomial)
+  - {:.list-unstyled} [III. Poisson distribution](#poisson)
+  - {:.list-unstyled} [IV. Gamma distribution ](#gamma)  
+  - {:.list-unstyled} [IV. Negative binomial distribution](#negativeBinomial)  
 <hr/>
 
-## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric Distribution</a>
+## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a>
 
 ### Physical Setup
 Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
@@ -87,7 +88,7 @@ ggplot(data, aes(x=factor(x), y=y)) +
   labs(x = "Number of Aces", y = "Probability")
 ```
 
-## <a href="#binomial" name="binomial">II. Binomial Distribution</a>
+## <a href="#binomial" name="binomial">II. Binomial distribution</a>
 
 ### Physical Setup
 Consider an experiment in which we have two distinct types of outcomes that can be categorized as
@@ -132,11 +133,11 @@ $$
 $$
 
 ### Moments
-The mean $$\mu$$ of a binomial distribution of sample size $$n$$ and probability $$p$$ is
+The mean of a binomial distribution of sample size $$n$$ and probability $$p$$ is
 
 $$
 \begin{equation*}
-    \mu = np
+    E[X] = np
 \end{equation*}
 $$
 
@@ -194,10 +195,10 @@ ggplot(data, aes(x=factor(x), y=y)) +
 ```
 
 
-## <a href="#poisson" name="poisson">III. Poisson Distribution</a>
+## <a href="#poisson" name="poisson">III. Poisson distribution</a>
 
 ### Physical Setup
-Consider a limiting case of the binomial distribution as $$n\rightarrow\infty$$ and $$p\rightarrow 0$$ but $$np=\mu$$ is fixed. This means that the event of interest is relatively rare.
+Consider a limiting case of the binomial distribution as $$n\rightarrow\infty$$ and $$p\rightarrow 0$$ but $$np=\mu$$ is fixed. This means that the event of interest is relatively rare. Then $$X$$ has a **poisson distribution** $$P \sim Poisson(\mu)$$.
 
 ### Probability Function
 
@@ -223,11 +224,11 @@ $$
 $$
 
 ### Moments
-The mean $$\mu$$ of a poisson distribution with some sampling size $$n$$ and probability $$p$$ is
+The mean of a poisson distribution with some sampling size $$n$$ and probability $$p$$ is
 
 $$
 \begin{equation*}
-    \mu = np
+    E[X] = np
 \end{equation*}
 $$
 
@@ -235,7 +236,7 @@ The variance is
 
 $$
 \begin{equation*}
-  Var(X) = \mu
+  Var(X) = E[X]
 \end{equation*}
 $$
 
@@ -259,5 +260,166 @@ probability <- dpois(2, mu, log = FALSE)
 probability
 ```
 
-## <a href="#negativeBinomial" name="negativeBinomial">IV. Negative Binomial</a>
-//TODO
+## <a href="#gamma" name="gamma">IV. Gamma distribution</a>
+
+### Gamma function
+
+**Definition** The **gamma function** os $$\alpha$$ is
+
+$$
+\begin{equation*}
+  \Gamma(\alpha) = \int_{0}^{\infty} x^{\alpha-1}e^{-x}dx
+\end{equation*}
+$$
+
+There are two nice properties of the gamma function that we will use.
+
+1. $$ \Gamma(\alpha) = (\alpha - 1)\Gamma(\alpha - 1) \text{ for } \alpha>1$$
+2. $$ \Gamma(\alpha) = (\alpha - 1)! \text{ if } \alpha \text{ is a positive integer}$$
+
+### Gamma distribution
+Let $$X$$ be a non-negative continuous random variable. Then if the probability function is of the form
+
+$$
+\begin{equation*}
+  f(x) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}
+\end{equation*}
+$$
+
+then $$X$$ has a **gamma distribution** $$X\sim Gamma(x; \alpha,\beta)$$. Typically, $$\alpha$$ is called the  'shape' parameter and $$\beta$$ the 'scale' or 'rate'.
+
+## <a href="#negativeBinomial" name="negativeBinomial">V. Negative binomial distribution</a>
+
+### Physical Setup
+The setup is very similar to the binomial. Consider an experiment in which we have two distinct types of outcomes that can be categorized as
+
+1. Success ($$S$$)
+2. Failure ($$F$$)
+
+Suppose the probability of success is $$p$$ and failure is $$(1-p)$$. Repeat an experiment until a pre-specified number of failures $$r$$ have been obtained. Let $$X$$ be the number of successes before the $$r^{th}$$ failure. Then $$X$$ has a **negative binomial distribution** denoted $$X\sim NB(r, p)$$.
+
+### Probability Function
+
+There will be $$x+r$$ total trials but the last event is a failure so we really care about the first $$x+r-1$$ trials. There will be $$x$$ successes and $$(r-1)$$ failures in any order. Each order has a probability identical to a binomial trial $$p^c(1-p)^r$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    f(x) &=  \binom{x+r-1}{x} p^x(1-p)^r \text{  for }x=0,1,2,\cdots\\
+  \end{split}
+\end{equation*}
+$$
+
+### Moments
+The mean of a negative binomial distribution is
+
+$$
+\begin{equation*}
+    E[X] = \frac{pr}{1-p}
+\end{equation*}
+$$
+
+The variance is
+
+$$
+\begin{equation*}
+  Var(X) = \frac{pr}{(1-p)^2}
+\end{equation*}
+$$
+
+
+### The Poisson-Gamma Mixture
+
+Count data such as RNA sequencing mapped reads is often modeled with a Poisson distribution where the mean and variance are equal to $$\mu$$. However, there are cases where the variance exceeds that specified by the mean. To account for this 'over-dispersed' data, the negative binomial distribution can be utilized. As we will show below, the negative binomial arises as a Poisson distribution where the Poisson parameter is itself a random variable distributed according to a Gamma distribution.
+
+Let us state this in a more precise fashion. Suppose that we have distribution of counts $$X$$ that follows a Poisson distribution indexed by the parameter $$\Theta$$. Now suppose that $$\Theta$$ is itself some function of another random variable $$\Theta = \lambda\epsilon$$ where $$\epsilon \sim Gamma(x;\alpha,\beta)$$. Then the conditional distribution of the random variable of counts is
+
+$$
+\begin{equation*}
+  P(X=x | \Theta = \lambda\epsilon) = \frac{(\lambda\epsilon)^x}{x!}e^{- (\lambda\epsilon)} \text{  for } x=0,1,2,\cdots
+\end{equation*}
+$$
+
+Let $$\epsilon$$ follow a gamma distribution with shape $$\alpha$$ and scale $$\beta$$.
+
+$$
+\begin{equation*}
+    g(\epsilon) = \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}   
+\end{equation*}
+$$
+
+The join density of $$N$$ and $$\Theta$$ is
+
+$$
+\begin{equation*}
+  \begin{split}
+    P(X=x | \Theta = \lambda\epsilon) \cdot g(\epsilon) &= \frac{(\lambda\epsilon)^x}{x!}e^{- \lambda\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}\\
+  \end{split}
+\end{equation*}
+$$
+
+Derive the marginal distribution of $$X$$ by integrating over the values of $$epsilon$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    P(X=x) &= \int_{0}^\infty \frac{(\lambda\epsilon)^x}{x!}e^{- \lambda\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon} d\epsilon\\
+
+    &= \frac{\lambda^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \lambda)\epsilon} d\epsilon\\    
+  \end{split}
+\end{equation*}
+$$
+
+The key here is to transform the integrand into a gamma distribution with shape parameter $$x+\alpha$$ and scale $$\beta+\lambda$$ and noting that the integral over all values is unity.
+
+$$
+\begin{equation*}
+  \begin{split}
+
+    P(X=x) &= \frac{\lambda^x \beta^\alpha}{x! \Gamma(\alpha)} \frac{\Gamma(x+\alpha)}{(\beta + \lambda)^{x + \alpha}} \int_{0}^\infty \frac{(\beta + \lambda)^{x + \alpha}}{\Gamma(x+\alpha)} \epsilon^{x+\alpha-1}  e^{-(\beta + \lambda)\epsilon} d\epsilon \\
+
+          &= \frac{\Gamma(x+\alpha)}{x! \Gamma(\alpha)} \frac{\lambda^x  \beta^\alpha}{(\beta + \lambda)^{x + \alpha}} \\
+
+          &= \frac{(x+\alpha-1)!}{x! (\alpha - 1)!} \frac{\lambda^x}{(\beta + \lambda)^x} \frac{\beta^\alpha}{(\beta + \lambda)^{\alpha}} \\
+
+          &= \binom{x+\alpha-1}{x} \left(\frac{\lambda}{\beta + \lambda }\right)^x \left(\frac{\beta}{\beta + \lambda}\right)^\alpha  \text{ for }x=0,1,\cdots
+  \end{split}
+\end{equation*}
+$$
+
+It is simple to see that this result is the negative binomial with $$r=\alpha$$ and $$p=\lambda/(\beta+\lambda)$$. In this case the moments can be stated using these new variables.
+
+From the moments of the negative binomial stated above, the mean is
+
+$$
+\begin{equation*}
+  \begin{split}
+    E[X] &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right) \alpha\\    
+         &= \frac{\alpha}{\beta} \lambda\\    
+  \end{split}
+\end{equation*}
+$$
+
+The variance is
+
+$$
+\begin{equation*}
+  \begin{split}
+    Var[X] &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right)^2 \alpha\\    
+         &= \frac{\alpha \lambda}{\beta} \left(1 + \frac{\lambda}{\beta} \right)\\    
+  \end{split}
+\end{equation*}
+$$
+
+We'll see this relationship in our discussion of RNA-seq data [differential expression testing]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#differentialExpression) where $$\alpha^{-1}=\beta^{-1}=\phi$$ is the 'dispersion' and $$X \equiv Y$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    \mu_Y &= \lambda\\    
+    \sigma_Y^2 &= \lambda + \phi\lambda^2\\    
+  \end{split}
+\end{equation*}
+$$
+
+Note that as the dispersion parameter $$phi$$ approaches zero the negative binomial variance approaches the Poisson. Thus the dispersion parameter accounts for the extra variability compared to the the Poisson.
