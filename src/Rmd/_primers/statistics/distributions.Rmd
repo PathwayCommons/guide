@@ -13,14 +13,14 @@ layout: markdown
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric distribution](#hypergeometric)
   - {:.list-unstyled} [II. Binomial distribution](#binomial)
-  - {:.list-unstyled} [III. Poisson distribution](#poisson)
+  - {:.list-unstyled} [III. Poisson distribution](#Poisson)
   - {:.list-unstyled} [IV. Gamma distribution ](#gamma)  
   - {:.list-unstyled} [IV. Negative binomial distribution](#negativeBinomial)  
 <hr/>
 
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a>
 
-### Physical Setup
+### Physical setup
 Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
 
 1. Success ($$S$$)
@@ -32,7 +32,7 @@ remove items in succession from the original set of $$N$$. Let $$X$$ be a random
 variable representing the number of successes obtained. Then $$X$$ has a
 **hypergeometric distribution**.
 
-### Probability Function
+### Probability function
 We require three values. Refer to the primer on [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/) for a discussion on
 counting rules and notation.
 
@@ -53,7 +53,7 @@ $$\binom{N-r}{n-x}$$
 
 Then the probability of selecting $$x$$ successes is
 
-$$f(x) = \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}}  \text{  for }x=0,1,\cdots,r $$
+$$f(x; N,n,r) = \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}}  \text{  for }x=0,1,\cdots,r $$
 
 
 ### Examples
@@ -90,7 +90,7 @@ ggplot(data, aes(x=factor(x), y=y)) +
 
 ## <a href="#binomial" name="binomial">II. Binomial distribution</a>
 
-### Physical Setup
+### Physical setup
 Consider an experiment in which we have two distinct types of outcomes that can be categorized as
 
 1. Success ($$S$$)
@@ -98,7 +98,7 @@ Consider an experiment in which we have two distinct types of outcomes that can 
 
 Suppose the probability of success is $$p$$ and failure is $$(1-p)$$. Repeat the experiment $$n$$ independent times. If $$X$$ is the number of successes then it has a **binomal distribution** denoted $$X\sim Bi(n, p)$$.
 
-### Probability Function
+### Probability function
 We require three values. Refer to the primer on [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/) for a discussion on
 counting rules and notation.
 
@@ -127,7 +127,7 @@ Therefore,
 $$
 \begin{equation*}
   \begin{split}
-    f(x) &=  \binom{n}{x} p^x(1-p)^{n-x} \text{  for }x=0,1,\cdots,n\\
+    f(x; n,p) &=  \binom{n}{x} p^x(1-p)^{n-x} \text{  for }x=0,1,\cdots,n\\
   \end{split}
 \end{equation*}
 $$
@@ -195,36 +195,36 @@ ggplot(data, aes(x=factor(x), y=y)) +
 ```
 
 
-## <a href="#poisson" name="poisson">III. Poisson distribution</a>
+## <a href="#Poisson" name="Poisson">III. Poisson distribution</a>
 
-### Physical Setup
-Consider a limiting case of the binomial distribution as $$n\rightarrow\infty$$ and $$p\rightarrow 0$$ but $$np=\mu$$ is fixed. This means that the event of interest is relatively rare. Then $$X$$ has a **poisson distribution** $$P \sim Poisson(\mu)$$.
+### Physical setup
+Consider a limiting case of the binomial distribution as $$n\rightarrow\infty$$ and $$p\rightarrow 0$$ but $$np=\mu$$ is fixed. This means that the event of interest is relatively rare. Then $$X$$ has a **Poisson distribution** $$P \sim Poisson(\mu)$$.
 
-### Probability Function
+### Probability function
 
 Since $$np=\mu$$ then $$p=\frac{\mu}{n}$$ and
 
 $$
 \begin{equation*}
   \begin{split}
-    f(x) &= \binom{n}{x} p^x(1-p)^{n-x} \\
-         &= \frac{n!}{x!(n-x)!} \left(\frac{\mu}{n}\right)^x \left(1-\frac{\mu}{n}\right)^{(n-x)} \\
+    f(x; n,p) &= \binom{n}{x} p^x(1-p)^{n-x} \\
+    f(x; n,\mu) &= \frac{n!}{x!(n-x)!} \left(\frac{\mu}{n}\right)^x \left(1-\frac{\mu}{n}\right)^{(n-x)} \\
          &= \frac{\mu^x}{x!} \frac{n(n-1)(n-2)\cdots(n-x+1)}{(n)(n)(n)\cdots(n)}  \left(1-\frac{\mu}{n}\right)^{(n-x)} \\
          &= \frac{\mu^x}{x!}
             \left(\frac{n}{n}\right) \left(\frac{n-1}{n}\right) \left(\frac{n-2}{n}\right) \cdots
             \left(\frac{n-x+1}{n}\right)
             \left(1-\frac{\mu}{n}\right)^n \left(1-\frac{\mu}{n}\right)^{-x}\\
-  \lim_{n\to\infty} f(x)  &= \frac{\mu^x}{x!}
+  \lim_{n\to\infty} f(x; n,\mu)  &= \frac{\mu^x}{x!}
            (1)(1)(1) \cdots (1)
            e^{-\mu} (1)^{-x}\\
-   f(x)  &= \frac{\mu^x}{x!}e^{-\mu} \text{ for }x=1,2,\cdots\\
+   f(x; \mu)  &= \frac{\mu^x}{x!}e^{-\mu} \text{ for }x=1,2,\cdots\\
 
   \end{split}
 \end{equation*}
 $$
 
 ### Moments
-The mean of a poisson distribution with some sampling size $$n$$ and probability $$p$$ is
+The mean of a Poisson distribution with some sampling size $$n$$ and probability $$p$$ is
 
 $$
 \begin{equation*}
@@ -255,7 +255,7 @@ n  <- 200   # The number of people
 p  <- 1/365 # The probability of a birthday on Dec. 25
 mu <- n*p   # The mean
 
-# Use the dpois built-in function for poisson probability
+# Use the dpois built-in function for Poisson probability
 probability <- dpois(2, mu, log = FALSE)
 probability
 ```
@@ -282,7 +282,7 @@ Let $$X$$ be a non-negative continuous random variable. Then if the probability 
 
 $$
 \begin{equation*}
-  f(x) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}
+  f(x; \alpha, \beta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}
 \end{equation*}
 $$
 
@@ -290,7 +290,7 @@ then $$X$$ has a **gamma distribution** $$X\sim Gamma(x; \alpha,\beta)$$. Typica
 
 ## <a href="#negativeBinomial" name="negativeBinomial">V. Negative binomial distribution</a>
 
-### Physical Setup
+### Physical setup
 The setup is very similar to the binomial. Consider an experiment in which we have two distinct types of outcomes that can be categorized as
 
 1. Success ($$S$$)
@@ -298,14 +298,14 @@ The setup is very similar to the binomial. Consider an experiment in which we ha
 
 Suppose the probability of success is $$p$$ and failure is $$(1-p)$$. Repeat an experiment until a pre-specified number of failures $$r$$ have been obtained. Let $$X$$ be the number of successes before the $$r^{th}$$ failure. Then $$X$$ has a **negative binomial distribution** denoted $$X\sim NB(r, p)$$.
 
-### Probability Function
+### Probability function
 
-There will be $$x+r$$ total trials but the last event is a failure so we really care about the first $$x+r-1$$ trials. There will be $$x$$ successes and $$(r-1)$$ failures in any order. Each order has a probability identical to a binomial trial $$p^c(1-p)^r$$.
+There will be $$x+r$$ total trials but the last event is a failure so we really care about the first $$x+r-1$$ trials. There will be $$x$$ successes and $$(r-1)$$ failures in any order. Each order has a probability identical to a binomial trial $$p^x(1-p)^r$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    f(x) &=  \binom{x+r-1}{x} p^x(1-p)^r \text{  for }x=0,1,2,\cdots\\
+    f(x; r,p) &=  \binom{x+r-1}{x} p^x(1-p)^r \text{  for }x=0,1,2,\cdots\\
   \end{split}
 \end{equation*}
 $$
@@ -328,9 +328,9 @@ $$
 $$
 
 
-### The Poisson-Gamma Mixture
+### The Poisson-gamma mixture
 
-Count data such as RNA sequencing mapped reads is often modeled with a Poisson distribution where the mean and variance are equal to $$\mu$$. However, there are cases where the variance exceeds that specified by the mean. To account for this 'over-dispersed' data, the negative binomial distribution can be utilized. As we will show below, the negative binomial arises as a Poisson distribution where the Poisson parameter is itself a random variable distributed according to a Gamma distribution.
+Count data such as RNA sequencing mapped reads is often modeled with a Poisson distribution where the mean and variance are equal to $$\mu$$. However, there are cases where the variance exceeds that specified by the mean. To account for this 'overdispersed' data, the negative binomial distribution can be utilized. As we will show below, the negative binomial arises as a Poisson distribution where the Poisson parameter is itself a random variable distributed according to a Gamma distribution.
 
 Let us state this in a more precise fashion. Suppose that we have distribution of counts $$X$$ that follows a Poisson distribution indexed by the parameter $$\Theta$$. Now suppose that $$\Theta$$ is itself some function of another random variable $$\Theta = \lambda\epsilon$$ where $$\epsilon \sim Gamma(x;\alpha,\beta)$$. Then the conditional distribution of the random variable of counts is
 
@@ -405,21 +405,36 @@ The variance is
 $$
 \begin{equation*}
   \begin{split}
-    Var[X] &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right)^2 \alpha\\    
+    Var(X) &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right)^2 \alpha\\    
          &= \frac{\alpha \lambda}{\beta} \left(1 + \frac{\lambda}{\beta} \right)\\    
   \end{split}
 \end{equation*}
 $$
 
-We'll see this relationship in our discussion of RNA-seq data [differential expression testing]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#differentialExpression) where $$\alpha^{-1}=\beta^{-1}=\phi$$ is the 'dispersion' and $$X \equiv Y$$.
+#### Poisson-gamma notation in RNA-seq
+
+This mixture model will be important in our discussion of RNA-seq data [differential expression testing]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#differentialExpression). In this case the notation is altered where $$r^-1=\alpha^{-1}=\beta^{-1}=\phi$$ is the 'dispersion' for some set of RNA species counts $$Y$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    \mu_Y &= \lambda\\    
-    \sigma_Y^2 &= \lambda + \phi\lambda^2\\    
+    Y &\sim NB \left(\phi^{-1}, \frac{\lambda}{\phi^{-1} + \lambda}\right)\\
+    f(y; \lambda,\phi^{-1}) &=  \binom{y+\phi^{-1}-1}{y} \left(\frac{\lambda}{\phi^{-1} + \lambda} \right)^y
+     \left(\frac{\phi^{-1}}{\phi^{-1} + \lambda} \right)^{\phi^{-1}} \\    
   \end{split}
 \end{equation*}
 $$
 
-Note that as the dispersion parameter $$phi$$ approaches zero the negative binomial variance approaches the Poisson. Thus the dispersion parameter accounts for the extra variability compared to the the Poisson.
+Sometimes in the context of RNA-seq model fitting, you might come across the negative binomial parametrized by its mean and variance.
+
+$$
+\begin{equation*}
+  \begin{split}
+    Y &\sim NB (\mu_Y, \sigma_Y^2)\\    
+    E[Y] &= \mu_Y = \lambda\\    
+    Var(Y) &= \sigma_Y^2 = \lambda + \phi\lambda^2\\    
+  \end{split}
+\end{equation*}
+$$
+
+Note that as the dispersion parameter $$\phi$$ approaches zero the negative binomial variance approaches the mean. Thus the dispersion parameter accounts for the extra variability over and above that expected with a Poisson.

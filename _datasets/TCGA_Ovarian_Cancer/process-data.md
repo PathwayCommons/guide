@@ -18,6 +18,11 @@ figures:
   figure_4: figure_correction_overview.jpg
   figure_5: figure_correction_totalCount.jpg
   figure_6: figure_TMM_trim.jpg
+  figure_7: figure_shot_noise.png
+  figure_8: figure_biological_noise.png
+  table_1: figure_contingency_table.jpg
+  table_2: figure_contingency_table_example.jpg
+  table_3: figure_contingency_enumerated_example.jpg  
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -25,10 +30,11 @@ figures:
   - {:.list-unstyled} [II. Opportunities and challenges](#opportunitiesChallenges)
   - {:.list-unstyled} [III. RNA Sequencing](#rnaSequencing)
   - {:.list-unstyled} [IV. Normalization](#normalization)
-  - {:.list-unstyled} [V. Differential expression](#differentialExpression)
-  - {:.list-unstyled} [VI. Data processing ](#geneLists)
-  - {:.list-unstyled} [VII. Datasets](#datasets)
-  - {:.list-unstyled} [VIII. References](#references)
+  - {:.list-unstyled} [V. Differential expression testing](#differentialExpression)
+  - {:.list-unstyled} [VI. Modelling counts ](#modellingCounts)
+  - {:.list-unstyled} [VII. Data processing](#datasets)
+  - {:.list-unstyled} [VIII. Datasets](#datasets)
+  - {:.list-unstyled} [IX. References](#references)
 
 <hr/>
 
@@ -98,6 +104,7 @@ To make our discussion more precise and concise, we will be using some mathemati
   - {:.list-unstyled} $$j$$: index of sample for $$j=1,2,\cdots,J$$
   - {:.list-unstyled} $$Y_{ij}$$: Observed read count for gene $$i$$ and sample $$j$$
   - {:.list-unstyled} $$N_{j}$$ = $$\sum\limits_{i \in I}Y_{ij}$$: Total sample read counts
+  - {:.list-unstyled} $$\pi_{ij}$$ the relative abundance of gene in sample
   - {:.list-unstyled} $$C_{j}$$: Sample normalization factor
 
 #### Sequencing experimental workflow
@@ -134,7 +141,7 @@ The sequencing workflow described in Figure 1 shows a single sequencing run in w
   <strong>Video 2. Illumina patterned flow cell technology.</strong>
 </div>
 
-## <a href="#normalization" name="normalization">III. Normalization</a>
+## <a href="#normalization" name="normalization">IV. Normalization</a>
 
 ### Variation
 
@@ -402,37 +409,219 @@ $$
 
 One of the advantages of TMM is that the RNA-seq data themselves are not transformed using the TMM normalization procedure. This leaves the data free from ambiguity and in its raw form. Rather, correction is applied during differential expression testing. This is discussed in the following section.
 
-## <a href="#differentialExpression" name="differentialExpression">IV. Differential expression</a>
+## <a href="#differentialExpression" name="differentialExpression">V. Differential expression testing</a>
 
-Our overarching goal in this section is gather evidence that a gene is expressed differently between two groups.
+<div class="alert alert-warning" role="alert">
+  We are going to lean heavily on our primer for <a href="{{ site.baseurl }}/primers/statistics/distributions/">Distributions</a>. In particular, you may wish to review our section on the <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">negative binomial distribution</a>. We will also use a lot of concepts from our section on <a href="{{ site.baseurl }}/primers/statistics/fishers_exact_test/">Fisher's Exact Test</a> and <a href="{{ site.baseurl }}/primers/statistics/multiple_testing/">Multiple Testing</a>.
+</div>
 
-Two important questions for DE testing.
+Let us suppose that RNA-seq data sets are sufficiently normalized. Our overarching goal in this section is to gather evidence that supports a claim that an RNA species is differentially expressed (DE) between two groups. Concretely, for our TCGA HGS-OvCa RNA-seq data, we gather evidence suggestive of elevated levels of an RNA species in 'mesenchymal' versus 'immunoreactive' subtypes or *vice versa*.
 
-  - What is the hypothesis we are testing?
-  - How do we quantify the test statistic?
+Our framework for gathering evidence will be a hypothesis test and the evidence for each gene will be encapsulated in the form of a p-value. This list of p-values for each RNA species will be our goal and represents the raw material for enrichment analysis tools.
 
+### Terminology
 
-Calculate the probability of the observed mapped read counts in each of the two sample types of interest. There are many similarities between this type of test and the [Fisher's Exact test]({{ site.baseurl }}/primers/statistics/fishers_exact_test/).
+Suppose that we wish to test whether the relative abundance ($$\pi$$) of a gene ($$i$$) in the set of cases with a HGS-OvCa subtype label 'mesenchymal' is different relative to cases witha a subtype label immunoreactive (r). Let the set of case/sample indices with an 'm' label be $$M=\{j:\eta(j) = m\}$$ and those with the label 'r' be $$R=\{j:\eta(j) = r\}$$ where $$\eta(j)=\{m, r\}$$ is a function that maps a sample index to a subtype. In classic hypothesis testing language, we take the *a priori* position of the null hypothesis ($$H_0$$) that there is no difference between groups.
 
-### Sampling variability
+$$
+\begin{equation}
+  H_0: \pi_{iM} = \pi_{iR} \text{ for each }i\in I    
+\end{equation}
+$$
 
- > Statistically, we find that the variation across technical replicates can be captured using a Poisson model, with only a small pro- portion (∼0.5%) of genes showing clear deviations from this model. This Poisson model can be used to identify differentially expressed genes, and using this approach, the sequence data identified 30% more differentially expressed genes than were obtained from a standard analysis of the array data at the same false discovery rate. - Marioni 2008
+What we wish to do is determine the feasibility of this null hypothesis given our RNA-seq count observations. Since we are comparing two groups, we can summarize our observations in a contingency table (Table 1).
+
+**Table 1. Contingency table for RNA-seq count data**
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_1 }}){: .img-responsive.slim }
+
+Define the test statistic as the number of observed counts $$Y_{ij}$$ for the gene of interest in each subtype.
+
+$$
+\begin{equation}
+  \begin{split}
+    n_{iM} &= \sum\limits_{j \in M} Y_{ij}\\
+    n_{iR} &= \sum\limits_{j \in R} Y_{ij}
+  \end{split}
+\end{equation}
+$$
+
+From this we can state their sum.
+
+$$
+\begin{equation}
+    n_{i} = n_{iM} + n_{iR}
+\end{equation}
+$$
+
+> *For those of you who have read our section on [Fisher's Exact Test]({{site.baseurl }}/primers/statistics/fishers_exact_test/) the following test setup will look familiar to you.*
+
+### An exact test
+
+Our test proceeds in very much the same fashion as the Fisher's Exact Test. Our test will determine the probabilities of observing the various joint values within a contingency table under two important assumptions:
+
+- The marginal values ($$n_i,N_M,n_{Total}$$) are fixed
+- There is no association between categorical values
+
+In a sense, the second assumption is a restatement of our null hypothesis $$H_0$$ that the relative abundance of a RNA species of interest is the same in each subtypes. We will calculate a composite p-value $$P_{i}$$ that will support or provide evidence to cast doubt on the $$H_0$$. Here, $$P_{i}$$ will actually be composed as a sum of individual probabilities of mapped read counts both observed and unobserved in our contingency table.
+
+Let $$p(a,b)$$ be the joint probability of a given pair of mapped read counts ($$a, b$$). Our first restriction is a fixed total $$a+b=n_i$$. The second restriction is that we only care about those probabilities with value less than or equal to $$p(n_{iM}, n_{iR})$$. This corresponds to contingency tables with mapped read count values for a gene more extreme (differentially expressed) hence more unlikely than those observed.
+
+$$
+\begin{equation}
+  \begin{split}
+    P_i &= \sum\limits_{\begin{split} a+b &=n_i\\ p(a,b) &\leq p(n_{iM}, n_{iR})\\ \end{split}} p(a,b)\\
+  \end{split}
+\end{equation}
+$$
+
+#### Example
+
+We will reuse an example originally intended to illustrate [Fisher's Exact Test](http://localhost:8080/guide/primers/statistics/fishers_exact_test/#fishersExactTest) since the concepts are nearly identical. Consider Table 2 which presents a hypothetical contingency table of observed mapped read counts for a gene between our two HGS-OvCa subtypes.
+
+**Table 2. Hypothetical contingency table for observed RNA-seq count data**
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_2 }}){: .img-responsive.slim }
+
+**Set marginal totals**. In this case there are a total of 32 mapped read counts. The marginal total counts for gene $$i$$ across subtypes is $$12+3=15=n_i$$. Also note the marginal totals for each subtype equal $$15$$. Given these marginal totals, our next goal is to enumerate all possible contingency tables (Table 3).
+
+**Table 3. Possible contingency tables given fixed marginal totals**
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_3 }}){: .img-responsive.slim }
+
+**Sum probabilities of contingency tables**. If the counts for gene $$i$$ in each subtype are $$a$$ and $$b$$, respectively, we desire those table probabilities $$p(a,b)$$ that are less than or equal to that observed, $$p(n_{iM},n_{iR}$$). From Table 2 the observed contingency table probability is calculated using $$a=12$$ and $$b=3$$ giving $$p(12,3)$$. Tables highlighted in red include those (unobserved) tables where the gene differential is more extreme than the observed table and consequently will have probabilities lower than the observed, that is, $$p(12,3) \geq p(a,b)$$. Likewise, tables highlighted in orange will have probabilities lower than that observed. The sum of these two sets of table probabilities will equal $$P_i$$.
+
+### Calculating p-values
+
+> Available in edgeR:`exactTest(...)`
+
+Our assumption of independence makes life a little easier in that our joint probability of mapped read counts can be expressed as a product.
+
+$$
+\begin{equation}
+  \begin{split}
+    p(a,b) &= p(a) \cdot p(b)\\
+  \end{split}
+\end{equation}
+$$
+
+Given normalized RNA-seq count data samples, the probabilities of any particular count can be estimated by a <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">negative binomial distribution</a>.
+
+$$
+\begin{equation}
+  \begin{split}
+    n_{ij} &\sim NB \left(\phi_i^{-1}, \frac{\lambda_i}{\phi_i^{-1} + \lambda_i}\right) \text{ where } \eta(j)=\{m, r\}\\
+  \end{split}
+\end{equation}
+$$
+
+Here the $$\phi$$ is referred to as the 'dispersion' and $$\lambda$$ the mean. But let's back up a bit. We seemed to pull this negative binomial distribution out of a magic hat. Where does this originate? What do all these parameters really mean and how do we get them?
+
+## <a href="#modellingCounts" name="modellingCounts">VI. Modelling counts</a>
+
+Our goal here is to rationalize the negative binomial distribution as an acceptable 'noise' model with which to input our observed RNA-seq mapped gene count data and retrieve a p-value $$P$$ for each gene. In simple terms, the question boils down to this: How are RNA-seq mapped read count data distributed? Another way of stating this question is: How do RNA-seq mapped read count data vary?
+
+## Technical variability
+
+Consider the RNA-seq experiment we presented in Figure 1: RNA is sourced from a particular case, a corresponding cDNA library is generated and short sequence reads are mapped to a reference. Thus, for any give gene we will derive a number of fragment counts. Imagine that we could use the identical cDNA library in multiple, distinct, parallel sequencing reactions such as that provided by a typical flow cell apparatus (Figure 2). Our intuition would lead us to expect that the sequencing reads to be similar but unlikely to produce exactly the same counts for every gene in every reaction.
+
+**Definition** The **technical variability** or **shot noise** is the variability attributed to the nature of the measurement approach itself.
+
+Consider a case where we observe a given number $$y$$ of elements of a given type (e.g. counts of an RNA transcript) within a sample $$n$$ (e.g. all measured transcripts) of elements chosen at random from a population $$N$$ (e.g. expressed transcripts). The probability of any particular $$y$$ is well described by a [hypergeometric distribution]({{ site.baseurl }}/primers/statistics/distributions/#hypergeometric). The popular example is the probability of consecutive aces when selecting $$n$$ cards without replacement from a standard playing deck $$N=52$$. Of course, probabilities are just declarations of our uncertainty. Thus in experimental trials, we expect actual counts to vary about the number prescribed by probabilities.
+
+In practice, hypergeometric probability calculations are expensive and so is approximated by the [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/#binomial) when the population size $$N$$ is large relative to the sample size $$n$$.
+
+Two important points about binomial distributions. First, is that it describes a situation in which we have *a priori* knowledge of the number of observations $$n$$. In RNA-seq parlance this amounts to knowing the number of mapped RNA species we will observe. Second, the binomial is well-approximated by the [Poisson distribution]({{ site.baseurl }}/primers/statistics/distributions/#Poisson) when the sample size $$n$$ is large and the probability of observing any particular species is small. This probability amounts to the relative abundance of a given RNA species.
+
+Modelling the technical variability associated with repeated RNA-seq measurements of a given library with as a Poisson distribution is attributed to Marioni *et al.* (Marioni 2008).
+
+ > *Statistically, we find that the variation across technical replicates can be captured using a Poisson model, with only a small proportion (∼0.5%) of genes showing clear deviations from this model.*
+
+Accordingly, the mean and variance of mapped read counts is a random variable $$Y$$.
+
+ $$
+ \begin{equation}
+   \begin{split}
+     f(y; \mu)  &= \frac{\mu^y}{y!}e^{-\mu} \text{ for }y=1,2,\cdots\\
+     E[Y] &= Var(Y) = \mu\\
+   \end{split}
+ \end{equation}
+ $$
+
+ A nice aspect of the Poisson distribution is the equality between mean and variance. Figure 7 displays a plot of simulated RNA-seq data where mean and variance for genes is measured across technical replicates.
+
+ ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.super-slim }
+ <div class="figure-legend well well-lg text-justify">
+   <strong>Figure 7. Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for technical replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+ </div>
 
 ### Biological variability
-> We develop tests using the negative binomial distribution to model overdispersion relative to the Poisson, and use conditional weighted likelihood to moderate the level of overdispersion across genes.  - Robinson 2007
 
+> Available in edgeR:`estimateCommonDisp(...)` and `estimateTagwiseDisp(...)`
 
-### Caveats
+Consider the RNA-seq experiments we presented in Figure 3: RNA is sourced from two distinct subtypes of HGS-OvCa and for each subtype, multiple cases. Again, for each case a corresponding cDNA library is generated and short sequence reads are mapped to a reference. Suppose we restrict our attention to cases of a given subtype such as the TCGA HGS-OvCa subtype 'mesenchymal'. Our experience would lead us to expect that the sequencing reads would be to be similar but unlikely to produce exactly the same counts even after controlling for technical variability.
 
-#### Transcript length bias
+**Definition** The **biological variability** is the variability attributed to the nature of the biological unit or sample itself.
 
-In RNA sequencing, longer genes are expected to generate more reads than a shorter gene expressed at the same level as a consequence of RNA fragmentation that precedes sequencing library creation for an RNA sample. To correct for this length bias, mapped read counts are divided by gene length. Oshlack *et al.* (Oshlack 2009) describe a bias introduced in differential expression testing by this correction. In brief, they demonstrate both theoretically and experimentally that normalizing RNA-seq counts by gene length leads to a variance inflation inversely proportional. This effectively reduces the power to detect differential expression. They go on to show that this propagates to gene set testing in that some sets with length bias will be over- or underrepresented commensurate with the length of genes in the set.  
+Consider a case where the technical variability in measured counts for a given case/cDNA library is well accounted for by a Poisson distribution indexed by its mean $$\mu$$. If we now made our measurements across different cases we would expect additional variability owing to the 'uniqueness' of individuals that includes (but not limited to) genetic, physiological and their environmental factors. Figure 8 displays a plot of simulated RNA-seq data where mean and variance for genes is measured across biological replicates.
 
-## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive.super-slim }
+<div class="figure-legend well well-lg text-justify">
+ <strong>Figure 8. Overdispersed Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for biological replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+</div>
+
+The overdispersed count data observed with biological replicates manifests as an elevated variance relative to the mean. Thus, some 'fudge factor' is desired to account for this additional variability. The [negative binomial]({{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial) arises from a Gamma-Poisson mixture in which a Poisson parameter $$\Theta$$ is itself a random variable $$\Theta=\lambda\epsilon$$ and $$\epsilon \sim Gamma(y; \alpha,\beta)$$. One way to look at this formulation is to view $$\lambda$$ as a population mean and $$\epsilon$$ the source of variability attributed to the unique character of each distinct biological source.
+
+Modelling the technical and biological variability associated with RNA-seq measurements of different biological sources as a negative binomial distribution is attributed to Robinson and Smyth (Robinson 2007).
+
+> *We develop tests using the negative binomial distribution to model overdispersion relative to the Poisson, and use conditional weighted likelihood to moderate the level of overdispersion across genes.*  
+
+#### Noise partitioning
+
+Accordingly, the mean and variance of mapped read counts is a random variable Y. We refer the reader to our discussion of the [negative binomial]({{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial) distribution for all the gory details.
+
+$$
+\begin{equation*}
+  \begin{split}
+    Y &\sim NB (\mu_Y, \sigma_Y^2)\\    
+    E[Y] &= \mu_Y = \lambda\\    
+    Var(Y) &= \sigma_Y^2 = \lambda + \phi\lambda^2\\    
+  \end{split}
+\end{equation*}
+$$
+
+Let's take a closer look at the moments. The mean of the counts will be $$\lambda$$ which represents a sort of population mean across biological replicates. Even more interesting is the variance.
+
+$$
+\begin{equation*}
+  \sigma_Y^2 = \lambda + \phi\lambda^2      
+\end{equation*}
+$$
+
+The parameter $$\phi$$ is called the 'dispersion' and we can see that as it approaches zero the variance approaches the mean and hence, becomes increasingly Poisson-like. In other words, we might view the negative binomial variance as the sum of two parts: The Poisson-like technical variability $$\lambda$$ and the overdispersion arising from biological sources $$\phi\lambda^2$$. Dividing each side of the  variance by $$\lambda^2$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    \frac{\sigma_Y^2}{\lambda^2} &= \frac{\lambda}{\lambda^2} + \frac{\phi\lambda^2}{\lambda^2} \\
+    CV_{total}^2(y) &= \frac{1}{\lambda} + \phi\\
+            &= CV_{technical}^2 + CV_{biological}^2    
+  \end{split}
+\end{equation*}
+$$
+
+Where we have now broken down the total squared coefficient of variation ($$CV_{total}^2$$) as a sum of the technical ($$CV_{technical}^2=1/\lambda$$) and biological ($$CV_{biological}^2=\phi$$) squared coefficients of variation.
+
+> *When a negative binomial model is fitted, we need to estimate the BCV(s) before we carry out the analysis. The BCV ... is the square root of the dispersion parameter under the negative binomial model. Hence, it is equivalent to estimating the dispersion(s) of the negative binomial model.*
+> <footer class="text-right"><a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeRUser Guide</a></footer>
+
+A through discussion of dispersion estimation is beyond the scope of this guide. We refer the reader to the original publication by Robinson and Smyth (Robinson 2007) for a detailed discussion of the rationale and approach to model fitting. In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section.
+
+## <a href="#dataProcessing" name="dataProcessing">VII. Data processing</a>
 This is basically a copy of the EM-Protocol ipython notebook for [Scoring normalized expression data with edgeR](https://github.com/jvwong/EM-tutorials-docker/blob/master/notebooks/Supplementary%20Protocol%202.ipynb)
 <hr/>
 
-## <a href="#datasets" name="datasets">VI. Datasets</a>
+## <a href="#datasets" name="datasets">VIII. Datasets</a>
 
-## <a href="#references" name="references">VII. References</a>
+## <a href="#references" name="references">IX. References</a>
 <!-- <div class="panel_group" data-inline="21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div> -->
