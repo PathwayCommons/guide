@@ -598,7 +598,9 @@ $$
 \end{equation*}
 $$
 
-The parameter $$\phi$$ is called the 'dispersion' and we can see that as it approaches zero the variance approaches the mean and hence, becomes increasingly Poisson-like. In other words, we might view the negative binomial variance as the sum of two parts: The Poisson-like technical variability $$\lambda$$ and the overdispersion arising from biological sources $$\phi\lambda^2$$. Dividing each side of the  variance by $$\lambda^2$$.
+The parameter $$\phi$$ is called the 'dispersion' and we can see that as it approaches zero the variance approaches the mean and hence, becomes increasingly Poisson-like. In other words, we might view the negative binomial variance as the sum of two parts: The Poisson-like technical variability $$\lambda$$ and the overdispersion arising from biological sources $$\phi\lambda^2$$.
+
+Let's transform this into a form that you may also see. Dividing each side of the  variance by $$\lambda^2$$.
 
 $$
 \begin{equation*}
@@ -610,18 +612,125 @@ $$
 \end{equation*}
 $$
 
-Where we have now broken down the total squared coefficient of variation ($$CV_{total}^2$$) as a sum of the technical ($$CV_{technical}^2=1/\lambda$$) and biological ($$CV_{biological}^2=\phi$$) squared coefficients of variation.
+Where we have now broken down the total squared coefficient of variation ($$CV_{total}^2$$) as a sum of the technical ($$CV_{technical}^2=1/\lambda$$) and biological ($$CV_{biological}^2=\phi$$) squared coefficients of variation. Of course, the biological coefficient of variation may contain contributions from technical sources such as library preparation.
 
 > *When a negative binomial model is fitted, we need to estimate the BCV(s) before we carry out the analysis. The BCV ... is the square root of the dispersion parameter under the negative binomial model. Hence, it is equivalent to estimating the dispersion(s) of the negative binomial model.*
-> <footer class="text-right"><a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeRUser Guide</a></footer>
+> <footer class="text-right"><a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR User Guide</a></footer>
 
-A through discussion of dispersion estimation is beyond the scope of this guide. We refer the reader to the original publication by Robinson and Smyth (Robinson 2007) for a detailed discussion of the rationale and approach to model fitting. In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section.
+A through discussion of dispersion estimation is beyond the scope of this guide. We refer the reader to the original publication by Robinson and Smyth (Robinson 2007) for a detailed discussion of the rationale and approach to model fitting. In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
 
 ## <a href="#dataProcessing" name="dataProcessing">VII. Data processing</a>
-This is basically a copy of the EM-Protocol ipython notebook for [Scoring normalized expression data with edgeR](https://github.com/jvwong/EM-tutorials-docker/blob/master/notebooks/Supplementary%20Protocol%202.ipynb)
-<hr/>
+
+### Requirements
+
+Let us recap what materials we will need to transform the [TCGA HGS-OvCa RNA-seq count data]({{ site.baseurl}}/guide/datasets/TCGA_Ovarian_Cancer/get-data/) retrieved previously into a list of  genes differentially expressed between 'mesenchymal' and 'immunoreactive' subtypes.
+
+- Files
+  - RNA-seq read counts: [TCGAOv_counts.txt.zip (21 MB)]({{ site.baseurl }}/{{ site.media_root }}/datasets/TCGA_Ovarian_Cancer/get-data/TCGAOv_counts.txt.zip)
+  - Case subtype assignments: [TCGAOv_subtypes.txt.zip (27 KB)]({{ site.baseurl }}/{{ site.media_root }}/datasets/TCGA_Ovarian_Cancer/get-data/TCGAOv_subtypes.txt.zip)
+- Software  
+  - [R](https://www.r-project.org/)
+  - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) Bioconductor package   
+
+For the purposes of this section and consistency with the instructions in 'get-data', we will assume that your files are located in a local directory at `/Users/username/Downloads/TCGAOV_data/output`.
+
+The latter portion of the data processing steps described herein are lifted from the Nature Protocols article 'Count-based differential expression analysis of RNA sequencing data using R and Bioconductor', Step 14, Option A (Anders 2013).
+
+### Process
+
+Load the data and do some basic filtering of the RNA-seq data.
+
+
+{% highlight r %}
+### ============ Load ===============
+rm(list=ls(all=TRUE))
+library("edgeR")
+
+BASE_DIR <- "/Users/jeffreywong/Sync/bader_jvwong/Guide/datasets/get-data/data/GDC_TCGAOv_Counts/output"
+subtypes_file <- file.path(BASE_DIR, "TCGAOv_subtypes.txt")
+counts_file <- file.path(BASE_DIR, "TCGAOv_counts.txt")
+comparisons=c("Mesenchymal","Immunoreactive")
+
+TCGAOv_counts <- read.table(counts_file,
+                            header = TRUE,
+                            sep = "\t",
+                            quote="\"",
+                            row.names = 1,
+                            check.names = FALSE,
+                            stringsAsFactors = FALSE )
+
+TCGAOv_subtypes <- read.table(subtypes_file,
+                              header = TRUE,
+                              sep = "\t",
+                              quote="\"",
+                              check.names = FALSE,
+                              stringsAsFactors = FALSE)
+N_Differentiated = sum(TCGAOv_subtypes$SUBTYPE == 'Differentiated')
+N_Immunoreactive = sum(TCGAOv_subtypes$SUBTYPE == 'Immunoreactive')
+N_Proliferative = sum(TCGAOv_subtypes$SUBTYPE == 'Proliferative')
+N_Mesenchymal = sum(TCGAOv_subtypes$SUBTYPE == 'Mesenchymal')
+
+### ============ Filter ===============
+row_with_mincount = rowSums(cpm(TCGAOv_counts) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
+TCGAOv_thresholded = TCGAOv_counts[row_with_mincount,]
+
+### Should exclude based on id mapping from g:Profiler
+# exclude <- rownames(TCGAOv_thresholded)[union(grep("\\?",rownames(TCGAOv_thresholded)), grep("^LOC", rownames(TCGAOv_thresholded)))]
+# TCGAOv_thresholded <- TCGAOv_thresholded[which(!rownames(TCGAOv_thresholded) %in% exclude),]
+
+### ============ Normalize ===============
+TCGAOv_data <- DGEList(counts=TCGAOv_thresholded,group=TCGAOv_subtypes$SUBTYPE)
+TCGAOv_data = calcNormFactors(TCGAOv_data)
+TCGAOv_data = estimateCommonDisp(TCGAOv_data)
+TCGAOv_data = estimateTagwiseDisp(TCGAOv_data)
+
+## Plot the mds?
+par(mfrow=c(2,2))
+mds_output <- plotMDS(TCGAOv_data, labels=TCGAOv_subtypes$SUBTYPE, col= c("darkgreen","blue", "red","black")[factor(TCGAOv_subtypes$SUBTYPE)])
+plotMeanVar(TCGAOv_data,show.tagwise.vars=TRUE,NBline = TRUE)
+plotBCV(TCGAOv_data)
+
+### ============ Test ===============
+TCGAOv_DE = exactTest(TCGAOv_data, pair=comparisons)
+TCGAOv_TT = topTags(TCGAOv_DE, n=nrow(TCGAOv_data))
+
+## Plot the DE genes in red
+rn = rownames(TCGAOv_TT$table)
+deg =rn[TCGAOv_TT$table$FDR<0.05]
+plotSmear(TCGAOv_data, pair=comparisons, de.tags=deg)
+{% endhighlight %}
+
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" />
+
+{% highlight r %}
+length(deg)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 3573
+{% endhighlight %}
+
+
+
+{% highlight r %}
+### ============ Write ===============
+ranks_file <- file.path(BASE_DIR, "MesenchymalvsImmunoreactive_edger_ranks.rnk")
+TCGAOv_ranks <- sign(TCGAOv_TT$table$logFC) * log10(TCGAOv_TT$table$PValue)
+genenames <- rownames(TCGAOv_TT$table)
+TCGAOv_ranks <- cbind(genenames, TCGAOv_ranks)
+colnames(TCGAOv_ranks) <- c("GeneName","rank")
+write.table(TCGAOv_ranks,
+            ranks_file,
+            col.name=TRUE,
+            sep="\t",
+            row.names=FALSE,
+            quote=FALSE)
+{% endhighlight %}
+
 
 ## <a href="#datasets" name="datasets">VIII. Datasets</a>
 
 ## <a href="#references" name="references">IX. References</a>
-<!-- <div class="panel_group" data-inline="21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div> -->
+<!-- <div class="panel_group" data-inline="23975260,21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div> -->

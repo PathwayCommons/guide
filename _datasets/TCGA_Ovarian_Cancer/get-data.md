@@ -279,19 +279,9 @@ TCGAOV_data
 
 ## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
 
-Our first goal in this section is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-seq counts for a gene (Table 1). This is described in the following 'Get data' section.
+Our first goal is to obtain a dataset that assigns a subtype to each of the cases (Table 1). Luckily, this assignment has already been done elsewhere (Verhaak 2013) but we will need to update it to reference the cases by the UUIDs assigned by the GDC. This is described in the 'Get subtypes' section.
 
-**Table 1. Desired layout for RNA-seq data**  
-
-| Gene ID  |  case 1  |  case 2  |  case 3  |  case 4  |
-|:--------:|:--------:|:--------:|:--------:|:--------:|
-| gene 1   |    0     |    200   |   150    |   0      |
-| gene 2   |    15    |    10    |    0     |   2      |
-| gene 3   |    10    |    0     |   250    |   0      |
-
-Our second goal is to obtain a dataset that assigns a subtype to each of the cases (Table 1). Luckily, this assignment has already been done elsewhere (Verhaak 2013) but we will need to update it to reference the cases by the UUIDs assigned by the GDC. This is described in the 'Get subtypes' section.
-
-**Table 2. Desired layout for subtype assignments data**  
+**Table 1. Desired layout for subtype assignments data**  
 
 | Case ID  |  Subtype         |
 |:--------:|:----------------:|
@@ -299,6 +289,17 @@ Our second goal is to obtain a dataset that assigns a subtype to each of the cas
 | case 2   |  proliferative   |
 | case 3   |  immunoreactive  |
 | case 4   |  differentiated  |
+
+Our next goal is to obtain a dataset in the form of a table where columns represent cases and rows are the respective RNA-seq counts for a gene (Table 2). This is described in the following 'Get data' section.
+
+**Table 2. Desired layout for RNA-seq data**  
+
+| Gene ID  |  case 1  |  case 2  |  case 3  |  case 4  |
+|:--------:|:--------:|:--------:|:--------:|:--------:|
+| gene 1   |    0     |    200   |   150    |   0      |
+| gene 2   |    15    |    10    |    0     |   2      |
+| gene 3   |    10    |    0     |   250    |   0      |
+
 
 The metadata file we downloaded contains some key information about each data file downloaded from the GDC and will be indispensable in generating our final output. A peek inside the meta data file reveals an array of json objects, one for each file (i.e. entry in the manifest).
 
@@ -360,19 +361,6 @@ We are particularly interested in the `analysis` and `associated_entities` field
 
 We will be making heavy use of the [Python Data Analysis (pandas)](http://pandas.pydata.org/) library to aid in our data munging tasks. For information on how to setup python for these tasks please see the section on [python setup](//TODO).
 
-### Obtain data
-Let us extract and combine the individual data files and label the columns with the corresponding case UUID. We present the full code followed by a brief explanation.
-
-<script src="https://gist.github.com/jvwong/1a46e9f6c967834c68f5ed99dd2fb77d.js"></script>
-
-- Note 1: Set up the path variables pointing to files. You should modify to suit your set up.
-- Note 2: Load the manifest file into a DataFrame and set the `filename` column as the index. The filename contains a UUID that will be mentioned in the metadata.
-- Note 3: As mentioned, the `submitter_id` contains the UUID of the corresponding data file. We extract the UUID into `count_file_id`.
-- Note 4: The `case_id` will be our data column header.
-- Note 5: Construct the path to the data file.  The parent folder name will be in the manifest.
-- Note 6: Merge with the growing DataFrame `df_combined`. The option `how='outer'` tells pandas to align the two data sets using the ENSG gene ids in the indices and use the union (rather than the intersection) of the two.
-- Note 7: The data files may contain extract status text so only keep indices that use the Ensembl ID namespace prefix `ENSG`.
-
 ### Get subtypes
 Verhaak *et al.* (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype ('mesenchymal', 'immunoreactive', 'proliferative' or 'differentiated'). Unfortunately, rather than UUIDs they instead identified cases with a now outdated ['TCGA barcode'](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode). Our goal here is to obtain the original data and update it accordingly.
 
@@ -381,15 +369,29 @@ Obtain the original data in Supplemental Table 1 filtered for the TCGA discovery
 <script src="https://gist.github.com/jvwong/48f9195db3d73009e8b93ed1de94a52d.js"></script>
 
 - Note 1: We're only interested in matching the project (TCGA), tissue source site (two digits) and the participant id (four digits) of the TCGA barcode
-- Note 2: Merge the query data stored in `df_gdc` with the publication assignments stored in `df_subtypes` and extract the intersection of the two using the pandas merge option `how='inner'`.
+- Note 2: Filter out any cases not in our list of `subtypes`
+- Note 3: Merge the query data stored in `df_gdc` with the publication assignments stored in `df_subtypes` and extract the intersection of the two using the pandas merge option `how='inner'`.
 
+### Obtain data
+Let us extract and combine the individual data files and label the columns with the corresponding case UUID. We present the full code followed by a brief explanation.
+
+<script src="https://gist.github.com/jvwong/1a46e9f6c967834c68f5ed99dd2fb77d.js"></script>
+
+- Note 1: Set up the path variables pointing to files. You should modify to suit your set up.
+- Note 2: Load the manifest file into a DataFrame and set the `filename` column as the index. The filename contains a UUID that will be mentioned in the metadata. We will also load `TCGAOv_subtypes.txt` created in the previous section in order to filter out cases missing a subtype (see Note 4).
+- Note 3: As mentioned, the `submitter_id` contains the UUID of the corresponding data file. We extract the UUID into `count_file_id`.
+- Note 4: The `case_id` will be our data column header.
+- Note 5: Guard against duplicates and ignore cases without a subtype.
+- Note 6: Construct the path to the data file.  The parent folder name will be in the manifest.
+- Note 7: Merge with the growing DataFrame `df_combined`. The option `how='outer'` tells pandas to align the two data sets using the ENSG gene ids in the indices and use the union (rather than the intersection) of the two.
+- Note 8: The data files may contain extract status text so only keep indices that use the Ensembl ID namespace prefix `ENSG`.
 
 ## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
 
 - {:.list-unstyled} RNA-seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_counts }}" download>`TCGAOv_counts.txt.zip`</a>(21 MB)
   - Format: tab-delimited  
     - Columns
-      - GDC case UUID (376 cases)      
+      - GDC case UUID (369 cases)      
     - Rows
       - ENSG gene identifier  
   - Workflow Type: HTSeq - Counts  
