@@ -10,6 +10,8 @@ data:
 videos:
   video_1: https://www.youtube.com/embed/HMyCqWhwB8E
   video_2: https://www.youtube.com/embed/pfZp5Vgsbw0
+data:
+  rank_list: MesenchymalvsImmunoreactive_ranks.rnk.zip  
 figures:
   figure_overview: overview.jpg
   figure_1: wang_nrg_v10_2009_fig1.png
@@ -20,6 +22,7 @@ figures:
   figure_6: figure_TMM_trim.jpg
   figure_7: figure_shot_noise.png
   figure_8: figure_biological_noise.png
+  figure_9: ranks_layout.png
   table_1: figure_contingency_table.jpg
   table_2: figure_contingency_table_example.jpg
   table_3: figure_contingency_enumerated_example.jpg  
@@ -39,7 +42,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning" role="alert">
-  To just get the data see <a href="#datasets">V. Datasets</a>.
+  To just get the p-value ranked list of differentially expressed genes see <a href="#datasets">VIII. Datasets</a>.
 </div>
 
 <div class="alert alert-warning" role="alert">
@@ -638,9 +641,11 @@ The latter portion of the data processing steps described herein are lifted from
 
 ### Process
 
-Load the data and do some basic filtering of the RNA-seq data.
+Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previously]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get-data/) then filter, normalize, test for differential expression and write out the resulting ranked list of p-values for each gene. We present the full code followed by a brief explanation.
 
-```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=TRUE, message=FALSE, warning=FALSE}
+<script src="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d.js"></script>
+
+```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
 ### ============ Load ===============
 rm(list=ls(all=TRUE))
 library("edgeR")
@@ -664,57 +669,151 @@ TCGAOv_subtypes <- read.table(subtypes_file,
                               quote="\"",
                               check.names = FALSE,
                               stringsAsFactors = FALSE)
-N_Differentiated = sum(TCGAOv_subtypes$SUBTYPE == 'Differentiated')
-N_Immunoreactive = sum(TCGAOv_subtypes$SUBTYPE == 'Immunoreactive')
-N_Proliferative = sum(TCGAOv_subtypes$SUBTYPE == 'Proliferative')
-N_Mesenchymal = sum(TCGAOv_subtypes$SUBTYPE == 'Mesenchymal')
 
 ### ============ Filter ===============
+N_Immunoreactive = sum(TCGAOv_subtypes$SUBTYPE == 'Immunoreactive')
+N_Mesenchymal = sum(TCGAOv_subtypes$SUBTYPE == 'Mesenchymal')
 row_with_mincount = rowSums(cpm(TCGAOv_counts) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
 TCGAOv_thresholded = TCGAOv_counts[row_with_mincount,]
 
-### Should exclude based on id mapping from g:Profiler
-# exclude <- rownames(TCGAOv_thresholded)[union(grep("\\?",rownames(TCGAOv_thresholded)), grep("^LOC", rownames(TCGAOv_thresholded)))]
-# TCGAOv_thresholded <- TCGAOv_thresholded[which(!rownames(TCGAOv_thresholded) %in% exclude),]
+TCGAOv_data <- DGEList(counts=TCGAOv_thresholded,group=TCGAOv_subtypes$SUBTYPE)
 
 ### ============ Normalize ===============
-TCGAOv_data <- DGEList(counts=TCGAOv_thresholded,group=TCGAOv_subtypes$SUBTYPE)
-TCGAOv_data = calcNormFactors(TCGAOv_data)
+TCGAOv_data = calcNormFactors(TCGAOv_data, method="TMM")
 TCGAOv_data = estimateCommonDisp(TCGAOv_data)
 TCGAOv_data = estimateTagwiseDisp(TCGAOv_data)
-
-## Plot the mds?
-par(mfrow=c(2,2))
-mds_output <- plotMDS(TCGAOv_data, labels=TCGAOv_subtypes$SUBTYPE, col= c("darkgreen","blue", "red","black")[factor(TCGAOv_subtypes$SUBTYPE)])
-plotMeanVar(TCGAOv_data,show.tagwise.vars=TRUE,NBline = TRUE)
-plotBCV(TCGAOv_data)
 
 ### ============ Test ===============
 TCGAOv_DE = exactTest(TCGAOv_data, pair=comparisons)
 TCGAOv_TT = topTags(TCGAOv_DE, n=nrow(TCGAOv_data))
+```
 
-## Plot the DE genes in red
+#### Note 1
+**Critical!** The order of the columns in the counts table which describes each sample/case must match the rows in the subtype assignments table. This code will not match up samples for you. Your subtypes will not be correctly assigned otherwise.
+
+#### Note 2
+The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to remove noisy genes with low expression.
+
+#### Note 3
+Store the count data and associated subtype assignments inside a DGEList. The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
+
+||group |lib.size |norm.factors|
+|----------|-------------|------|------|
+|01ea6354-137b-47f3-9021-a01a382b1147| Mesenchymal| 34914764| 1|
+|02594e5e-8751-47c1-9245-90c66984b665| Immunoreactive| 97809932| 1|
+|02d9aa2e-b16a-48ea-a420-5daed9fd51a6| Mesenchymal| 74404879| 1|
+|0484a929-7a7f-4926-8d25-470ddab082ec| Immunoreactive| 89634159| 1|
+
+We can take a look at how 'different' our expression between subtypes is using the function `plotMDS`.
+
+```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=TRUE, message=FALSE, warning=FALSE}
+### ============ Plotting ===============
+mds_output <- plotMDS(TCGAOv_data, labels=TCGAOv_subtypes$SUBTYPE, col= c("darkgreen","blue", "red","black")[factor(TCGAOv_subtypes$SUBTYPE)])
+```
+
+#### Note 4
+
+The function `calcNormFactors` is a [normalization procedure](#normalization) using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
+
+||group |lib.size |norm.factors|
+|----------|-------------|------|------|
+|01ea6354-137b-47f3-9021-a01a382b1147| Mesenchymal| 34914764| 0.9739587|
+|02594e5e-8751-47c1-9245-90c66984b665| Immunoreactive| 97809932| 1.1989746|
+|02d9aa2e-b16a-48ea-a420-5daed9fd51a6| Mesenchymal| 74404879| 1.0189433|
+|0484a929-7a7f-4926-8d25-470ddab082ec| Immunoreactive| 89634159| 1.0524297|
+
+The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
+
+$$
+\begin{equation}
+  \begin{split}
+    f_k^r &= \frac{S_k}{S_{r}}    
+  \end{split}
+\end{equation}
+$$
+
+Recall from our discussion that $$S_k$$ represents our total RNA output whose increase will lead to under-sampling genes via RNA-seq and *vice versa*. The 'effective library size' replaces `lib.size` for each case and is computed by simply multiplying by `norm.factors`. This normalized result is used in downstream, differential expression testing and is a 'model-based' normalization in contrast to those that directly transform the raw data.
+
+#### Note 5
+
+Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
+
+```r
+#[1] "counts"            "samples"    "common.dispersion"   "pseudo.counts"    
+#[5] "pseudo.lib.size"   "AveLogCPM"
+```
+
+`estimateTagwiseDisp` estimates the dispersion for each gene and adds the list `tagwise.dispersion` to DGEList.
+
+```r
+names(TCGAOv_data)
+#[1] "counts"            "samples"     "common.dispersion"  "pseudo.counts"     
+#[5] "pseudo.lib.size"   "AveLogCPM"   "prior.n"            "tagwise.dispersion"
+```
+
+Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
+
+```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
+### ============ Plotting ===============
+plotBCV(TCGAOv_data)
+plotMeanVar(TCGAOv_data, show.tagwise.vars=TRUE, NBline = TRUE)
+```
+
+#### Note 6
+
+A negative binomial mode can be fit from our data and dispersion estimates. From this, we calculate p-values $$P$$ for each gene. As described [above](#differentialExpression), $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
+
+The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
+
+||logFC |logCPM |PValue|
+|----------|-------------|------|------|
+|ENSG00000000003| 0.01016134| 6.316852| 0.9154125718|
+|ENSG00000000419| 0.07286626| 5.742385| 0.3871193323|
+|ENSG00000000457| 0.06727284| 3.814321| 0.3411576097|
+|ENSG00000000460| 0.24572199| 3.301272| 0.0095910907|
+
+#### Note 7
+
+The function `topTags` takes the output from `exactTest`, adjusts the raw p-values using the [False Discovery Rate (FDR) correction (Bejamini-Hochberg)]({{ site.baseurl }}/primers/statistics/multiple_testing/#multipleTestingControl), and returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
+
+||logFC |logCPM |PValue|FDR|
+|----------|-------------|------|------|------|
+|ENSG00000106624| -2.157814|  8.409861| 7.261311e-36 |6.595628e-32|
+|ENSG00000113140 |-1.761172 |10.327175 |1.123712e-35 |6.595628e-32|
+|ENSG00000166147| -2.134744|  5.739566 |3.422990e-35| 1.339416e-31|
+|ENSG00000182492| -1.876400 | 8.821797| 1.503263e-34 |4.411702e-31|
+
+We can now plot our differentially expressed genes (red) over our full data.
+
+```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=TRUE, message=FALSE, warning=FALSE}
+### ============ Plotting ===============
 rn = rownames(TCGAOv_TT$table)
 deg =rn[TCGAOv_TT$table$FDR<0.05]
 plotSmear(TCGAOv_data, pair=comparisons, de.tags=deg)
-length(deg)
-
-### ============ Write ===============
-ranks_file <- file.path(BASE_DIR, "MesenchymalvsImmunoreactive_edger_ranks.rnk")
-TCGAOv_ranks <- sign(TCGAOv_TT$table$logFC) * log10(TCGAOv_TT$table$PValue)
-genenames <- rownames(TCGAOv_TT$table)
-TCGAOv_ranks <- cbind(genenames, TCGAOv_ranks)
-colnames(TCGAOv_ranks) <- c("GeneName","rank")
-write.table(TCGAOv_ranks,
-            ranks_file,
-            col.name=TRUE,
-            sep="\t",
-            row.names=FALSE,
-            quote=FALSE)
 ```
 
+#### Note 8
+The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less probably under the null hypothesis.
 
 ## <a href="#datasets" name="datasets">VIII. Datasets</a>
 
+- {:.list-unstyled} Differential gene expression ranks: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_ranks.rnk.zip`</a>(0.14 MB)
+  - Comparisons
+    - 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes
+  - Format: tab-delimited  
+    - Columns
+      - GeneName
+      - rank
+    - Rows
+      - ENSG gene identifier  
+  - Normalization & testing: edgeR
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive.super-slim }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 9. Rank data file layout.</strong> GeneName displays gene identifiers using the Ensembl namespace.
+  </div>
+
+<hr/>
+
 ## <a href="#references" name="references">IX. References</a>
-<!-- <div class="panel_group" data-inline="23975260,21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div> -->
+<div class="panel_group" data-inline="23975260,21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div>
