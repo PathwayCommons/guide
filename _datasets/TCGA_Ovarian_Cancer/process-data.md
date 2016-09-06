@@ -58,13 +58,13 @@ figures:
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 This section is a follow-up to ['Get Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get-data/) describing how to source [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
 
-In this section we will assess differential gene expression between subtypes. Our over-overarching goal is to generate a list of genes ranked with respect to a 'p-value' - the probability of the observed difference in gene expression between subtypes when in fact none exists - that is suitable for downstream analysis using [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/index.jsp). By then end of this discussion you should:
+In this section we will assess differential expression (DE) of RNA species between subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a probability value (p-value) suitable for downstream analysis using [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/index.jsp). By then end of this discussion you should:
 
-1. Be aware of why RNA seq data requires normalization
-2. Understand the rationale for two types of normalization  
-3. Be aware of the statistical tests for differential expression
-4. Be familiar with the statistical models used to describe variability in discrete count data
-5. Be comfortable using the [R](https://www.r-project.org/) package [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) to filter, normalize and test for differential expression
+1. Be aware of why RNA-seq data requires normalization
+2. Understand the rationale behind global normalization  
+3. Be aware of statistical tests used to interrogate differential expression
+4. Be familiar with the statistical models describing variability in count data
+5. Be able to use the [R](https://www.r-project.org/) package [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) to filter, normalize and test for differential expression
 4. Obtain a ranked list of differentially expressed genes relevant to TCGA HGS-OvCa subtypes suitable for downstream analysis using GSEA
 
 <br/>
@@ -74,21 +74,21 @@ In this section we will assess differential gene expression between subtypes. Ou
 </div>
 
 ## <a href="#opportunitiesChallenges" name="opportunitiesChallenges">II. Opportunities and challenges</a>
-It's a simple question: What genes are expressed differently between two biological 'states'? In basic research it is common to assess how a treatment modifies expression *in vitro* relative to controls. In a translational context one often desires to determine how expression evolves over the course of a pathology. While microarrays were the tool of choice for parallel measurement of thousands of transcripts, in the last decade it has been usurped by the opportunities provided by deep sequencing technologies. Nevertheless, RNA-seq technologies come with their unique set of experimental, technical and data analysis challenges.
+It's a simple question: What genes are expressed differently between two biological states? In basic research it is common to assess how a treatment modifies expression *in vitro* relative to controls. In a translational context one often desires to determine how expression evolves over the course of a pathology. While microarrays paved the way for rapid, inexpensive measurements of thousands of transcripts, in the last decade it has been usurped by deep sequencing technologies. As always, RNA-seq technologies come with their unique set of experimental, technical and data analysis challenges.
 
-Using high-throughput sequencing technology to analyze the abundance of RNA species has several advantages over hybridization-based methods such as microarrays (Wang 2009). RNA-seq methods provide insight into alternative splicing, transcriptional initiation and termination sites, post-transcriptional modification and discovery of novel RNA species. From a technical standpoint, the method is unparalleled with respect to measurement noise, sensitivity, dynamic range and reproducibility. Sequencing methods provide discrete counts of mapped RNA species and depending on the conditions, may report abundances down to 1 transcript per cell. With great power, however, comes great responsibility.
+Using high-throughput sequencing technology to analyze the abundance of RNA species has several advantages over hybridization-based methods such as microarrays (Wang 2009). RNA-seq methods can provide unprecedented insight into alternative splicing, transcriptional initiation and termination, post-transcriptional modification and novel  RNA species. From a technical standpoint, the method is unparalleled with respect to measurement noise, sensitivity, dynamic range and reproducibility. The discrete counts arising from sequencing methods are more intuitive than fluorescence intensities. Depending on the conditions, sequencing sensitivity can approach 1 transcript per cell. With great power, however, comes great responsibility.
 
 ### Normalization
 
-RNA-seq appeared in the latter-half of the 2000s (Kim 2007). There was hope that, unlike microarrays, RNA-seq might *'capture transriptional dynamics across different tissues or conditions without sophisticated normalization of data sets'* (Wang 2009). As is often the case, a flood of initial excitement and widespread adoption has given way to more nuanced discussions concerning sources of error, bias and reproducibility (Oshlack 2010, Li 2014). Indeed, even as late as 2010 there was not a rigorous analysis of methodology developed for RNA deep sequencing. Software packages have been developed alongside publications in an attempt to encapsulate and standardize approaches to control for unwanted bias. Here we direct our attention to those biases that arise in differential expression analysis.
+RNA-seq made its debut in the latter-half of the 2000s (Kim 2007) and the hope was that, unlike microarrays, it might *'capture transriptional dynamics across different tissues or conditions without sophisticated normalization of data sets'* (Wang 2009). As is often the case, a flood of initial excitement and widespread adoption has given way to more nuanced discussions concerning sources of error, bias and reproducibility (Oshlack 2010, Li 2014). Even as late as 2010 a rigorous analysis of methodology had not yet been developed for RNA deep sequencing. Software packages emerging alongside publications have attempted to encapsulate and standardize approaches that control for various sources of 'error'. Here we expand upon the nature of such errors particularly as they relate to analysis of differential expression.
 
 ### Statistical models
 
-Our overarching goal is to assess genes for differential expression. In practice, we will apply a hypothesis test and calculate the probability of the observed difference in counts between subtypes assuming there is no difference between subtypes. Statistical concepts are introduced into this process in order to provide a more explicit and rigorous basis for modeling variability and [hypothesis testing]({{ site.baseurl }}/primers/statistics/multiple_testing/#hypothesisTestingErrors/). Unlike microarrays which provide continuous measures of light intensity associated with labelled nucleic acids, deep sequencing produces discrete or 'digital' counts of mapped reads and are better described by a distinct set of statistical models. We focus our discussion on the statistical models and approaches relevant to differential expression testing.
+In practice, assessing differential expression entails a hypothesis test that calculates the probability of an observed difference in RNA species counts between groups/subtypes assuming no association between subtypes. Statistical concepts are introduced into this process in order to provide a more explicit and rigorous basis for modeling variability and [hypothesis testing]({{ site.baseurl }}/primers/statistics/multiple_testing/#hypothesisTestingErrors/). Unlike microarrays which provide continuous measures of fluorescence intensity associated with labelled nucleic acids, deep sequencing produces discrete counts better described by a distinct set of statistical models.
 
 ## <a href="#rnaSequencing" name="rnaSequencing">III. RNA sequencing</a>
 
-We review some RNA-seq concepts and terminology that will be necessary for a detailed discussion of data normalization. The TCGA ovarian cancer RNA sequencing was performed using the Illumina platform and for that reason we focus on their technology.
+This section includes a very brief review of RNA-seq concepts and terminology that will be a basis for discussion of data normalization. TCGA HGS-OvCa RNA-seq was performed using the Illumina platform and for that reason we focus on their technology.
 
 > *A detailed discussion of RNA-seq is beyond the scope of this section. We refer the reader to the [RNA-seqlopedia](http://rnaseq.uoregon.edu/), a rich web resource for all things RNA-sequencing related.*
 
@@ -100,27 +100,19 @@ We review some RNA-seq concepts and terminology that will be necessary for a det
 
 **Definition** An **aligned read** or **mapped sequence read** refers to a sequencing result that has been unambiguously assigned to a reference genome or transcriptome.
 
-#### Notation
+> Note: *For historical reasons, some authors use the expression 'library size' interchangeably with 'sequencing depth'*.
 
-> *In this section we'll often use the terms 'case', 'sample' and 'library' interchangeably. They are meant to refer to a distinct source of material from which RNA-seq counts are generated.*
-
-To make our discussion more precise we will use mathematical notation in the following sections.
-
-  - {:.list-unstyled} $$Y_{ij}$$: Observed read count for gene $$i=1,\cdots,I$$ and sample $$j=1,\cdots,J$$
-  - {:.list-unstyled} $$N_{j}$$ = $$\sum\limits_{i \in I}Y_{ij}$$: Total sample read counts
-  - {:.list-unstyled} $$\pi_{ij}$$ the relative abundance of gene in sample
-  - {:.list-unstyled} $$C_{j}$$: Sample normalization factor
 
 #### Sequencing experimental workflow
 
-Figure 1 shows a typical RNA sequencing run in which an mRNA sample is converted into a set of corresponding mapped read counts.
+Figure 1 shows a typical RNA-seq experimental workflow in which an mRNA sample is converted into a set of corresponding mapped read counts.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. A typical RNA-seq experiment.</strong> mRNAs are converted into a library of cDNA fragments typically following RNA fragmentation. Sequencing adaptors (blue) are subsequently added to each cDNA fragment and a short sequence is obtained from each cDNA using high-throughput sequencing technology. The resulting sequence reads are aligned with the reference genome or transcriptome, and classified as three types: exonic reads, junction reads and poly(A) end-reads. These three types are used to generate a base-resolution expression profile for each gene (bottom). <em>Adapted from Wang et al. (2009)</em>
 </div>
 
-For those more curious about the process by which the short sequence reads referred to in Figure 1 are generated, Illumina has made available a summary of their 'Sequencing by Synthesis' (SBS) technology.
+For those more curious about the process by which the short sequence reads are generated, Illumina has made available a summary of their 'Sequencing by Synthesis' (SBS) technology.
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="{{ page.videos.video_1 }}"></iframe>
@@ -131,8 +123,9 @@ For those more curious about the process by which the short sequence reads refer
 
 #### Sequencing multiple libraries
 
-The workflow described in Figure 1 shows a single sequencing run in which an RNA sample is converted into a cDNA library, sequenced and then mapped to a reference. More often, RNA sourced from distinct biological entities will be compared. Also, the same cDNA library may be sequenced multiple times. Figure 2 shows a typical sequencing flow cell consisting of lanes in which samples can be loaded and sequenced in parallel. Correcting for bias between different sequencing
-runs' will be an important aspect of normalization.
+The workflow described in Figure 1 shows a single sequencing experiment whereby an RNA sample is converted into a cDNA library, sequenced and then mapped to a reference. More often, RNA sourced from biological entities in distinct states will be compared. Figure 2 shows a typical sequencing flow cell consisting of lanes in which samples can be loaded and sequenced in parallel. Correcting for bias between different sequencing experiments will be an important aspect of normalization.
+
+> Note: *We will use the term 'sample' and 'case' interchangeably to refer to an a distinct source of biological material from which RNA-seq counts are derived.*
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
@@ -150,33 +143,43 @@ runs' will be an important aspect of normalization.
 
 ### Variation
 
-RNA-sequencing data is variable. Variability can broadly be divided into two types: 'Interesting' variation is that which is biologically relevant such as the differences that arise between HGS-OvCa subtypes; 'Obscuring' variation in contrast is that which hinders our ability to observe the interesting variation and often arises from the experimental approach itself. Obscuring variation in gene expression measurement may be largely unavoidable when it takes the form of 'random error' such as the stochastic nature of gene expression. In contrast, a large amount of effort has been directed at identifying and attempting to mitigate 'systematic errors' which arise as a part of the RNA-sequencing procedure.
+RNA-sequencing data is variable. Variability can broadly be divided into two types: 'Interesting' variation is that which is biologically relevant such as the differences that arise between HGS-OvCa subtypes; 'Obscuring' variation, in contrast, often reflects the peculiarities of the experimental assay itself and reduces our ability to detect the interesting variation that leads to publications and the envy of colleagues. Obscuring variation in gene expression measurement may be largely unavoidable when it represents random error, such as the stochastic nature of gene expression. In contrast, a large amount of effort has been directed at identifying and attempting to mitigate systematic errors.
 
 #### Variability obscures comparisons   
 
 The path to understanding what underlies a disease pathology or the effect of a drug often begins with determining how they differ from an unperturbed state. In an ideal world we would directly observe those changes. In reality, our observations are indirect and represent inferences upon data that result from many experimental and analysis steps. The aim of normalization is to remove systematic technical effects that occur during data creation to ensure that technical bias has minimal impact on the results.
 
-The overall goal for RNA-seq normalization is to provide a basis upon which an accurate comparison of RNA species can be made. The need for normalization often arises when we wish to compare different sequencing runs. Figure 1 shows the process of performing a single measurement from an RNA source. Differential expression analysis involves comparing at least two distinct types (Figure 3). In each case, a library must be created and sequenced to a particular depth. Moreover, it is often desirable to measure many members of the same type, for example, TCGA HGS-OvCa cases assigned to the same subtype. Such 'biological replicates' are often used to boost the power to detect a signal between types and average-out minor differences amongst types.
+The overall goal for RNA-seq normalization is to provide a basis upon which an fair comparison of RNA species can be made. The need for normalization arises when we wish to compare different sequencing experiments. In this context, a sequencing experiment is performed on a library created from a single RNA source. Differential expression analysis involves comparing RNA from at least two distinct biological sources, often reflecting different biological states (Figure 3). Moreover, it is common to measure many members of the same type, for example, TCGA HGS-OvCa cases assigned to the same subtype. Such 'biological replicates' are often used to boost the power to detect a signal between types and average-out minor differences amongst types.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (light and dark blue) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. A cDNA library for each sample is created and sequenced to a given depth. The total number of aligned reads from each library (i.e. column sums) are invariably unique. In this section, expression between TCGA HGS-OvCa 'mesenchymal' and 'immunoreactive' subtypes are compared.
+  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological states (light and dark) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. A cDNA library for each sample is created and sequenced to a given depth. The total number of aligned reads from each library (i.e. column sums) are invariably unique. In this section, expression between TCGA HGS-OvCa 'mesenchymal' and 'immunoreactive' subtypes are compared.
 </div>
+
+### Notation
+To make our discussion more precise we will use mathematical notation in the following sections.
+
+  - {:.list-unstyled} $$Y_{ij}$$: Observed read count for gene $$i=1,\cdots,I$$ and sample $$j=1,\cdots,J$$
+  - {:.list-unstyled} $$N_{j}$$ = $$\sum\limits_{i \in I}Y_{ij}$$: Total sample read counts
+  - {:.list-unstyled} $$C_{j}$$: Sample normalization factor
+  - {:.list-unstyled} $$\pi_{ij}$$ the relative abundance of gene in sample
+  - {:.list-unstyled} $$\mu_{ij}$$ the expression level expressed in counts of transcripts
+  - {:.list-unstyled} $$S_{j}$$ the total RNA output in a sample
+  - {:.list-unstyled} $$L_{i}$$ the length of an RNA species
+
 
 ### Correction factors
 
-> We reference capabilities of the  [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package.
-
 > Much of this section is inspired by Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse, November 2014)
 
-Our overarching goal is to determine a way to make a fair comparison between two RNA sequencing data sets. Such data could arise from sequencing samples from distinct types (e.g. males and females), the same type (e.g. males) and perhaps even sequencing the same sample multiple times.  Here we describe global normalization whereby a correction factor is applied to an entire set of mapped read counts (Figure 4).
+We wish to make fair comparisons between RNA sequencing experiments. Such data could arise from sequencing RNA from distinct types (e.g. males and females), the same type (e.g. males) and perhaps even sequencing the same sample multiple times.  Here we describe global normalization whereby a correction factor is applied to an entire set of mapped read counts (Figure 4).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Global normalization.</strong> (Above) Hypothetical mapped read counts for samples of two types. Counts for each sample arise from a corresponding cDNA library and sequencing run. (Middle) For each sample (j) a correction factor (Cj) is calculated. In this case, the normalization factor is the ratio of total counts relative to the first of each type (samples 1 and 4). (Below) The normalized data results from dividing each raw mapped read count by the respective sample correction factor.    
 </div>
 
-Several different normalization schemes have been suggested in the literature but all result in a global correction factor ($$C_j$$) applied to each read count of a sequencing result. Which normalization scheme is the 'best' is an ongoing debate and we discuss those relevant to differential expression analysis.
+Several different normalization schemes have been suggested but which is 'best' is an ongoing debate. Here we discuss those relevant to differential expression analysis and available as part of the  [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) Bioconductor package.
 
 ### Total count
 
@@ -186,7 +189,7 @@ In this approach, variations in sequencing depth are directly proportional to to
 
 This approach can be attributed to Mortazavi *et al.* (Mortazavi 2008) who claimed  *'The sensitivity of RNA-Seq will be a function of both molar concentration and transcript length. We therefore quantified transcript levels in reads per kilobase of exon model per million mapped reads (RPKM).'*
 
-The correction factor $$C_j$$ is just the total mapped read counts for a given sample $$N_j$$ divided by one million
+The correction factor $$C_j$$ is just the sum of mapped read counts for a given sample $$N_j$$ divided by one million
 
 $$
 \begin{equation}
@@ -196,7 +199,7 @@ $$
 \end{equation}
 $$
 
-The 'kilobase of exon model' correction is necessary to correct for comparison of different species *within* the same sample. This arises due to the RNA fragmentation step performed prior to library creation: Longer loci generate more fragments and hence more reads. This is not required when comparing the same RNA species *between* samples such as in differential expression analysis.
+The 'kilobase of exon model' referred to by Mortazavi *et al.* is necessary to correct for comparison of different species *within* the same sample. This arises due to the RNA fragmentation step performed prior to library creation: Longer loci generate more fragments and hence more reads. This is not required when comparing the same RNA species *between* samples such as in differential expression analysis.
 
 ### Trimmed mean of M-values
 
@@ -204,7 +207,7 @@ The 'kilobase of exon model' correction is necessary to correct for comparison o
 
 Let us consider the rationale underlying total count correction. Strictly speaking, the method rests on the assumption that the relative abundance of RNA species in different samples are identical and that differences in counts reflects differences in sampling depth. A more realistic assumption is that the relative expression of *most* genes in every sample is similar and that any particular RNA species represents a small proportion of total read counts.
 
-Of course, there are situations in which these assumptions are violated and total count normalization can skew the desired correction (Figure 5). Consider a case where samples express at a high level RNA species that are absent in others. Consider a similar situation where a small number of genes in a sample may generate a large proportion of the reads.
+Of course, there are situations in which these assumptions are violated and total count normalization can skew the desired correction. Consider a scenario where samples express relatively large amounts of an RNA species absent in others  (Figure 5). Likewise, consider a situation where a small number of genes in a sample may generate a large proportion of the reads.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -213,11 +216,11 @@ Of course, there are situations in which these assumptions are violated and tota
 
 Robinson and Oshlack (Robinson 2010) formalized this potential discrepancy and proposed that the number of reads assigned to any particular gene will depend on the composition of the RNA population being sampled. More generally, the proportion of reads attributed to a gene in a library depends on the expression properties of the whole sample rather than merely the gene of interest. In both cases considered in Figure 5, the presence of a highly expressed gene underlies an elevated total RNA output that reduces the sequencing 'real estate' for genes that are otherwise not differentially expressed.
 
-To correct for this bias, Robinson and Oshlack proposed the Trimmed mean of M-values (TMM) normalization method. In simple terms, the method makes the relatively safe assumption that most genes are not differentially expressed and calculates an average per-gene difference between a sample and a reference. The TMM correction factor is that which eliminates any discrepancy between sample and reference. A more rigorous description of TMM follows.
+To correct for this bias, Robinson and Oshlack proposed the Trimmed mean of M-values (TMM) normalization method. In simple terms, the method makes the relatively safe assumption that most genes are not differentially expressed and calculates an average fold-difference in abundance of each gene in a sample relative to a reference. This average value is the TMM correction factor and is used in downstream analyses to account for differences between sample and reference. A more rigorous description of TMM follows.
 
 #### TMM notation
 
-Suppose that we observe some number of read counts $$Y_{ij}$$ for a gene $$i$$ in a given sample/library $$j$$. The expected value or average counts will equal the fraction of the total RNA output attributed to this RNA species - the relative abundance $$\pi_{ij}$$ - multiplied by the total number of mapped read counts $$N_j$$. The relative abundance is equal to the product of the unknown expression level (number of transcripts) $$\mu_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$ .
+Suppose that we observe some number of read counts $$Y_{ij}$$ for a gene $$i$$ in a given sample/library $$j$$. The expected value (i.e. average) of counts will equal the fraction of the total RNA output attributed to this RNA species - the relative abundance $$\pi_{ij}$$ - multiplied by the total number of mapped read counts $$N_j$$. The relative abundance is equal to the product of the unknown expression level (number of transcripts) $$\mu_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$ .
 
 $$
 \begin{equation}
@@ -267,15 +270,14 @@ $$
 \begin{equation}
   \begin{split}
     A_{ik}^r &= \frac{1}{2} \left[ log_2{\left(\frac{Y_{ik}}{N_k} \right)} + log_2{\left(\frac{Y_{ir}}{N_r}\right)} \right]\\
-          &= \frac{1}{2} log_2{\left(\frac{Y_{ik}}{N_k} \cdot \frac{Y_{ir}}{N_r}\right)}\\   
-    \text{where } Y_{i\cdot} &\neq 0
+          &= \frac{1}{2} log_2{\left(\frac{Y_{ik}}{N_k} \cdot \frac{Y_{ir}}{N_r}\right)}\\       
   \end{split}
 \end{equation}
 $$
 
 #### Step 1. Trim data
 
-Towards our goal of a robust estimate of total RNA outputs, we remove any genes with expression differences beyond a threshold that would skew our estimates. Oshlack and Robinson trim off the upper and lower 30% of $$M$$ and the outer 5% of $$A$$ values. Implicit in the calculation of $$M$$ and $$A$$ is the removal of genes with zero counts.
+Towards our goal of a robust estimate of total RNA outputs, we remove genes with extreme expression differences beyond a threshold that would skew our estimates. Oshlack and Robinson trim off the upper and lower 30% of $$M$$ and the outer 5% of $$A$$ values. Implicit in the calculation of $$M$$ and $$A$$ is the removal of genes with zero counts.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -419,13 +421,13 @@ One of the advantages of TMM is that the RNA-seq data themselves are not transfo
   We are going to lean heavily on our primer for <a href="{{ site.baseurl }}/primers/statistics/distributions/">Distributions</a>. In particular, you may wish to review our section on the <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">negative binomial distribution</a>. We will also use a lot of concepts from our section on <a href="{{ site.baseurl }}/primers/statistics/fishers_exact_test/">Fisher's Exact Test</a> and <a href="{{ site.baseurl }}/primers/statistics/multiple_testing/">Multiple Testing</a>.
 </div>
 
-Our overarching goal in this section is to gather evidence that supports a claim that an RNA species is differentially expressed (DE) between two groups. Concretely, for our TCGA HGS-OvCa RNA-seq data, we gather evidence suggestive of elevated levels of an RNA species in 'mesenchymal' versus 'immunoreactive' subtypes or *vice versa*.
+Our goal in this section is to gather evidence that supports a claim that an RNA species is differentially expressed between two groups. Concretely, for our TCGA HGS-OvCa RNA-seq data, we gather evidence suggestive of differences between 'mesenchymal' versus 'immunoreactive' subtypes.
 
-Our framework for gathering evidence will be a hypothesis test and the evidence for each gene will be encapsulated in the form of a p-value. Recall that a p-value in this context will be the probability of an observed difference in counts between subtypes assuming no difference in subtypes actually exists. This list of p-values for each RNA species will be our goal and represents the raw material for enrichment analysis tools.
+Our framework for gathering evidence will be a hypothesis test and the evidence for each gene will be encapsulated in the form of a p-value. Recall that a p-value in this context will be the probability of an observed difference in counts between subtypes assuming no association between expression and subtype exists. This list of p-values for each RNA species will be our goal and represents the raw material for enrichment analysis tools.
 
 ### Terminology
 
-Suppose that we wish to test whether the relative abundance ($$\pi$$) of a gene in the set of cases with a HGS-OvCa subtype label 'mesenchymal' (m) is different relative to 'immunoreactive' (r). Let $$\eta(j)=\{m, r\}$$ be a function that maps a case index to a subtype, then the set of cases labelled 'm' is $$M=\{j:\eta(j) = m\}$$ and those labelled 'r' be $$R=\{j:\eta(j) = r\}$$ . In classic hypothesis testing language, we take the *a priori* position of the null hypothesis ($$H_0$$) that there is no difference in gene expression between subtypes.
+Suppose that we wish to test whether the relative abundance ($$\pi_{ij}$$) of a gene in the set of cases with a HGS-OvCa subtype label 'mesenchymal' (m) is different relative to 'immunoreactive' (r). Let $$\eta(j)=\{m, r\}$$ be a function that maps a case index to a subtype label, then the group of mesenchymal cases is $$M=\{j:\eta(j) = m\}$$ and likewise the immunoreactive group is $$R=\{j:\eta(j) = r\}$$. In classic hypothesis testing language, we take the *a priori* position of a null hypothesis ($$H_0$$) that there is no association between gene expression and subtype.
 
 $$
 \begin{equation}
@@ -458,16 +460,16 @@ $$
 \end{equation}
 $$
 
-> *For those of you who have read our section on [Fisher's Exact Test]({{site.baseurl }}/primers/statistics/fishers_exact_test/) the following test setup will look familiar to you.*
-
 ### An exact test
 
-Our test proceeds in very much the same fashion as the Fisher's Exact Test. Our test will determine the probabilities of observing the various joint values within a contingency table under two important assumptions:
+> *For those of you who have read our section on [Fisher's Exact Test]({{site.baseurl }}/primers/statistics/fishers_exact_test/) the following test setup will look familiar to you.*
 
-- The marginal values ($$n_i,N_M,n_{Total}$$) are fixed
+Our test will determine the probabilities of observing the various joint values within a contingency table under two important assumptions:
+
+- The marginal values ($$n_i, N_M, N_{Total}$$) are fixed
 - There is no association between categorical values
 
-In a sense, the second assumption is a restatement of our null hypothesis $$H_0$$ that the relative abundance of a RNA species of interest is the same in each subtypes. We will calculate a composite p-value $$P_{i}$$ that will support or provide evidence to cast doubt on the $$H_0$$. Here, $$P_{i}$$ will actually be composed as a sum of individual probabilities of mapped read counts both observed and unobserved in our contingency table.
+In a sense, the second assumption is a restatement of our null hypothesis $$H_0$$ that the relative abundance of a RNA species of interest is the same in each subtypes. We will calculate a p-value $$P_{i}$$ that will support or provide evidence to cast doubt on the $$H_0$$. Here, $$P_{i}$$ will be a sum of individual probabilities of mapped read counts both observed and unobserved in our contingency table.
 
 Let $$p(a,b)$$ be the joint probability of a given pair of mapped read counts ($$a, b$$). Our first restriction is a fixed total $$a+b=n_i$$. The second restriction is that we only care about those probabilities with value less than or equal to $$p(n_{iM}, n_{iR})$$. This corresponds to contingency tables with mapped read count values for a gene more extreme (differentially expressed) hence more unlikely than those observed.
 
@@ -648,6 +650,7 @@ Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previousl
 
 
 
+
 #### Note 1
 **Critical!** The order of the columns in the counts table which describes each sample/case must match the rows in the subtype assignments table. This code will not match up samples for you. Your subtypes will not be correctly assigned otherwise.
 
@@ -664,7 +667,7 @@ Store the count data and associated subtype assignments inside a DGEList. The DG
 |02d9aa2e-b16a-48ea-a420-5daed9fd51a6| Mesenchymal| 74404879| 1|
 |0484a929-7a7f-4926-8d25-470ddab082ec| Immunoreactive| 89634159| 1|
 
-We can take a look at how 'different' our expression between subtypes is using the function `plotMDS`.
+We can take a look at how 'different' cases are using the function `plotMDS`. The plot represents the output of 'Multidimensional Scaling' (MDS) that maps gene expression distances for each case into a 2-D space (Hout 2013).
 
 
 {% highlight r %}
@@ -755,7 +758,7 @@ plotSmear(TCGAOv_data, pair=comparisons, de.tags=deg)
 <img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="500" style="display: block; margin: auto auto auto 0;" />
 
 #### Note 8
-The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less probably under the null hypothesis.
+The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
 
 ## <a href="#datasets" name="datasets">VIII. Datasets</a>
 
@@ -778,4 +781,4 @@ The rank of each gene is inversely proportional to the log of the $$P$$ as small
 <hr/>
 
 ## <a href="#references" name="references">IX. References</a>
-<div class="panel_group" data-inline="23975260,21720365,20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div>
+<div class="panel_group" data-inline="23975260,21720365,20167110,26813401,23359318,17556586,25150837,18550803,18516045,21176179,17881408,20196867,19015660"></div>

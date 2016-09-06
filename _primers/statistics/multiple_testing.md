@@ -19,7 +19,10 @@ figures:
   - {:.list-unstyled}  [I. Introduction](#introduction)
   - {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
   - {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
-  - {:.list-unstyled}  [IV. References](#references)
+  - {:.list-unstyled}  [IV. Controlling the Family-Wise Error Rate (FWER)](#controllingFWER)
+  - {:.list-unstyled}  [V. Controlling the False Discovery Rate](#controllingFDR)
+  - {:.list-unstyled}  [Appendix A. Proof of Lemma 1](#appendixA)
+  - {:.list-unstyled}  [VI. References](#references)
 
 <hr/>
 
@@ -72,7 +75,42 @@ Typically, type I errors are considered more harmful than type II errors where o
 
 Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.
 
-<img src="/guide/media/primers/statistics/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" />
+<!-- ```{r, out.width = 400, fig.retina = NULL, echo=FALSE, warning=FALSE}
+# ***** Probability of heads from a set of nickel flips *****
+
+# ***** Probability of more than 14 heads in nickel flip trials *****
+# Initialize our relevant variables
+nNickels <- 20 # Number of nickels
+pHeads <- 0.5 # The probability of heads
+trials <- c(1, 2, 10, 100, 250) # The number of trials
+nTrials <- length(trials)
+cutoff <- 14 # Number corresponds to the significance level 0.05
+
+# Simulate using the rbinom built-in function for binomial probability
+counts <- vector(mode="numeric", length=nTrials)
+for (i in 1:nTrials)
+{
+    counts[i] = sum((rbinom(trials[i], nNickels, pHeads) >= cutoff) == TRUE)
+}
+data2 <- data.frame( x = trials, y = counts )
+
+
+# ***** Plotting *****
+library(ggplot2)
+library(gridExtra)
+margin_axis_label <- 10
+size_font <- 12
+size_font_title <- 16
+
+ggplot(data2, aes(x=x, y=y)) +
+  theme(axis.text=element_text(size=size_font),
+        axis.title=element_text(size=size_font_title, face="bold"),
+        axis.title.x=element_text(margin=margin(margin_axis_label,0,0,0)),
+        axis.title.y=element_text(margin=margin(0,margin_axis_label,0,0))
+        ) +
+   geom_point(colour="#c0392b", size=5, pch=21) +
+  labs(x = "Tests", y = "Tests with 14 or more Heads")
+``` -->
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
 </div>
@@ -148,7 +186,7 @@ A common way to summarize the possible outcomes of multiple hypothesis tests is 
 
 Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant ($$V$$). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.
 
-### Controlling the Family-Wise Error Rate (FWER)
+## <a href="#controllingFWER" name="controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a>
 
 **Definition** The **family-wise error rate (FWER)** is the probability of at least one (1 or more) type I error
 
@@ -158,7 +196,7 @@ $$
  \end{equation*}
 $$
 
-#### The Bonferroni Correction
+### The Bonferroni Correction
 The most intuitive way to control for the FWER is to make the significance level lower as the number of tests increase. Ensuring that the FWER is maintained at $$\alpha$$ across $$m$$ independent tests
 
 $$P(V \gt 0) \leq \alpha$$
@@ -181,7 +219,7 @@ $$
 \end{equation*}
 $$
 
-#### Caveats, concerns, and objections
+### Caveats, concerns, and objections
 The Bonferroni correction is a very strict form of type I error control in the sense that it controls for the probability of even a single erroneous rejection of the null hypothesis (i.e. $$P(V\gt0)$$). One practical argument against this form of correction is that it is overly conservative and impinges upon statistical power (Whitley 2002b).
 
 **Definition** The **statistical power** of a test is the probability of rejecting a null hypothesis when the alternative is true
@@ -190,13 +228,13 @@ $$\text{Power}=P(\text{reject null hypothesis} \mid \text{ alternative hypothesi
 
 Indeed our discussion above would indicate that large-scale experiments are exploratory in nature and that we should be assured that testing errors are of minor consequence. We could accept more potential errors as a reasonable trade-off for identifying more significant genes. There are many other arguments made over the past few decades against using such control procedures, some of which border on the philosophical (Goodman 1998, Savitz 1995). Some even have gone as far as to call for the abandonment of correction procedures altogether (Rothman 1990). At least two arguments are relevant to the context of multiple testing involving large-scale experimental data.
 
-##### 1. The composite "universal" null hypothesis is irrelevant
+#### 1. The composite "universal" null hypothesis is irrelevant
 
 The origin of the Bonferroni correction is predicated on the universal hypothesis that only purely random processes govern all the variability of all the observations in hand. The omnibus alternative hypothesis is that some associations are present in the data. Rejection of the null hypothesis amounts to a statement merely that at least one of the assumptions underlying the null hypothesis is invalid, however, it does not specify exactly what aspect.
 
 Concretely, testing a multitude of genes for differential expression in treatment and control cells on a microarray could be grounds for Bonferroni correction. However, rejecting the composite null hypothesis that purely random processes governs expression of all genes represented on the array is not very interesting. Rather, researchers are more interested in which genes or subsets demonstrate these non-random expression patterns following treatment.
 
-##### 2. Penalty for peeking and 'p hacking'
+#### 2. Penalty for peeking and 'p hacking'
 
 This argument boils down to the argument: Why should one independent test result impact the outcome of another?
 
@@ -204,24 +242,23 @@ Imagine a situation in which 20 tests are performed using the Bonferroni correct
 
 Alternatively, 'p-hacking' is the process of creatively organizing data sets in such a fashion such that the p-values remain below the significance threshold. For example, imagine we perform 100 tests and each results in a $$p=0.001$$. A Bonferroni-adjusted significance level is $$0.0005$$ meaning none of the latter results are deemed significant. Suppose that we break these 100 tests into 5 groups of 20 and publish each group separately. In this case the significance level is $$0.0025$$ and in all cases the tests are significant.
 
+## <a href="#controllingFDR" name="controllingFDR">V. Controlling the false discovery rate (FDR)</a>
 
-### Controlling the false discovery rate
-
-Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m-m_0$$) null hypotheses.   
+Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m_1=m-m_0$$) null hypotheses.   
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and non-true (m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
+  <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and false (m1=m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
 </div>
 
 In an exploratory analysis, we are happy to sacrifice are strict control on type I errors for a wider net of discovery. This is the underlying rationale behind the second control procedure.
 
-#### Benjamini-Hochberg control
+### Benjamini-Hochberg control
 A landmark paper by Yoav Benjamini and Yosef Hochberg (Benjamini 1995) rationalized an alternative view of the errors associated with multiple testing:
 
 > *In this work we suggest a new point of view on the problem of multiplicity. In many multiplicity problems the number of erroneous rejections should be taken into account and not only the question of whether any error was made. Yet, at the same time, the seriousness of the loss incurred by erroneous rejections is inversely related to the number of hypotheses rejected. From this point of view, a desirable error rate to control may be the expected proportion of errors among the rejected hypotheses, which we term the false discovery rate (FDR).*
 
-**Definition** The **false discovery proportion (Q)** is the proportion of false discoveries among the null hypotheses declared significant
+**Definition** The **false discovery proportion** ($$Q$$) is the proportion of false discoveries among the rejected null hypotheses.
 
 $$
 \begin{equation*}
@@ -232,87 +269,67 @@ $$
 \end{equation*}
 $$
 
-Note that in reality, we will only be able to observe $$R$$ the number of hypotheses declared significant and will not have any direct knowledge regarding $$V$$ or $$S$$. This subtlety motivates the attempt to control the [expected value](//TODO) or 'average' $$Q$$
+By convention, if $$R$$ is zero then so is $$Q$$. We will only be able to observe $$R$$ - the number of rejected hypotheses - and will have no direct knowledge of random variables $$V$$ and $$S$$. This subtlety motivates the attempt to control the expected value of $$Q$$.
 
-**Definition** The **false discovery rate (FDR)** is the expected false discovery proportion
+**Definition** The **false discovery rate (FDR)** $$Q_e$$ is the expected value of the false discovery proportion.
 
 $$
 \begin{equation*}
   \begin{split}
-    FDR&=E \left[Q\right]\\
-       &=E \left[ \frac{V}{R} \right]\\
+    Q_e&=E \left[Q\right]\\
   \end{split}
 \end{equation*}
 $$
 
-The Benjamini-Hochberg (BH) procedure then attempts to place an upper bound ($$q$$) on the FDR
+### The Benjamini-Hochberg procedure
 
-$$FDR=E \left[ Q \right] \leq \frac{m_0}{m}q \leq q$$
+In practice, deriving a set of rejected hypotheses is rather simple. Consider testing $$m$$ independent hypotheses $$H_1, H_2, \ldots, H_m$$ from the associated p-values $$P_1, P_2, \ldots, P_m$$.
 
-#### The Benjamini-Hochberg procedure
+1. Sort the $$m$$ p-values in ascending order.
 
-Consider testing $$m$$ independent hypotheses $$H_1, H_2, \cdots, H_m$$ from the associated p-values $$P_1, P_2, \cdots, P_m$$.
+$$P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}$$
 
-  1. Sort the $$m$$ p-values in ascending order
+  - {: .list-unstyled} Here the notation $$P_{(i)}$$ indicates the $$i^{th}$$ order statistic. In this case, the ordered p-values correspond to the ordered null hypotheses
 
-  $$P_1 \leq P_2 \leq \cdots \leq P_i \leq \cdots \leq P_m$$
+$$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, \leq H_{(m)}$$
 
-  2. Set $$k$$ as the largest index $$i$$ for which $$P_i\leq\frac{i}{m} \cdot q$$
+2. Set $$k$$ as the largest index $$i$$ for which $$P_{(i)}\leq\frac{i}{m} \cdot q^*$$
 
-  3. Then the significant hypotheses are $$H_1, H_2, \cdots, H_k$$
+3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
-#### A sketch(y) proof
+### Justification
 
-We leave the rather tedious proof and rationale for the BH procedure to the reader (Benjamini 1995). Rather, we provide an intuitive explanation for the choice of the bound.
+**Theorem 1** The Benjamini-Hochberg (BH) procedure controls the FDR at $$q^*$$ for independent test statistics and any distribution of false null hypothesis.
 
-Consider testing $$m$$ independent null hypotheses $$H_{0, i}$$ from the associated p-values $$P_i$$ where $$i=1, 2, \cdots, m$$. Let $$i_0$$ define the indices for those $$m_0$$ true null hypotheses $$I_0=\{i: 1 \leq i \leq m_0 \}$$.
+**Proof of Theorem 1** The theorem follows from Lemma 1 whose proof is added as  [Appendix A](#appendixA) at the conclusion of this section.
 
-Then the overall goal is to determine the largest cut-off $$T_q$$ so that the expected value of $$Q$$ is bound by $$q$$
+<hr/>
 
-$$
-  \begin{equation*}
-    \begin{split}
-      E\left[Q \right] &\leq q\\
-      E\left[\frac{V}{R} \right] &\leq q\\
-      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q
-    \end{split}
-  \end{equation*}
-$$
-
-For large $$m$$, suppose that the number of false discoveries $$V=m_0 \cdot T_q$$
+**Lemma 1** Let $$X_1, \ldots, X_{m_0}$$ be the $$0 \ge m_0 \ge m$$ independent p-values (as random variables) corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ be the $$m_1 = m - m_0$$ p-values corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure described above satisfies the inequality
 
 $$
-  \begin{equation*}
-    \begin{split}
-      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
-      \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
-    \end{split}
-  \end{equation*}
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^* \\
+  \end{split}
+\end{equation*}
 $$
 
-The largest cut-off $$T_q$$ will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index $$i$$
+**Proof of Lemma 1.** This is provided as [Appendix A](#appendixA).
+
+<hr/>
+
+From Lemma 1, if we integrate the inequality we can state
 
 $$
-  \begin{equation*}
-    \begin{split}
-       \frac{m_0 \cdot p_i}{i} &\leq q
-    \end{split}
-  \end{equation*}
+\begin{equation*}
+  E[Q] = \frac{m_0}{m}q^* \leq q^*
+\end{equation*}
 $$
 
-Since $$m_0$$ will not be known, choose the larger option $$m$$ and find the largest index $$i$$ so that
+and the FDR is thus bounded.
 
-$$
-  \begin{equation*}
-    \begin{split}
-       \frac{m \cdot p_i}{i} &\leq q\\
-       p_i &\leq \frac{i}{m} \cdot q
-    \end{split}
-  \end{equation*}
-$$
-
-
-#### Two properties of FDR
+### Two properties of FDR
 
 Let us note two important properties of FDR in relation to FWER.
 First, consider the case where all the null hypotheses are true. Then $$m=m_0$$, $$s=0$$ and $$v=r$$ which means that any discovery is a false discovery. By convention, if $$v=0$$ then we set $$Q=0$$ otherwise $$Q=1$$.
@@ -365,7 +382,7 @@ To illustrate the BH procedure we adapt a trivial example presented by Glickman 
 
 In this case, we examine the final column for the largest case in which $$p_i \leq \frac{i}{100}\cdot0.05$$ which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our $$q=0.05$$ we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.
 
-#### Practical implications of BH compared to Bonferroni correction
+### Practical implications of BH compared to Bonferroni correction
 
 The BH procedure overcomes some of the caveats associated with FWER control procedures.
 
@@ -376,7 +393,7 @@ The BH procedure overcomes some of the caveats associated with FWER control proc
 $$
 \begin{equation*}
   \begin{split}
-    p_i &\leq \frac{i}{m}\cdot q\\
+    p_i &\leq \frac{i}{m}\cdot q^*\\
     p_i &\leq \frac{i}{100}\cdot 0.05
   \end{split}
 \end{equation*}
@@ -384,14 +401,177 @@ $$
 
 All hypotheses will be significant if we can find such a relation to hold for $$p_{100}$$. This is true for $$k=100$$ such that $$p_m=0.001 \leq \frac{100}{100} \cdot 0.05=0.05$$.
 
-#### Caveats and limitations
+### Caveats and limitations
 
 Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2012).
 
 
-******
+## <a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a>
 
-## <a href="#references" name="references">IV. References</a>
+We intend on proving Lemma 1 that underlies the BH procedure for control of the FDR. The proof is adapted from the original publication by Benjamini and Hochberg (Benjamini 1995) with variant notation and diagrams for clarification purposes. We restate the lemma and the associated notation.
+
+### The lemma
+
+Consider testing $$H_1, \ldots, H_m$$ null hypothesis based on the corresponding p-values $$P_1, \ldots, P_{m}$$. Let the null hypotheses sorted in ascending order be $$P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}$$ and so the corresponding ordered null hypotheses are $$H_{(1)}, H_{(2)}, \ldots, H_{(i)},  \ldots, H_{(m)}$$.
+
+**Lemma 1** Let $$X_1, \ldots, X_{m_0}$$ be the $$0 \ge m_0 \ge m$$ independent distributed p-values (as random variables) corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ be the $$m_1 = m - m_0$$ p-values corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure satisfies the inequality
+
+$$
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m} q^*\\
+  \end{split}
+\end{equation*}
+$$
+
+<hr/>
+
+We proceed using proof by induction. First we provide a proof for the base case $$m=1$$. Second, we assume Lemma 1 holds for $$m \leq k$$ and go on to show that this holds for $$m=k+1$$.
+
+### Asides
+
+There are a few not so obvious details that we will need along the way. We present these as a set of numbered 'asides' that we will refer back to.
+
+#### 1. Distribution of true null hypothesis p-values
+
+The true null hypotheses are associated with p-values $$X_1, \dots, X_{m_0}$$ that are distributed according to a standard uniform distribution, that is, $$X\sim U(0,1)$$. The proof of this follows.
+
+Let $$P$$ be a p-value that is a random variable with realization $$p$$. Likewise let $$T$$ be a test statistic with realization $$t$$. As before, our null hypothesis is $$H_0$$. The formal definition of a p-value is the probability of obtaining a test statistic at least as extreme as the one observed assuming the null hypothesis is true.
+
+$$
+\begin{equation*}
+  \begin{split}
+    p &= P(T \geq t \mid H_0)\\
+  \end{split}
+\end{equation*}
+$$
+
+Let's rearrange this.
+
+$$ p = 1 - P(T \lt t \mid H_0) $$
+
+The last term on the right is just the definition of the [cumulative distribution function]({{ site.baseurl }}/primers/statistics/definitions/#distributionFunction) (cdf) $$F_0(t)$$ where the subscript denotes the null hypothesis $$H_0$$.
+
+$$ p = 1 - F_0(t) $$
+
+If the cdf is monotonic increasing then
+
+$$
+\begin{equation*}
+  \begin{split}
+    P(T \geq t \mid H_0) &= P(F_0(T) \geq F_0(t))\\
+                         &= 1 - P(F_0(T) \lt F_0(t))\\
+  \end{split}
+\end{equation*}
+$$
+
+The last two results allow us to say that
+
+$$  p = 1 - F_0(t) = 1 - P(F_0(T) \lt F_0(t)) $$
+
+This means that $$P(F_0(T) \lt F_0(t)) = F_0(t)$$ which happens when $$F_0(t) \sim U(0,1)$$.
+
+#### 2. Distribution of the largest order statistic
+
+Suppose that $$X_1,\ldots, X_n$$ are $$n$$ independent variates, each with cdf $$F(x)$$. Let $$F_{(i)}(x)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i$$th order statistic $$X_{(i)}$$. Then the cdf of the largest order statistic $$X_{(n)}$$ is given by
+
+$$
+\begin{equation*}
+  \begin{split}
+    F_{(n)}(x) &= P(X_{(n)} \leq x)\\
+             &= P(\text{all }X_i \leq x) = F^n(x)\\
+  \end{split}
+\end{equation*}
+$$
+
+Thus the corresponding [probability mass function]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) $$f_n(x)$$ is
+
+$$
+\begin{equation*}
+  \begin{split}
+    f_{(n)}(x) &= \frac{d}{dx}F_{(n)}(x)\\
+             &= nF^{n-1}(x)\\
+  \end{split}
+\end{equation*}
+$$
+
+In the particular case that the cdf is for a standard uniform distribution $$X\sim U(0,1)$$ then this simplifies to
+
+$$ f_{(n)}(x) = nx^{n-1} $$
+
+
+### Base case
+ Suppose that there is a single null hypothesis $$m=1$$.
+
+**Case 1: $$m_0=0$$.**
+
+Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^*$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Q_1=q_1] &= 0 \leq \frac{m_0}{m}q^* = 0\\
+    \text{ since }m_0=0
+  \end{split}
+\end{equation*}
+$$
+
+**Case 2: $$m_0=1$$.**
+
+Since $$m_0=1$$ then there is a single true null hypothesis ($$X_1$$). This could be accepted $$V=R=Q=0$$ or rejected $$V=R=Q=1$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Q_1=q_1] &= 0 \cdot P(Q_1=0) + 1 \cdot P(Q_1=1)\\
+                      &= P(X_{(1)} \leq \frac{1}{1}q^*) \text{ according to the BH procedure }\\
+                      &= F_X(q^*)= q^* \text{ From aside 1: } X\sim U(0,1)\\
+  \end{split}
+\end{equation*}
+$$
+
+### Induction
+
+Assume Lemma 1 holds for $$m \leq k$$ and go on to show that this holds for $$m=k+1$$.
+
+**Case 1: $$m_0=0$$.**
+
+Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^*$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Q_1=q1, \ldots, Q_m=q_m] &= 0 \leq \frac{m_0}{k+1}q^* \\
+  \end{split}
+\end{equation*}
+$$
+
+**Case 2: $$m_0\gt0$$.**
+
+Define $$j_0$$ as the largest index $$0 \leq j \leq m_1$$ for the p-values corresponding to the false null hypotheses satisfying
+
+$$
+\begin{equation*}
+  \begin{split}
+    q_j \leq \frac{m_0+j}{k+1}q^*\\    
+  \end{split}
+\end{equation*}
+$$
+
+Define $$q^\prime$$ as the value on the right side of the inequality at $$j=j_0$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    q^\prime &= \frac{m_0+j_0}{k+1}q^*\\    
+  \end{split}
+\end{equation*}
+$$
+
+
+<hr/>
+
+## <a href="#references" name="references">VI. References</a>
   - Benjamini Y and Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Roy. Stat. Soc., v57(1) pp289-300, 1995.
   - Glickman ME *et al.* False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.
   - Goeman JJ and Solari A. Multiple hypothesis testing in genomics. Stat. Med., 33(11) pp1946-1978, 2014.
