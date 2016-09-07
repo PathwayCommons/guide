@@ -68,7 +68,7 @@ In this section we will assess differential expression (DE) of RNA species betwe
 4. Obtain a ranked list of differentially expressed genes relevant to TCGA HGS-OvCa subtypes suitable for downstream analysis using GSEA
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Summary and Goals.</strong> This section provides background on the approaches used to determine differential expression in RNA sequencing count data. We describe how to filter and normalize TCGA ovarian cancer RNA sequencing data, described in the previous section 'Get data'. Finally, we describe how to derive a list of differentially expressed genes ranked according to their p-value and suitable for downstream pathway analysis tools.
 </div>
@@ -675,7 +675,7 @@ We can take a look at how 'different' cases are using the function `plotMDS`. Th
 mds_output <- plotMDS(TCGAOv_data, labels=TCGAOv_subtypes$SUBTYPE, col= c("darkgreen","blue", "red","black")[factor(TCGAOv_subtypes$SUBTYPE)])
 {% endhighlight %}
 
-<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto auto auto 0;" />
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
 
 #### Note 4
 
@@ -719,7 +719,7 @@ names(TCGAOv_data)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto auto auto 0;" /><img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-2.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto auto auto 0;" />
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" /><img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-2.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
 
 #### Note 6
 
@@ -736,7 +736,7 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 
 #### Note 7
 
-The function `topTags` takes the output from `exactTest`, adjusts the raw p-values using the [False Discovery Rate (FDR) correction (Bejamini-Hochberg)]({{ site.baseurl }}/primers/statistics/multiple_testing/#multipleTestingControl), and returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
+The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/statistics/multiple_testing/#multipleTestingControl) to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
 ||logFC |logCPM |PValue|FDR|
 |----------|-------------|------|------|------|
@@ -755,7 +755,7 @@ deg =rn[TCGAOv_TT$table$FDR<0.05]
 plotSmear(TCGAOv_data, pair=comparisons, de.tags=deg)
 {% endhighlight %}
 
-<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="500" style="display: block; margin: auto auto auto 0;" />
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="500" style="display: block; margin: auto;" />
 
 #### Note 8
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.

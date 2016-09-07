@@ -259,13 +259,13 @@ $$P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}$$
 
 $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
-2. Set $$k$$ as the largest index $$i$$ for which $$P_{(i)}\leq\frac{i}{m} \cdot q^*$$
+2. Set $$k$$ as the largest index $$i$$ for which $$P_{(i)}\leq\frac{i}{m} \cdot q^∗$$
 
 3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
 ### Justification
 
-**Theorem 1** The Benjamini-Hochberg (BH) procedure controls the FDR at $$q^*$$ for independent test statistics and any distribution of false null hypothesis.
+**Theorem 1** The Benjamini-Hochberg (BH) procedure controls the FDR at $$q^∗$$ for independent test statistics and any distribution of false null hypothesis.
 
 **Proof of Theorem 1** The theorem follows from Lemma 1 whose proof is added as  [Appendix A](#appendixA) at the conclusion of this section.
 
@@ -276,7 +276,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^* \\
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^∗ \\
   \end{split}
 \end{equation*}
 $$
@@ -289,7 +289,7 @@ From Lemma 1, if we integrate the inequality we can state
 
 $$
 \begin{equation*}
-  E[Q] = \frac{m_0}{m}q^* \leq q^*
+  E[Q] = \frac{m_0}{m}q^∗ \leq q^∗
 \end{equation*}
 $$
 
@@ -359,7 +359,7 @@ The BH procedure overcomes some of the caveats associated with FWER control proc
 $$
 \begin{equation*}
   \begin{split}
-    p_i &\leq \frac{i}{m}\cdot q^*\\
+    p_i &\leq \frac{i}{m}\cdot q^∗\\
     p_i &\leq \frac{i}{100}\cdot 0.05
   \end{split}
 \end{equation*}
@@ -392,7 +392,7 @@ We intend on proving Lemma 1 that underlies the BH procedure for control of the 
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^* \\
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^∗ \\
   \end{split}
 \end{equation*}
 $$
@@ -479,12 +479,12 @@ $$ f_{(n)}(y) = ny^{n-1} $$
 
 **Case 1: $$m_0=0$$.**
 
-Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^*$$.
+Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^∗$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Z_1=z_1] &= 0 \leq \frac{m_0}{m}q^* = 0  &\text{ since }m_0=0 \\
+    E[Q \mid Z_1=z_1] &= 0 \leq \frac{m_0}{m}q^∗ = 0  &\text{ since }m_0=0 \\
   \end{split}
 \end{equation*}
 $$
@@ -497,8 +497,8 @@ $$
 \begin{equation*}
   \begin{split}
     E[Q \mid Z_1=z_1] &= 0 \cdot P(Q=0) + 1 \cdot P(Q=1)\\
-                      &= P(X_{(1)} \leq \frac{1}{1}q^*) &\text{ According to the BH procedure }\\
-                      &= F_X(q^*)= q^* &\text{ Aside 1: } X\sim U(0,1)\\
+                      &= P(X_{(1)} \leq \frac{1}{1}q^∗) &\text{ According to the BH procedure }\\
+                      &= F_X(q^∗)= q^∗ &\text{ Aside 1: } X\sim U(0,1)\\
   \end{split}
 \end{equation*}
 $$
@@ -509,12 +509,12 @@ Assume Lemma 1 holds for $$m \leq k$$ and go on to show that this holds for $$m=
 
 **Case 1: $$m_0=0$$.**
 
-Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^*$$.
+Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for false rejections $$V=0$$, thus $$Q=V/R=0$$. So Lemma 1 holds for any sensible $$q^∗$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Z_1=z_1, \ldots, Z_m=z_m] &= 0 \leq \frac{m_0}{k+1}q^* \\
+    E[Q \mid Z_1=z_1, \ldots, Z_m=z_m] &= 0 \leq \frac{m_0}{k+1}q^∗ \\
   \end{split}
 \end{equation*}
 $$
@@ -526,7 +526,7 @@ Define $$j_0$$ as the largest index $$0 \leq j \leq m_1$$ for the p-values corre
 $$
 \begin{equation*}
   \begin{split}
-    z_j \leq \frac{m_0+j}{k+1}q^*\\    
+    z_j \leq \frac{m_0+j}{k+1}q^∗\\    
   \end{split}
 \end{equation*}
 $$
@@ -536,7 +536,7 @@ Define $$z^\prime$$ as the value on the right side of the inequality at $$j=j_0$
 $$
 \begin{equation*}
   \begin{split}
-    z^\prime &= \frac{m_0+j_0}{k+1}q^*\\    
+    z^\prime &= \frac{m_0+j_0}{k+1}q^∗\\    
   \end{split}
 \end{equation*}
 $$
@@ -584,7 +584,7 @@ Finally let's extract a $$z^\prime$$ and substitute it with its definition.
 
 $$
 \begin{equation}
-  \frac{m_0}{m_0+j_0} z^{\prime}(z^{\prime})^{m_0-1} \leq \frac{m_0}{m_0+j_0}\frac{m_0+j_0}{k+1}q^* (z^{\prime})^{m_0-1} = \frac{m_0}{k+1}q^* (z^{\prime})^{m_0-1}
+  \frac{m_0}{m_0+j_0} z^{\prime}(z^{\prime})^{m_0-1} \leq \frac{m_0}{m_0+j_0}\frac{m_0+j_0}{k+1}q^∗ (z^{\prime})^{m_0-1} = \frac{m_0}{k+1}q^∗ (z^{\prime})^{m_0-1}
 \end{equation}
 $$
 
@@ -630,7 +630,7 @@ If we combine and order just this subset of null hypotheses, then according to t
 $$
 \begin{equation*}
   \begin{split}
-      P_{(t)} \leq \frac{t}{k+1}q^*
+      P_{(t)} \leq \frac{t}{k+1}q^∗
   \end{split}
 \end{equation*}
 $$
@@ -642,7 +642,7 @@ $$
   \begin{split}
       X_i^\prime &= \frac{X_i}{p},\qquad &i=1,2,\ldots,m_0-1 \\
       Z_i^\prime &= \frac{Z_i}{p},\qquad &i=1,2,\ldots,j \\
-      q^{*\prime} &= \frac{m_0+j-1}{(k+1)p}q^*\\
+      q^{∗\prime} &= \frac{m_0+j-1}{(k+1)p}q^∗\\
   \end{split}
 \end{equation*}
 $$
@@ -652,12 +652,12 @@ Convince yourself that the $$X_i^\prime$$ are ordered statistics of a set of $$m
 $$
 \begin{equation*}
   \begin{split}
-      Y_i^\prime &\leq \frac{i}{m^\prime}q^{*\prime} \Longleftrightarrow  Y_i &\leq \frac{i}{m}q^*\\
+      Y_i^\prime &\leq \frac{i}{m^\prime}q^{∗\prime} \Longleftrightarrow  Y_i &\leq \frac{i}{m}q^∗\\
   \end{split}
 \end{equation*}
 $$
 
-In other words, the false discovery proportion of $$X_1,\ldots,X_{m_0},Z_1,\ldots,Z_{m_1}$$ at level $$q^*$$ is equivalent to testing $$X_1^\prime,\ldots,X_{m_0-1}^\prime,Z_1^\prime,\ldots,Z_{j}^\prime$$ at $$q^{*\prime}=\frac{m_0+j-1}{(k+1)p}q^*$$.
+In other words, the false discovery proportion of $$X_1,\ldots,X_{m_0},Z_1,\ldots,Z_{m_1}$$ at level $$q^∗$$ is equivalent to testing $$X_1^\prime,\ldots,X_{m_0-1}^\prime,Z_1^\prime,\ldots,Z_{j}^\prime$$ at $$q^{∗\prime}=\frac{m_0+j-1}{(k+1)p}q^∗$$.
 
 Now we are ready to tackle the expectation inside the integral.
 
@@ -666,9 +666,9 @@ $$
   \begin{split}
       &E[Q \mid X_{m_0} =p, Z_1=z_1 \ldots,  Z_{m_1}=z_{m_1}]\\
       &=E\left[Q \mid Z_1^\prime=\frac{z_1}{p} \ldots,  Z_{j}^\prime=\frac{z_j}{p}\right]\\
-      &=\frac{m_0^\prime}{m^\prime}q^{*\prime} \qquad \text{Using the induction hypothesis}\\
-      &=\frac{m_0-1}{m_0+j-1}\frac{m_0+j-1}{(k+1)p}q^*\\
-      &=\frac{m_0-1}{(k+1)p}q^*\\
+      &=\frac{m_0^\prime}{m^\prime}q^{∗\prime} \qquad \text{Using the induction hypothesis}\\
+      &=\frac{m_0-1}{m_0+j-1}\frac{m_0+j-1}{(k+1)p}q^∗\\
+      &=\frac{m_0-1}{(k+1)p}q^∗\\
   \end{split}
 \end{equation*}
 $$
@@ -679,10 +679,10 @@ $$
 \begin{equation}
   \begin{split}
       &\int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
-      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^* \cdot f_{X_{m_0}}(p) dp\\
-      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^* \cdot m_0p^{m_0-1} dp \quad \text{ Aside 2 } \\
-      &=\int_{z^\prime}^{1} \frac{m_0-1}{k+1}q^* \cdot m_0p^{m_0-2} dp \\
-      &= \frac{m_0}{k+1}q^* \{1-(p^{\prime})^{m_0-1}\}\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^∗ \cdot f_{X_{m_0}}(p) dp\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^∗ \cdot m_0p^{m_0-1} dp \quad \text{ Aside 2 } \\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{k+1}q^∗ \cdot m_0p^{m_0-2} dp \\
+      &= \frac{m_0}{k+1}q^∗ \{1-(p^{\prime})^{m_0-1}\}\\
   \end{split}
 \end{equation}
 $$
@@ -695,8 +695,8 @@ $$
      E[Q \mid Q_1=q_1, \ldots, Q_{m_1}=q_{m_1}]
         &= \int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
         &+ \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
-        &= \frac{m_0}{k+1}q^* (z^{\prime})^{m_0-1} + \frac{m_0}{k+1}q^* \{1-(z^{\prime})^{m_0-1}\}\\
-        &= \frac{m_0}{k+1}q^* = \frac{m_0}{m}q^*
+        &= \frac{m_0}{k+1}q^∗ (z^{\prime})^{m_0-1} + \frac{m_0}{k+1}q^∗ \{1-(z^{\prime})^{m_0-1}\}\\
+        &= \frac{m_0}{k+1}q^∗ = \frac{m_0}{m}q^∗
   \end{split}
 \end{equation*}
 $$
