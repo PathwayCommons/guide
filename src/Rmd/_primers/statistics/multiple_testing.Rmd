@@ -13,6 +13,7 @@ figures:
   table_1: table_1.jpg
   table_2: table_2.jpg
   figure_3: figure_3.jpg
+  figure_4: figure_bh_indices.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -322,7 +323,7 @@ $$P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}$$
 
   - {: .list-unstyled} Here the notation $$P_{(i)}$$ indicates the $$i^{th}$$ order statistic. In this case, the ordered p-values correspond to the ordered null hypotheses
 
-$$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, \leq H_{(m)}$$
+$$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
 2. Set $$k$$ as the largest index $$i$$ for which $$P_{(i)}\leq\frac{i}{m} \cdot q^*$$
 
@@ -336,7 +337,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, \leq H_{(m)}$$
 
 <hr/>
 
-**Lemma 1** Let $$X_1, \ldots, X_{m_0}$$ be the $$0 \ge m_0 \ge m$$ independent p-values (as random variables) corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ be the $$m_1 = m - m_0$$ p-values corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure described above satisfies the inequality
+**Lemma 1** Suppose there are $$0 \ge m_0 \ge m$$ independent p-values corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ are the $$m_1 = m - m_0$$ p-values (as random variables) corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure described above satisfies the inequality
 
 $$
 \begin{equation*}
@@ -439,18 +440,25 @@ Since the original publication of the BH procedure in 1995, there have been a nu
 
 ## <a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a>
 
-We intend on proving Lemma 1 that underlies the BH procedure for control of the FDR. The proof is adapted from the original publication by Benjamini and Hochberg (Benjamini 1995) with variant notation and diagrams for clarification purposes. We restate the lemma and the associated notation.
+We intend on proving Lemma 1 that underlies the BH procedure for control of the FDR. The proof is adapted from the original publication by Benjamini and Hochberg (Benjamini 1995) with variant notation and diagrams for clarification purposes. We provide some notation and restate the lemma followed by the proof.
+
+### Notation
+
+- {: list-unstyled} Null hypotheses: $$H_1, \ldots, H_m$$
+- {: list-unstyled} Ordered null hypotheses: $$H_{(1)}, H_{(2)}, \ldots, H_{(i)},  \ldots, H_{(m)}$$.
+- {: list-unstyled} P-values corresponding to null hypotheses: $$P_1, \ldots, P_{m}$$.
+- {: list-unstyled} Ordered P-values corresponding to null hypotheses: $$P_{(1)}, P_{(2)}, \ldots, P_{(i)},  \ldots, P_{(m)}$$.
+- {: list-unstyled} Ordered P-values corresponding to true null hypotheses: $$X_1 \leq X_2 \leq \ldots \leq X_i \leq \ldots \leq X_{m_0}$$
+- {: list-unstyled} Ordered P-values corresponding to false null hypotheses: $$Z_1 \leq Z_2 \leq \ldots \leq Z_j \leq \ldots \leq Z_{m_1}$$
 
 ### The lemma
 
-Consider testing $$H_1, \ldots, H_m$$ null hypothesis based on the corresponding p-values $$P_1, \ldots, P_{m}$$. Let the null hypotheses sorted in ascending order be $$P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}$$ and so the corresponding ordered null hypotheses are $$H_{(1)}, H_{(2)}, \ldots, H_{(i)},  \ldots, H_{(m)}$$.
-
-**Lemma 1** Let $$X_1, \ldots, X_{m_0}$$ be the $$0 \ge m_0 \ge m$$ independent distributed p-values (as random variables) corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ be the $$m_1 = m - m_0$$ p-values corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure satisfies the inequality
+**Lemma 1** Suppose there are $$0 \ge m_0 \ge m$$ independent p-values corresponding to the true null hypotheses and $$Z_1, \ldots, Z_{m_1}$$ are the $$m_1 = m - m_0$$ p-values (as random variables) corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values $$Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}$$. Then the BH multiple testing procedure satisfies the inequality
 
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m} q^*\\
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^* \\
   \end{split}
 \end{equation*}
 $$
@@ -504,34 +512,35 @@ This means that $$P(F_0(T) \lt F_0(t)) = F_0(t)$$ which happens when $$F_0(t) \s
 
 #### 2. Distribution of the largest order statistic
 
-Suppose that $$X_1,\ldots, X_n$$ are $$n$$ independent variates, each with cdf $$F(x)$$. Let $$F_{(i)}(x)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i$$th order statistic $$X_{(i)}$$. Then the cdf of the largest order statistic $$X_{(n)}$$ is given by
+Suppose that $$Y_1,\ldots, Y_n$$ are $$n$$ independent variates, each with cdf $$F(y)$$. Let $$F_{(i)}(y)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i^{th}$$ order statistic $$Y_{(i)}$$. Then the cdf of the largest order statistic $$Y_{(n)}$$ is given by
 
 $$
 \begin{equation*}
   \begin{split}
-    F_{(n)}(x) &= P(X_{(n)} \leq x)\\
-             &= P(\text{all }X_i \leq x) = F^n(x)\\
+    F_{(n)}(y) &= P(Y_{(n)} \leq y)\\
+             &= P(\text{all }Y_i \leq y) = F^n(Y)\\
   \end{split}
 \end{equation*}
 $$
 
-Thus the corresponding [probability mass function]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) $$f_n(x)$$ is
+Thus the corresponding [probability mass function]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) $$f_n(y)$$ is
 
 $$
 \begin{equation*}
   \begin{split}
-    f_{(n)}(x) &= \frac{d}{dx}F_{(n)}(x)\\
-             &= nF^{n-1}(x)\\
+    f_{(n)}(y) &= \frac{d}{dy}F_{(n)}(y)\\
+             &= nF^{n-1}(y)\\
   \end{split}
 \end{equation*}
 $$
 
-In the particular case that the cdf is for a standard uniform distribution $$X\sim U(0,1)$$ then this simplifies to
+In the particular case that the cdf is for a standard uniform distribution $$Y\sim U(0,1)$$ then this simplifies to
 
-$$ f_{(n)}(x) = nx^{n-1} $$
+$$ f_{(n)}(y) = ny^{n-1} $$
 
 
 ### Base case
+
  Suppose that there is a single null hypothesis $$m=1$$.
 
 **Case 1: $$m_0=0$$.**
@@ -541,8 +550,7 @@ Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Q_1=q_1] &= 0 \leq \frac{m_0}{m}q^* = 0\\
-    \text{ since }m_0=0
+    E[Q \mid Z_1=z_1] &= 0 \leq \frac{m_0}{m}q^* = 0  &\text{ since }m_0=0 \\
   \end{split}
 \end{equation*}
 $$
@@ -554,9 +562,9 @@ Since $$m_0=1$$ then there is a single true null hypothesis ($$X_1$$). This coul
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Q_1=q_1] &= 0 \cdot P(Q_1=0) + 1 \cdot P(Q_1=1)\\
-                      &= P(X_{(1)} \leq \frac{1}{1}q^*) \text{ according to the BH procedure }\\
-                      &= F_X(q^*)= q^* \text{ From aside 1: } X\sim U(0,1)\\
+    E[Q \mid Z_1=z_1] &= 0 \cdot P(Q=0) + 1 \cdot P(Q=1)\\
+                      &= P(X_{(1)} \leq \frac{1}{1}q^*) &\text{ According to the BH procedure }\\
+                      &= F_X(q^*)= q^* &\text{ Aside 1: } X\sim U(0,1)\\
   \end{split}
 \end{equation*}
 $$
@@ -572,7 +580,7 @@ Since $$m_0=0$$ then there are no true null hypotheses and so no opportunity for
 $$
 \begin{equation*}
   \begin{split}
-    E[Q \mid Q_1=q1, \ldots, Q_m=q_m] &= 0 \leq \frac{m_0}{k+1}q^* \\
+    E[Q \mid Z_1=z_1, \ldots, Z_m=z_m] &= 0 \leq \frac{m_0}{k+1}q^* \\
   \end{split}
 \end{equation*}
 $$
@@ -584,21 +592,182 @@ Define $$j_0$$ as the largest index $$0 \leq j \leq m_1$$ for the p-values corre
 $$
 \begin{equation*}
   \begin{split}
-    q_j \leq \frac{m_0+j}{k+1}q^*\\    
+    z_j \leq \frac{m_0+j}{k+1}q^*\\    
   \end{split}
 \end{equation*}
 $$
 
-Define $$q^\prime$$ as the value on the right side of the inequality at $$j=j_0$$.
+Define $$z^\prime$$ as the value on the right side of the inequality at $$j=j_0$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    q^\prime &= \frac{m_0+j_0}{k+1}q^*\\    
+    z^\prime &= \frac{m_0+j_0}{k+1}q^*\\    
   \end{split}
 \end{equation*}
 $$
 
+Moving forward, we will condition the Lemma 1 inequality on the largest p-value for the true null hypotheses $$X_{m_0}=p$$ by integrating over all possible values $$p\in[0,1]$$. Note that we've omitted the parentheses for order statistics with the true and false null hypothesis p-values. We'll break the integral into two using $$z^\prime$$ as the division point. The first integral $$p\in[0,z^\prime]$$ will be straightforward while the second $$p\in[z^\prime,1]$$ will require a little more nuance. The sum of the two sub-integrals will support Lemma 1 as valid for $$m=k+1$$.
+
+Condition on the largest p-value for the true null hypotheses $$X_{m_0}=p$$ and split the integral on $$z^\prime$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+     E[Q \mid Q_1=q_1, \ldots, Q_{m_1}=q_{m_1}]
+        &= \int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &+ \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+  \end{split}
+\end{equation*}
+$$
+
+**The first integral**
+
+In the case of the first integral $$X_{m_0}=p \in [0,z^\prime]$$. It is obvious that all p-values corresponding to the true null hypotheses are less than $$z^\prime$$, that is $$p \leq z^\prime$$. By the BH-procedure this means that all $$m_0$$ true null hypotheses are rejected regardless of order. Also, we know that from the definition of $$z^\prime$$, there will be $$m_0+j_0$$ total hypotheses that are rejected (i.e. the numerator). We can express these statements mathematically.
+
+$$
+\begin{equation*}
+  \begin{split}
+     E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &= \frac{m_0}{m_0+j_0}\\
+  \end{split}
+\end{equation*}
+$$
+
+Substitute this back into the first integral.
+
+$$
+\begin{equation*}
+  \begin{split}     
+        &\int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} f_{X_{m_0}}(p) dp\\
+        &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} m_0p^{m_0-1} dp \quad \text{  Aside 2 }\\
+        &=\frac{m_0}{m_0+j_0} (z^{\prime})^{m_0} \\        
+  \end{split}
+\end{equation*}
+$$
+
+Finally let's extract a $$z^\prime$$ and substitute it with its definition.
+
+$$
+\begin{equation}
+  \frac{m_0}{m_0+j_0} z^{\prime}(z^{\prime})^{m_0-1} \leq \frac{m_0}{m_0+j_0}\frac{m_0+j_0}{k+1}q^* (z^{\prime})^{m_0-1} = \frac{m_0}{k+1}q^* (z^{\prime})^{m_0-1}
+\end{equation}
+$$
+
+**The second integral**
+
+Let us remind ourselves what we wish to evaluate.
+
+$$
+\begin{equation*}
+  \begin{split}
+      \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+  \end{split}
+\end{equation*}
+$$
+
+The next part of the proof relies on a description of p-values and indices but is often described in a very compact fashion. Keeping track of everything can outstrip intuition, so we pause to reflect on a schematic of the ordered false null hypothesis p-values and relevant indices (Figure 4).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Schematic of p-values and indices.</strong> Shown are the p-values ordered in ascending value from left to right corresponding to the false null hypotheses (z). Indices j0 and m1 for true null hypotheses are as described in main text. Blue segment represents region where z' can lie. Green demarcates regions larger than z' where p-values corresponding to hypotheses (true or false) that will not be rejected lie.
+</div>
+
+Let us define the set of p-values that may be subject to rejection, that is, smaller than $$z^\prime$$. Another way to look at this is to define the set of p-values that will not be rejected, that is, larger than $$z^\prime$$.
+
+Consider the set of possible values for $$X_{m_0}$$ defined by the criteria $$z_{j_0} \lt z_t \leq X_{m_0}=p \lt z_{t+1}$$ where $$t \in [j_0+1, m_1-1]$$. In Figure 4 this would correspond to the half-open set of intervals to the right of $$z_{j_0+1}$$. If we set $$j=j_0$$, then this same region includes the set of false null hypothesis p-values with indices $$j+1, \ldots, m_1$$. We need to consider one more region defined by $$z_{j_0} \leq z^\prime \lt X_{m_0}=p \lt z_{j_0+1}$$. In Figure 4 this is the green segment to the right of $$z^\prime$$.
+
+Let us discuss the regions we just described that are larger than $$z^\prime$$. By the BH procedure, these bound p-values for true and false null hypotheses that will not be rejected. Thus, we will not reject neither the true null hypothesis corresponding to $$X_{m_0}=p$$ nor any of the false null hypotheses corresponding to $$z_{j+1}, \ldots, z_{m_1}$$.
+
+So what is left over in terms of null hypotheses? First we have the set of true null hypotheses $$m_0$$ less the largest $$X_{m_0}$$ giving a total of $$m_0-1$$. Second we have the set of false null hypotheses excluding the ones we just described, that is, $$z_1, \ldots, z_j$$ for a total of $$j$$. This means that there are $$m_0+j-1$$ null hypotheses subject to rejection. Let us provide some updated notation to describe this subset.
+
+$$
+\begin{equation*}
+  \begin{split}
+      m_0^\prime &= m_0 - 1 \\
+      m_1^\prime &= j\\
+      m^\prime &= m_0 + j - 1 \text{ subject to  } m^\prime \lt k+1=m\\
+  \end{split}
+\end{equation*}
+$$
+
+If we combine and order just this subset of null hypotheses, then according to the BH procedure any given null hypothesis $$H_{(i)}$$ will be rejected if there is a $$t$$ such that $$i \leq t \leq m_0+j-1$$ for which
+
+$$
+\begin{equation*}
+  \begin{split}
+      P_{(t)} \leq \frac{t}{k+1}q^*
+  \end{split}
+\end{equation*}
+$$
+
+Now comes some massaging of the notation which may seem complicated but has a purpose: We wish to use the induction assumption on the expectation $$E[Q \mid X_{m_0}=p, Z_1=z_1 \ldots,  Z_{m_1}=z_{m_1}]$$ inside the second integral but we will need to somehow rid ourselves of the pesky $$X_{m_0}=p$$ term. This motivates the definition of transformed variables for the true and false null hypotheses.
+
+$$
+\begin{equation*}
+  \begin{split}
+      X_i^\prime &= \frac{X_i}{p},\qquad &i=1,2,\ldots,m_0-1 \\
+      Z_i^\prime &= \frac{Z_i}{p},\qquad &i=1,2,\ldots,j \\
+      q^{*\prime} &= \frac{m_0+j-1}{(k+1)p}q^*\\
+  \end{split}
+\end{equation*}
+$$
+
+Convince yourself that the $$X_i^\prime$$ are ordered statistics of a set of $$m_0-1$$ independent $$U(0,1)$$ random variables while $$Z_i^\prime$$ correspond to the $$j$$ false null hypotheses subject to $$0 \leq Z_i^\prime \leq 1$$. Also convince yourself that for $$Y=\{X, Z\}$$
+
+$$
+\begin{equation*}
+  \begin{split}
+      Y_i^\prime &\leq \frac{i}{m^\prime}q^{*\prime} \Longleftrightarrow  Y_i &\leq \frac{i}{m}q^*\\
+  \end{split}
+\end{equation*}
+$$
+
+In other words, the false discovery proportion of $$X_1,\ldots,X_{m_0},Z_1,\ldots,Z_{m_1}$$ at level $$q^*$$ is equivalent to testing $$X_1^\prime,\ldots,X_{m_0-1}^\prime,Z_1^\prime,\ldots,Z_{j}^\prime$$ at $$q^{*\prime}=\frac{m_0+j-1}{(k+1)p}q^*$$.
+
+Now we are ready to tackle the expectation inside the integral.
+
+$$
+\begin{equation*}
+  \begin{split}
+      &E[Q \mid X_{m_0} =p, Z_1=z_1 \ldots,  Z_{m_1}=z_{m_1}]\\
+      &=E\left[Q \mid Z_1^\prime=\frac{z_1}{p} \ldots,  Z_{j}^\prime=\frac{z_j}{p}\right]\\
+      &=\frac{m_0^\prime}{m^\prime}q^{*\prime} \qquad \text{Using the induction hypothesis}\\
+      &=\frac{m_0-1}{m_0+j-1}\frac{m_0+j-1}{(k+1)p}q^*\\
+      &=\frac{m_0-1}{(k+1)p}q^*\\
+  \end{split}
+\end{equation*}
+$$
+
+Let us now place this result inside the original integral.
+
+$$
+\begin{equation}
+  \begin{split}
+      &\int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^* \cdot f_{X_{m_0}}(p) dp\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^* \cdot m_0p^{m_0-1} dp \quad \text{ Aside 2 } \\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{k+1}q^* \cdot m_0p^{m_0-2} dp \\
+      &= \frac{m_0}{k+1}q^* \{1-(p^{\prime})^{m_0-1}\}\\
+  \end{split}
+\end{equation}
+$$
+
+Let's now add the results of the two half integrals $$(1)$$ and $$(2)$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+     E[Q \mid Q_1=q_1, \ldots, Q_{m_1}=q_{m_1}]
+        &= \int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &+ \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &= \frac{m_0}{k+1}q^* (z^{\prime})^{m_0-1} + \frac{m_0}{k+1}q^* \{1-(z^{\prime})^{m_0-1}\}\\
+        &= \frac{m_0}{k+1}q^* = \frac{m_0}{m}q^*
+  \end{split}
+\end{equation*}
+$$
+
+Thus, Lemma 1 holds for the base case $$m=1$$ and by the induction hypothesis all $$m \leq k$$. Since we have shown that Lemma 1 holds for $$m=k+1$$, by induction we claim that Lemma 1 holds for all positive integers $$k$$ and the proof is complete.
 
 <hr/>
 
