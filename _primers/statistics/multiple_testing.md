@@ -76,42 +76,7 @@ Typically, type I errors are considered more harmful than type II errors where o
 
 Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.
 
-<!-- ```{r, out.width = 400, fig.retina = NULL, echo=FALSE, warning=FALSE}
-# ***** Probability of heads from a set of nickel flips *****
-
-# ***** Probability of more than 14 heads in nickel flip trials *****
-# Initialize our relevant variables
-nNickels <- 20 # Number of nickels
-pHeads <- 0.5 # The probability of heads
-trials <- c(1, 2, 10, 100, 250) # The number of trials
-nTrials <- length(trials)
-cutoff <- 14 # Number corresponds to the significance level 0.05
-
-# Simulate using the rbinom built-in function for binomial probability
-counts <- vector(mode="numeric", length=nTrials)
-for (i in 1:nTrials)
-{
-    counts[i] = sum((rbinom(trials[i], nNickels, pHeads) >= cutoff) == TRUE)
-}
-data2 <- data.frame( x = trials, y = counts )
-
-
-# ***** Plotting *****
-library(ggplot2)
-library(gridExtra)
-margin_axis_label <- 10
-size_font <- 12
-size_font_title <- 16
-
-ggplot(data2, aes(x=x, y=y)) +
-  theme(axis.text=element_text(size=size_font),
-        axis.title=element_text(size=size_font_title, face="bold"),
-        axis.title.x=element_text(margin=margin(margin_axis_label,0,0,0)),
-        axis.title.y=element_text(margin=margin(0,margin_axis_label,0,0))
-        ) +
-   geom_point(colour="#c0392b", size=5, pch=21) +
-  labs(x = "Tests", y = "Tests with 14 or more Heads")
-``` -->
+<img src="/guide/media/primers/statistics/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" />
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
 </div>
