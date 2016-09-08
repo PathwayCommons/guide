@@ -7,7 +7,7 @@ output:
     toc: true
     mathjax:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-category: functional_analysis 
+category: functional_analysis
 layout: markdown
 figures:
   table_1: table_1.jpg
@@ -17,29 +17,29 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled}  [I. Introduction](#introduction)
+  - {:.list-unstyled}  [I. Summary & goals](#summaryGoals)
   - {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
   - {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
   - {:.list-unstyled}  [IV. Controlling the Family-Wise Error Rate (FWER)](#controllingFWER)
-  - {:.list-unstyled}  [V. Controlling the False Discovery Rate](#controllingFDR)
+  - {:.list-unstyled}  [V. Controlling the False Discovery Rate (FDR)](#controllingFDR)
   - {:.list-unstyled}  [Appendix A. Proof of Lemma 1](#appendixA)
   - {:.list-unstyled}  [VI. References](#references)
 
 <hr/>
 
-## <a href="#introduction" name="introduction">I. Introduction</a>
-
-### Errors in 'omics
+## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 
 Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.
 
-The broad reach of these approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a *[hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing)* and performing many tests simultaneously is referred to as *multiple testing* or *multiple comparison*.
+The broad reach of these approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a *[hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_testing)* and performing many tests simultaneously is referred to as *multiple testing* or *multiple comparison*. Multiple testing arises enrichment analyses, which draw upon databases of annotated sets of genes with shared themes and determine if there is 'enrichment' or 'depletion' in the experimentally derived gene list following perturbation entails performing tests across many gene sets increases the chance of mistaking noise as true signals.
 
-Multiple testing arises in analyzing the results of microarray and RNA-sequencing experiments. For example, a test for differential analysis could entail 10 000 separate hypothesis tests, one for each gene observed after either treatment or control. Using the standard hypothesis testing criteria, we could erroneously deem 500 genes 'statistically significant' with respect to differential expression. Likewise, multiple testing arises in enrichment analyses which draw upon databases of annotated sets of genes with shared themes and determine if there is 'enrichment' or 'depletion' in the experimentally derived gene list following perturbation. Performing tests across many gene sets increases the chance of mistaking noise as true signals.
+This goal of this section is to introduce concepts related to quantifying and controlling errors in multiple testing. By the end of this section you should:
 
-### Overview
-
-This primer introduces concepts related to attempts to quantify and control errors in multiple testing. In [section II](#hypothesisTestingErrors) we provide a brief introduction to hypothesis testing and use an intuitive example to illustrate the causes for concern in large-scale testing scenarios. In [section III](#multipleTestingControl) we provide an overview of the statistical methods for dealing with errors that arise in multiple testing.
+  1. Be familiar with the conditions in which multiple testing can arise
+  2. Understand what a Type I error and false discovery are  
+  3. Be familiar with multiple control procedures
+  4. Be familiar with the Bonferroni control of family-wise error rate
+  5. Be familiar with Benjamini-Hochberg control of false discovery rates
 
 ## <a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a>
 

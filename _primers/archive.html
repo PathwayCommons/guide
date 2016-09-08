@@ -10,8 +10,8 @@ categories:
 
 {% for category in page.categories %}
   {% assign docs = (site.primers | where: 'category' , category ) %}
-  <p>Size: {{ docs | size}}</p>
-  <h2 class="page-category">{{ category | capitalize }}</h2>
+
+  <h2 class="page-category">{{ category | capitalize | replace: "_", " " }}</h2>
   <hr/>
   {% include grid.html %}
 {% endfor %}
