@@ -5,7 +5,7 @@ date: June 29, 2016
 output:
   html_document:
     mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-category: statistics
+category: functional_analysis
 layout: markdown
 figures:
   table_1: table_1.jpg
@@ -16,20 +16,25 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Introduction](#introduction)
+  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
   - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)  
   - {:.list-unstyled} [III.Fisher's Exact Test](#fishersExactTest)
-  - {:.list-unstyled} [IV. Summary](#summary)
+  - {:.list-unstyled} [IV. Caveats](#caveats)
   - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
-## <a href="#introduction" name="introduction">I. Introduction</a>
-Large-scale gene expression analyses can produce lists of genes whose immediate relevance to the study objective may be unclear. Approaches collectively termed 'enrichment' analyses seek to unearth meaningful biological themes from such data.
+## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 
-Enrichment methods source candidate gene sets that share some attribute such as membership in a pathway or subcellular location. Gene sets are defined in curated biological databases such as the classes described within the Gene Ontology [GO](http://geneontology.org/) (Ashburner 2000). These sets are tested one after another to determine whether the constituents are overrepresented (or depleted) in a target gene list typically derived from experiments.
+Large-scale genome sequencing and gene expression analyses can result in lists of genes whose immediate relevance to the study objective may be unclear. Approaches collectively referred to as 'enrichment' or 'overrepresentation' analyses all aim to distill from more meaningful biological themes from reams of biological data.
 
-Here we describe the underlying many of the enrichment software tools currently in use (Khatri 2012). This discussion is geared towards the goal of assessing GO term enrichment in the output of a large-scale gene expression analysis.  
+Enrichment methods source candidate sets of genes that share attributes such as membership in a pathway or location within a cell. Gene sets are defined in curated biological databases such as the classes described within the Gene Ontology [GO](http://geneontology.org/) (Ashburner 2000). These sets are tested one after another to determine whether the constituents are overrepresented (or depleted) in a target gene list typically derived from experiments.
+
+Our overarching goal is to describe the theory underlying many of the enrichment software tools currently in use (Khatri 2012). We use the concrete example of assessing GO term enrichment in the output of a large-scale gene expression analysis although the approaches are found in many other types of analyses.  By then end of this discussion you should:
+
+1. Be familiar with how an enrichment analysis is structured  
+2. Be familiar with rationale underlying Fisher's Exact Test
+3. Be aware of the meaning of a p-value arising from Fisher's Exact Test
 
 ## <a href="#setup" name="setup">II. Setup for enrichment analysis</a>
 
@@ -142,8 +147,8 @@ $$
 
 This result is just under double the one-sided p-value, resulting from an 'uneven' distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.
 
-## <a href="#summary" name="summary">IV. Summary</a>
-This primer has described the rationale for Fisher's Exact Test as a basis for determining  enrichment and depletion of a gene set. Many software packages employ some variation on this theme, and there has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up ons.
+## <a href="#caveats" name="caveats">IV. Caveats</a>
+There has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up on.
 
 <hr/>
 

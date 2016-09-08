@@ -26,11 +26,11 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#goals)
+  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
   - {:.list-unstyled} [II. Background](#background)  
   - {:.list-unstyled} [III. TCGA-Ov project](#tcgaovProject)
   - {:.list-unstyled} [IV. Data retrieval](#dataRetrieval)
-  - {:.list-unstyled} [V. Data processing](#dataProcessing)
+  - {:.list-unstyled} [V. Data extraction](#dataExtraction)
   - {:.list-unstyled} [VI. TCGA ovarian cancer datasets](#datasets)
   - {:.list-unstyled} [VII. References](#references)
 
@@ -40,10 +40,10 @@ figures:
   To just get the data see <a href="#datasets">V. TCGA ovarian cancer datasets</a>.
 </div>
 
-## <a href="#overviewGoals" name="overviewGoals">I. Summary & goals</a>
+## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 Efforts to comprehensively characterize cancers from the clinical to molecular level are underway and a major goal is to make this data accessible to the research community. Here we focus on one such effort by [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) to characterize high-grade serous ovarian cancer (HGS-OvCa).
 
-This section spans background on ovarian cancer to detailed instructions on sourcing and processing data in a format suitable for downstream gene expression analysis in the follow-up section titled ['Process Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/). Our overarching goal is to identify gene expression differences between subtypes of study participants. By then end of this discussion you should:
+This section spans background on ovarian cancer to detailed instructions on sourcing and extracting data in a format suitable for downstream gene expression analysis in the follow-up section titled ['Process Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/). Our overarching goal is to identify gene expression differences between subtypes of study participants. By then end of this discussion you should:
 
 1. Be familiar with TCGA effort to characterize HGS-OvCa
 2. Be familiar with the expression subtypes of ovarian cancer  
@@ -136,7 +136,7 @@ The GDC portal makes available files of RNA sequencing count data ('Gene Count')
   <strong>Figure 5. Overview of RNA-seq quantification.</strong> The grey boxes represent data types that are available through the GDC data portal. For the purposes of our downstream data analyses, we will require an unnormalized 'Gene Count' data format. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/high-level-data-generation/rna-seq-quantification">Data Harmonization and Generation</a>.
 </div>
 
-## <a name="dataRetrieval">IV. Data retrieval</a>
+## <a href="#dataRetrieval" name="dataRetrieval">IV. Data retrieval</a>
 
 Below we provide step-by-step instructions to download the HGS-OvCa RNA-seq dataset to your computer. We recommend using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
 
@@ -277,7 +277,7 @@ TCGAOV_data
 
 <hr/>
 
-## <a href="#dataProcessing" name="dataProcessing">V. Data processing</a>
+## <a href="#dataExtraction" name="dataExtraction">V. Data extraction</a>
 
 Our first goal is to obtain a dataset that assigns a subtype to each of the cases (Table 1). Luckily, this assignment has already been done elsewhere (Verhaak 2013) but we will need to update it to reference the cases by the UUIDs assigned by the GDC. This is described in the 'Get subtypes' section.
 

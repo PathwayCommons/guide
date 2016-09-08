@@ -7,7 +7,7 @@ output:
     toc: true
     mathjax:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-category: statistics
+category: functional_analysis 
 layout: markdown
 figures:
   table_1: table_1.jpg
@@ -53,38 +53,7 @@ Let us pause to more deeply consider our hypothesis testing strategy. We have no
 
 Conveniently, we can use the [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/) to model the exact probability of observing any possible number of heads (0 to 20) in a single test where 20 fair nickels are flipped (Figure 1).
 
-```{r, out.height = 500, fig.retina = NULL, fig.align="center", echo=FALSE, warning=FALSE}
-# ***** Probability of heads from a set of nickel flips *****
-
-# Initialize our relevant variables
-nNickels <- 20 # Number of nickels
-pHeads <- 0.5 # The probability of heads
-heads <- seq(0, nNickels, 1) # The possible number of heads
-alpha <- 0.05 # The significance level
-
-# Use the dbinom built-in function for binomial probability
-probability <- dbinom(heads, nNickels, pHeads, log = FALSE)
-threshold <- qbinom(alpha, nNickels, pHeads, lower.tail = FALSE, log.p = FALSE)
-data1 <- data.frame( x = heads, y = probability )
-
-# ***** Plotting *****
-library(ggplot2)
-library(gridExtra)
-margin_axis_label <- 10
-size_font <- 12
-size_font_title <- 16
-
-ggplot(data1, aes(x=factor(x), y=y)) +
-  theme(axis.text=element_text(size=size_font),
-        axis.title=element_text(size=size_font_title, face="bold"),
-        axis.title.x=element_text(margin=margin(margin_axis_label,0,0,0)),
-        axis.title.y=element_text(margin=margin(0,margin_axis_label,0,0))
-        ) +
-  geom_bar(stat="identity", fill= ifelse(data1$x>=threshold,"#c0392b","#2c3e50"), colour="black") +
-  labs(x = "Number of Heads", y = "Probability") +
-  geom_vline(aes(xintercept = threshold + 1), linetype = "dashed") +
-  scale_x_discrete(breaks=seq(0, nNickels, 2))
-```
+<img src="/guide/media/primers/functional_analysis/multiple_testing/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" height="500" style="display: block; margin: auto;" />
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
 </div>
@@ -107,42 +76,7 @@ Typically, type I errors are considered more harmful than type II errors where o
 
 Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.
 
-```{r, out.width = 400, fig.retina = NULL, echo=FALSE, warning=FALSE}
-# ***** Probability of heads from a set of nickel flips *****
-
-# ***** Probability of more than 14 heads in nickel flip trials *****
-# Initialize our relevant variables
-nNickels <- 20 # Number of nickels
-pHeads <- 0.5 # The probability of heads
-trials <- c(1, 2, 10, 100, 250) # The number of trials
-nTrials <- length(trials)
-cutoff <- 14 # Number corresponds to the significance level 0.05
-
-# Simulate using the rbinom built-in function for binomial probability
-counts <- vector(mode="numeric", length=nTrials)
-for (i in 1:nTrials)
-{
-    counts[i] = sum((rbinom(trials[i], nNickels, pHeads) >= cutoff) == TRUE)
-}
-data2 <- data.frame( x = trials, y = counts )
-
-
-# ***** Plotting *****
-library(ggplot2)
-library(gridExtra)
-margin_axis_label <- 10
-size_font <- 12
-size_font_title <- 16
-
-ggplot(data2, aes(x=x, y=y)) +
-  theme(axis.text=element_text(size=size_font),
-        axis.title=element_text(size=size_font_title, face="bold"),
-        axis.title.x=element_text(margin=margin(margin_axis_label,0,0,0)),
-        axis.title.y=element_text(margin=margin(0,margin_axis_label,0,0))
-        ) +
-   geom_point(colour="#c0392b", size=5, pch=21) +
-  labs(x = "Tests", y = "Tests with 14 or more Heads")
-```
+<img src="/guide/media/primers/functional_analysis/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" />
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
 </div>
