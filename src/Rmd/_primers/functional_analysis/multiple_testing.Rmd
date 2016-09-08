@@ -435,7 +435,7 @@ All hypotheses will be significant if we can find such a relation to hold for $$
 
 ### Caveats and limitations
 
-Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2012).
+Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2014).
 
 
 ## <a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a>

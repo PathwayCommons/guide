@@ -5,8 +5,7 @@ layout: panelista
 ---
 
 {% if site.tools %}
-{% assign docs = (site.tools | sort: 'date' | reverse) %}
-
+{% assign docs = (site.tools | sort: 'date' | reverse) %}  
   <div class="dataset">
     {% include archive_list.html %}
   </div>
