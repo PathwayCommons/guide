@@ -413,7 +413,14 @@ $$
 
 #### Step 3. Calculate the correction
 
-One of the advantages of TMM is that the RNA-seq data themselves are not transformed using the TMM normalization procedure. This leaves the data free from ambiguity and in its raw form. Rather, correction is applied during differential expression testing. This is discussed in the following section.
+One of the advantages of TMM is that the RNA-seq data themselves are not transformed using the TMM normalization procedure. This leaves the data free from ambiguity and in its raw form. Rather, the correction is applied during differential expression testing by multiplying the total counts or library size by the correction factor resulting in an *effective library size* used in subsequent analysis steps.
+
+> *A normalization factor below one indicates that a small number of high count genes are monopolizing the sequencing,
+causing the counts for other genes to be lower than would be usual given the library size. As
+a result, the library size will be scaled down, analogous to scaling the counts upwards in that
+library. Conversely, a factor above one scales up the library size, analogous to downscaling
+the counts.*
+> <footnote class="pull-right">- edgeR User Guide, Chapter 2.7.3 </footnote>
 
 ## <a href="#differentialExpression" name="differentialExpression">V. Differential expression testing</a>
 

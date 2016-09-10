@@ -329,7 +329,58 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
 3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
-### Justification
+#### A sketch(y) proof
+
+Here, we provide an intuitive explanation for the choice of the BH procedure bound.
+
+Consider testing $$m$$ independent null hypotheses $$H_i$$ from the associated p-values $$P_i$$ where $$i=1, 2, \ldots, m$$. Let $$X_i$$ be the p-values corresponding to the $$m_0$$ true null hypotheses indexed by the set $$I_0=\{i: 1 \leq i \leq m_0 \}$$.
+
+Then the overall goal is to determine the largest cut-off $$T_q$$ so that the expected value of $$Q$$ is bound by $$q^∗$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+      E\left[Q \right] &\leq q^∗\\
+      E\left[\frac{V}{R} \right] &\leq q^∗\\
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q^∗
+    \end{split}
+  \end{equation*}
+$$
+
+For large $$m$$, suppose that the number of false discoveries $$V=m_0 \cdot T_q$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
+      \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
+    \end{split}
+  \end{equation*}
+$$
+
+The largest cut-off $$T_q$$ will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index $$i$$
+
+$$
+  \begin{equation*}
+    \begin{split}
+       \frac{m_0 \cdot p_i}{i} &\leq q^∗
+    \end{split}
+  \end{equation*}
+$$
+
+Since $$m_0$$ will not be known, choose the larger option $$m$$ and find the largest index $$i$$ so that
+
+$$
+  \begin{equation*}
+    \begin{split}
+       \frac{m \cdot p_i}{i} &\leq q^∗\\
+       p_i &\leq \frac{i}{m} \cdot q^∗
+    \end{split}
+  \end{equation*}
+$$
+
+
+### Proof  
 
 **Theorem 1** The Benjamini-Hochberg (BH) procedure controls the FDR at $$q^∗$$ for independent test statistics and any distribution of false null hypothesis.
 

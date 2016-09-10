@@ -10,6 +10,7 @@ category: Software
 draft: false
 figures:
   figure_overview: figure_overview.jpg
+  figure_1: figure_gsea_methodology.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
