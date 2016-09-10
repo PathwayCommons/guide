@@ -316,99 +316,99 @@ $$
 \end{equation*}
 $$
 
-#### Aside: Estimating variances via the delta method
+- {: .aside } ##### Aside: Estimating variances via the delta method
 
-The delta method is a statistical procedure used to estimate the variance of a function of a random variable based on an approximation of of the function about its mean value. We will use it to derive an expression for the
-inverse of the variance, the precision or weights $$w_{ik}^r$$.
+  The delta method is a statistical procedure used to estimate the variance of a function of a random variable based on an approximation of of the function about its mean value. We will use it to derive an expression for the
+  inverse of the variance, the precision or weights $$w_{ik}^r$$.
 
-Consider an interval $$I$$ containing the point $$\mu_Y$$. Suppose that a function $$f$$ with first derivative $$f'$$ is defined on $$I$$. Then by Taylor's theorem, the linear approximation of $$f$$ for any $$Y$$ about $$\mu_Y$$ is
+  Consider an interval $$I$$ containing the point $$\mu_Y$$. Suppose that a function $$f$$ with first derivative $$f'$$ is defined on $$I$$. Then by Taylor's theorem, the linear approximation of $$f$$ for any $$Y$$ about $$\mu_Y$$ is
 
-$$
-\begin{equation}
-    f(Y) \approx f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)  
-\end{equation}
-$$
+  $$
+  \begin{equation}
+      f(Y) \approx f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)  
+  \end{equation}
+  $$
 
-We will use equality for this relationship moving forward. The expectation of $$f$$ is
+  We will use equality for this relationship moving forward. The expectation of $$f$$ is
 
-$$
-\begin{equation}
-  \begin{split}
-    E[f(Y)] &= E[f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)] \\
-            &= f(\mu_Y) + f'(\mu_Y)(E[Y]-\mu_Y) \text{  since }E[Y] = \mu_Y  \\
-            &= f(\mu_Y) \\
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      E[f(Y)] &= E[f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)] \\
+              &= f(\mu_Y) + f'(\mu_Y)(E[Y]-\mu_Y) \text{  since }E[Y] = \mu_Y  \\
+              &= f(\mu_Y) \\
+    \end{split}
+  \end{equation}
+  $$
 
-Likewise, the variance can be estimated
+  Likewise, the variance can be estimated
 
-$$
-\begin{equation}
-  \begin{split}
-    Var(f(Y)) &= E[( f(Y) - f(\mu_Y) )^2]  \\
-              &= E[(f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y) - f(\mu_Y))^2] \\
-              &= f'(\mu_Y)^2E[(Y-\mu_Y)^2]\\
-              &= f'(\mu_Y)^2Var(Y)
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Var(f(Y)) &= E[( f(Y) - f(\mu_Y) )^2]  \\
+                &= E[(f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y) - f(\mu_Y))^2] \\
+                &= f'(\mu_Y)^2E[(Y-\mu_Y)^2]\\
+                &= f'(\mu_Y)^2Var(Y)
+    \end{split}
+  \end{equation}
+  $$
 
-This is a pretty powerful result. It says that the variance of a function of a variable about the mean can be estimated from the variance of the variable and the squared first derivative evaluated at the mean. Notice that our definition of $$M_k^r$$ is a function of observed read counts $$Y_{ij}$$. Remember our goal:
+  This is a pretty powerful result. It says that the variance of a function of a variable about the mean can be estimated from the variance of the variable and the squared first derivative evaluated at the mean. Notice that our definition of $$M_k^r$$ is a function of observed read counts $$Y_{ij}$$. Remember our goal:
 
-$$
-\begin{equation}
-  \begin{split}
-    Var(M_k^r) &= Var\left(log_2{\frac{Y_{ik}}{N_k}} - log_2{\frac{Y_{ir}}{N_r}}\right) \\
-              &= Var\left(log_2{\frac{Y_{ik}}{N_k}}\right) + Var\left(log_2{\frac{Y_{ir}}{N_r}}\right) \\
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Var(M_k^r) &= Var\left(log_2{\frac{Y_{ik}}{N_k}} - log_2{\frac{Y_{ir}}{N_r}}\right) \\
+                &= Var\left(log_2{\frac{Y_{ik}}{N_k}}\right) + Var\left(log_2{\frac{Y_{ir}}{N_r}}\right) \\
+    \end{split}
+  \end{equation}
+  $$
 
-Now consider just one of the variance terms above. We can use our result for estimating the variance we derived previously
+  Now consider just one of the variance terms above. We can use our result for estimating the variance we derived previously
 
-$$
-\begin{equation}
-  \begin{split}
-    Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
+    \end{split}
+  \end{equation}
+  $$
 
-Consider now when the total read counts are relatively large, then the observed read counts $$Y_{ij}$$ is a random variable whose realizations follow a [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/#binomial)
+  Consider now when the total read counts are relatively large, then the observed read counts $$Y_{ij}$$ is a random variable whose realizations follow a [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/#binomial)
 
-$$
-\begin{equation}
-  \begin{split}
-    Y &\sim Binom(N, p)\\    
-    \text{where }p&= Y/N\\
-    \text{with }\mu_Y&= Np = Y\\
-    \text{and }Var(Y)&= Np(1-p) = Y\left(\frac{N - Y}{N}\right)\\
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Y &\sim Binom(N, p)\\    
+      \text{where }p&= Y/N\\
+      \text{with }\mu_Y&= Np = Y\\
+      \text{and }Var(Y)&= Np(1-p) = Y\left(\frac{N - Y}{N}\right)\\
+    \end{split}
+  \end{equation}
+  $$
 
-Let us revisit our variance estimate using the results for binomial distribution in $$Y_ij$$.
+  Let us revisit our variance estimate using the results for binomial distribution in $$Y_ij$$.
 
-$$
-\begin{equation}
-  \begin{split}
-    Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
-    &=  \frac{1}{Y_{ij}^2 ln^22} Y_{ij}\left(\frac{N_j - Y_{ij}}{N_j}\right) \\
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
+      &=  \frac{1}{Y_{ij}^2 ln^22} Y_{ij}\left(\frac{N_j - Y_{ij}}{N_j}\right) \\
+    \end{split}
+  \end{equation}
+  $$
 
-If the total read counts are large then we can ignore the constant $$ln^22$$. Now we are ready to state the estimated variance for the log fold-difference.
+  If the total read counts are large then we can ignore the constant $$ln^22$$. Now we are ready to state the estimated variance for the log fold-difference.
 
-$$
-\begin{equation}
-  \begin{split}
-    Var(M_k^r) &\approx \left(\frac{N_k - Y_{ik}}{N_kY_{ik}}\right) + \left(\frac{N_r - Y_{ir}}{N_rY_{ir}}\right)\\
-    &:= 1/w_{ik}^r
-  \end{split}
-\end{equation}
-$$
+  $$
+  \begin{equation}
+    \begin{split}
+      Var(M_k^r) &\approx \left(\frac{N_k - Y_{ik}}{N_kY_{ik}}\right) + \left(\frac{N_r - Y_{ir}}{N_rY_{ir}}\right)\\
+      &:= 1/w_{ik}^r
+    \end{split}
+  \end{equation}
+  $$
 
 
 #### Step 3. Calculate the correction
@@ -654,6 +654,7 @@ The latter portion of the data processing steps described herein are lifted from
 Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previously]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get-data/) then filter, normalize, test for differential expression and write out the resulting ranked list of p-values for each gene. We present the full code followed by a brief explanation.
 
 <script src="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d.js"></script>
+
 
 
 

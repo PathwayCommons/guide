@@ -326,6 +326,12 @@ img.left {
    font-size: $figure-legend;
  }
 
+ li.aside {
+   list-style: none;
+   padding: 1em;
+   background-color: $clouds;
+ }
+
 
  /*
   * lists

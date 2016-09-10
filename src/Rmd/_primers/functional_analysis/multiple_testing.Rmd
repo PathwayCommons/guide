@@ -329,55 +329,55 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
 3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
-#### A sketch(y) proof
+- {: .aside } #### A sketch(y) proof
 
-Here, we provide an intuitive explanation for the choice of the BH procedure bound.
+  Here, we provide an intuitive explanation for the choice of the BH procedure bound.
 
-Consider testing $$m$$ independent null hypotheses $$H_i$$ from the associated p-values $$P_i$$ where $$i=1, 2, \ldots, m$$. Let $$X_i$$ be the p-values corresponding to the $$m_0$$ true null hypotheses indexed by the set $$I_0=\{i: 1 \leq i \leq m_0 \}$$.
+  Consider testing $$m$$ independent null hypotheses $$H_i$$ from the associated p-values $$P_i$$ where $$i=1, 2, \ldots, m$$. Let $$X_i$$ be the p-values corresponding to the $$m_0$$ true null hypotheses indexed by the set $$I_0=\{i: 1 \leq i \leq m_0 \}$$.
 
-Then the overall goal is to determine the largest cut-off $$T_q$$ so that the expected value of $$Q$$ is bound by $$q^∗$$
+  Then the overall goal is to determine the largest cut-off $$T_q$$ so that the expected value of $$Q$$ is bound by $$q^∗$$
 
-$$
-  \begin{equation*}
-    \begin{split}
-      E\left[Q \right] &\leq q^∗\\
-      E\left[\frac{V}{R} \right] &\leq q^∗\\
-      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q^∗
-    \end{split}
-  \end{equation*}
-$$
+  $$
+    \begin{equation*}
+      \begin{split}
+        E\left[Q \right] &\leq q^∗\\
+        E\left[\frac{V}{R} \right] &\leq q^∗\\
+        E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q^∗
+      \end{split}
+    \end{equation*}
+  $$
 
-For large $$m$$, suppose that the number of false discoveries $$V=m_0 \cdot T_q$$
+  For large $$m$$, suppose that the number of false discoveries $$V=m_0 \cdot T_q$$
 
-$$
-  \begin{equation*}
-    \begin{split}
-      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
-      \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
-    \end{split}
-  \end{equation*}
-$$
+  $$
+    \begin{equation*}
+      \begin{split}
+        E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
+        \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
+      \end{split}
+    \end{equation*}
+  $$
 
-The largest cut-off $$T_q$$ will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index $$i$$
+  The largest cut-off $$T_q$$ will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index $$i$$
 
-$$
-  \begin{equation*}
-    \begin{split}
-       \frac{m_0 \cdot p_i}{i} &\leq q^∗
-    \end{split}
-  \end{equation*}
-$$
+  $$
+    \begin{equation*}
+      \begin{split}
+         \frac{m_0 \cdot p_i}{i} &\leq q^∗
+      \end{split}
+    \end{equation*}
+  $$
 
-Since $$m_0$$ will not be known, choose the larger option $$m$$ and find the largest index $$i$$ so that
+  Since $$m_0$$ will not be known, choose the larger option $$m$$ and find the largest index $$i$$ so that
 
-$$
-  \begin{equation*}
-    \begin{split}
-       \frac{m \cdot p_i}{i} &\leq q^∗\\
-       p_i &\leq \frac{i}{m} \cdot q^∗
-    \end{split}
-  \end{equation*}
-$$
+  $$
+    \begin{equation*}
+      \begin{split}
+         \frac{m \cdot p_i}{i} &\leq q^∗\\
+         p_i &\leq \frac{i}{m} \cdot q^∗
+      \end{split}
+    \end{equation*}
+  $$
 
 
 ### Proof  
@@ -518,76 +518,77 @@ $$
 
 We proceed using proof by induction. First we provide a proof for the base case $$m=1$$. Second, we assume Lemma 1 holds for $$m \leq k$$ and go on to show that this holds for $$m=k+1$$.
 
-### Asides
 
-There are a few not so obvious details that we will need along the way. We present these as a set of numbered 'asides' that we will refer back to.
+  - {: .aside } #### Asides
 
-#### 1. Distribution of true null hypothesis p-values
+    There are a few not so obvious details that we will need along the way. We present these as a set of numbered 'asides' that we will refer back to.
 
-The true null hypotheses are associated with p-values $$X_1, \dots, X_{m_0}$$ that are distributed according to a standard uniform distribution, that is, $$X\sim U(0,1)$$. The proof of this follows.
+  - {: .aside } #### 1. Distribution of true null hypothesis p-values
 
-Let $$P$$ be a p-value that is a random variable with realization $$p$$. Likewise let $$T$$ be a test statistic with realization $$t$$. As before, our null hypothesis is $$H_0$$. The formal definition of a p-value is the probability of obtaining a test statistic at least as extreme as the one observed assuming the null hypothesis is true.
+    The true null hypotheses are associated with p-values $$X_1, \dots, X_{m_0}$$ that are distributed according to a standard uniform distribution, that is, $$X\sim U(0,1)$$. The proof of this follows.
 
-$$
-\begin{equation*}
-  \begin{split}
-    p &= P(T \geq t \mid H_0)\\
-  \end{split}
-\end{equation*}
-$$
+    Let $$P$$ be a p-value that is a random variable with realization $$p$$. Likewise let $$T$$ be a test statistic with realization $$t$$. As before, our null hypothesis is $$H_0$$. The formal definition of a p-value is the probability of obtaining a test statistic at least as extreme as the one observed assuming the null hypothesis is true.
 
-Let's rearrange this.
+    $$
+    \begin{equation*}
+      \begin{split}
+        p &= P(T \geq t \mid H_0)\\
+      \end{split}
+    \end{equation*}
+    $$
 
-$$ p = 1 - P(T \lt t \mid H_0) $$
+    Let's rearrange this.
 
-The last term on the right is just the definition of the [cumulative distribution function]({{ site.baseurl }}/primers/statistics/definitions/#distributionFunction) (cdf) $$F_0(t)$$ where the subscript denotes the null hypothesis $$H_0$$.
+    $$ p = 1 - P(T \lt t \mid H_0) $$
 
-$$ p = 1 - F_0(t) $$
+    The last term on the right is just the definition of the [cumulative distribution function]({{ site.baseurl }}/primers/statistics/definitions/#distributionFunction) (cdf) $$F_0(t)$$ where the subscript denotes the null hypothesis $$H_0$$.
 
-If the cdf is monotonic increasing then
+    $$ p = 1 - F_0(t) $$
 
-$$
-\begin{equation*}
-  \begin{split}
-    P(T \geq t \mid H_0) &= P(F_0(T) \geq F_0(t))\\
-                         &= 1 - P(F_0(T) \lt F_0(t))\\
-  \end{split}
-\end{equation*}
-$$
+    If the cdf is monotonic increasing then
 
-The last two results allow us to say that
+    $$
+    \begin{equation*}
+      \begin{split}
+        P(T \geq t \mid H_0) &= P(F_0(T) \geq F_0(t))\\
+                             &= 1 - P(F_0(T) \lt F_0(t))\\
+      \end{split}
+    \end{equation*}
+    $$
 
-$$  p = 1 - F_0(t) = 1 - P(F_0(T) \lt F_0(t)) $$
+    The last two results allow us to say that
 
-This means that $$P(F_0(T) \lt F_0(t)) = F_0(t)$$ which happens when $$F_0(t) \sim U(0,1)$$.
+    $$  p = 1 - F_0(t) = 1 - P(F_0(T) \lt F_0(t)) $$
 
-#### 2. Distribution of the largest order statistic
+    This means that $$P(F_0(T) \lt F_0(t)) = F_0(t)$$ which happens when $$F_0(t) \sim U(0,1)$$.
 
-Suppose that $$Y_1,\ldots, Y_n$$ are $$n$$ independent variates, each with cdf $$F(y)$$. Let $$F_{(i)}(y)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i^{th}$$ order statistic $$Y_{(i)}$$. Then the cdf of the largest order statistic $$Y_{(n)}$$ is given by
+  - {: .aside } #### 2. Distribution of the largest order statistic
 
-$$
-\begin{equation*}
-  \begin{split}
-    F_{(n)}(y) &= P(Y_{(n)} \leq y)\\
-             &= P(\text{all }Y_i \leq y) = F^n(Y)\\
-  \end{split}
-\end{equation*}
-$$
+    Suppose that $$Y_1,\ldots, Y_n$$ are $$n$$ independent variates, each with cdf $$F(y)$$. Let $$F_{(i)}(y)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i^{th}$$ order statistic $$Y_{(i)}$$. Then the cdf of the largest order statistic $$Y_{(n)}$$ is given by
 
-Thus the corresponding [probability mass function]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) $$f_n(y)$$ is
+    $$
+    \begin{equation*}
+      \begin{split}
+        F_{(n)}(y) &= P(Y_{(n)} \leq y)\\
+                 &= P(\text{all }Y_i \leq y) = F^n(Y)\\
+      \end{split}
+    \end{equation*}
+    $$
 
-$$
-\begin{equation*}
-  \begin{split}
-    f_{(n)}(y) &= \frac{d}{dy}F_{(n)}(y)\\
-             &= nF^{n-1}(y)\\
-  \end{split}
-\end{equation*}
-$$
+    Thus the corresponding [probability mass function]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) $$f_n(y)$$ is
 
-In the particular case that the cdf is for a standard uniform distribution $$Y\sim U(0,1)$$ then this simplifies to
+    $$
+    \begin{equation*}
+      \begin{split}
+        f_{(n)}(y) &= \frac{d}{dy}F_{(n)}(y)\\
+                 &= nF^{n-1}(y)\\
+      \end{split}
+    \end{equation*}
+    $$
 
-$$ f_{(n)}(y) = ny^{n-1} $$
+    In the particular case that the cdf is for a standard uniform distribution $$Y\sim U(0,1)$$ then this simplifies to
+
+    $$ f_{(n)}(y) = ny^{n-1} $$
 
 
 ### Base case

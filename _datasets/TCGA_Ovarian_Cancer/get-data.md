@@ -388,7 +388,7 @@ Let us extract and combine the individual data files and label the columns with 
 
 ## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
 
-- {:.list-unstyled} RNA-seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_counts }}" download>`TCGAOv_counts.txt.zip`</a>(21 MB)
+- {: .list-unstyled } RNA-seq data: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_counts }}" download>`TCGAOv_counts.txt.zip`</a>(21 MB)
   - Format: tab-delimited  
     - Columns
       - GDC case UUID (369 cases)      
@@ -401,9 +401,7 @@ Let us extract and combine the individual data files and label the columns with 
   <strong>Figure 8. RNA-seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
 </div>
 
-<hr/>
-
-- {:.list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(27 KB)
+- {: .list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(27 KB)
   - Format: tab-delimited
     - Columns
       - GDC case UUID (case_id)
