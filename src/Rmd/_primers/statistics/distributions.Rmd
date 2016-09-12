@@ -332,11 +332,11 @@ $$
 
 Count data such as RNA sequencing mapped reads is often modeled with a Poisson distribution where the mean and variance are equal to $$\mu$$. However, there are cases where the variance exceeds that specified by the mean. To account for this 'overdispersed' data, the negative binomial distribution can be utilized. As we will show below, the negative binomial arises as a Poisson distribution where the Poisson parameter is itself a random variable distributed according to a Gamma distribution.
 
-Let us state this in a more precise fashion. Suppose that we have distribution of counts $$X$$ that follows a Poisson distribution indexed by the parameter $$\Theta$$. Now suppose that $$\Theta$$ is itself some function of another random variable $$\Theta = \lambda\epsilon$$ where $$\epsilon \sim Gamma(x;\alpha,\beta)$$. Then the conditional distribution of the random variable of counts is
+Let us state this in a more precise fashion. Suppose that we have distribution of counts $$X$$ that follows a Poisson distribution indexed by the parameter $$\Theta$$. Now suppose that $$\Theta$$ is itself some function of another random variable $$\Theta = \mu\epsilon$$ where $$\epsilon \sim Gamma(x;\alpha,\beta)$$. Then the conditional distribution of the random variable of counts is
 
 $$
 \begin{equation*}
-  P(X=x | \Theta = \lambda\epsilon) = \frac{(\lambda\epsilon)^x}{x!}e^{- (\lambda\epsilon)} \text{  for } x=0,1,2,\cdots
+  P(X=x | \Theta = \mu\epsilon) = \frac{(\mu\epsilon)^x}{x!}e^{- (\mu\epsilon)} \text{  for } x=0,1,2,\cdots
 \end{equation*}
 $$
 
@@ -348,12 +348,12 @@ $$
 \end{equation*}
 $$
 
-The join density of $$N$$ and $$\Theta$$ is
+The joint density of $$N$$ and $$\Theta$$ is
 
 $$
 \begin{equation*}
   \begin{split}
-    P(X=x | \Theta = \lambda\epsilon) \cdot g(\epsilon) &= \frac{(\lambda\epsilon)^x}{x!}e^{- \lambda\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}\\
+    P(X=x | \Theta = \mu\epsilon) \cdot g(\epsilon) &= \frac{(\mu\epsilon)^x}{x!}e^{- \mu\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}\\
   \end{split}
 \end{equation*}
 $$
@@ -363,39 +363,39 @@ Derive the marginal distribution of $$X$$ by integrating over the values of $$ep
 $$
 \begin{equation*}
   \begin{split}
-    P(X=x) &= \int_{0}^\infty \frac{(\lambda\epsilon)^x}{x!}e^{- \lambda\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon} d\epsilon\\
+    P(X=x) &= \int_{0}^\infty \frac{(\mu\epsilon)^x}{x!}e^{- \mu\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon} d\epsilon\\
 
-    &= \frac{\lambda^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \lambda)\epsilon} d\epsilon\\    
+    &= \frac{\mu^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon\\    
   \end{split}
 \end{equation*}
 $$
 
-The key here is to transform the integrand into a gamma distribution with shape parameter $$x+\alpha$$ and scale $$\beta+\lambda$$ and noting that the integral over all values is unity.
+The key here is to transform the integrand into a gamma distribution with shape parameter $$x+\alpha$$ and scale $$\beta+\mu$$ and noting that the integral over all values is unity.
 
 $$
 \begin{equation*}
   \begin{split}
 
-    P(X=x) &= \frac{\lambda^x \beta^\alpha}{x! \Gamma(\alpha)} \frac{\Gamma(x+\alpha)}{(\beta + \lambda)^{x + \alpha}} \int_{0}^\infty \frac{(\beta + \lambda)^{x + \alpha}}{\Gamma(x+\alpha)} \epsilon^{x+\alpha-1}  e^{-(\beta + \lambda)\epsilon} d\epsilon \\
+    P(X=x) &= \frac{\mu^x \beta^\alpha}{x! \Gamma(\alpha)} \frac{\Gamma(x+\alpha)}{(\beta + \mu)^{x + \alpha}} \int_{0}^\infty \frac{(\beta + \mu)^{x + \alpha}}{\Gamma(x+\alpha)} \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon \\
 
-          &= \frac{\Gamma(x+\alpha)}{x! \Gamma(\alpha)} \frac{\lambda^x  \beta^\alpha}{(\beta + \lambda)^{x + \alpha}} \\
+          &= \frac{\Gamma(x+\alpha)}{x! \Gamma(\alpha)} \frac{\mu^x  \beta^\alpha}{(\beta + \mu)^{x + \alpha}} \\
 
-          &= \frac{(x+\alpha-1)!}{x! (\alpha - 1)!} \frac{\lambda^x}{(\beta + \lambda)^x} \frac{\beta^\alpha}{(\beta + \lambda)^{\alpha}} \\
+          &= \frac{(x+\alpha-1)!}{x! (\alpha - 1)!} \frac{\mu^x}{(\beta + \mu)^x} \frac{\beta^\alpha}{(\beta + \mu)^{\alpha}} \\
 
-          &= \binom{x+\alpha-1}{x} \left(\frac{\lambda}{\beta + \lambda }\right)^x \left(\frac{\beta}{\beta + \lambda}\right)^\alpha  \text{ for }x=0,1,\cdots
+          &= \binom{x+\alpha-1}{x} \left(\frac{\mu}{\beta + \mu }\right)^x \left(\frac{\beta}{\beta + \mu}\right)^\alpha  \text{ for }x=0,1,\cdots
   \end{split}
 \end{equation*}
 $$
 
-It is simple to see that this result is the negative binomial with $$r=\alpha$$ and $$p=\lambda/(\beta+\lambda)$$. In this case the moments can be stated using these new variables.
+It is simple to see that this result is the negative binomial with $$r=\alpha$$ and $$p=\mu/(\beta+\mu)$$. In this case the moments can be stated using these new variables.
 
 From the moments of the negative binomial stated above, the mean is
 
 $$
 \begin{equation*}
   \begin{split}
-    E[X] &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right) \alpha\\    
-         &= \frac{\alpha}{\beta} \lambda\\    
+    E[X] &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right) \alpha\\    
+         &= \frac{\alpha}{\beta} \mu\\    
   \end{split}
 \end{equation*}
 $$
@@ -405,34 +405,33 @@ The variance is
 $$
 \begin{equation*}
   \begin{split}
-    Var(X) &= \left(\frac{\lambda}{\beta + \lambda}\right) \left(\frac{\beta + \lambda}{\beta}\right)^2 \alpha\\    
-         &= \frac{\alpha \lambda}{\beta} \left(1 + \frac{\lambda}{\beta} \right)\\    
+    Var(X) &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right)^2 \alpha\\    
+         &= \frac{\alpha \mu}{\beta} \left(1 + \frac{\mu}{\beta} \right)\\    
   \end{split}
 \end{equation*}
 $$
 
-#### Poisson-gamma notation in RNA-seq
+#### Alternative Poisson-gamma notation
 
-This mixture model will be important in our discussion of RNA-seq data [differential expression testing]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#differentialExpression). In this case the notation is altered where $$r^-1=\alpha^{-1}=\beta^{-1}=\phi$$ is the 'dispersion' for some set of RNA species counts $$Y$$.
+This mixture model will be important in our discussion of RNA sequencing data [differential expression testing]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#differentialExpression). In this case the notation is altered where $$r=\alpha=\beta=\phi^{-1}$$ and $$\phi$$ is the 'dispersion' parameter for some counts of an RNA species $$Y$$. Also the gamma function is used to replace the binomial coefficients.
 
 $$
 \begin{equation*}
   \begin{split}
-    Y &\sim NB \left(\phi^{-1}, \frac{\lambda}{\phi^{-1} + \lambda}\right)\\
-    f(y; \lambda,\phi^{-1}) &=  \binom{y+\phi^{-1}-1}{y} \left(\frac{\lambda}{\phi^{-1} + \lambda} \right)^y
-     \left(\frac{\phi^{-1}}{\phi^{-1} + \lambda} \right)^{\phi^{-1}} \\    
+    Y &\sim NB(\mu, \phi^{-1})\\
+    f(y; \mu,\phi^{-1}) &=  \frac{\Gamma(y+\phi^{-1})}{\Gamma(y+1)\Gamma(\phi^{-1})} \left(\frac{\mu}{\phi^{-1} + \mu} \right)^y
+     \left(\frac{\phi^{-1}}{\phi^{-1} + \mu} \right)^{\phi^{-1}} \\    
   \end{split}
 \end{equation*}
 $$
 
-Sometimes in the context of RNA-seq model fitting, you might come across the negative binomial parametrized by its mean and variance.
+From the above discussion, we can restate the mean and variance.
 
 $$
 \begin{equation*}
-  \begin{split}
-    Y &\sim NB (\mu_Y, \sigma_Y^2)\\    
-    E[Y] &= \mu_Y = \lambda\\    
-    Var(Y) &= \sigma_Y^2 = \lambda + \phi\lambda^2\\    
+  \begin{split}  
+    E[Y] &= \mu\\    
+    Var(Y) &= \mu + \phi\mu^2\\    
   \end{split}
 \end{equation*}
 $$

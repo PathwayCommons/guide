@@ -86,6 +86,8 @@ Figure 2 should show that with increasing number of tests we see trials with 14 
 
 ### Example 2: Pathway analyses
 
+> This section could be better and include more direct examples from biology. For example, binding site motifs as described by William Noble 2009 v27 No.12 Nature Biotechnology pp1135.
+
 Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we detail the use of [g:Profiler]({{ site.baseurl }}/tools/archive/g-profiler) and [Gene Set Enrichment Analysis]({{ site.baseurl }}/tools/archive/gene-set-enrichment-analysis).
 
 In [g:Profiler](http://biit.cs.ut.ee/gprofiler/), the g:GOSt tool uses [Fisher's exact test]({{ site.baseurl }}/primers/statistics/fishers_exact_test/) as the p-value measuring the randomness of the occurred intersection between an input gene list of interest and a previously defined set of related genes, for example, those associated with a [Gene Ontology](http://geneontology.org/) term. Every analysis of a gene list in g:GOSt involves a series of comparisons, as the intersection and corresponding p-value is calculated for a large number of terms from GO, KEGG, TRANSFAC, and other data sources. g:GOSt uses multiple algorithms (see Bonferroni correction and Benjamini-Hochberg False Discovery rate below) for adjusting significance.
