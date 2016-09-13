@@ -480,11 +480,7 @@ $$
 
 ### An exact test for 2 types
 
-Our test will determine the exact probabilities of observing the totals for each subtype ($$Z_{iM}, Z_{iR}$$) conditioned on the sum ($$Z_i$$) under one important assumption: The total mapped sequence counts for each and every sample are identical.
-
-$$ N_1 = N_2 = \ldots = N_J$$
-
-Now clearly this is an unrealistic assumption but Robinson and Smyth (Robinson 2008) use an approach called 'quantile adjustment' whereby the sample data can be massaged to approximate such conditions. Assuming now the assumption of equal total mapped sequence counts holds, we can derive a suitable null distribution (see section 'Calculating p-values' below) from which we can calculate a p-value $$P_{i}$$ that will support or cast doubt on the $$H_0$$. Here, $$P_{i}$$ will be a sum of individual probabilities of mapped sequence reads observed (and unobserved).
+Our test will determine the exact probabilities of observing the totals for each subtype ($$Z_{iM}, Z_{iR}$$) conditioned on the sum ($$Z_i$$). Given equal total mapped sequence reads in each sample we can derive a suitable null distribution (see section 'Calculating p-values' below) from which we can calculate a p-value $$P_{i}$$ that will support or cast doubt on the $$H_0$$. Here, $$P_{i}$$ will be a sum of individual probabilities of mapped sequence reads observed (and unobserved).
 
 Let $$p(a_i,b_i)$$ be the joint probability of a given pair of total mapped sequence reads for a given gene over all samples of a given type (e.g. $$Z_{iM}, Z_{iR}$$). Our first restriction is a fixed total $$a_i+b_i=Z_i$$. The second restriction is that we only care about those probabilities with value less than or equal to those observed (e.g. $$p(Z_{iM}, Z_{iR})$$). This corresponds to tables with mapped read count values for a gene more extreme (differentially expressed) hence more unlikely than those observed.
 
@@ -646,15 +642,15 @@ $$
 It turns out that the sum of independent and identically distributed negative binomial random variables is also negative binomial. We snuck this fact into our discussion in the previous section for calculating p-values. In particular, for our HGS-OvCa subtypes $$T=\{M, R\}$$
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     Z_{iM} &\sim NB \left(\rho_{M} N \lambda_{iM}, \phi \rho_{M}^{-1} \right)\\
     Z_{iR} &\sim NB \left(\rho_{R} N \lambda_{iR}, \phi \rho_{R}^{-1} \right)\\
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
-Where $$\rho_T$$ is the number of samples of a given subtype. Let us return again to a key assumption: There is a common value for total mapped sequence reads in a sample ($$N_1=N_2=\cdots=N_J=N$$). This assumption is required as without it, there are no exact tests for testing a hypothesis under the negative binomial distribution. Recall again this is unreasonable in practice and motivates the adjustments described by Robinson and Smyth (Robinson 2007, Robinson 2008).
+Where $$\rho_T$$ is the number of samples of a given subtype. Let us return again to a key assumption that there is a common value for total mapped sequence reads ($$N$$). This assumption is required as without it, the data is not identically distributed and consequently the distributions of within-condition data totals $$Z_iT$$ are not known. Recall again this assumption is unlikely to occur in practice and motivates the adjustments described by Robinson and Smyth (Robinson 2007, Robinson 2008).
 
 <hr/>
 
@@ -684,49 +680,6 @@ Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previousl
 <script src="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d.js"></script>
 
 
-<!-- ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
-### ============ Load ===============
-rm(list=ls(all=TRUE))
-library("edgeR")
-
-BASE_DIR <- "/Users/jeffreywong/Sync/bader_jvwong/Guide/datasets/get-data/data/GDC_TCGAOv_Counts/output"
-subtypes_file <- file.path(BASE_DIR, "TCGAOv_subtypes.txt")
-counts_file <- file.path(BASE_DIR, "TCGAOv_counts.txt")
-comparisons=c("Mesenchymal","Immunoreactive")
-
-TCGAOv_counts <- read.table(counts_file,
-                            header = TRUE,
-                            sep = "\t",
-                            quote="\"",
-                            row.names = 1,
-                            check.names = FALSE,
-                            stringsAsFactors = FALSE )
-
-TCGAOv_subtypes <- read.table(subtypes_file,
-                              header = TRUE,
-                              sep = "\t",
-                              quote="\"",
-                              check.names = FALSE,
-                              stringsAsFactors = FALSE)
-
-### ============ Filter ===============
-N_Immunoreactive = sum(TCGAOv_subtypes$SUBTYPE == 'Immunoreactive')
-N_Mesenchymal = sum(TCGAOv_subtypes$SUBTYPE == 'Mesenchymal')
-row_with_mincount = rowSums(cpm(TCGAOv_counts) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
-TCGAOv_thresholded = TCGAOv_counts[row_with_mincount,]
-
-TCGAOv_data <- DGEList(counts=TCGAOv_thresholded,group=TCGAOv_subtypes$SUBTYPE)
-
-### ============ Normalize ===============
-TCGAOv_data = calcNormFactors(TCGAOv_data, method="TMM")
-TCGAOv_data = estimateCommonDisp(TCGAOv_data)
-TCGAOv_data = estimateTagwiseDisp(TCGAOv_data)
-
-### ============ Test ===============
-TCGAOv_DE = exactTest(TCGAOv_data, pair=comparisons)
-TCGAOv_TT = topTags(TCGAOv_DE, n=nrow(TCGAOv_data))
-``` -->
-
 
 
 #### Note 1
@@ -753,11 +706,7 @@ We can take a look at how 'different' cases are using the function `plotMDS`. Th
 mds_output <- plotMDS(TCGAOv_data, labels=TCGAOv_subtypes$SUBTYPE, col= c("darkgreen","blue", "red","black")[factor(TCGAOv_subtypes$SUBTYPE)])
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotMDS"
-{% endhighlight %}
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
 
 #### Note 4
 
@@ -801,16 +750,7 @@ names(TCGAOv_data)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotBCV"
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
-{% endhighlight %}
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" /><img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-3-2.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
 
 #### Note 6
 
@@ -842,37 +782,11 @@ We can now plot our differentially expressed genes (red) over our full data.
 {% highlight r %}
 ### ============ Plotting ===============
 rn = rownames(TCGAOv_TT$table)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in rownames(TCGAOv_TT$table): object 'TCGAOv_TT' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
 deg =rn[TCGAOv_TT$table$FDR<0.05]
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'rn' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
 plotSmear(TCGAOv_data, pair=comparisons, de.tags=deg)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotSmear"
-{% endhighlight %}
+<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process-data/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="500" style="display: block; margin: auto;" />
 
 #### Note 8
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
