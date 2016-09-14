@@ -9,7 +9,7 @@ layout: document
 category: Software
 draft: false
 figures:
-  figure_overview: figure_overview.jpg
+  figure_overview: figure_overview.png
   figure_1: figure_gsea_methodology.jpg
 ---
 
@@ -21,14 +21,12 @@ figures:
   <hr/>
 
   <div class="alert alert-warning" role="alert">
-    For this section we will be using the file <a href="{{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/#datasets"> 'MesenchymalvsImmunoreactive_ranks.rnk' (0.14 MB)</a> of genes ranked by their p-values for differential expression in subtypes of TCGA HGS-OvCa.
+    For this section we will require a rank file ('.rnk') which contains a list of genes ranked by p-value from differential expression testing. In the <a href="{{site.baseurl}}/datasets/archive/">Data Sets</a> section, we have provided samples for TCGA <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">ovarian</a> and <a href="{{site.baseurl}}/datasets/TCGA_HNSCC/process_data/#datasets"> head and neck</a> cancer.
   </div>
 
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 
-This section is a follow-up to ['Process Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/) describing how to analyze differential expression in [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
-
-In this section we will be using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify functionally related genes - pathways - enriched in our list of genes demonstrating differential expression in TCGA HGS-OvCa subtypes. By then end of this discussion you should:
+In this section we will be using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify functionally related genes - pathways - enriched in our list of genes demonstrating differential expression. We will provide the motivation for this pathway analysis approach and a brief description of the statistical models that  define criteria for pathways that are significantly enriched. By then end of this discussion you should:
 
 1. Be aware of how tools like GSEA map gene expression patterns to pathways
 2. Be able to apply GSEA to test our ranked list of DE genes for enriched pathways
