@@ -2,7 +2,7 @@
 title: Get Data
 subtitle: Use the Genomic Data Commons data portal to retrieve TCGA ovarian cancer project RNA expression data
 pmid: 21720365
-cover: cover.png
+cover: cover.jpg
 pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
@@ -37,7 +37,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning" role="alert">
-  To just get the data see <a href="#datasets">V. TCGA ovarian cancer datasets</a>.
+  To directly get the TCGA-OV project RNA sequencing data, see <a href="#datasets">V. TCGA ovarian cancer datasets</a>.
 </div>
 
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
@@ -45,7 +45,7 @@ Efforts to comprehensively characterize cancers from the clinical to molecular l
 
 This section spans background on ovarian cancer to detailed instructions on sourcing and extracting data in a format suitable for downstream gene expression analysis in the follow-up section titled ['Process Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/process-data/). Our overarching goal is to identify gene expression differences between subtypes of study participants. By then end of this discussion you should:
 
-1. Be familiar with TCGA effort to characterize HGS-OvCa
+1. Be familiar with TCGA effort to characterize HGS-OvCa (project name-code 'TCGA-OV')
 2. Be familiar with the expression subtypes of ovarian cancer  
 3. Be able to obtain the TCGA HGS-OvCa RNA sequencing data
 4. Be able to prepare the data for downstream expression analysis
@@ -53,7 +53,7 @@ This section spans background on ovarian cancer to detailed instructions on sour
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Summary and Goals.</strong> This section provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill *et al.* (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes in the 'Process Data' follow-up section.
+  <strong>Summary and Goals.</strong> This section provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases under the project name-code 'TCGA-OV'. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill <em>et al.</em> (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes in the 'Process Data' follow-up section.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
