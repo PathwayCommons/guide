@@ -7,7 +7,7 @@ cover: cover.jpg
 pdf: case_study_campbell.pdf
 date: 2016-03-15
 layout: publication
-category: computational
+category: Pathway_Commons
 ---
 
 ## Quick Summary

@@ -2,13 +2,16 @@
 title: Case Studies
 subtitle: Recent highlights from the literature using interaction and pathway analyses
 layout: panelista
+categories:
+  - Pathway_Analysis
+  - Pathway_Commons
 ---
 
-
-{% if site.case_studies %}
-{% assign docs = (site.case_studies | sort: 'date' | reverse) %}
-
-  <div class="case-list">
+{% for category in page.categories %}
+  {% assign docs = (site.case_studies | where: 'category' , category ) %}
+  <h2 class="page-category">{{ category | replace: '_', ' ' }}</h2>
+  <hr/>
+  <div class="dataset">
     {% include archive_list.html %}
   </div>
-{% endif %}
+{% endfor %}
