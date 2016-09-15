@@ -36,7 +36,7 @@ figures:
 
 <hr/>
 
-<div class="alert alert-warning" role="alert">
+<div class="alert alert-warning text-justify" role="alert">
   To directly get the TCGA-OV project RNA sequencing data, see <a href="#datasets">V. TCGA ovarian cancer datasets</a>.
 </div>
 
@@ -140,7 +140,7 @@ The GDC portal makes available files of RNA sequencing count data ('Gene Count')
 
 Below we provide step-by-step instructions to download the HGS-OvCa RNA-seq dataset to your computer. We recommend using the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which is a command line tool for robust and efficient data download.
 
-<div class="alert alert-warning" role="alert">
+<div class="alert alert-warning text-justify" role="alert">
   To download the RNA-seq dataset see <a href="#datasets">V. TCGA ovarian cancer datasets</a>.
 </div>
 
