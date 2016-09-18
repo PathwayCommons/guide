@@ -36,8 +36,15 @@ The underlying assumption is that subsuming the low-level biological components 
 
 All forms of pathway analysis have the same basic requirements.
 
-1. Obtain quantitive measurements relevant to a biological phenomena or phenotype.
-2.
+### Approach
+
+FCS methods like GSEA share the same basic requirements as most other pathway analysis approaches.
+
+1. Quantitive measurements relevant to a biological phenomena
+2. Knowledge base(s) of pathways
+3. A methodology for mapping measurements onto pathways
+
+For the purposes of this discussion, our quantitative measurements are represented by a list of genes expressed differently in subtypes.
 
 There are two broad classes of pathway analysis tools.The first category, termed 'Overrepresentation Analyses' (ORA) . The second group of pathway analysis was motivated by some of the shortcomings of ORA.
 

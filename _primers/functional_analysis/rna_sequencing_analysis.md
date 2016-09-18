@@ -31,7 +31,8 @@ figures:
   - {:.list-unstyled} [IV. Normalization](#normalization)
   - {:.list-unstyled} [V. Differential expression testing](#differentialExpression)
   - {:.list-unstyled} [VI. Modelling counts ](#modellingCounts)
-  - {:.list-unstyled} [VII. References](#references)
+  - {:.list-unstyled} [VII. Dispersion estimation ](#dispersionEstimation)
+  - {:.list-unstyled} [VIII. References](#references)
 
 <hr/>
 
@@ -133,7 +134,7 @@ The overall goal for RNA-seq normalization is to provide a basis upon which an f
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (A and B) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. There are rho_A samples of Type A and rho_B of Type B. A cDNA library for each sample is created and sequenced. The total number of mapped sequence reads from each sample (N) are usually non-identical; Total mapped sequence reads for each gene is also indicated along right margin (Z).
+  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (A and B) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. There are n_A samples of Type A and n_B of Type B. A cDNA library for each sample is created and sequenced. The total number of mapped sequence reads from each sample (N) are usually non-identical; Total mapped sequence reads for each gene is also indicated along right margin (Z).
 </div>
 
 ### Notation
@@ -144,7 +145,7 @@ To make our discussion more precise we will use mathematical notation in the fol
   - {:.list-unstyled} $$Z_{i}$$ = $$\sum\limits_{j \in J}Y_{ij}$$ total mapped sequence reads for a gene
   - {:.list-unstyled} $$Z_{iT}$$ = $$\sum\limits_{j \in T}Y_{ij}$$ total mapped sequence reads for a gene over all sample indices corresponding to a  given type $$T=\{j: j \subseteq 1 \leq k \leq J \}$$
   - {:.list-unstyled} $$\lambda_{ij}$$ relative abundance of mapped sequence reads attributed to a given locus in a sample. Proportion of total mass
-  - {:.list-unstyled} $$\rho_{T} = \|T\|$$ (rho_T) number of samples of given type $$T$$
+  - {:.list-unstyled} $$n_{T} = \|T\|$$ number of samples of type $$T$$
   - {:.list-unstyled} $$\omega_{ij}$$ gene expression level in number of transcripts
   - {:.list-unstyled} $$L_{i}$$ length of an RNA species in bases
   - {:.list-unstyled} $$S_{j}$$ total RNA output in a sample. Total mass in bases
@@ -416,7 +417,7 @@ Our framework for gathering evidence will be a hypothesis test and the evidence 
 
 ### Terminology
 
-Suppose that we wish to test whether the relative abundance ($$\lambda_{ij}$$) of a gene in the set of cases with a HGS-OvCa subtype label 'mesenchymal' is different relative to 'immunoreactive'. Let the set of sample indices $$j$$ belonging to the mesenchymal cases be $$M$$ of which there are $$\rho_M=\|M\|$$ cases. Likewise, the set of $$\rho_R=\|R\|$$ immunoreactive cases is $$R$$.
+Suppose that we wish to test whether the relative abundance ($$\lambda_{ij}$$) of a gene in the set of cases with a HGS-OvCa subtype label 'mesenchymal' is different relative to 'immunoreactive'. Let the set of sample indices $$j$$ belonging to the mesenchymal cases be $$M$$ of which there are $$n_M=\|M\|$$ cases. Likewise, the set of $$n_R=\|R\|$$ immunoreactive cases is $$R$$.
 
 In classic hypothesis testing language, we take the *a priori* position of the null hypothesis ($$H_0$$) that the relative abundance is the same in each subtype.
 
@@ -502,18 +503,18 @@ Given RNA-seq data samples having the the same total mapped sequence reads ($$N$
 $$
 \begin{equation}
   \begin{split}
-    Z_{iT} &\sim NB \left(\rho_{T} N \lambda_{i}, \phi \rho_{T}^{-1} \right)\\
+    Z_{iT} &\sim NB \left(n_{T} N \lambda_{i}, \phi n_{T}^{-1} \right)\\
   \end{split}
 \end{equation}
 $$
 
-Here the $$\phi$$ is the dispersion, $$\rho_T$$ is the number of samples of type $$T$$ and $$\lambda_i$$ is the relative abundance of the gene. But let's back up a bit. We seemed to pull this negative binomial distribution out of a magic hat. Where does this originate? What do all these parameters really mean and how do we get them?
+Here the $$\phi$$ is the dispersion, $$n_T$$ is the number of samples of type $$T$$ and $$\lambda_i$$ is the relative abundance of the gene. But let's back up a bit. We seemed to pull this negative binomial distribution out of a magic hat. Where does this originate? What do all these parameters really mean and how do we get them?
 
 ## <a href="#modellingCounts" name="modellingCounts">VI. Modelling counts</a>
 
 Our goal here is to rationalize the negative binomial distribution as an acceptable null [probability distribution]({{ site.baseurl }}/primers/statistics/definitions/#probabilityFunction) which we can use to map an observed RNA-seq sequenced read count to a corresponding p-value $$P$$. In simple terms, trying to derive the null distribution corresponds to the question: How are RNA-seq mapped sequence reads distributed? Another way of stating this is: How do RNA-seq mapped sequence read data vary?
 
-## Technical variability
+### Technical variability
 
 Consider the RNA-seq experiment we presented in Figure 1: RNA is sourced from a particular case, a corresponding cDNA library is generated and short sequence reads are mapped to a reference. Thus, for any give gene we will derive a number of fragment counts. Imagine that we could use the identical cDNA library in multiple, distinct, parallel sequencing reactions such as that provided by a typical flow cell apparatus (Figure 2). Our intuition would lead us to expect that the sequencing reads to be similar but unlikely to produce exactly the same counts for every gene in every reaction.
 
@@ -548,8 +549,6 @@ Accordingly, the mean and variance of mapped read counts is a random variable $$
  </div>
 
 ### Biological variability
-
-> Available in edgeR:`estimateCommonDisp(...)` and `estimateTagwiseDisp(...)`
 
 Consider the RNA-seq experiments we presented in Figure 3: RNA is sourced from two distinct subtypes and for each subtype, multiple cases. Again, for each case a corresponding cDNA library is generated and short sequence reads are mapped to a reference. Suppose we restrict our attention to cases of a given subtype. Our experience would lead us to expect that the sequencing reads would be similar but unlikely to produce exactly the same counts even after controlling for technical variability.
 
@@ -601,9 +600,9 @@ Where we have now broken down the total squared coefficient of variation ($$CV_{
 > *When a negative binomial model is fitted, we need to estimate the BCV(s) before we carry out the analysis. The BCV ... is the square root of the dispersion parameter under the negative binomial model. Hence, it is equivalent to estimating the dispersion(s) of the negative binomial model.*
 > <footer class="text-right"><a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR User Guide</a></footer>
 
-### Distribution theory
+## <a href="#dispersionEstimation" name="dispersionEstimation">VII. Dispersion estimation</a>
 
-Recall in the previous section [Differential expression testing](#differentialExpression) we defined our test statistics - the number of observed counts $$Y_{ij}$$ for the gene of interest in each subtype.
+Let us preview what we will discuss in this section. Recall in the previous section [differential expression testing](#differentialExpression) we defined our test statistics - the number of observed counts $$Y_{ij}$$ for the gene of interest in each subtype.
 
 $$
 \begin{equation}
@@ -619,17 +618,176 @@ It turns out that the sum of independent and identically distributed negative bi
 $$
 \begin{equation*}
   \begin{split}
-    Z_{iM} &\sim NB \left(\rho_{M} N \lambda_{iM}, \phi \rho_{M}^{-1} \right)\\
-    Z_{iR} &\sim NB \left(\rho_{R} N \lambda_{iR}, \phi \rho_{R}^{-1} \right)\\
+    Z_{iM} &\sim NB \left(n_{M} N \lambda_{iM}, \phi n_{M}^{-1} \right)\\
+    Z_{iR} &\sim NB \left(n_{R} N \lambda_{iR}, \phi n_{R}^{-1} \right)\\
   \end{split}
 \end{equation*}
 $$
 
-Where $$\rho_T$$ is the number of samples of a given subtype. Let us return again to a key assumption that there is a common value for total mapped sequence reads ($$N$$). This assumption is required as without it, the data is not identically distributed and consequently the distributions of within-condition data totals $$Z_{iT}$$ are not known. Recall again this assumption is unlikely to occur in practice and motivates the adjustments described by Robinson and Smyth (Robinson 2007, Robinson 2008).
+Where $$n_T$$ is the number of samples of a given subtype. Let us return again to a key assumption that there is a common value for total mapped sequence reads ($$N$$). This assumption is required as without it, the data is not identically distributed and consequently the distributions of within-condition data totals $$Z_{iT}$$ are not known. Recall again this assumption is unlikely to occur in practice and motivates the adjustments described by Robinson and Smyth (Robinson 2007, Robinson 2008).
+
+### Estimating common dispersion
+
+> Available in edgeR: `estimateCommonDisp(...)`
+
+This is a method suggested by Robinson and Smith (Robinson 2008) who were concerned with a forerunner of RNA sequencing called Serial Analysis of Gene Expression (SAGE). The motivation  behind this method is that often times, few biological replicates are available (e.g. less than three). Instead, we leverage the availability of observations across all genes towards the estimation of a common dispersion shared by all genes.
+
+Suppose once again that $$Y_{ij}$$ represents the observed number of mapped sequence reads for a gene and sample and $$Y_{ij} \sim NB(\mu_{ij},\phi)$$. Let us restrict ourselves to the set of $$n_T$$ biological replicates where each sample is from the same condition $$T$$. In the case that the total mapped sequence reads are equal $$N_j=N$$ then their sum
+
+$$
+\begin{equation*}
+  \begin{split}
+    Z_{iT}({\bf Y}) &= Y_{i1}+ \cdots + Y_{in_T} \sim NB(n_T N \lambda_{iT} = n_T \mu_{iT}, n_T^{-1}\phi)\\
+  \end{split}
+\end{equation*}
+$$
+
+Let us drop the subscripts and assume that we are examining a single gene for samples of a given type. Now it is simple to show that the sample sum $$Z$$ is a sufficient statistic for $$\lambda$$. In this case, we can effectively rid ourselves of $$\lambda$$ in an estimate of $$\phi$$ by forming a likelihood expression $$L$$ for $$Y$$ conditioned on the sum $$Z=z$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    L_{Y \mid Z=z}(\phi) = f_{Y \mid Z=z}({\bf y} \mid z; \phi)\\
+  \end{split}
+\end{equation*}
+$$
+
+In practice we will attempt to maximize the log-likelihood instead.
+
+$$
+\begin{equation*}
+  \begin{split}
+    \ell_{Y \mid Z=z}(\phi) = log(f_{Y \mid Z=z}({\bf y} \mid z; \phi))\\
+  \end{split}
+\end{equation*}
+$$
+
+Using the definition of conditional probability we can write.
+
+$$
+\begin{equation*}
+  \begin{split}
+    f_{Y \mid Z=z}({\bf y} \mid z; \phi)
+      &= \frac{f_{Y, Z}({\bf y}, z; \phi)}{f_{Z}(z;\phi)}\\
+      &= \frac{f_{Y}({\bf y};\phi)}{f_{Z}(z;\phi)} \qquad \text{since }Z = Z({\bf y})\\
+  \end{split}
+\end{equation*}
+$$
+
+This is the probability distribution of the counts conditioned on the sum and we will proceed by finding the numerator and denominator separately. To do this, we'll start with some notation that is simplified by restricting our discussion to a single gene and sample type.
+
+$$
+  \begin{equation*}
+      \mu = \frac{1}{n} \sum\limits_{j}y_{j}
+  \end{equation*}
+$$
+
+$$
+  \begin{equation*}
+      z = n\mu
+  \end{equation*}
+$$
+
+The denominator of the conditional probability distribution is found by recalling that the sum has a negative binomial distribution $$Z \sim NB(n\mu, n^{-1}\phi)$$.
+
+$$
+\begin{equation*}
+  \begin{split}
+    f_{Z}(z; \phi)
+      &= \frac{\Gamma(z + n\phi^{-1})}{\Gamma(n\phi^{-1}) \Gamma(z + 1)}
+        \left(\frac{n\mu}{n\phi^{-1}+n\mu}\right)^z \left(\frac{n\phi^{-1}}{n\phi^{-1}+n\mu}\right)^{n\phi^{-1}} \\
+
+    log(f_{Z}(z; \phi))
+      &= log\Gamma(z + n\phi^{-1}) - log\Gamma(n\phi^{-1}) - log\Gamma(z + 1)
+        + zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
+  \end{split}
+\end{equation*}
+$$
+
+The numerator of the condition probability is found as usual.
+
+$$
+\begin{equation*}
+  \begin{split}
+    f_{Y}({\bf y};\phi) &= \prod\limits_{j}
+      \frac{\Gamma(y_j + \phi^{-1})}{\Gamma(\phi^{-1}) \Gamma(y_j + 1)}
+      \left(\frac{\mu}{\phi^{-1}+\mu}\right)^{y_j}
+      \left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right)^{\phi^{-1}} \\
+
+      &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+        - log\Gamma(\phi^{-1})^n - \sum\limits_{j} log\Gamma(y_j + 1)
+        + log\left(\frac{\mu}{\phi^{-1}+\mu}\right)^{\sum\limits_{j} y_j}
+        + log\left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right)^{\sum\limits_{j} \phi^{-1}} \\
+
+      &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
+        + zlog\left(\frac{\mu}{\phi^{-1}+\mu}\right)
+        + n\phi^{-1}log\left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right) \\
+
+      &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
+        + zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+        + n\phi^{-1}log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
+  \end{split}
+\end{equation*}
+$$
+
+Where the final equality results from us multiplying the numerator and denominator of the fractions by $$n$$. Then we can take the difference of the two previous results to derive the log-likelihood we are looking for.
+
+$$
+\begin{equation*}
+  \begin{split}
+  \ell_{Y \mid Z=z}(\phi) &= logf_{Y}({\bf y};\phi) - logf_{Z}(z;\phi)\\
+
+  &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+    - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
+    + zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+    + n\phi^{-1}log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
+
+  &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)
+    - zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+    - n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
+  \end{split}
+\end{equation*}
+$$
+
+Crossing out terms leaves us with the result.
+
+$$
+\begin{equation*}
+  \begin{split}
+    \ell_{Y \mid Z=z}(\phi)
+
+    &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+      - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\    
+    &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)\\      
+  \end{split}
+\end{equation*}
+$$
+
+If we ignore terms that do not contain the parameter of interest $$\phi$$ then we are left with an equation quoted by Robinson and Smyth (Equation 4.1 in Robinson 2008) that we wish to  maximize.
+
+$$
+\begin{equation*}
+  \begin{split}
+    \ell_{Y \mid Z=z}^{\prime}(\phi)
+
+    &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
+      - nlog\Gamma(\phi^{-1}) - log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1})\\      
+  \end{split}
+\end{equation*}
+$$
+
+
+### Estimating per-gene ('tag-wise') dispersions
+
+> Available in edgeR: `estimateTagwiseDisp(...)`
 
 <hr/>
 
 A through discussion of dispersion estimation is beyond the scope of this guide. We refer the reader to the original publication by Robinson and Smyth (Robinson 2007) for a detailed discussion of the rationale and approach to model fitting. In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
 
-## <a href="#references" name="references">IX. References</a>
+
+
+## <a href="#references" name="references">VIII. References</a>
 <!-- <div class="panel_group" data-inline="20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,17728317,20196867,19015660"></div> -->
