@@ -17,7 +17,7 @@ figures:
   figure_6: figure_TMM_trim.jpg
   figure_7: figure_shot_noise.png
   figure_8: figure_biological_noise.png
-  figure_9: ranks_layout.png
+  figure_9: figure_quantile_adjust.png
   table_1: figure_count_table.jpg
   table_2: figure_count_table_example.jpg
   table_3: figure_count_enumerated_example.jpg
@@ -563,7 +563,7 @@ Consider a case where the technical variability in measured counts for a given c
 
 The overdispersed count data observed with biological replicates manifests as an elevated variance relative to the mean. Thus, some 'fudge factor' is desired to account for this additional variability. The [negative binomial]({{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial) arises from a Gamma-Poisson mixture in which a Poisson parameter $$\Theta$$ is itself a random variable $$\Theta=\mu\epsilon$$ and $$\epsilon \sim Gamma(\alpha,\beta)$$.
 
-Modelling the technical and biological variability associated with RNA-seq measurements of different biological sources as a negative binomial distribution is attributed to Robinson and Smyth (Robinson 2007).
+Modelling the technical and biological variability associated with RNA-seq measurements of different biological sources as a negative binomial distribution is attributed to Robinson and Smyth (Robinson 2008).
 
 > *We develop tests using the negative binomial distribution to model overdispersion relative to the Poisson, and use conditional weighted likelihood to moderate the level of overdispersion across genes.*
 
@@ -700,8 +700,8 @@ $$
         \left(\frac{n\mu}{n\phi^{-1}+n\mu}\right)^z \left(\frac{n\phi^{-1}}{n\phi^{-1}+n\mu}\right)^{n\phi^{-1}} \\
 
     logf_{Z}(z; \phi)
-      &= log\Gamma(z + n\phi^{-1}) - log\Gamma(n\phi^{-1}) - log\Gamma(z + 1)
-        + zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
+      &= log\Gamma(z + n\phi^{-1}) - log\Gamma(n\phi^{-1}) - log\Gamma(z + 1)\\
+        &+ zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
   \end{split}
 \end{equation*}
 $$
@@ -720,18 +720,18 @@ $$
     logf_{Y}({\bf y};\phi)
 
       &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-        - log\Gamma(\phi^{-1})^n - \sum\limits_{j} log\Gamma(y_j + 1)
-        + log\left(\frac{\mu}{\phi^{-1}+\mu}\right)^{\sum\limits_{j} y_j}
+        - log\Gamma(\phi^{-1})^n - \sum\limits_{j} log\Gamma(y_j + 1)\\
+        &+ log\left(\frac{\mu}{\phi^{-1}+\mu}\right)^{\sum\limits_{j} y_j}
         + log\left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right)^{\sum\limits_{j} \phi^{-1}} \\
 
       &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
-        + zlog\left(\frac{\mu}{\phi^{-1}+\mu}\right)
+        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\
+        &+ zlog\left(\frac{\mu}{\phi^{-1}+\mu}\right)
         + n\phi^{-1}log\left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right) \\
 
       &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
-        + zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+        - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\
+        &+ zlog\left(\frac{z}{n\phi^{-1}+z}\right)
         + n\phi^{-1}log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
   \end{split}
 \end{equation*}
@@ -745,12 +745,12 @@ $$
   \ell_{Y \mid Z=z}(\phi) &= logf_{Y}({\bf y};\phi) - logf_{Z}(z;\phi)\\
 
   &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-    - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)
-    + zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+    - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\
+    &+ zlog\left(\frac{z}{n\phi^{-1}+z}\right)
     + n\phi^{-1}log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
 
-  &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)
-    - zlog\left(\frac{z}{n\phi^{-1}+z}\right)
+  &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)\\
+    &- zlog\left(\frac{z}{n\phi^{-1}+z}\right)
     - n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
   \end{split}
 \end{equation*}
@@ -807,9 +807,7 @@ $$
 
 #### Quantile-adjusted CML (qCML)
 
-The common likelihood we derived is contingent on the assumption that the total mapped sequence reads for each sample is the same $$N_j=N$$. This is pretty unrealistic. As a workaround, Robinson and Smyth devised an iterative algorithm called quantile-adjusted conditional maximum likelihood (qCML) that transforms sample data into **pseudodata** that reflects the counts that would have been observed under equal total mapped sequence reads. In effect, the algorithm adjusts counts upwards for samples having total mapped sequence counts below the geometric mean and *vice versa*. It is this pseudodata for each gene that is applied to the CML estimate for common dispersion.
-
-Let the geometric mean ($$N^∗$$) of the total mapped sequence reads be given by
+The common likelihood we wish to maximize is contingent on equal total mapped sequence reads for each sample, that is, $$N_j=N$$ for all $$j$$. This is pretty unrealistic. As a workaround, Robinson and Smyth devised an iterative algorithm that involves 'quantile adjustment' of mapped sequence reads for each gene in each sample into **pseudodata** that represent the counts that would occur had the total reads been equal to the geometric mean of all samples ($$N_j=N^∗$$) (Figure 9A).
 
 $$
 \begin{equation*}
@@ -817,21 +815,34 @@ $$
 \end{equation*}
 $$
 
-**1. Initialize $$\phi$$**
+It is the pseudodata that is applied to the CML estimate for common dispersion (Figure 9B). In effect, the algorithm adjusts counts upwards for samples having total mapped sequence counts below the geometric mean and *vice versa*.
 
-Initialize $$\phi$$.
-
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+ <strong>Figure 10. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.         
+</div>
 
 
 ### Estimating per-gene ('tag-wise') dispersions
 
 > Available in edgeR: `estimateTagwiseDisp(...)`
 
+It can be argued that the dispersion for each gene is different. Consequently, the common dispersion may not accurately represent the count distribution. To account for this, Robinson and Smyth (2007) employed a weighted likelihood
+
+$$
+\begin{equation*}
+  \begin{split}
+    WL(\phi_i) &= l_i(\phi_i) + \alpha l_{C}(\phi_i)\\
+  \end{split}
+\end{equation*}
+$$
+
+where $$\alpha$$ is a weight given to the common likelihood - the conditional likelihood summed over all genes. Clearly, a relatively large $$\alpha$$ means we revert to using the common dispersion and *vice versa*. Robinson and Smyth describe the selection of a suitable $$\alpha$$ somewhere between the two extremes. A through discussion of per-gene or 'tag-wise' dispersion estimation is beyond the scope of this section. We refer the reader to the original publication by Robinson and Smyth (Robinson 2008) for a detailed discussion of the rationale and approach.
+
 <hr/>
 
-A through discussion of dispersion estimation is beyond the scope of this guide. We refer the reader to the original publication by Robinson and Smyth (Robinson 2007) for a detailed discussion of the rationale and approach to model fitting. In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
-
+In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
 
 
 ## <a href="#references" name="references">VIII. References</a>
-<!-- <div class="panel_group" data-inline="20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,17728317,20196867,19015660"></div> -->
+<div class="panel_group" data-inline="20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,17728317,20196867,19015660"></div>
