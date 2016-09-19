@@ -175,11 +175,11 @@ This approach can be attributed to Mortazavi *et al.* (Mortazavi 2008) who claim
 The correction factor $$C_j$$ is just the sum of mapped read counts for a given sample $$N_j$$ divided by one million
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     C_{j}& = \frac{N_{j}}{10^6}
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 The 'kilobase of exon model' referred to by Mortazavi *et al.* is necessary to correct for comparison of different species *within* the same sample. This arises due to the RNA fragmentation step performed prior to library creation: Longer loci generate more fragments and hence more reads. This is not required when comparing the same RNA species *between* samples such as in differential expression analysis.
@@ -206,23 +206,23 @@ To correct for this bias, Robinson and Oshlack proposed the Trimmed mean of M-va
 Suppose that we observe some number of mapped sequence reads $$Y_{ij}$$ for a gene $$i$$ in a given sample/case/library $$j$$. The expected value of counts will equal the fraction of the total RNA mass attributed to this RNA species which is the product of the relative abundance $$\lambda_{ij}$$ multiplied by the total number of mapped sequence reads $$N_j$$. Relative abundance is equal to the product of the unknown expression level (number of transcripts) $$\omega_{ij}$$ and the RNA species length $$L_i$$ all divided by the unknown total RNA output in the sample $$S_j$$.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     E[Y_{ij}] &= \lambda_{ij} N_j\\
               &= \frac{\omega_{ij}L_i}{S_j}N_j\\
     \text{where } S_j &= \sum\limits_{i \in  I} \omega_{ij}L_i
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 It is desirable to calculate the total RNA output $$S_j$$ as we could use this as our correction factor. However, RNA output is unknown. Instead, we estimate the ratio $$f$$ between sample $$j=k$$ relative to $$j=r$$.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     f_k^r &= \frac{S_k}{S_{r}}
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 The proposed strategy attempts to estimate this ratio from the data. The assumption is that most genes are expressed at similar levels, then $$\omega_{ik}L_i=\omega_{ir}L_i$$. So we estimate output accordingly:
@@ -238,24 +238,24 @@ $$
 Note that $$Y_{ij}/N_j$$ represents the relative abundance $$\lambda_{ij}$$ so that the last two terms are the fold-difference between samples. Then define the per-gene log fold-difference $$M_{ik}^r$$
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     M_{ik}^r &= log_2{\left( \frac{Y_{ik}}{N_k} \right)} - log_2{\left( \frac{Y_{ir}}{N_r} \right)}\\
         &= log_2{\left( \frac{Y_{ik}/N_k}{Y_{ir}/N_r} \right)}\\
     \text{where } Y_{i\cdot} &\neq 0
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 and likewise, the absolute expression levels $$A_{ik}^r$$
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     A_{ik}^r &= \frac{1}{2} \left[ log_2{\left(\frac{Y_{ik}}{N_k} \right)} + log_2{\left(\frac{Y_{ir}}{N_r}\right)} \right]\\
           &= \frac{1}{2} log_2{\left(\frac{Y_{ik}}{N_k} \cdot \frac{Y_{ir}}{N_r}\right)}\\
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 #### Step 1. Trim data
@@ -280,12 +280,12 @@ $$\{ M_{1k}^r, M_{2k}^r, \cdots, M_{ik}^r, \cdots, M_{Ik}^r\}$$
 with non-negative weights $$w_{ik}^r$$ is
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     \bar{M_k^r} &= \frac{ \sum\limits_{i=1}^I w_{ik}^r M_{ik}^r}{ \sum\limits_{i=1}^I w_{ik}^r } \\
     &:= log_2{(TMM_k^r)}
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 Recall the definition of $$M_k^r$$ as a log of a ratio, thus exponentiating the weighted mean recovers the original ratio.
@@ -307,90 +307,90 @@ $$
   Consider an interval $$I$$ containing the point $$\mu_Y$$. Suppose that a function $$f$$ with first derivative $$f'$$ is defined on $$I$$. Then by Taylor's theorem, the linear approximation of $$f$$ for any $$Y$$ about $$\mu_Y$$ is
 
   $$
-  \begin{equation}
+  \begin{equation*}
       f(Y) \approx f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)
-  \end{equation}
+  \end{equation*}
   $$
 
   We will use equality for this relationship moving forward. The expectation of $$f$$ is
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       E[f(Y)] &= E[f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y)] \\
               &= f(\mu_Y) + f'(\mu_Y)(E[Y]-\mu_Y) \text{  since }E[Y] = \mu_Y  \\
               &= f(\mu_Y) \\
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   Likewise, the variance can be estimated
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Var(f(Y)) &= E[( f(Y) - f(\mu_Y) )^2]  \\
                 &= E[(f(\mu_Y) + f'(\mu_Y)(Y-\mu_Y) - f(\mu_Y))^2] \\
                 &= f'(\mu_Y)^2E[(Y-\mu_Y)^2]\\
                 &= f'(\mu_Y)^2Var(Y)
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   This is a pretty powerful result. It says that the variance of a function of a variable about the mean can be estimated from the variance of the variable and the squared first derivative evaluated at the mean. Notice that our definition of $$M_k^r$$ is a function of observed read counts $$Y_{ij}$$. Remember our goal:
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Var(M_k^r) &= Var\left(log_2{\frac{Y_{ik}}{N_k}} - log_2{\frac{Y_{ir}}{N_r}}\right) \\
                 &= Var\left(log_2{\frac{Y_{ik}}{N_k}}\right) + Var\left(log_2{\frac{Y_{ir}}{N_r}}\right) \\
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   Now consider just one of the variance terms above. We can use our result for estimating the variance we derived previously
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   Consider now when the total read counts are relatively large, then the observed read counts $$Y_{ij}$$ is a random variable whose realizations follow a [binomial distribution]({{ site.baseurl }}/primers/statistics/distributions/#binomial)
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Y &\sim Binom(N, p)\\
       \text{where }p&= Y/N\\
       \text{with }\mu_Y&= Np = Y\\
       \text{and }Var(Y)&= Np(1-p) = Y\left(\frac{N - Y}{N}\right)\\
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   Let us revisit our variance estimate using the results for binomial distribution in $$Y_ij$$.
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Var\left(log_2{\frac{Y_{ij}}{N_j}}\right) &\approx \left[ \frac{1}{\mu_{Y_{ij}}ln2}\right]^2Var(Y_{ij}) \\
       &=  \frac{1}{Y_{ij}^2 ln^22} Y_{ij}\left(\frac{N_j - Y_{ij}}{N_j}\right) \\
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
   If the total read counts are large then we can ignore the constant $$ln^22$$. Now we are ready to state the estimated variance for the log fold-difference.
 
   $$
-  \begin{equation}
+  \begin{equation*}
     \begin{split}
       Var(M_k^r) &\approx \left(\frac{N_k - Y_{ik}}{N_kY_{ik}}\right) + \left(\frac{N_r - Y_{ir}}{N_rY_{ir}}\right)\\
       &:= 1/w_{ik}^r
     \end{split}
-  \end{equation}
+  \end{equation*}
   $$
 
 
@@ -422,9 +422,9 @@ Suppose that we wish to test whether the relative abundance ($$\lambda_{ij}$$) o
 In classic hypothesis testing language, we take the *a priori* position of the null hypothesis ($$H_0$$) that the relative abundance is the same in each subtype.
 
 $$
-\begin{equation}
+\begin{equation*}
   H_0: \lambda_{iM} = \lambda_{iR} \text{ for each }i\in I
-\end{equation}
+\end{equation*}
 $$
 
 What we wish to do is determine the feasibility of this null hypothesis given our RNA-seq count observations. For any given gene we can summarize our observations in a table (Table 1).
@@ -438,20 +438,20 @@ What we wish to do is determine the feasibility of this null hypothesis given ou
 Define the test statistic as the total number of observed mapped sequence reads  $$Y_{ij}$$ for the gene of interest over all samples of a subtype.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     Z_{iM} &= \sum\limits_{j \in M} Y_{ij}\\
     Z_{iR} &= \sum\limits_{j \in R} Y_{ij}
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 From this we can state the gene-wise total.
 
 $$
-\begin{equation}
+\begin{equation*}
     Z_{i} = Z_{iM} + Z_{iR}
-\end{equation}
+\end{equation*}
 $$
 
 ### An exact test for 2 types
@@ -461,11 +461,11 @@ Our test will determine the exact probabilities of observing the totals for each
 Let $$p(a_i,b_i)$$ be the joint probability of a given pair of total mapped sequence reads for a given gene over all samples of a given type (e.g. $$Z_{iM}, Z_{iR}$$). Our first restriction is a fixed total $$a_i+b_i=Z_i$$. The second restriction is that we only care about those probabilities with value less than or equal to those observed (e.g. $$p(Z_{iM}, Z_{iR})$$). This corresponds to tables with mapped read count values for a gene more extreme (differentially expressed) hence more unlikely than those observed.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     P_i &= \sum\limits_{\begin{split} a_i+b_i &=Z_i\\ p(a_i,b_i) &\leq p(Z_{iM}, Z_{iR})\\ \end{split}} p(a_i,b_i)\\
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 #### Example
@@ -491,21 +491,21 @@ We will reuse an example originally intended to illustrate [Fisher's Exact Test]
 Our assumption of independence makes life a little easier in that our joint probability of mapped read counts can be expressed as a product.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     p(a_i,b_i) &= p(a_i) \cdot p(b_i)\\
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 Given RNA-seq data samples having the the same total mapped sequence reads ($$N$$), the probabilities of any particular count can be estimated by a <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">negative binomial distribution</a>.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     Z_{iT} &\sim NB \left(n_{T} N \lambda_{i}, \phi n_{T}^{-1} \right)\\
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 Here the $$\phi$$ is the dispersion, $$n_T$$ is the number of samples of type $$T$$ and $$\lambda_i$$ is the relative abundance of the gene. But let's back up a bit. We seemed to pull this negative binomial distribution out of a magic hat. Where does this originate? What do all these parameters really mean and how do we get them?
@@ -533,12 +533,12 @@ Modelling the technical variability associated with repeated RNA-seq measurement
 Accordingly, the mean and variance of mapped read counts is a random variable $$Y$$.
 
  $$
- \begin{equation}
+ \begin{equation*}
    \begin{split}
      f(y; \mu)  &= \frac{\mu^y}{y!}e^{-\mu} \text{ for }y=1,2,\cdots\\
      E[Y] &= Var(Y) = \mu\\
    \end{split}
- \end{equation}
+ \end{equation*}
  $$
 
  A nice aspect of the Poisson distribution is the equality between mean and variance. Figure 7 displays a plot of simulated RNA-seq data where mean and variance for genes is measured across technical replicates.
@@ -605,12 +605,12 @@ Where we have now broken down the total squared coefficient of variation ($$CV_{
 Let us preview what we will discuss in this section. Recall in the previous section [differential expression testing](#differentialExpression) we defined our test statistics - the number of observed counts $$Y_{ij}$$ for the gene of interest in each subtype.
 
 $$
-\begin{equation}
+\begin{equation*}
   \begin{split}
     Z_{iM} &= \sum\limits_{j \in M} Y_{ij}\\
     Z_{iR} &= \sum\limits_{j \in R} Y_{ij}
   \end{split}
-\end{equation}
+\end{equation*}
 $$
 
 It turns out that the sum of independent and identically distributed negative binomial random variables is also negative binomial. We snuck this fact into our discussion in the previous section for calculating p-values. In particular, for our HGS-OvCa subtypes $$T=\{M, R\}$$
@@ -632,6 +632,8 @@ Where $$n_T$$ is the number of samples of a given subtype. Let us return again t
 
 This is a method suggested by Robinson and Smith (Robinson 2008) who were concerned with a forerunner of RNA sequencing called Serial Analysis of Gene Expression (SAGE). The motivation  behind this method is that often times, few biological replicates are available (e.g. less than three). Instead, we leverage the availability of observations across all genes towards the estimation of a common dispersion shared by all genes.
 
+#### Conditional maximum likelihood (CML)
+
 Suppose once again that $$Y_{ij}$$ represents the observed number of mapped sequence reads for a gene and sample and $$Y_{ij} \sim NB(\mu_{ij},\phi)$$. Let us restrict ourselves to the set of $$n_T$$ biological replicates where each sample is from the same condition $$T$$. In the case that the total mapped sequence reads are equal $$N_j=N$$ then their sum
 
 $$
@@ -652,7 +654,7 @@ $$
 \end{equation*}
 $$
 
-In practice we will attempt to maximize the log-likelihood instead.
+In practice we will work with the conditional log-likelihood.
 
 $$
 \begin{equation*}
@@ -697,14 +699,14 @@ $$
       &= \frac{\Gamma(z + n\phi^{-1})}{\Gamma(n\phi^{-1}) \Gamma(z + 1)}
         \left(\frac{n\mu}{n\phi^{-1}+n\mu}\right)^z \left(\frac{n\phi^{-1}}{n\phi^{-1}+n\mu}\right)^{n\phi^{-1}} \\
 
-    log(f_{Z}(z; \phi))
+    logf_{Z}(z; \phi)
       &= log\Gamma(z + n\phi^{-1}) - log\Gamma(n\phi^{-1}) - log\Gamma(z + 1)
         + zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
   \end{split}
 \end{equation*}
 $$
 
-The numerator of the condition probability is found as usual.
+The numerator of the conditional probability is found as usual.
 
 $$
 \begin{equation*}
@@ -713,6 +715,9 @@ $$
       \frac{\Gamma(y_j + \phi^{-1})}{\Gamma(\phi^{-1}) \Gamma(y_j + 1)}
       \left(\frac{\mu}{\phi^{-1}+\mu}\right)^{y_j}
       \left(\frac{\phi^{-1}}{\phi^{-1}+\mu}\right)^{\phi^{-1}} \\
+
+
+    logf_{Y}({\bf y};\phi)
 
       &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
         - log\Gamma(\phi^{-1})^n - \sum\limits_{j} log\Gamma(y_j + 1)
@@ -777,6 +782,45 @@ $$
   \end{split}
 \end{equation*}
 $$
+
+Now let us return to our original scenario of multiple samples that fall under one of two conditions $$T=\{M,R\}$$. Then for any given gene $$i$$ the conditional likelihood expression expands to encompass both groups.
+
+$$
+\begin{equation*}
+  \begin{split}
+    l_{i}(\phi)
+    &=  \sum\limits_{T} \left[
+    \sum\limits_{j \in T} log\Gamma(y_{ij} + \phi^{-1})
+      - n_Tlog\Gamma(\phi^{-1}) - log\Gamma(z_{iT} + n\phi^{-1}) + log\Gamma(n_T\phi^{-1})
+      \right]\\      
+  \end{split}
+\end{equation*}
+$$
+
+The commons dispersion estimator maximizes the *common likelihood* over all genes.
+
+$$
+\begin{equation*}
+    l_{C}(\phi) = \sum\limits_{i \in I} l_{i}(\phi)\\
+\end{equation*}
+$$
+
+#### Quantile-adjusted CML (qCML)
+
+The common likelihood we derived is contingent on the assumption that the total mapped sequence reads for each sample is the same $$N_j=N$$. This is pretty unrealistic. As a workaround, Robinson and Smyth devised an iterative algorithm called quantile-adjusted conditional maximum likelihood (qCML) that transforms sample data into **pseudodata** that reflects the counts that would have been observed under equal total mapped sequence reads. In effect, the algorithm adjusts counts upwards for samples having total mapped sequence counts below the geometric mean and *vice versa*. It is this pseudodata for each gene that is applied to the CML estimate for common dispersion.
+
+Let the geometric mean ($$N^∗$$) of the total mapped sequence reads be given by
+
+$$
+\begin{equation*}
+    N^∗ = \left(\prod\limits_{j=1}^{J} N_{j}\right)^{\frac{1}{J}}\\
+\end{equation*}
+$$
+
+**1. Initialize $$\phi$$**
+
+Initialize $$\phi$$.
+
 
 
 ### Estimating per-gene ('tag-wise') dispersions
