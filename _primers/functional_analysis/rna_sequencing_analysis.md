@@ -39,7 +39,7 @@ figures:
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 
 <div class="alert alert-warning text-justify" role="alert">
-  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> software package and referenced in our discussion of RNA sequencing data processing.  
+  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> software package.  
 </div>
 
 In this section we begin with a broad introduction to the use of RNA deep sequencing towards the goal differential expression testing. This provides the necessary context for the rationale and statistical theory underlying normalization and differential expression testing of RNA sequencing (RNA-seq) data. By then end of this discussion you should:
