@@ -69,20 +69,42 @@ The method used by GSEA to map genes onto pathways is generic to those collectiv
 
 ## <a href="#scoring" name="scoring">II. Scoring</a>
 
+### Overview
+
 Figure 1 shows the GSEA approach to calculate the gene- and pathway-level scores for a pairwise comparison of gene expression. The comparison could involve disease subtypes, disease versus normal or treatment versus control.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Calculating a GSEA enrichment score.</strong> A pairwise comparison of gene expression. 1. RNA levels for each sample are interrogated by microarray or deep-sequencing for N genes. 2. Genes are placed in a list (L) ranked by a 'local' or 'gene-level' score that corresponds to some measure of differential expression. 3. The  list is scanned in order for candidate gene set membership (G genes in set). In this case, cell cycle entry genes in the ranked list are indicated in red. 4. A 'global' or 'pathway-level' statistic is calculated: For each successive gene in the ranked list, add to a running sum if the gene is a member of the gene set and subtract otherwise. This running sum is called the 'Enrichment Score' (ES) and we track its maximum (MES) over the ranked list.
+  <strong>Figure 1. Calculating a GSEA enrichment score.</strong> A pairwise comparison of gene expression. 1. RNA levels for each sample are interrogated by microarray or deep-sequencing for N genes. 2. Genes are placed in a list (L) ranked by a 'local' or 'gene-level' score that corresponds to some measure of differential expression. 3. The  list is scanned in order for candidate gene set membership (G; N_H genes in set). In this case, cell cycle entry genes in the ranked list are indicated in red. 4. A 'global' or 'pathway-level' statistic is calculated: For each successive gene in the ranked list, add to a running sum if the gene is a member of the gene set and subtract otherwise. This running sum is called the 'Enrichment Score' (ES) and we track its maximum (MES) over the ranked list.
 </div>
 
-The running sum calculated by adding and subtracting based on gene set membership in a ranked list is a Komolgorov-Smirnov (K-S) statistic.
+To make the description more explicit and concise, we adopt notation used by Subramanian *et al.* (Subramanian 2005).
 
-- Outstanding questions
-  - What are we adding and subtracting?
-  - Why does rank matter?
-  - What is the significance of the maximum?
-  - Why does GSEA 'work'?
+- {:.list-unstyled} Terminology
+  - {:.list-unstyled} Expression data: $$D \in \mathbb{R}^{N \times k}$$
+  - {:.list-unstyled} Gene list: $$L=\{g_i: i=1, \ldots, N\}$$
+  - {:.list-unstyled} Gene set: $$S=\{s_{i}: i=1, \ldots, N_H\}$$
+  - {:.list-unstyled} Step weight: $$p$$
+
+### Enrichment score calculation
+
+1. Create ranked gene list  
+
+    The scoring function $$r(g_i)$$ maps a gene into a score ($$r_i$$). In our discussion of [RNA-seq data processing]({{site.baseurl}}/datasets/archive/) we use p-values ($$P$$) derived from a differential expression analysis.
+
+    $$
+    \begin{equation*}
+      \begin{split}
+        r(g_i) &\equiv r_i\\
+        &= sign(\text{Fold Change}) \cdot -log(\text{P})\\        
+      \end{split}
+    \end{equation*}
+    $$
+
+    > *Subramanian et al. describe a ranking system based on correlation with a phenotype.*
+
+
+
 
 ## <a href="#significanceTesting" name="significanceTesting">III. Significance testing</a>
 
@@ -96,12 +118,20 @@ Let's break that null hypothesis down.
 
 ## <a href="#multipleTesting" name="multipleTesting">IV. Multiple testing correction</a>
 
-Gene Set Enrichment Analysis.
+The ES are normalized to account for the number of genes in the candidate set (G) to yield a normalized enrichment score (NES).
+
+The false discovery rate is then calculated empirically from the tails of the observed and null distribution (Noble 2009).
 
 
 ## <a href="#gsea" name="gsea">V. Gene Set Enrichment Analysis</a>
 
+- Outstanding questions
+  - What are we adding (+) and subtracting ?
+  - Why does rank matter?
+  - What is the significance of the maximum?
+  - Why does GSEA 'work'?
+
 Gene Set Enrichment Analysis.
 
 ## <a href="#references" name="references">VI. References</a>
-<!-- <div class="panel_group" data-inline="26125594,19192285,15647293,22383865,12808457,16199517"></div> -->
+<div class="panel_group" data-inline="26125594,19192285,15647293,22383865,12808457,20010596,16199517"></div>
