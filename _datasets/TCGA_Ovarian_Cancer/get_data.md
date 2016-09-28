@@ -7,7 +7,7 @@ pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: publication
 category: TCGA_Ovarian_Cancer
-badge: RNA-seq
+badge: TCGA
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
   tcgaov_counts: TCGAOv_counts.txt.zip

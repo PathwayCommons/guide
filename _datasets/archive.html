@@ -4,9 +4,9 @@ subtitle: Study data used in this site
 layout: panelista
 categories:
   - TCGA_Ovarian_Cancer
-  - TCGA_Head_and_Neck_Squamous_Cell_Carcinomas
 ---
 
+<!-- - TCGA_Head_and_Neck_Squamous_Cell_Carcinomas -->
 {% for category in page.categories %}
   {% assign docs = (site.datasets | where: 'category' , category ) %}
   <h2 class="page-category">{{ category | replace: '_', ' ' }}</h2>

@@ -5,8 +5,7 @@ cover: cover2.png
 date: 2014-02-27
 layout: document
 category: TCGA_Ovarian_Cancer
-badge: RNA-seq
-data:
+badge: TCGA
 data:
   rank_list: MesenchymalvsImmunoreactive_ranks.rnk.zip  
 figures:
