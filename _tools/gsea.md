@@ -11,55 +11,61 @@ draft: false
 figures:
   figure_overview: figure_overview.png
   figure_1: figure_gsea_local.png
-  figure_2: figure_gsea_es_sample.png
+  figure_2: figure_gsea_global.png
 ---
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
   - {:.list-unstyled} [II. Background](#background)
-  - {:.list-unstyled} [III. Local and global statistics](#localGlobalStatistics)
-  - {:.list-unstyled} [IV. Significance testing](#significanceTesting)
-  - {:.list-unstyled} [V. Multiple testing correction](#multipleTesting)
-  - {:.list-unstyled} [VI. References](#references)
+  - {:.list-unstyled} [III. Local statistic](#localStatistic)
+  - {:.list-unstyled} [IV. Global statistic](#globalStatistic)
+  - {:.list-unstyled} [V. Significance testing](#significanceTesting)
+  - {:.list-unstyled} [VI. Multiple testing correction](#multipleTesting)
+  - {:.list-unstyled} [VII. References](#references)
 
   <hr/>
 
   <div class="alert alert-warning text-justify" role="alert">
-    For this section we will require a rank file ('.rnk') which contains a list of genes ranked by p-value from differential expression testing. In the <a href="{{site.baseurl}}/datasets/archive/">Data Sets</a> section, we have provided samples for TCGA <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">ovarian</a> and <a href="{{site.baseurl}}/datasets/TCGA_HNSCC/process_data/#datasets"> head and neck</a> cancer.
+    For this section we will require a rank file ('.rnk') of genes ranked by a function of their respective p-value from differential expression testing. In the <a href="{{site.baseurl}}/datasets/archive/">Data Sets</a> section, we have provided samples for TCGA <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">ovarian</a> and <a href="{{site.baseurl}}/datasets/TCGA_HNSCC/process_data/#datasets"> head and neck</a> cancer.
   </div>
 
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
 
-In this section we will be using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify pathways enriched in list of genes arising from a differential gene expression analysis. We aim to provide an intuitive rationale for the approach and a brief description of the statistical methods used to defined significantly enriched pathways. By then end of this discussion you should:
+> *Gene Set Enrichment Analysis attempts to answer the question: Does my list of differentially expressed genes indicate alterations in pathways?*
 
-1. Understand how GSEA identifies gene sets and pathways within a gene list
-2. Be aware of the advantages GSEA demonstrates in detecting altered pathways
-2. Be aware of the statistical methods underlying GSEA
-3. Be able to apply GSEA to test our ranked list of DE genes for enriched pathways
+In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify pathways enriched in gene lists arising from a differential gene expression analysis. We aim to convey how the approach works from an intuitive standpoint before a briefly describing a statistical basis. By then end of this discussion you should:
+
+1. Understand what you can get from GSEA
+2. Be aware of the advantages over previous methods
+3. Understand how GSEA finds enriched gene sets within gene lists
+4. Be aware of the statistical basis of the approach
+5. Be able to use software to test a list of DE genes for enriched pathways
 
 <br/>
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Summary and Goals.</strong> This section provides background on GSEA. This approach accepts a gene list of genes ranked according to their expression differences between groups along with a collection of candidate gene sets or pathways. GSEA uses a statistical criteria to filter the gene sets that are significantly enriched in the input gene list.
+  <strong>Summary and Goals.</strong> Gene Set Enrichment Analysis attempts to answer the question: Does my list of differentially expressed genes indicate alterations in pathways? GSEA requires a ranked gene list ordered according to measure of expression differences between groups along with a collection of candidate gene sets or pathways. GSEA uses a statistical criteria to filter the gene sets that are significantly enriched in the input gene list.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
 
-High-throughput approaches for gene expression measurement can generate a tremendous volume of data but can be unwieldy and easily outstrip intuition. The noisy nature of biological processes further compounds the difficulty in interpreting outputs of large-scale experiments. Clearly, there is a need for robust approaches that places data in a wider context that is more biologically meaningful to the scientific question at hand.
+High-throughput approaches for gene expression measurement can generate a tremendous volume of data but can be unwieldy and easily outstrip intuition. The noisy nature of biological processes compounds the difficulty in interpreting outputs of large-scale experiments. Clearly, there is a need for robust approaches that place data in a wider context that is more biologically meaningful to the scientific question at hand.
 
-To this end, approaches collectively termed 'Overrepresentation Analyses' (ORA) were developed to identify sets of genes known to be related through some common theme within a larger list of genes derived from  experimental results (Khatri 2005, Khatri 2012). In simple terms, ORA approaches leverage prior information about gene sets or pathways that have higher-level functional relevance to identify those that are statistically enriched within a list of genes arising from an experiment. A popular source of sets is the [Gene Ontology (GO)](http://geneontology.org/) which groups of genes according to biological process and molecular function.
+To this end, approaches collectively termed 'Overrepresentation Analyses' (ORA) were developed to take large lists of genes emerging from experimental results and determine whether there was evidence of enrichment for gene sets grouped on the basis of some shared theme (Khatri 2005, Khatri 2012). In simple terms, ORA approaches aim to distill which pathways are present within a list of genes. A popular source of sets is the [Gene Ontology (GO)](http://geneontology.org/) which groups of genes according to various biological processes and molecular functions.
 
-### A SAFE approach
+> *In simple terms, ORA approaches aim to distill which pathways are present within a list of genes*
+
+### The 'SAFE' approach
 
 While tremendously useful for interpreting differential expression output, ORA approaches have three major limitations. First, the inclusion criteria for input gene lists are rather arbitrary and typically involves selecting genes that exceed some user-defined statistical cutoff. This risks excluding potentially important genes that for whatever reason fail to reach statistical significance. Second, ORA approaches use gene names but not any of the rich quantitative information associated with gene expression experiments. In this way, equal importance is assigned to each an every gene. Third, many of the ORA procedures uses statistical procedures that assume independence among genes: Changes in any gene do not affect or are not influenced by any others. Clearly, this is unrealistic for biological systems and has the effect of making ORA procedures more prone to erroneous discoveries or false-positives.
 
-Gene Set Enrichment Analysis (GSEA) is a tool that belongs to a class of second-generation pathway analysis approaches referred to as *functional class scoring (FCS)* (Khatri 2012) and *significance analysis of function and expression (SAFE)* (Barry 2005). These methods are distinguished from their forerunners in that they make use of entire data sets including quantitive data gene expression values or their proxies.
+Gene Set Enrichment Analysis (GSEA) is a tool that belongs to a class of second-generation pathway analysis approaches referred to as *significance analysis of function and expression (SAFE)* (Barry 2005). These methods are distinguished from their forerunners in that they make use of entire data sets including quantitive data gene expression values or their proxies.
 
 Methods that fall under the SAFE framework use a four-step approach to map gene lists onto pathways (Barry 2005).
 
-1. Calculate a local (gene) statistic
-2. Calculate a global (gene set or pathway) statistic
+1. Calculate a local (gene-level) statistic
+2. Calculate a global (gene set or pathway-level) statistic
 3. Determine significance of the global statistic
 4. Adjust for [multiple testing]({{site.baseurl}}/primers/functional_analysis/multiple_testing/)
 
@@ -75,157 +81,82 @@ Importantly, the prominence of OXPHOS genes provided the necessary clues for the
 
 Criticisms concerning the original methodology (Damian 2004) were considered in an updated version of GSEA described in detail by Subramanian *et al.* (Subramanian 2005). Below, we provide a description of the approach with particular emphasis on the protocol we recommend for analyzing gene lists ranked according to differential expression.
 
-## <a href="#localGlobalStatistics" name="localGlobalStatistics">III. Local and global statistics</a>
+## <a href="#localStatistics" name="localStatistics">III. Local statistic</a>
 
 <div class="alert alert-danger text-justify" role="alert">
-  <strong>Caution!</strong> Our procedure for analyzing differential expression data using GSEA diverges from that detailed by Subramanian <em>et al.</em> (Subramanian 2005) with respect to the calculation of local statistics and normalization.
+  <strong>Caution!</strong> Our procedure for analyzing differential expression data using GSEA diverges from that detailed by Subramanian <em>et al.</em> (Subramanian 2005) with respect to the calculation of local statistics.
 </div>
 
-Here we describe how GSEA generates local (gene-level) and global (gene set or pathway-level) statistics, representing the first two stages in the general SAFE framework.
+In this step, we desire some local or gene-level measure that will be used to rank genes. In GSEA terminology this is referred to as a 'rank metric'. Previously, we described how to [obtain and process RNA-seq datasets]({{site.baseurl}}/datasets/archive/) into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when in fact, no inter-group difference exists. We simply declare this function of p-values the rank metric (Figure 1).
 
-### Local statistic
-
-Elsewhere in this guide, we describe how to [obtain various RNA-seq datasets]({{site.baseurl}}/datasets/archive/) and process them into a single gene list ordered according to a function of each gene's p-value obtained from differential expression testing (Figure 1).
+> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when in fact, no inter-group difference exists*
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Deriving a GSEA local statistic.</strong> Shown is a pairwise comparison of gene expression for samples (m total). RNA levels for each of gene are determined (n total genes). Differential expression testing assigns a p-value (P) for each gene. The p-value is used to derive the 'local' (gene-level) statistic (s(P)). Genes are placed in a ranked gene list (L) according to the value of the local statistic.
+  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> Shown is a pairwise comparison of gene expression for samples (m total). RNA levels for each of gene are determined (n total). Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic called the rank metric (s). A gene list (L) is ordered according to the value of the rank metric.
 </div>
 
-The local statistic in our case is a simple transformation of the p-value ($$P$$).
+The rank metric in our case is a simple function of the p-value ($$P$$)
 
 $$
   \begin{equation*}
-    s(P_i) = sign(\text{Fold Change})\cdot -log_{10}(P_i)
+    s_i=s(P_i) = sign(\text{Log fold change gene }i)\cdot -log_{10}(P_i)
   \end{equation*}
 $$
 
-In this case, genes at the top of the list of those with the smallest p-values amongst up-regulated genes whereas at the bottom are those with the smallest p-values amongst down-regulated genes. The benefit for us is that we have no extra work to do: This part of the GSEA procedure is complete. To make the following discussion more concise, we summarize our notation adapted from Tamayo *et al.* (Tamayo 2016).
+Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list; Down-regulated genes with small p-values appear at the bottom. If you have followed the instructions we provided for RNA-seq datasets to generate the ranked list then you have already calculated the rank metric. To make the following discussion more concise, we summarize the relevant notation, adapted from Tamayo *et al.* (Tamayo 2016).
 
-- {:.list-unstyled} Notation for local statistic
+- {:.list-unstyled} **Notation for local statistic**
   - {:.list-unstyled} Number of biological samples: $$m$$
-  - {:.list-unstyled} Number of genes or 'features': $$n$$
+  - {:.list-unstyled} Number of genes: $$n$$
+  - {:.list-unstyled} P-value: $$P$$
+  - {:.list-unstyled} Local statistic or rank metric: $$s_i$$
   - {:.list-unstyled} Ranked gene list: $$L$$
-  - {:.list-unstyled} P-value for gene $$i$$: $$P_i$$ where $$1 \leq i \leq N$$
-  - {:.list-unstyled} Local statistic: $$s(P_i)$$
 
 
-### Enrichment score calculation
+## <a href="#globalStatistics" name="globalStatistics">IV. Global statistic</a>
 
-1. *Create ranked gene list*
+This step is at the very heart of GSEA. The rather simple calculations belie a more profound statistical approach that tests each candidate gene set using the rank metrics. We begin by describing the global statistic which measures how enriched our ranked gene list is for members of a given candidate gene set or pathway. In GSEA terminology, this is referred to as the 'enrichment score'. For the more curious, this is followed by a more technical description of the statistical basis of the procedure.
 
-    The scoring function $$r(g_j)$$ maps a gene into a metric ($$r_j$$). In our discussion of [RNA-seq data processing]({{site.baseurl}}/datasets/archive/) we use p-values ($$P$$) derived from a differential expression analysis.
+### Non-technical description: A sample calculation
 
-    $$
-    \begin{equation*}
-      \begin{split}
-        r_j &\equiv r(g_j) = -log(\text{P}) \cdot sign(\text{Fold Change})\\        
-      \end{split}
-    \end{equation*}
-    $$
-
-    > *Subramanian et al. use correlation with phenotype as the metric.*
-
-    Represent the ordered list ($$L$$) as the set
-
-    $$
-    \begin{equation*}
-      \begin{split}
-        L &= \{g_j: j=1,\ldots, N \} \text{ where } r_1 \leq \cdots \leq r_j \leq \cdots \leq r_N
-      \end{split}
-    \end{equation*}
-    $$
-
-2. *Score the ranked gene list*
-
-    Call the intersection of the ranked list $$L$$ and candidate gene set $$S$$  'hits' and those not shared 'misses'. Then the enrichment score (ES) for a given gene set is defined as
-
-    $$
-    \begin{equation*}
-      \begin{split}
-        ES(S) = \max_{i} \left[ P_{hit}(S,i) - P_{miss}(S,i) \right]\\
-      \end{split}
-    \end{equation*}
-    $$
-
-    where
-
-    $$
-    \begin{equation*}
-      \begin{split}
-        P_{hit}(S,i) &= \sum\limits_{\begin{split} g_j &\in S\\  j &\leq i \end{split} } \frac{|r_j|^p}{N_R}
-          \quad \text{ where } \quad N_R = \sum|r_j|^p \\
-        P_{miss}(S,i) &= \sum\limits_{\begin{split} g_j &\not\in S\\  j &\leq i \end{split} }
-          \frac{1}{N-N_H}\\
-      \end{split}
-    \end{equation*}
-    $$
-
-#### Sample calculation
-
-Let us reuse the setup depicted in Figure 1 for a pairwise comparison of differential expression. In particular, let's pick up the process after having declared the genes in the cell cycle gene set that are members of the ranked list (Figure 2).
+Let us set aside the technical details for a moment to see how the GSEA software derives the global statistic - the enrichment score. In particular, let's pick up the process after having calculated the rank metric as shown in Figure 1. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway candidate gene set (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Sample calculation of enrichment score for hypothetical data in Figure 1.</strong> Shown is a gene list (L) ordered according to the p-value from a differential expression analysis. The red highlights indicate the genes in the candidate set for Cell Cycle set (S). The green region highlighted represents the genes for P_hit relevant to the ES.
+  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle entry pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the largest value that the running sum achieves (horizontal axis).
 </div>
 
-For simplicity, let $$p=1$$ and suppose that the number of genes in our list is $$N=1000$$ and the size of the cell cycle gene set $$S$$ is $$N_H=20$$. If members of the cell cycle gene set $$S$$ are restricted to the top 9 genes in $$L$$ then
+GSEA considers each candidate gene set in succession. The process of calculating the global statistic - the enrichment score - begins by starting at the stop of the ranked gene list. For each gene in the list, if it is a member of the candidate gene set then add to the running sum otherwise, subtract from the running sum. When this is done for all genes in the ranked list, the enrichment score for that particular gene set is equal to the largest value of the running sum.
+
+One aspect of this algorithm that we side-stepped is the actual value that gets added or subtracted from the running sum. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum of increments and decrements across the entire list would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that can be used in a statistical procedure called 'K-S Goodness-of-Fit' tests that determine if the enrichment score is significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather mathematical, which we reserve for those more curious in the following section. 
+
+#### Technical description
+
+Consider a particular gene set $$G_k$$  indexed by $$1 \leq k \leq K$$ consisting of of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: 1 \leq j \leq n_k\}$$. The [GSEA protocol](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideFrame.html) recommends that $$25 \leq n_k \leq 500$$ as normalization for gene set size is not accurate outside this range (below). Note that the genes within the gene set must be represented in the ranked list of genes $$L$$.
+
+Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is a weighted Kolmogorov-Smirnov statistic.
 
 $$
 \begin{equation*}
   \begin{split}
-    P_{hit}(S,9) &= \sum\limits_{\begin{split} g_j &\in S\\  j &\leq 9 \end{split} } \frac{|r_j|}{N_R}\\    
-      &= \frac{|r_1|}{N_R} + \frac{|r_2|}{N_R} + \frac{|r_4|}{N_R} + \frac{|r_5|}{N_R} + \frac{|r_6|}{N_R} + \frac{|r_9|}{N_R}\\    
-      &= \frac{18.63}{123.59} + \frac{16.05}{123.59} + \frac{15.10}{123.59} + \frac{14.99}{123.59} + \frac{14.77}{123.59} + \frac{13.89}{123.59}\\
-      &= \frac{93.82}{123.59} \approx 0.759\\    
+    S^{GSEA}_k = \sup_{1 \leq i \leq n} (F_i-F_i)\\
   \end{split}
 \end{equation*}
 $$
 
-In this case the value of $$P_{\text{hit}}$$ represents the proportion of p-values from cell cycle genes. Likewise, the value of $$P_{\text{miss}}$$ is calculated from examining the first 9 genes of $$L$$ not in $$S$$.
+Where the position in the ranked gene list $$L$$ is indexed by $$i$$.
 
 $$
 \begin{equation*}
   \begin{split}
-    P_{miss}(S,9) &= \sum\limits_{\begin{split} g_j &\not\in S\\  j &\leq 9 \end{split} } \frac{1}{N-N_H}\\
-      &= \frac{1}{N - N_H} + \frac{1}{N - N_H} + \frac{1}{N - N_H}\\
-      &= 3 \cdot \frac{1}{1000 - 20} = 0.003\\
   \end{split}
 \end{equation*}
 $$
 
-Then the ES is the difference between the two.
-
-$$
-\begin{equation*}
-  \begin{split}
-    ES(S) &= P_{hit}(S,9) - P_{miss}(S,9)\\
-      &= 0.759 - 0.003 = 0.756 \\
-  \end{split}
-\end{equation*}
-$$
-
-It should be obvious from the tiny value of $$P_{\text{miss}}$$ that calculating the running sum for any index $$i \leq 9$$ would not give a larger value.
 
 ### Why does GSEA 'work'?
 
-- How can I trust this? What was the ground truth it tested against - It preserves our original results in ref 4. (Mootha 2003) with the oxidative phosphorylation pathway significantly enriched in the normal samples.  6 more examples, also Male vs Female Lymphoblastoind, p53 status in cancer cell lines
-  - Lung cancer
-    - this is  a good example to describe how gene-wise analysis might fail whereas pathway-level anaylses were able to reconcile the disparity betweeen the data sets.
-
-
-- Why does being at the top or bottom of the list matter?
-
-    Clearly this arises because the running sum incorporates a metric that underlies the ordering of genes in the list. In the original publication, this metric is the correlation between expression and phenotype; In our case we describe p-values arising from a differential expression analysis.
-
-    $$
-    \begin{equation*}
-      \begin{split}
-        P_{hit}(S,i) &= \sum\limits_{\begin{split} g_j &\in S\\  j &\leq 6 \end{split} } \frac{|r_j|}{N_R}\\
-      \end{split}
-    \end{equation*}
-    $$
 
 ### What is the significance of the weight $$p$$?
 
@@ -234,7 +165,7 @@ When $$p=1$$, we are weighting the genes by their metric (correlation, p-value) 
 
 If one is interested in penalizing sets for lack of coherence or to discover sets with any type of nonrandom distribution of tags, $$p < 1$$ might be appropriate. If one uses sets with a large number of genes and only a small subset are expected to be coherent, then consider using $$p>1$$.
 
-## <a href="#significanceTesting" name="significanceTesting">III. Significance testing</a>
+## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
 
 The approach can be framed in hypothesis testing language: GSEA gathers evidence to support or cast doubt upon a null hypothesis of **random rank ordering of genes** in a given comparison with respect to sample categorization.
 
@@ -242,16 +173,12 @@ The approach can be framed in hypothesis testing language: GSEA gathers evidence
 
 - When permuting class labels, is GSEA doing any normalization? Is this why we use pre-ranked lists?
 
-## <a href="#multipleTesting" name="multipleTesting">IV. Multiple testing correction</a>
+## <a href="#multipleTesting" name="multipleTesting">VI. Multiple testing correction</a>
 
 The ES are normalized to account for the number of genes in the candidate set (G) to yield a normalized enrichment score (NES).
 
 The false discovery rate is then calculated empirically from the tails of the observed and null distribution (Noble 2009).
 
 
-## <a href="#gsea" name="gsea">V. Gene Set Enrichment Analysis</a>
-
-Gene Set Enrichment Analysis. How do I retrieve gene sets?
-
-## <a href="#references" name="references">VI. References</a>
+## <a href="#references" name="references">VII. References</a>
 <!-- <div class="panel_group" data-inline="15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
