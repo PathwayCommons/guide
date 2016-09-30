@@ -12,6 +12,7 @@ figures:
   figure_overview: figure_overview.png
   figure_1: figure_gsea_local.png
   figure_2: figure_gsea_global.png
+  figure_3: figure_gsea_cdf.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -87,13 +88,13 @@ Criticisms concerning the original methodology (Damian 2004) were considered in 
   <strong>Caution!</strong> Our procedure for analyzing differential expression data using GSEA diverges from that detailed by Subramanian <em>et al.</em> (Subramanian 2005) with respect to the calculation of local statistics.
 </div>
 
-In this step, we desire some local or gene-level measure that will be used to rank genes. In GSEA terminology this is referred to as a 'rank metric'. Previously, we described how to [obtain and process RNA-seq datasets]({{site.baseurl}}/datasets/archive/) into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when in fact, no inter-group difference exists. We simply declare this function of p-values the rank metric (Figure 1).
+In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a 'rank metric'. Previously, we described how to [obtain and process RNA-seq datasets]({{site.baseurl}}/datasets/archive/) into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 1).
 
-> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when in fact, no inter-group difference exists*
+> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when given no inter-group difference*
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> Shown is a pairwise comparison of gene expression for samples (m total). RNA levels for each of gene are determined (n total). Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic called the rank metric (s). A gene list (L) is ordered according to the value of the rank metric.
+  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> Shown is a pairwise comparison of gene expression for samples (m total). RNA levels for each of gene are determined (n total). Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic called the rank metric (s). A gene list (L) is ordered according to rank.
 </div>
 
 The rank metric in our case is a simple function of the p-value ($$P$$)
@@ -104,7 +105,7 @@ $$
   \end{equation*}
 $$
 
-Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list; Down-regulated genes with small p-values appear at the bottom. If you have followed the instructions we provided for RNA-seq datasets to generate the ranked list then you have already calculated the rank metric. To make the following discussion more concise, we summarize the relevant notation, adapted from Tamayo *et al.* (Tamayo 2016).
+Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list and down-regulated genes with small p-values at the bottom. If you have followed the instructions we provided for RNA-seq datasets to generate a ranked list then you have already calculated the rank metric. To make the following discussion more concise, we summarize the relevant notation, adapted from Tamayo *et al.* (Tamayo 2016).
 
 - {:.list-unstyled} **Notation for local statistic**
   - {:.list-unstyled} Number of biological samples: $$m$$
@@ -116,54 +117,83 @@ Under this rank metric, up-regulated genes with relatively small p-values appear
 
 ## <a href="#globalStatistics" name="globalStatistics">IV. Global statistic</a>
 
-This step is at the very heart of GSEA. The rather simple calculations belie a more profound statistical approach that tests each candidate gene set using the rank metrics. We begin by describing the global statistic which measures how enriched our ranked gene list is for members of a given candidate gene set or pathway. In GSEA terminology, this is referred to as the 'enrichment score'. For the more curious, this is followed by a more technical description of the statistical basis of the procedure.
+This step is at the very heart of GSEA. The rather simple calculation belies a profound statistical basis to test each candidate gene set. We begin by describing the global statistic which measures how enriched our ranked gene list is for members of a given candidate gene set or pathway. In GSEA terminology, this is referred to as the 'enrichment score'. For the more curious, this is followed by a more technical description of the statistical context for the enrichment score.
 
 ### Non-technical description: A sample calculation
 
-Let us set aside the technical details for a moment to see how the GSEA software derives the global statistic - the enrichment score. In particular, let's pick up the process after having calculated the rank metric as shown in Figure 1. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway candidate gene set (Figure 2).
+Let us set aside the details for a moment to see how the GSEA software calculates the enrichment score. Let's pick up the process shown in Figure 1 after having calculated gene rank. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway candidate gene set (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle entry pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the largest value that the running sum achieves (horizontal axis).
+  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the largest value that the running sum achieves.
 </div>
 
-GSEA considers each candidate gene set in succession. The process of calculating the global statistic - the enrichment score - begins by starting at the stop of the ranked gene list. For each gene in the list, if it is a member of the candidate gene set then add to the running sum otherwise, subtract from the running sum. When this is done for all genes in the ranked list, the enrichment score for that particular gene set is equal to the largest value of the running sum.
+GSEA considers each candidate gene set one at a time. To calculate the enrichment score, GSEA starts at the stop of the ranked gene list. For each gene, if it is a member of the candidate gene set then it adds to a running sum, otherwise, it subtracts. When this is done for all genes in the ranked list, the enrichment score for that particular gene set is equal to the largest value of the running sum.
 
-One aspect of this algorithm that we side-stepped is the actual value that gets added or subtracted from the running sum. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum of increments and decrements across the entire list would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that can be used in a statistical procedure called 'K-S Goodness-of-Fit' tests that determine if the enrichment score is significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather mathematical, which we reserve for those more curious in the following section.
+One aspect of this algorithm we side-stepped is the value that gets added or taken away from the running sum. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum over all genes would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that can be used in a statistical procedures that determine if the enrichment score is significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather technical and we reserve this for those more curious in the following section.
 
-### Technical description of the enrichment score
+### Technical description: The enrichment score
 
-Consider a particular gene set $$G_k$$  indexed by $$1 \leq k \leq K$$ consisting of of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: 1 \leq j \leq n_k\}$$. The [GSEA protocol](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideFrame.html) recommends that $$25 \leq n_k \leq 500$$ as normalization for gene set size is not accurate outside this range (below). Note that the genes within the gene set must be represented in the ranked list of genes $$L$$.
+Consider a particular gene set $$G_k$$ out of a total of $$K$$ under consideration, that is, $$1 \leq k \leq K$$. The gene set consists of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: 1 \leq j \leq n_k\}$$. The [GSEA protocol](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideFrame.html) recommends that $$25 \leq n_k \leq 500$$ as normalization for gene set size is not accurate outside this range (below). Note that the gene set must be a subset of the ranked list $$L$$. Thus, define the set of genes outside of the gene set $$k$$ as $$\bar{G}_k = \{\bar{g}_{kj}: 1 \leq j \leq n-n_k\}$$.
 
-Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is a weighted Kolmogorov-Smirnov statistic.
-
-$$
-\begin{equation*}
-  \begin{split}
-    S^{GSEA}_k = \sup_{1 \leq i \leq n} (F_i-F_i)\\
-  \end{split}
-\end{equation*}
-$$
-
-Where the position in the ranked gene list $$L$$ is indexed by $$i$$.
+Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is a (weighted) Kolmogorov-Smirnov (K-S) statistic.
 
 $$
-\begin{equation*}
-  \begin{split}
-  \end{split}
-\end{equation*}
+\begin{equation} \label{eq:1}
+    S^{GSEA}_k = \sup_{1 \leq i \leq n} (F^{G_k}_i-F^{\bar{G}_k}_i)  
+\end{equation}
 $$
 
+Where the indices $$i$$ represents the rank in $$L$$. The $$S^{GSEA}_k$$ is the largest difference in $$F$$ which are the (weighted) empirical cumulative distribution functions.
 
-### Why does GSEA 'work'?
+$$
+\begin{equation} \label{eq:2}
+    F^{G_k}_i = \frac{\sum\limits_{t=1}^i |s_t|^p \cdot \mathbb{1}_{\{gene_t \in G_k\}}}{\sum\limits_{t=1}^n |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}  
+\end{equation}
+$$
 
+$$
+\begin{equation} \label{eq:3}
+    F^{\bar{G}_k}_i = \frac{\sum\limits_{t=1}^i \mathbb{1}_{\{gene_t \in \bar{G}_k\}}}{n-n_k}  
+\end{equation}
+$$
 
-### What is the significance of the weight $$p$$?
+To get a better feel for what these equations for $$F$$ mean, we briefly digress on the consequences of varying the exponent $$\alpha$$.
 
-The recommendation by Subramanian *et al.* is to use $$p=1$$.
-When $$p=1$$, we are weighting the genes by their metric (correlation, p-value) with phenotype $$C$$ normalized by the sum of the metrics over all genes in $$S$$. When $$p=0$$ the ES reduces to the standard Kolmogorov-Smirnov statistic.
+#### Case 1: Equal weights
 
-If one is interested in penalizing sets for lack of coherence or to discover sets with any type of nonrandom distribution of tags, $$p < 1$$ might be appropriate. If one uses sets with a large number of genes and only a small subset are expected to be coherent, then consider using $$p>1$$.
+If $$\alpha=0$$ then all contributions have equal weight and we do not consider the value of the rank metric $$s$$ in \eqref{eq:2}.
+
+$$
+\begin{equation} \label{eq:4}
+    F^{G_k}_i = \frac{1}{n_k} \sum\limits_{t=1}^i \mathbb{1}_{\{gene_t \in G_k\}}
+\end{equation}
+$$
+
+In this case, the value of $$F^{G_k}_i$$ is equal to the fraction of genes in the ranked list up to position $$i$$ that are members of the gene set. Under these circumstances, the $$S^{GSEA}_k$$ calculated using \eqref{eq:4} is the classic version of the Kolmogorov-Smirnov (K-S) statistic. It is more common to represent this as an empirical cumulative distribution function of an order statistic $$X$$. Without loss of generality, define the order statistics as the rank metrics in *increasing order*, that is, $$X_{(1)}=s_n \leq X_{(2)}=s_{n-1} \leq \cdots \leq X_{(n)}=s_{1}$$. For ease of notation, we drop the subscript bracket.
+
+$$
+\begin{equation} \label{eq:5}
+    \hat{F}_{n}^{G_k}(x) = \frac{1}{n_k} \sum\limits_{t=1}^n \mathbb{1}_{\{X_t \leq x\}} \cdot \mathbb{1}_{\{gene_t \in G_k\}}
+\end{equation}
+$$
+
+In the same way, we can express \eqref{eq:3} for the genes not in the gene set.
+
+$$
+\begin{equation} \label{eq:6}
+    \hat{F}_{n}^{\bar{G}_k}(x) = \frac{1}{n-n_k} \sum\limits_{t=1}^n \mathbb{1}_{\{X_t \leq x\}} \cdot \mathbb{1}_{\{gene_t \in \bar{G}_k\}}
+\end{equation}
+$$
+
+Typically we can better appreciate these function when plotted, such as in Figure 3.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Empirical cumulative distribution functions.</strong> This is created using hypothetical data for genes within and outide of the gene set.
+</div>
+
+**Case 2: $$\alpha=2.$$** This the recommendation by Subramanian *et al.* (Subramanian 2005) and the default state for GSEA. When $$p=1$$, we are weighting the genes by their rank metric normalized by the sum of the metrics over all genes in $$G_kS$$.
 
 ## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
 
