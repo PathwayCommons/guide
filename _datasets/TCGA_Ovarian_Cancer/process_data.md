@@ -7,7 +7,7 @@ layout: document
 category: TCGA_Ovarian_Cancer
 badge: TCGA
 data:
-  rank_list: MesenchymalvsImmunoreactive_ranks.rnk.zip  
+  rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
 figures:
   figure_overview: overview.jpg
   figure_1: ranks_layout.png  
@@ -179,7 +179,7 @@ The rank of each gene is inversely proportional to the log of the $$P$$ as small
 
 ## <a href="#datasets" name="datasets">III. Datasets</a>
 
-- {:.list-unstyled} Differential gene expression ranks: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_ranks.rnk.zip`</a>(0.14 MB)
+- {:.list-unstyled} Differential gene expression ranks: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_edger_ranks.rnk.zip`</a>(0.14 MB)
   - Comparisons
     - 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes
   - Format: tab-delimited  
