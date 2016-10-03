@@ -12,7 +12,7 @@ figures:
   figure_overview: figure_overview.png
   figure_1: figure_gsea_local.png
   figure_2: figure_gsea_global.png
-  figure_3: figure_gsea_cdf.png
+  figure_3: figure_gsea_ks.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -82,7 +82,7 @@ Importantly, the prominence of OXPHOS genes provided the necessary clues for the
 
 Criticisms concerning the original methodology (Damian 2004) were considered in an updated version of GSEA described in detail by Subramanian *et al.* (Subramanian 2005). Below, we provide a description of the approach with particular emphasis on the protocol we recommend for analyzing gene lists ranked according to differential expression.
 
-## <a href="#localStatistics" name="localStatistics">III. Local statistic</a>
+## <a href="#localStatistic" name="localStatistic">III. Local statistic</a>
 
 <div class="alert alert-danger text-justify" role="alert">
   <strong>Caution!</strong> Our procedure for analyzing differential expression data using GSEA diverges from that detailed by Subramanian <em>et al.</em> (Subramanian 2005) with respect to the calculation of local statistics.
@@ -115,7 +115,7 @@ Under this rank metric, up-regulated genes with relatively small p-values appear
   - {:.list-unstyled} Ranked gene list: $$L$$
 
 
-## <a href="#globalStatistics" name="globalStatistics">IV. Global statistic</a>
+## <a href="#globalStatistic" name="globalStatistic">IV. Global statistic</a>
 
 The global statistic is at the very heart of GSEA and the rather simple calculation belies a profound statistical basis to test each candidate gene set. We begin by describing the GSEA 'enrichment score' which measures how enriched our ranked gene list is for members of a given candidate gene set or pathway. For the more curious, we provide a more technical description of the statistical theory upon which the enrichment score is based.
 
@@ -134,9 +134,9 @@ One aspect of this algorithm we side-stepped is the value that gets added or sub
 
 ### Technical description: The enrichment score
 
-Consider a particular gene set $$G_k$$ indexes by $$k$$ out of $$K$$ total gene sets. The gene set consists of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the gene set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the gene set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$.
+Consider a single gene set $$G_k$$ indexed by $$k$$ out of $$K$$ total gene sets. The set consists of a list of $$n_k$$ gene names ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$.
 
-Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is a (weighted) Kolmogorov-Smirnov (K-S) statistic.
+Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is the (weighted) Kolmogorov-Smirnov (K-S) statistic.
 
 $$
 \begin{equation} \label{eq:1}
@@ -144,7 +144,7 @@ $$
 \end{equation}
 $$
 
-Where the indices $$i$$ represents the rank in $$L$$. The $$S^{GSEA}_k$$ is the largest difference in $$F$$ which are the (weighted) empirical cumulative distribution functions.
+Where the indices $$i$$ represents the position or rank in $$L$$. The $$S^{GSEA}_k$$ is the largest difference in $$F$$ which are the (weighted) empirical cumulative distribution functions.
 
 $$
 \begin{equation} \label{eq:2}
@@ -158,11 +158,11 @@ $$
 \end{equation}
 $$
 
-To get a better feel for what these equations for $$F$$ mean, we briefly digress on the consequences of varying the exponent $$\alpha$$.
+To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
 
-#### Case 1: Equal weights
+### Equal weights case: The 'classic' Kolmogorov-Smirnov statistic
 
-If $$\alpha=0$$ then all contributions have equal weight and we do not consider the value of the rank metric $$s$$ in \eqref{eq:2}.
+Consider the simple case when $$\alpha=0$$. Then all contributions from genes in the gene set do not take into account the rank metric $$s$$ in \eqref{eq:2}. In effect, this gives all genes in the gene set equal weight regardless of rank.
 
 $$
 \begin{equation} \label{eq:4}
@@ -170,7 +170,9 @@ $$
 \end{equation}
 $$
 
-In this case, the value of $$F^{G_k}_i$$ is equal to the fraction of genes in the ranked list up to position $$i$$ that are members of the gene set. Under these circumstances, the $$S^{GSEA}_k$$ calculated using \eqref{eq:4} is the classic version of the Kolmogorov-Smirnov (K-S) statistic. It is more common to represent this as an empirical cumulative distribution function of an order statistic $$X$$. Without loss of generality, define the order statistics as the rank metrics in *increasing order*, that is, $$X_{(1)}=s_n \leq X_{(2)}=s_{n-1} \leq \cdots \leq X_{(n)}=s_{1}$$. For ease of notation, we drop the subscript bracket.
+Under these circumstances, the $$S^{GSEA}_k$$ calculated using \eqref{eq:4} is the 'classic' version of the Kolmogorov-Smirnov (K-S) statistic. It is more common to represent $$F$$ as an empirical cumulative distribution function (ecdf) of an order statistic ($$X_{(\cdot)}$$). Without loss of generality, define the order statistic as the rank or index of each gene in $$L$$ that is, $$X_{(1)}=1, X_{(2)}=2, \cdots, X_{(i)}=i, \cdots, X_{(n)}=n$$. For ease of notation, we drop the subscript brackets.
+
+Using the order statistic notation, equation \eqref{eq:4} describing the contribution of genes within the gene set can be expressed as
 
 $$
 \begin{equation} \label{eq:5}
@@ -178,7 +180,7 @@ $$
 \end{equation}
 $$
 
-In the same way, we can express \eqref{eq:3} for the genes not in the gene set.
+In the same way, we can express equation \eqref{eq:3} for the genes outside the gene set as
 
 $$
 \begin{equation} \label{eq:6}
@@ -186,28 +188,90 @@ $$
 \end{equation}
 $$
 
-Typically we can better appreciate these function when plotted, such as in Figure 3.
+Another way to represent the running sum is to plot $$\hat{F}_n^{G_k}(x)$$ and $$\hat{F}_n^{\bar{G}_k}(x)$$ separately on the same axes, such as in Figure 3.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Empirical cumulative distribution functions.</strong> This is created using hypothetical data for genes within and outide of the gene set.
+  <strong>Figure 3. Empirical cumulative distribution functions.</strong> (Above) A hypothetical ordered gene list where each line represents a gene in the gene set (red) or not (blue). (Below) Empirical cumulative distribution functions for the genes in the gene set (red) and those outside the gene set (blue). The maximum deviation between ecdfs is the dotted green line.  
 </div>
 
-**Case 2: $$\alpha=2.$$** This the recommendation by Subramanian *et al.* (Subramanian 2005) and the default state for GSEA. When $$p=1$$, we are weighting the genes by their rank metric normalized by the sum of the metrics over all genes in $$G_kS$$.
+Upon close inspection, it is simple to relate the running sum (bottom Figure 2) with the ecdfs (Figure 3): Increases in the running sum correspond to increments in the ecdf of genes within the gene set (Figure 3, red) and likewise, decreases in the running sum correspond to increments in the ecdf for genes outside (Figure 3, blue). Then, the enrichment score - the largest deviation in the running sum - corresponds to the largest vertical distance between ecdf plots (Figure 3, dotted green).
+
+We are now ready to handle the most important question that gets to the very validity of GSEA: *When is the $$S^{GSEA}_k$$ 'significant'?*.
+
+### The Kolmogorov-Smirnov goodness-of-fit test
+
+We have learned that the $$S^{GSEA}$$ can be represented as the biggest distance between component ecdfs $$\hat{F}_n^{G_k}(x)$$ and $$\hat{F}_n^{\bar{G}_k}(x)$$ (Figure 3). To ask whether a given $$S^{GSEA}$$ is significant is equivalent to asking whether the component ecdfs represent different 'samples' of the same cdf and whether their differences are attributable to minor sampling errors. For didactic purposes, we'll first present a simpler case, where we set up a K-S goodness-of-fit test between a single empirical cdf derived from a sample and a specified cdf. We will also define concepts mentioned already in a more rigorous fashion.
+
+#### K-S test for a single sample
+
+Suppose we have an independent and identically distributed sample $$X_{1}, \ldots, X_{n}$$ with some unknown cdf $$\mathbb{P}$$ and we wish to test whether it is equal to a specified cdf $$\mathbb{P_0}$$. The null hypothesis is
+
+$$
+\begin{equation*}
+  H_0 :  \mathbb{P} = \mathbb{P_0}
+\end{equation*}
+$$
+
+A common situation is that we have a sample and want to know whether it comes from a normal distribution, that is $$\mathbb{P_0} = N(\mu, \sigma^2)$$.
+
+Concretely, define the empirical cumulative distribution function (ecdf) that is generated from the data.
+
+$$
+\begin{equation} \label{eq:7}
+  \hat{F}_n(x) = \sum\limits_{t=1}^{n} \mathbb{1}_{\{X_t \leq x\}}
+\end{equation}
+$$
+
+Then the K-S goodness-of-fit test proceeds by assuming that the ecdf in equation \eqref{eq:7} is an estimate of a specified cdf $$F(x)$$.
+
+**Definition** The **Kolmogorov-Smirnov statistic $$D_n$$** is the distance between two functions.
+
+$$
+\begin{equation} \label{eq:8}
+  D_n = \sup_{x} \left|\hat{F}_n(x)-F(x)\right|
+\end{equation}
+$$
+
+So given the null hypothesis that the ecdf is a sample from the specified cdf, we want to know how the $$D_n$$ behaves. In other words, if we calculate a value of $$D_n$$ then we wish to know if it is a discrepancy that is worthy of further investigation. It turns out that there is an analytic solution to this question, that is, there is an equation for the probability distribution of $$D_n$$ so that we can derive a p-value under our null hypothesis. To get to this point, we'll need a few theorems, which we present without proof.
+
+**Theorem 1** The **Glivenko-Cantelli** theorem:
+
+$$
+\begin{equation} \label{eq:9}
+  D_n \xrightarrow[]{a.s.} 0 \text{ as }  n \rightarrow \infty
+\end{equation}
+$$
+
+The significance of this theorem is subtle: The sample points we use to construct our ecdf as well as all those points in between converge to the specified cdf for large $$n$$. This is also termed 'uniform convergence'.
+
+**Theorem 2** The **distribution-free property** states that the distribution of $$D_n$$ is the same for all continuous underlying distribution functions $$F$$.
+
+The distribution-free property is a key aspect of the K-S test and pretty powerful result. It says that regardless of whether the $$F$$ is normal, uniform, gamma or even some completely unknown distribution, they all have the same $$D_n$$ distribution. This is particularly useful because we won't have any idea what the distribution of the ecdfs used to construct our GSEA running sum will be.
+
+The Glivenko-Cantelli and the distribution-free properties are nice, but not very useful in practice. Knowing that an ecdf will converge regardless of the specified cdf is just the start. What we really want to know is *how* the convergence happens, that is, how $$D_n$$ is distributed. This leads us right into the next theorem.
+
+**Theorem 3** Define $$H(x)$$ as the Kolmogorov-Smirnov distribution then,
+
+$$
+\begin{equation} \label{eq:10}  
+  P(\sqrt{n} D_n \gt x) \rightarrow H(x) = 2 \sum\limits_{k=1}^{\infty} (-1)^{k+1}\exp^{-2k^2x^2}
+\end{equation}
+$$
+
+Theorem 3 is the culmination of an extensive body of knowledge surrounding empirical process theory that, in simple terms, describes the distribution of random walks between two fixed endpoints and bounds (i.e. the interval $$[0,1]$$ as these are the cdf bounds) otherwise known as a 'Brownian Bridge'.
+
+The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$.  
+
+#### K-S test for two samples
+
+What about the situation more relevant to the $$S^{GSEA}$$ where we have to ecdfs and we wish to determine whether they are generated by sampling the same underlying distribution?
+
 
 ## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
 
-The approach can be framed in hypothesis testing language: GSEA gathers evidence to support or cast doubt upon a null hypothesis of **random rank ordering of genes** in a given comparison with respect to sample categorization.
-
-> *GSEA gathers evidence to support or cast doubt upon a null hypothesis of random rank ordering of genes in a given comparison with respect to sample categorization.*
-
-- When permuting class labels, is GSEA doing any normalization? Is this why we use pre-ranked lists?
 
 ## <a href="#multipleTesting" name="multipleTesting">VI. Multiple testing correction</a>
-
-The ES are normalized to account for the number of genes in the candidate set (G) to yield a normalized enrichment score (NES).
-
-The false discovery rate is then calculated empirically from the tails of the observed and null distribution (Noble 2009).
 
 
 ## <a href="#references" name="references">VII. References</a>
