@@ -1,0 +1,12 @@
+---
+title: Analysis
+subtitle: Guide to recommended software analysis tools
+layout: panelista
+---
+
+{% if site.analysis %}
+{% assign docs = (site.analysis | sort: 'date' | reverse) %}  
+  <div class="dataset">
+    {% include archive_list.html %}
+  </div>
+{% endif %}

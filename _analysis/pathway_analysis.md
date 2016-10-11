@@ -5,6 +5,10 @@ layout: page
 draft: true
 ---
 
+
+see Kelder et al (20824171)
+
+
 ## <a href="#modularBiology" name="modularBiology">Modular biology</a>
 
 Often, it is desirable to explore the molecular mechanisms underlying a phenotype. However, biological systems are fraught with complexity, obscuring any simple and intuitive understanding of how any particular gene or protein may contribute to an observable biological outcome for all but the most trivial of cases. The availability of high-throughput data have only added urgency to the need for an integrated conceptual framework with which to reason about the relationship between the concentration, location and state of molecules and higher-level phenomena.
@@ -51,4 +55,4 @@ There are two broad classes of pathway analysis tools.The first category, termed
 
 
 ## <a href="#references" name="references">III. References</a>
-<!-- <div class="panel_group" data-inline="20008397,24766803,10591225"></div> -->
+<div class="panel_group" data-inline="20824171,20008397,24766803,10591225"></div>

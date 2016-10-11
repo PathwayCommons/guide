@@ -85,56 +85,56 @@ Criticisms concerning the original methodology (Damian 2004) were considered in 
 ## <a href="#localStatistic" name="localStatistic">III. Local statistic</a>
 
 <div class="alert alert-danger text-justify" role="alert">
-  <strong>Caution!</strong> Our procedure for analyzing differential expression data using GSEA diverges from that detailed by Subramanian <em>et al.</em> (Subramanian 2005) with respect to the calculation of local statistics.
+  <strong>Caution!</strong> Our procedure for GSEA diverges significantly from  Subramanian <em>et al.</em> (Subramanian 2005) with regards to calculation of local statistics.
 </div>
 
 In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a 'rank metric'. Previously, we described how to [obtain and process RNA-seq datasets]({{site.baseurl}}/datasets/archive/) into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 1).
 
-> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed when given no inter-group difference*
+> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference*
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> Shown is a pairwise comparison of gene expression for samples (m total). RNA levels for each of gene are determined (n total). Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic called the rank metric (s). A gene list (L) is ordered according to rank.
+  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> A pairwise comparison of gene expression for m total samples is depicted. RNA levels for each of n genes is determined. Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic denoted the GSEA rank metric (s). A gene list (L) is ordered according to rank.
 </div>
 
-The rank metric in our case is a simple function of the p-value ($$P$$)
+The rank metric in our case is the product of the sign of the 'direction' in the expression change (i.e. 'up-regulation' is positive and 'down-regulation' is negative) and the p-value ($$P$$).
 
 $$
   \begin{equation*}
-    s_i=s(P_i) = sign(\text{Log fold change gene }i)\cdot -log_{10}(P_i)
+    s_i=s(P_i) = sign(\text{fold change gene }i)\cdot -log_{10}(P_i)
   \end{equation*}
 $$
 
 Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list and down-regulated genes with small p-values at the bottom. If you have followed the instructions we provided for RNA-seq datasets to generate a ranked list then you have already calculated the rank metric. To make the following discussion more concise, we summarize the relevant notation, adapted from Tamayo *et al.* (Tamayo 2016).
 
-- {:.list-unstyled} **Notation for local statistic**
-  - {:.list-unstyled} Number of biological samples: $$m$$
-  - {:.list-unstyled} Number of genes: $$n$$
-  - {:.list-unstyled} P-value: $$P$$
-  - {:.list-unstyled} Local statistic or rank metric: $$s_i$$
-  - {:.list-unstyled} Ranked gene list: $$L$$
-
-
 ## <a href="#globalStatistic" name="globalStatistic">IV. Global statistic</a>
 
-The global statistic is at the very heart of GSEA and the rather simple calculation belies a profound statistical basis to test each candidate gene set. We begin by describing the GSEA 'enrichment score' which measures how enriched our ranked gene list is for members of a given candidate gene set or pathway. For the more curious, we provide a more technical description of the statistical theory upon which the enrichment score is based.
+The global statistic is at the very heart of GSEA and the rather simple algorithm used to calculate it belies a rather profound statistical method to judge each candidate gene set. We begin by describing the GSEA 'enrichment score' which measures how enriched our ranked gene list is for members of a given candidate pathway. For the more curious, we provide a technical description of the statistical basis upon which the score rests.
 
-### Non-technical description: A sample calculation
+### Non-technical: A sample calculation
 
-Let us set aside the theoretical details for a moment to see how the GSEA software calculates an enrichment score. Let's pick up the process shown in Figure 1 after having ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway candidate gene set (Figure 2).
+Let us set aside the theoretical details for a moment to see how GSEA calculates the enrichment score for a given pathway. Let's pick up the process following Figure 1 where we have a list of ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the largest value of the running sum at any point along the list.
+  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the maximum value of the sum at any point in the list. Although not shown, the running sum may deviate in the negative direction, hence, S is actually the largest absolute value of the running sum.
 </div>
 
 GSEA considers candidate gene sets one at a time. To calculate the enrichment score, GSEA starts at the top of the ranked gene list. If a gene is a member of the candidate gene set then it adds to a running sum, otherwise, it subtracts. This process is repeated for each gene in the ranked list and the enrichment score for that gene set is equal to the largest absolute value that the running sum achieved.
 
-One aspect of this algorithm we side-stepped is the value that gets added or subtracted. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum over all genes would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that is used to determines if the enrichment score is statistically significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather technical and we reserve this for those more curious in the following section.
+One aspect of this algorithm we side-stepped is the value that gets added or subtracted. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum over all genes would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that is used to determines if the enrichment score is statistically significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather technical and we reserve this for those more mathematically inclined in the following section.
 
-### Technical description: The enrichment score
+### Technical: The enrichment score
 
-Consider a single gene set $$G_k$$ indexed by $$k$$ out of $$K$$ total gene sets. The set consists of a list of $$n_k$$ gene names ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$.
+Consider a single gene set $$G_k$$ indexed by $$k$$. The gene set consists of a list of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$. We summarize the relevant notation up to this point
+
+- {:.list-unstyled} **Notation**
+  - {:.list-unstyled} Number of genes: $$n$$  
+  - {:.list-unstyled} Gene rank metric: $$s$$
+  - {:.list-unstyled} Ranked gene list: $$L$$
+  - {:.list-unstyled} Gene set: $$G_k$$ where $$k=1,\ldots,K$$    
+  - {:.list-unstyled} Genes in gene set: $$G_k=\{g_{kj}: j=1,\ldots,n_k\}$$    
+  - {:.list-unstyled} Genes not in gene set: $$\bar{G}_k=\{\bar{g}_{kj}: j=1,\ldots,n-n_k\}$$    
 
 Define the enrichment score for a given gene set as $$S^{GSEA}_k$$ which is the (weighted) Kolmogorov-Smirnov (K-S) statistic.
 
@@ -148,7 +148,7 @@ Where the indices $$i$$ represents the position or rank in $$L$$. The $$S^{GSEA}
 
 $$
 \begin{equation} \label{eq:2}
-    F^{G_k}_i = \frac{\sum\limits_{t=1}^i |s_t|^p \cdot \mathbb{1}_{\{gene_t \in G_k\}}}{\sum\limits_{t=1}^n |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}  
+    F^{G_k}_i = \frac{\sum\limits_{t=1}^i |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}{\sum\limits_{t=1}^n |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}  
 \end{equation}
 $$
 
@@ -162,7 +162,7 @@ To get a better feel for what these equations mean, let's see what happens when 
 
 ### Equal weights case: The 'classic' Kolmogorov-Smirnov statistic
 
-Consider the simple case when $$\alpha=0$$. Then all contributions from genes in the gene set do not take into account the rank metric $$s$$ in \eqref{eq:2}. In effect, this gives all genes in the gene set equal weight regardless of rank.
+Consider the simple case when $$\alpha=0$$. Then all contributions from genes in the gene set do not take into account the rank metric $$s$$ in \eqref{eq:2}. In effect, this gives all genes equal weight.
 
 $$
 \begin{equation} \label{eq:4}
@@ -188,7 +188,7 @@ $$
 \end{equation}
 $$
 
-Another way to represent the running sum is to plot $$\hat{F}_n^{G_k}(x)$$ and $$\hat{F}_n^{\bar{G}_k}(x)$$ separately on the same axes, such as in Figure 3.
+Rather than plotting a single running sum (Figure 2) we can plot its constituent $$\hat{F}_n^{G_k}(x)$$ and $$\hat{F}_n^{\bar{G}_k}(x)$$ on the same axes, such as in Figure 3.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -201,9 +201,9 @@ We are now ready to handle the most important question that gets to the very val
 
 ### The Kolmogorov-Smirnov goodness-of-fit test
 
-We have learned that the $$S^{GSEA}$$ can be represented as the biggest distance between component ecdfs $$\hat{F}_n^{G_k}(x)$$ and $$\hat{F}_n^{\bar{G}_k}(x)$$ (Figure 3). To ask whether a given $$S^{GSEA}$$ is significant is equivalent to asking whether the component ecdfs represent different 'samples' of the same cdf and whether their differences are attributable to minor sampling errors. For didactic purposes, we'll first present a simpler case, where we set up a K-S goodness-of-fit test between a single empirical cdf derived from a sample and a specified cdf. We will also define concepts mentioned already in a more rigorous fashion.
+We have learned that the $$S^{GSEA}$$ can be represented as the biggest distance between component ecdfs (Figure 3). To ask whether a given $$S^{GSEA}$$ is significant is equivalent to asking whether the component ecdfs represent different 'samples' of the same cdf and whether their differences are attributable to minor sampling errors. For didactic purposes, we'll first present a simpler case, where we set up a K-S goodness-of-fit test between a single empirical cdf derived from a sample and a theoretical 'specified' cdf. We will also define concepts mentioned already in a more rigorous fashion.
 
-#### K-S test for a single sample
+#### One sample K-S goodness-of-fit test
 
 Suppose we have an independent and identically distributed sample $$X_{1}, \ldots, X_{n}$$ with some unknown cdf $$\mathbb{P}$$ and we wish to test whether it is equal to a specified cdf $$\mathbb{P_0}$$. The null hypothesis is
 
@@ -243,13 +243,13 @@ $$
 \end{equation}
 $$
 
-The significance of this theorem is subtle: The sample points we use to construct our ecdf as well as all those points in between converge to the specified cdf for large $$n$$. This is also termed 'uniform convergence'.
+The significance of this theorem is subtle: The sample points we use to construct our ecdf along with *all those points in between* converge to the specified cdf for large $$n$$. This is also termed 'uniform convergence'.
 
 **Theorem 2** The **distribution-free property** states that the distribution of $$D_n$$ is the same for all continuous underlying distribution functions $$F$$.
 
 The distribution-free property is a key aspect of the K-S test and pretty powerful result. It says that regardless of whether the $$F$$ is normal, uniform, gamma or even some completely unknown distribution, they all have the same $$D_n$$ distribution. This is particularly useful because we won't have any idea what the distribution of the ecdfs used to construct our GSEA running sum will be.
 
-The Glivenko-Cantelli and the distribution-free properties are nice, but not very useful in practice. Knowing that an ecdf will converge regardless of the specified cdf is just the start. What we really want to know is *how* the convergence happens, that is, how $$D_n$$ is distributed. This leads us right into the next theorem.
+The Glivenko-Cantelli and the distribution-free properties are nice, but not very useful in practice. Knowing that an ecdf will converge regardless of the form of the distribution is just the start. What we really want to know is *how* the convergence happens, that is, how $$D_n$$ is distributed. This leads us right into the next theorem.
 
 **Theorem 3** Define $$H(x)$$ as the Kolmogorov-Smirnov distribution then,
 
@@ -263,9 +263,28 @@ Theorem 3 is the culmination of an extensive body of knowledge surrounding empir
 
 The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$.  
 
-#### K-S test for two samples
+#### Two sample K-S goodness-of-fit test
 
-What about the situation more relevant to the $$S^{GSEA}$$ where we have to ecdfs and we wish to determine whether they are generated by sampling the same underlying distribution?
+Let us return to the context that is more relevant to GSEA where we compare two ecdfs representing the distribution of genes within and outside the gene set.
+
+The setup is much that same. Suppose we have a sample $$X_1,\ldots,X_{a}$$ with cdf $$F^{G_k}(x)$$ and a second sample $$Y_1,\ldots,Y_{b}$$ with cdf $$F^{\bar{G}_k}(x)$$ then we wish to test the null hypothesis
+
+$$
+\begin{equation*}
+  H_0 :  F^{G_k} = F^{\bar{G}_k}
+\end{equation*}
+$$
+
+The corresponding ecdfs are $$\hat{F}_a^{G_k}$$ and $$\hat{F}_b^{\bar{G}_k}$$as before and the K-S statistic is
+
+$$
+\begin{equation} \label{eq:11}
+  D_{ab} = \left(\frac{ab}{a+b}\right)^{1/2}
+    \sup_{x} \left|\hat{F}^{G_k}_a(x)-\hat{F}^{\bar{G}_k}_b(x)\right|
+\end{equation}
+$$
+
+and the rest is the same.
 
 
 ## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>

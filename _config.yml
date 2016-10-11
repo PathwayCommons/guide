@@ -46,7 +46,6 @@ collections:
   case_studies:
     output: true
     permalink: /case_studies/:path/
-    layout: document
     index: /case_studies/archive/
     description: Deep-dive into pathway analysis
     icon: index/case_study.png
@@ -54,7 +53,6 @@ collections:
   reading_list:
     output: true
     permalink: /reading_list/:path/
-    layout: reading_list
     index: /reading_list/archive/
     description: Curated article sets
     icon: index/reading_list.png
@@ -62,7 +60,6 @@ collections:
   datasets:
     output: true
     permalink: /datasets/:path/
-    layout: datasets
     index: /datasets/archive/
     description: Datasets
     icon: index/datasets.png
@@ -70,7 +67,6 @@ collections:
   communications:
     output: true
     permalink: /communications/:path/
-    layout: page
     index: /communications/archive/
     description: Communications
     icon: index/documents.png
@@ -78,15 +74,13 @@ collections:
   primers:
     output: true
     permalink: /primers/:path/
-    layout: primers
     index: /primers/archive/
     description: Primers
     icon: index/primers.png
 
-  tools:
+  analysis:
     output: true
-    permalink: /tools/:path/
-    layout: tools
-    index: /tools/archive/
-    description: Tools
-    icon: index/tools.png
+    permalink: /analysis/:path/
+    index: /analysis/archive/
+    description: Analysis
+    icon: index/analysis.png
