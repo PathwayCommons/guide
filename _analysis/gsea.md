@@ -158,7 +158,7 @@ $$
 \end{equation}
 $$
 
-To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
+We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
 
 ### Equal weights case: The 'classic' Kolmogorov-Smirnov statistic
 
@@ -199,7 +199,7 @@ Upon close inspection, it is simple to relate the running sum (bottom Figure 2) 
 
 We are now ready to handle the most important question that gets to the very validity of GSEA: *When is the $$S^{GSEA}_k$$ 'significant'?*.
 
-### The Kolmogorov-Smirnov goodness-of-fit test
+#### The Kolmogorov-Smirnov goodness-of-fit test
 
 We have learned that the $$S^{GSEA}$$ can be represented as the biggest distance between component ecdfs (Figure 3). To ask whether a given $$S^{GSEA}$$ is significant is equivalent to asking whether the component ecdfs represent different 'samples' of the same cdf and whether their differences are attributable to minor sampling errors. For didactic purposes, we'll first present a simpler case, where we set up a K-S goodness-of-fit test between a single empirical cdf derived from a sample and a theoretical 'specified' cdf. We will also define concepts mentioned already in a more rigorous fashion.
 
@@ -251,17 +251,17 @@ The distribution-free property is a key aspect of the K-S test and pretty powerf
 
 The Glivenko-Cantelli and the distribution-free properties are nice, but not very useful in practice. Knowing that an ecdf will converge regardless of the form of the distribution is just the start. What we really want to know is *how* the convergence happens, that is, how $$D_n$$ is distributed. This leads us right into the next theorem.
 
-**Theorem 3** Define $$H(x)$$ as the Kolmogorov-Smirnov distribution then,
+**Theorem 3** Define $$K(x)$$ as the Kolmogorov-Smirnov distribution then,
 
 $$
 \begin{equation} \label{eq:10}  
-  P(\sqrt{n} D_n \gt x) \rightarrow H(x) = 2 \sum\limits_{k=1}^{\infty} (-1)^{k+1}\exp^{-2k^2x^2}
+  P(\sqrt{n} D_n \leq x) \rightarrow K(x) = \sum\limits_{k=-\infty}^{\infty} (-1)^{k}\exp(-2k^2x^2)
 \end{equation}
 $$
 
 Theorem 3 is the culmination of an extensive body of knowledge surrounding empirical process theory that, in simple terms, describes the distribution of random walks between two fixed endpoints and bounds (i.e. the interval $$[0,1]$$ as these are the cdf bounds) otherwise known as a 'Brownian Bridge'.
 
-The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$.  
+The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$. One small detail that we will discuss in greater detail below stems from the previous observation that the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normailzed prior to calculating the p-values.  
 
 #### Two sample K-S goodness-of-fit test
 
@@ -285,6 +285,40 @@ $$
 $$
 
 and the rest is the same.
+
+### Unequal weights case: Increasing the sensitivity
+
+Consider the default case when $$\alpha=1$$. Then the global statistic is weighted by the value of the rank metric $$s$$ in \eqref{eq:2}. This effectively renders the enrichment score more sensitive to genes at the top and bottom of the gene list $$L$$ compared to the classic K-S case.
+
+The choice to depart from the classic K-S statistic was two-fold. First, Subramanian *et al.* noticed an unwanted sensitivity of the enrichment score to genes in the middle of the list.
+
+> *In the original implementation, the running sum statistic used equal weights at every stop, which yielded high scores for the sets clustered near the middle of the ranked list...These sets do not represent biologically relevant correlation with the phenotype.*
+
+Second, the authors were unsatisfied with the observation that the unweighted method was insensitive to well-known gene expression responses, in particular, the p53 transcriptional program in wild-type cells.
+
+> *In the examples described in the text, and in many other examples not reported, we found that p = 1 (weighting by the correlation) is a very reasonable choice that allows significant genes with less than perfect coherence, i.e. only a subset of genes in the set are coordinately expressed, to score well.*
+
+#### Trade-offs
+
+While weighting the enrichment score calculation with the rank metric can increase the power of the approach to detect valid gene sets, it does have several consequences.
+
+One important trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the bootstrap procedure for deriving the null distribution discussed in the following section [Significance Testing](#significanceTesting).
+
+Another important point to reiterate is that an enrichment score is a function of both the length of the gene list $$n$$ along with the size of the gene set $$n_k$$. This means that enrichment scores must be normalized for gene set size. In the unweighted case, an analytic expression for the normalization factor can be estimate but when terms are weighted, this is no longer the case and once again, we defer to bootstrap measures to derive it.  
+
+The above discussion leads us into the next section on how GSEA uses bootstrapping procedures to derive the null distribution for candidate gene sets.  
+
+## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
+
+Why bootstrap? A consequence of the weighted approach is that there is no longer a reasonable analytic solution to the distribution.
+
+### Normalized enrichment score: Accounting for gene set size
+
+It is clear from equations \eqref{eq:2} and \eqref{eq:3} that the global statistic $$S_k^{GSEA}$$ shown in equation \eqref{eq:1} depends on gene set size. Thus, in both the unweighted and weighted cases, enrichment scores will not be identically distributed. The most important practical consequence of this is that they cannot be directly compared to the same null distribution thus precluding the derivation of a p-value for any given candidate gene set.
+
+The solution to this problem is to normalize the enrichment scores, that is, find some scaling factor that results in fair and comparable values. In this case, Subramanian *et al.* suggested that scores should be simply divided by the mean   
+
+Also Positive and negative are separate why?
 
 
 ## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
