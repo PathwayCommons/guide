@@ -13,6 +13,7 @@ figures:
   figure_1: figure_gsea_local.png
   figure_2: figure_gsea_global.png
   figure_3: figure_gsea_ks.png
+  figure_4: figure_gsea_null.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -109,11 +110,9 @@ Under this rank metric, up-regulated genes with relatively small p-values appear
 
 ## <a href="#globalStatistic" name="globalStatistic">IV. Global statistic</a>
 
-The global statistic is at the very heart of GSEA and the rather simple algorithm used to calculate it belies a rather profound statistical method to judge each candidate gene set. We begin by describing the GSEA 'enrichment score' which measures how enriched our ranked gene list is for members of a given candidate pathway. For the more curious, we provide a technical description of the statistical basis upon which the score rests.
+The global statistic is at the very heart of GSEA and the rather simple algorithm used to calculate it belies a rather profound statistical method to judge each candidate gene set. We will set aside the technical details for a moment to see how GSEA calculates the enrichment score for a given pathway.
 
-### Non-technical: A sample calculation
-
-Let us set aside the theoretical details for a moment to see how GSEA calculates the enrichment score for a given pathway. Let's pick up the process following Figure 1 where we have a list of ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway (Figure 2).
+Let's pick up the process following Figure 1 where we have a list of ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -124,7 +123,7 @@ GSEA considers candidate gene sets one at a time. To calculate the enrichment sc
 
 One aspect of this algorithm we side-stepped is the value that gets added or subtracted. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum over all genes would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the [Kolmogorov-Smirnov (K-S) statistic](//TODO) that is used to determines if the enrichment score is statistically significant. The updated procedure described by Subramanian *et al* (Subramanian 2005) uses a 'weighted' version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather technical and we reserve this for those more mathematically inclined in the following section.
 
-### Technical: The enrichment score
+### The enrichment score
 
 Consider a single gene set $$G_k$$ indexed by $$k$$. The gene set consists of a list of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$. We summarize the relevant notation up to this point
 
@@ -160,7 +159,7 @@ $$
 
 We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
 
-### Equal weights case: The 'classic' Kolmogorov-Smirnov statistic
+### Equal weights: The 'classic' Kolmogorov-Smirnov statistic
 
 Consider the simple case when $$\alpha=0$$. Then all contributions from genes in the gene set do not take into account the rank metric $$s$$ in \eqref{eq:2}. In effect, this gives all genes equal weight.
 
@@ -261,13 +260,13 @@ $$
 
 Theorem 3 is the culmination of an extensive body of knowledge surrounding empirical process theory that, in simple terms, describes the distribution of random walks between two fixed endpoints and bounds (i.e. the interval $$[0,1]$$ as these are the cdf bounds) otherwise known as a 'Brownian Bridge'.
 
-The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$. One small detail that we will discuss in greater detail below stems from the previous observation that the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normailzed prior to calculating the p-values.  
+The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$.
+
+Recall that by definition, the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normalized prior to calculating the p-values. We reserve this discussion for the next section we when broach the topic of [Null distributions](#nullDistributions).
 
 #### Two sample K-S goodness-of-fit test
 
-Let us return to the context that is more relevant to GSEA where we compare two ecdfs representing the distribution of genes within and outside the gene set.
-
-The setup is much that same. Suppose we have a sample $$X_1,\ldots,X_{a}$$ with cdf $$F^{G_k}(x)$$ and a second sample $$Y_1,\ldots,Y_{b}$$ with cdf $$F^{\bar{G}_k}(x)$$ then we wish to test the null hypothesis
+We are now ready to describe the setup that occurs in GSEA where we compare ecdfs representing the distribution of genes within and outside the gene set. Suppose we have a sample $$X_1,\ldots,X_{a}$$ with cdf $$F^{G_k}(x)$$ and a second sample $$Y_1,\ldots,Y_{b}$$ with cdf $$F^{\bar{G}_k}(x)$$. GSEA is effectively a test of the null hypothesis
 
 $$
 \begin{equation*}
@@ -286,45 +285,108 @@ $$
 
 and the rest is the same.
 
-### Unequal weights case: Increasing the sensitivity
+### Unequal weights: Boosting sensitivity
 
-Consider the default case when $$\alpha=1$$. Then the global statistic is weighted by the value of the rank metric $$s$$ in \eqref{eq:2}. This effectively renders the enrichment score more sensitive to genes at the top and bottom of the gene list $$L$$ compared to the classic K-S case.
+Consider the case when $$\alpha=1$$ which is the recommended setting in GSEA. Then the global statistic is weighted by the value of the rank metric $$s$$ in \eqref{eq:2}. Effectively, this renders the enrichment score more sensitive to genes at the top and bottom of the gene list $$L$$ compared to the classic K-S case.
 
 The choice to depart from the classic K-S statistic was two-fold. First, Subramanian *et al.* noticed an unwanted sensitivity of the enrichment score to genes in the middle of the list.
 
 > *In the original implementation, the running sum statistic used equal weights at every stop, which yielded high scores for the sets clustered near the middle of the ranked list...These sets do not represent biologically relevant correlation with the phenotype.*
 
-Second, the authors were unsatisfied with the observation that the unweighted method was insensitive to well-known gene expression responses, in particular, the p53 transcriptional program in wild-type cells.
+Second, the authors were unsatisfied with the observation that the unweighted method failed to identify well-known gene expression responses, in particular, the p53 transcriptional program in wild-type cells.
 
 > *In the examples described in the text, and in many other examples not reported, we found that p = 1 (weighting by the correlation) is a very reasonable choice that allows significant genes with less than perfect coherence, i.e. only a subset of genes in the set are coordinately expressed, to score well.*
 
 #### Trade-offs
 
-While weighting the enrichment score calculation with the rank metric can increase the power of the approach to detect valid gene sets, it does have several consequences.
+While weighting the enrichment score calculation with the rank metric can increase the power of the approach to detect valid gene sets, it does have several consequences that must be kept in mind.
 
-One important trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the bootstrap procedure for deriving the null distribution discussed in the following section [Significance Testing](#significanceTesting).
+Recall that the enrichment score is a function of the size of the gene set $$n_k$$. This means that enrichment scores must be normalized for gene set size. In the unweighted case, an analytic expression for the normalization factor can be estimate but when terms are weighted, this is no longer the case and once again, we defer to bootstrap measures to derive it.  
 
-Another important point to reiterate is that an enrichment score is a function of both the length of the gene list $$n$$ along with the size of the gene set $$n_k$$. This means that enrichment scores must be normalized for gene set size. In the unweighted case, an analytic expression for the normalization factor can be estimate but when terms are weighted, this is no longer the case and once again, we defer to bootstrap measures to derive it.  
+Another trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the empirical bootstrap procedure for deriving the null distribution discussed in the following section concerning [Significance Testing](#significanceTesting).
 
-The above discussion leads us into the next section on how GSEA uses bootstrapping procedures to derive the null distribution for candidate gene sets.  
+The above discussion motivates the next section on how GSEA generates null distributions for candidate gene set enrichment scores.  
 
-## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
+## <a href="#nullDistributions" name="nullDistributions">V. Null distributions</a>
 
-Why bootstrap? A consequence of the weighted approach is that there is no longer a reasonable analytic solution to the distribution.
+<div class="alert alert-danger text-justify" role="alert">
+  <strong>Caution!</strong> The procedure for deriving null distributions described here is not the same as that described by Subramanian <em>et al.</em> (Subramanian 2005).
+</div>
+
+Up to this point, the GSEA approach will use the set of rank metrics for a gene list to calculate an enrichment score for each candidate gene set that we supply (Figure 2). Let us keep in mind the overarching goal which is to provide some explicit indication of whether an gene set is enriched. In hypothesis testing language, we wish to determine the statistical significance of each calculated global statistic and we accomplish this by deriving a p-value $$P$$ representing the probability of observing a given enrichment score or anything more extreme.
+
+Two obstacles stand in our way of establishing our statistical significance criteria.
+
+1. The enrichment score is a function of gene set size
+  - If gene set sizes $$n_k$$ are different, the enrichment scores $$S_k^{GSEA}$$ are not identically distributed. Consequently, we must find a way to compare different $$S_k^{GSEA}$$ values.
+2. There is not analytic description of the null distribution of the weighted enrichment score
+  - When $$\alpha>0$$ we weight the enrichment score $$S_k^{GSEA}$$ with the local statistic $$s$$. This is no longer the classic Kolmogorov-Smirnov statistic and hence the values deviate from the K-S distribution
+
+GSEA employs empirical or 'resampling' methods to find away around both of these problems.
 
 ### Normalized enrichment score: Accounting for gene set size
 
-It is clear from equations \eqref{eq:2} and \eqref{eq:3} that the global statistic $$S_k^{GSEA}$$ shown in equation \eqref{eq:1} depends on gene set size. Thus, in both the unweighted and weighted cases, enrichment scores will not be identically distributed. The most important practical consequence of this is that they cannot be directly compared to the same null distribution thus precluding the derivation of a p-value for any given candidate gene set.
+It is clear that the global statistic $$S_k^{GSEA}$$ depends on gene set size (equations \eqref{eq:1} - \eqref{eq:3}). Consequently, unless we are dealing with gene sets of equal sizes, the enrichment scores will not be identically distributed and cannot be directly compared with a single null distribution. This precludes the derivation of a p-value for any given candidate gene set.
 
-The solution to this problem is to normalize the enrichment scores, that is, find some scaling factor that results in fair and comparable values. In this case, Subramanian *et al.* suggested that scores should be simply divided by the mean   
+GSEA solves this problem by normalizing the raw enrichment scores $$S_k^{GSEA}$$ such that they lie on a comparable scale. In particular, this normalized enrichment score is the raw enrichment score divided by the expected value (average) of the null distribution for that gene set. There are substantial differences in the way we generate this gene set null distribution compared to Subramanian *et al.*, discussed below.  
 
-Also Positive and negative are separate why?
+#### Phenotype permutation
+
+The SAFE and GSEA publications describe a 'phenotype' permutation approach to sample the null distribution for a given gene set (Figure 4). This amounts to randomly swapping sample labels and recalculating an enrichment score many times over for a given gene set.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Class label permutation.</strong>
+</div>
+
+From an intuitive standpoint, this generates a sample of the enrichment score distribution under the assumption of no particular association between gene rank and phenotype. From a statistical standpoint, the authors claim that this provides a more accurate description of the null model
+
+>*Importantly, the permutation of class labels preserves gene-gene correlations and, thus, provides a more biologically reasonable assessment of significance than would be obtained by permuting genes.*
+
+Then the relevant normalized enrichment score $$\zeta_k^{GSEA}$$ is the raw score divided by the mean of the class label permutation values
+
+$$
+\begin{equation} \label{eq:12}
+  \zeta_k^{GSEA} = \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA}]}
+\end{equation}
+$$
+
+where $$S_{k,\boldsymbol{\pi(k)}}^{GSEA} = \{S_{k,\pi_p}^{GSEA}: p=1,\ldots,N_k \}$$ is the vector of class label permutation enrichment scores and the subscript $$\boldsymbol{\pi(k)}$$ indicates the $$N_k$$ permutations out of a possible $$m!$$ rearrangements. This makes it possible to define a null distribution for the GSEA global statistics assuming a null distribution induced by phenotype permutation,
+
+$$
+\begin{equation*}
+  H_0^{GSEA}: \zeta_1^{GSEA},\zeta_2^{GSEA},\ldots,\zeta_K^{GSEA} \text{ are identically distributed and }  \zeta_k^{GSEA} \sim F_0^{phenotype}
+\end{equation*}
+$$
 
 
-## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
+#### Gene set permutation
+
+The workflow described here uses as input a 'pre-ranked' list of genes are ordered by a function of the p-value for differential expression. In GSEA software this is called the 'GSEAPreranked' approach and using a pre-ranked list precludes phenotype permutation.
+
+Rather, a gene set permutation approach is used to generate the null distribution. For each gene set $$G_k$$ of size $$n_k$$, the same number genes are randomly selected from the ranked list $$L$$ and the corresponding enrichment score $$S^{GSEA}_{k,{\pi_p}}$$ is calculated. This process is repeated $$N_k$$ times to generate the sample null distribution consisting of the vector $$S^{GSEA}_{k,{\boldsymbol{\pi(k)}}}$$. Finally, the normalized enrichment score $$\zeta_k^{GSEA}$$ is calculated as for phenotype permutation. This makes it possible to define a null distribution for the GSEA global statistics assuming a null distribution induced by gene set permutation,
+
+$$
+\begin{equation*}
+  H_0^{GSEA}: \zeta_1^{GSEA},\zeta_2^{GSEA},\ldots,\zeta_K^{GSEA} \text{ are identically distributed and }  \zeta_k^{GSEA} \sim F_0^{gene\_set}
+\end{equation*}
+$$
+
+**Caveat** The GSEA team recommends using phenotype permutation whenever possible. This preserves the correlation structure between the genes in the dataset. Gene set permutation creates random gene sets and so disrupts the gene-gene correlations in the data. Thus, gene set permutation provides a relatively weaker (less stringent) assessment of significance.   
 
 
-## <a href="#multipleTesting" name="multipleTesting">VI. Multiple testing correction</a>
+
+
+## <a href="#significanceTesting" name="significanceTesting">VI. Significance testing</a>
+
+With our understanding of null distributions for gene sets in place, we are now ready to complete our hypothesis testing procedure and answer the question: Which enrichment scores are significant? In practice, this means calculating a p-value.
+
+### Weighting and normalization
+
+This screwy bit about positive and negative distributions comes outta nowhere and is barely justified.
+Lack of symmetry when weighting -- see Supplemental Text.
+
+## <a href="#multipleTesting" name="multipleTesting">VII. Multiple testing correction</a>
 
 
 ## <a href="#references" name="references">VII. References</a>
