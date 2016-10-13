@@ -14,6 +14,8 @@ figures:
   figure_2: figure_gsea_global.png
   figure_3: figure_gsea_ks.png
   figure_4: figure_gsea_null.png
+  figure_5: figure_gsea_bimodalnull.png
+  figure_6: figure_gsea_fdr.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -307,46 +309,103 @@ Another trade-off incurred by departing from the classic K-S statistic is that w
 
 The above discussion motivates the next section on how GSEA generates null distributions for candidate gene set enrichment scores.  
 
-## <a href="#nullDistributions" name="nullDistributions">V. Null distributions</a>
+## <a href="#significanceTesting" name="significanceTesting">V. Significance testing</a>
 
 <div class="alert alert-danger text-justify" role="alert">
   <strong>Caution!</strong> The procedure for deriving null distributions described here is not the same as that described by Subramanian <em>et al.</em> (Subramanian 2005).
 </div>
 
-Up to this point, the GSEA approach will use the set of rank metrics for a gene list to calculate an enrichment score for each candidate gene set that we supply (Figure 2). Let us keep in mind the overarching goal which is to provide some explicit indication of whether an gene set is enriched. In hypothesis testing language, we wish to determine the statistical significance of each calculated global statistic and we accomplish this by deriving a p-value $$P$$ representing the probability of observing a given enrichment score or anything more extreme.
+To recap, GSEA uses the set of rank metrics for a gene list to calculate a set of  enrichment scores for candidate gene sets (Figure 2). The primary issue at this point is which scores are indicative of enrichment? In hypothesis testing jargon, we wish to determine the statistical significance of each global statistic. We accomplish this by deriving a p-value $$P$$ representing the probability of observing a given enrichment score or anything more extreme. To do this, we require some understanding of how statistics are distributed.
 
-Two obstacles stand in our way of establishing our statistical significance criteria.
+### Null distributions
 
-1. The enrichment score is a function of gene set size
-  - If gene set sizes $$n_k$$ are different, the enrichment scores $$S_k^{GSEA}$$ are not identically distributed. Consequently, we must find a way to compare different $$S_k^{GSEA}$$ values.
-2. There is not analytic description of the null distribution of the weighted enrichment score
-  - When $$\alpha>0$$ we weight the enrichment score $$S_k^{GSEA}$$ with the local statistic $$s$$. This is no longer the classic Kolmogorov-Smirnov statistic and hence the values deviate from the K-S distribution
+From our discussion of the [global statistic](#globalStatistic), using a weighted enrichment score leaves us without an analytic description of their null distribution. That is, weighting the enrichment score $$S_k^{GSEA}$$ with the local statistic deviates from the classic Kolmogorov-Smirnov statistic which would typically follow a K-S-like distribution.
 
-GSEA employs empirical or 'resampling' methods to find away around both of these problems.
-
-### Normalized enrichment score: Accounting for gene set size
-
-It is clear that the global statistic $$S_k^{GSEA}$$ depends on gene set size (equations \eqref{eq:1} - \eqref{eq:3}). Consequently, unless we are dealing with gene sets of equal sizes, the enrichment scores will not be identically distributed and cannot be directly compared with a single null distribution. This precludes the derivation of a p-value for any given candidate gene set.
-
-GSEA solves this problem by normalizing the raw enrichment scores $$S_k^{GSEA}$$ such that they lie on a comparable scale. In particular, this normalized enrichment score is the raw enrichment score divided by the expected value (average) of the null distribution for that gene set. There are substantial differences in the way we generate this gene set null distribution compared to Subramanian *et al.*, discussed below.  
-
-#### Phenotype permutation
-
-The SAFE and GSEA publications describe a 'phenotype' permutation approach to sample the null distribution for a given gene set (Figure 4). This amounts to randomly swapping sample labels and recalculating an enrichment score many times over for a given gene set.
+GSEA employs 'resampling' or 'bootstrap' methods to derive an empirical sample of the null distribution for the enrichment scores of each gene set. The GSEA software provides a choice of two flavours of permutation methods that underlie the null distribution calculations (Figure 4).   
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Class label permutation.</strong>
+  <strong>Figure 4. GSEA uses permutation methods to generate null distributions for each gene set.</strong> For the sake of brevity, we depict a schematic of permutation methods for a single gene set. In GSEA, this process is repeated separately for each gene set. <strong>A. </strong>Phenotype permutation. <strong>B.</strong> Gene set permutation. <strong>C.</strong> Calculation of p-values.
 </div>
 
-From an intuitive standpoint, this generates a sample of the enrichment score distribution under the assumption of no particular association between gene rank and phenotype. From a statistical standpoint, the authors claim that this provides a more accurate description of the null model
+#### Phenotype permutation
+
+The SAFE and GSEA publications describe 'phenotype' permutation approach to sample the null distribution (Figure 4A). For a given gene set $$G_k$$, this amounts to randomly swapping sample labels and recalculating a permutation enrichment score $$S^{GSEA}_{k,{\pi_p}}$$. This process is repeated $$N_k$$ times to generate $$S^{GSEA}_{k,{\boldsymbol{\pi(k)}}} = \{S^{GSEA}_{k,{\pi_p}}: p=1,\ldots,N_k\}$$ which is a vector of points sufficient to depict the underlying distribution.
+
+From an intuitive standpoint, this generates a sample of the enrichment score distribution under the assumption of no particular association between gene rank and phenotype. In other words, we get a sense of how widely enrichment scores vary and how often when the two groups are effectively the same.
+
+From a statistical standpoint, the authors claim that this provides a more accurate description of the null model.
 
 >*Importantly, the permutation of class labels preserves gene-gene correlations and, thus, provides a more biologically reasonable assessment of significance than would be obtained by permuting genes.*
+
+Indeed, variations on GSEA that purport to simply the methodology rely on an assumption of gene-gene independence (Irizarry 2009). However, empirical comparisons suggest that ignoring these correlations leads to variance inflation - a wider and flatter null distribution - resulting in a much higher risk of false discovery for gene sets (Tamayo 2016).
+
+#### Gene set permutation
+
+The workflow we recommend uses as input a 'pre-ranked' list of genes are ordered by a function of the p-value for differential expression. In GSEA software this is called 'GSEAPreranked' and precludes phenotype permutation.
+
+Rather, a gene set permutation approach is used to generate the null distribution (Figure 4B). For each gene set $$G_k$$ of size $$n_k$$, the same number genes are randomly selected from the ranked list $$L$$ and the corresponding enrichment score $$S^{GSEA}_{k,{\pi_p}}$$ is calculated. This process is repeated $$N_k$$ times to generate the sample null distribution consisting of the vector $$S^{GSEA}_{k,{\boldsymbol{\pi(k)}}}$$.
+
+The GSEA team recommends using phenotype permutation whenever possible. This preserves the correlation structure between the genes in the dataset. Gene set permutation creates random gene sets and so disrupts the gene-gene correlations in the data. Thus, gene set permutation provides a relatively weaker (less stringent) assessment of significance.   
+
+### P-value calculation
+
+Once an empirical null distribution of values is in hand using either of the permutation methods described above, it is straightforward to calculate the p-value $$P$$ for an enrichment score (Figure 4C). By definition, $$P$$ is the probability of observing a statistic or anything more extreme under the null hypothesis. In practice, we derive an empirical p-value $$P_k$$ by calculating the fraction of null values $$S^{GSEA}_{k,{\pi_p}}$$ greater than or equal to our observed value $$S^{GSEA}_{k}$$.
+
+$$
+\begin{equation}\label{eq:12}
+  P_k = \frac{1}{N_k}\sum\limits_{p=1}^{N_k} I\{S^{GSEA}_{k,{\pi_p}} \geq S^{GSEA}_{k}\}
+\end{equation}
+$$
+
+#### On last thing...
+
+Note that throughout this discussion we have chosen to depict the GSEA global statistic as positive deviations of the running sum (Figure 2). Of course, there is no particular reason why the deviations could not be negative. Indeed a more accurate description of the results of permutation would see a bimodal distribution representing global statistics that lie above and below zero (Figure 5). Thus, it is more accurate to say that the p-values are calculated from the positive or negative region of the empirical null distribution.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Null distributions.</strong> Permutation methods will result in enrichment scores that lie both above and below zero resulting in a bimodal distribution. In practice, p-values for negative enrichment scores (green) and positive ones (red) are calculated using only the region of the null distribution less than and greater than zero, respectively.  
+</div>
+
+## <a href="#multipleTesting" name="multipleTesting">VII. Multiple testing correction</a>
+
+<div class="alert alert-warning text-justify" role="alert">
+  You may wish to review our primer on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/">multiple  testing</a> before reading this section, in particular, the section on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/#controllingFDR">false discovery rates</a>.
+</div>
+
+When we test a family of hypotheses, the chances of observing a rare value of a statistic increases. If those values exceed the significance level, they can be erroneously classified as discoveries, that is, they are Type I errors. Multiple testing procedures attempt to quantify and control for these.
+
+In GSEA, the collection of gene sets interrogated against the observed data represents the family of test hypotheses. The recommended procedure for quantifying Type I errors is the false discovery rate (FDR). The FDR is defined as the expected value of the fraction of rejected null hypotheses that are true; In practice, GSEA attempts to establish this proportion empirically.
+
+In general, given a specified threshold $$T$$ of the global statistic, the FDR is be the number of true null hypotheses larger than $$T$$ divided by the sum of true and false null hypotheses larger than $$T$$. For GSEA, $$T$$ would be some value of the enrichment score and a true null hypothesis would arise from a gene set that is in fact not enriched. In practice, we estimate the number of true null hypotheses from the empirical null.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 6. Empirical false discovery rate.</strong>. (Left) The observed value distribution and null value distribution derived by permutation methods. T represents the threshold. The boxed region is expanded on the right. (Right) Enlarged view of distribution tails. The number of null distribution values beyond the threshold is used to estimate the true null hypotheses and so the fraction of erroneous rejections is estimated as the ratio of the red and green regions right of T.
+</div>
+
+If the number of rejections is $$n_{obs}$$ then the empirical false discovery rate is
+
+$$
+\begin{equation*}
+  \hat{FDR} = \frac{n_{null}}{n_{obs}}
+\end{equation*}
+$$
+
+> For a nice primer on empirical methods for FDR estimation, we refer the reader to a well written piece by William S. Noble entitled *'How does multiple testing correction work?'* (Noble 2009).
+
+So why don't we just retrieve our sets of null distributions $$S_{k,\boldsymbol{\pi(k)}}^{GSEA}$$ and observed enrichment statistics  $$S_k^{GSEA}$$ and calculate the FDR? The problem lies in the dependence of the enrichment statistic on gene set size.
+
+### Normalized enrichment score: Accounting for gene set size
+
+It is clear that the global statistic $$S_k^{GSEA}$$ depends on gene set size (equations \eqref{eq:1} - \eqref{eq:3}). Consequently, unless we are dealing with gene sets of equal sizes, the enrichment scores will not be identically distributed and cannot be compared directly. This precludes the derivation of a p-value for any given candidate gene set.
+
+GSEA solves this problem by normalizing the raw enrichment scores $$S_k^{GSEA}$$ such that they lie on a comparable scale. In particular, this normalized enrichment score is the raw enrichment score divided by the expected value (average) of the null distribution for that gene set. There are substantial differences in the way we generate this gene set null distribution compared to Subramanian *et al.*, discussed below.  
 
 Then the relevant normalized enrichment score $$\zeta_k^{GSEA}$$ is the raw score divided by the mean of the class label permutation values
 
 $$
-\begin{equation} \label{eq:12}
+\begin{equation} \label{eq:13}
   \zeta_k^{GSEA} = \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA}]}
 \end{equation}
 $$
@@ -359,35 +418,9 @@ $$
 \end{equation*}
 $$
 
-
-#### Gene set permutation
-
-The workflow described here uses as input a 'pre-ranked' list of genes are ordered by a function of the p-value for differential expression. In GSEA software this is called the 'GSEAPreranked' approach and using a pre-ranked list precludes phenotype permutation.
-
-Rather, a gene set permutation approach is used to generate the null distribution. For each gene set $$G_k$$ of size $$n_k$$, the same number genes are randomly selected from the ranked list $$L$$ and the corresponding enrichment score $$S^{GSEA}_{k,{\pi_p}}$$ is calculated. This process is repeated $$N_k$$ times to generate the sample null distribution consisting of the vector $$S^{GSEA}_{k,{\boldsymbol{\pi(k)}}}$$. Finally, the normalized enrichment score $$\zeta_k^{GSEA}$$ is calculated as for phenotype permutation. This makes it possible to define a null distribution for the GSEA global statistics assuming a null distribution induced by gene set permutation,
-
-$$
-\begin{equation*}
-  H_0^{GSEA}: \zeta_1^{GSEA},\zeta_2^{GSEA},\ldots,\zeta_K^{GSEA} \text{ are identically distributed and }  \zeta_k^{GSEA} \sim F_0^{gene\_set}
-\end{equation*}
-$$
-
-**Caveat** The GSEA team recommends using phenotype permutation whenever possible. This preserves the correlation structure between the genes in the dataset. Gene set permutation creates random gene sets and so disrupts the gene-gene correlations in the data. Thus, gene set permutation provides a relatively weaker (less stringent) assessment of significance.   
-
-
-
-
-## <a href="#significanceTesting" name="significanceTesting">VI. Significance testing</a>
-
-With our understanding of null distributions for gene sets in place, we are now ready to complete our hypothesis testing procedure and answer the question: Which enrichment scores are significant? In practice, this means calculating a p-value.
-
 ### Weighting and normalization
 
-This screwy bit about positive and negative distributions comes outta nowhere and is barely justified.
-Lack of symmetry when weighting -- see Supplemental Text.
-
-## <a href="#multipleTesting" name="multipleTesting">VII. Multiple testing correction</a>
-
+Lack of symmetry when weighting -- see Supplemental Text. So basically they try to compare how the permutation set looks against the C2 database which they propose a priori should look similar. However, there are strong biases in one of the modes which arises from the gene set tendency to be present in one of the two phenotypes. This is also reflected in the correlation plots. So they do this separately so that the areas and hence the p-values are more representative.
 
 ## <a href="#references" name="references">VII. References</a>
-<!-- <div class="panel_group" data-inline="15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
+<!-- <div class="panel_group" data-inline=" 20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
