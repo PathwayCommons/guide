@@ -370,57 +370,86 @@ Note that throughout this discussion we have chosen to depict the GSEA global st
 ## <a href="#multipleTesting" name="multipleTesting">VII. Multiple testing correction</a>
 
 <div class="alert alert-warning text-justify" role="alert">
-  You may wish to review our primer on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/">multiple  testing</a> before reading this section, in particular, the section on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/#controllingFDR">false discovery rates</a>.
+  You may wish to review our primer on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/">multiple  testing</a>, in particular the section on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/#controllingFDR">false discovery rates</a>.
 </div>
 
-When we test a family of hypotheses, the chances of observing a rare value of a statistic increases. If those values exceed the significance level, they can be erroneously classified as discoveries, that is, they are Type I errors. Multiple testing procedures attempt to quantify and control for these.
+When we test a family of hypotheses, the chance of observing a statistic with a small p-value increases. When smaller than the significance level, they can be erroneously classified as discoveries or Type I errors. Multiple testing procedures attempt to quantify and control for these.
 
-In GSEA, the collection of gene sets interrogated against the observed data represents the family of test hypotheses. The recommended procedure for quantifying Type I errors is the false discovery rate (FDR). The FDR is defined as the expected value of the fraction of rejected null hypotheses that are true; In practice, GSEA attempts to establish this proportion empirically.
+In GSEA, the collection of gene sets interrogated against the observed data are a family of hypotheses. The recommended procedure for quantifying Type I errors is the false discovery rate (FDR). The FDR is defined as the expected value of the fraction of rejected null hypotheses that are in fact true. In practice, GSEA establishes this proportion empirically.
 
-In general, given a specified threshold $$T$$ of the global statistic, the FDR is be the number of true null hypotheses larger than $$T$$ divided by the sum of true and false null hypotheses larger than $$T$$. For GSEA, $$T$$ would be some value of the enrichment score and a true null hypothesis would arise from a gene set that is in fact not enriched. In practice, we estimate the number of true null hypotheses from the empirical null.
+In general, given a specified threshold $$T$$ of the global statistic, the FDR is be the number of true null hypotheses larger than $$T$$ divided by the sum of true and false null hypotheses larger than $$T$$. For GSEA, $$T$$ would be some value of the enrichment score and a true null hypothesis would represent a gene set that is in fact not enriched. In practice, we won't directly observe the latter so it is estimated from the values of the empirical null that exceed $$T$$ (Figure 6).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Empirical false discovery rate.</strong>. (Left) The observed value distribution and null value distribution derived by permutation methods. T represents the threshold. The boxed region is expanded on the right. (Right) Enlarged view of distribution tails. The number of null distribution values beyond the threshold is used to estimate the true null hypotheses and so the fraction of erroneous rejections is estimated as the ratio of the red and green regions right of T.
+  <strong>Figure 6. Empirical false discovery rate.</strong>. <strong>A.</strong> The distribution of observed statistics and null distribution derived by permutation methods. T represents the threshold. <strong>B.</strong> Enlarged view of right-hand distribution tail in A. The number of null distribution values beyond the threshold is used to estimate the true null hypotheses. The fraction of erroneous rejections is estimated as the ratio of s_null (red) to s_obs (blue) and a correction is introduced when the number of data points are unequal.
 </div>
 
-If the number of rejections is $$n_{obs}$$ then the empirical false discovery rate is
+Suppose there are $$n_{obs}$$ observed and $$n_{null}$$ empirical null distribution data points. If the number of observed and null statistics beyond the threshold $$T$$ are $$s_{obs}$$ and $$s_{null}$$, respectively, then the empirical false discovery rate is
 
 $$
-\begin{equation*}
-  \hat{FDR} = \frac{n_{null}}{n_{obs}}
-\end{equation*}
+\begin{equation} \label{eq:13}
+  \hat{FDR} = \frac{s_{null}}{s_{obs}} \cdot \frac{n_{obs}}{n_{null}}
+\end{equation}
 $$
 
 > For a nice primer on empirical methods for FDR estimation, we refer the reader to a well written piece by William S. Noble entitled *'How does multiple testing correction work?'* (Noble 2009).
 
-So why don't we just retrieve our sets of null distributions $$S_{k,\boldsymbol{\pi(k)}}^{GSEA}$$ and observed enrichment statistics  $$S_k^{GSEA}$$ and calculate the FDR? The problem lies in the dependence of the enrichment statistic on gene set size.
+At first glance, this appears to be quite a straightforward exercise: We retrieve our sets of null distributions $$S_{k,\boldsymbol{\pi(k)}}^{GSEA}$$ and observed enrichment statistics $$S_k^{GSEA}$$ and calculate the ratio for a given enrichment score threshold. However, there is one glaring problem: The enrichment statistic depends on gene set size which precludes comparison across gene sets.
 
 ### Normalized enrichment score: Accounting for gene set size
 
-It is clear that the global statistic $$S_k^{GSEA}$$ depends on gene set size (equations \eqref{eq:1} - \eqref{eq:3}). Consequently, unless we are dealing with gene sets of equal sizes, the enrichment scores will not be identically distributed and cannot be compared directly. This precludes the derivation of a p-value for any given candidate gene set.
+That the enrichment score depends on gene set size can be seen from the definition in equations \eqref{eq:1} - \eqref{eq:3}. Consequently, unless we are in an unlikely scenario where all the gene sets we test are of equal size, the enrichment scores will not be identically distributed and hence cannot be directly compared. This precludes the calculation of an empirical false discovery rate.
 
-GSEA solves this problem by normalizing the raw enrichment scores $$S_k^{GSEA}$$ such that they lie on a comparable scale. In particular, this normalized enrichment score is the raw enrichment score divided by the expected value (average) of the null distribution for that gene set. There are substantial differences in the way we generate this gene set null distribution compared to Subramanian *et al.*, discussed below.  
+GSEA solves this problem by applying a transformation to calculated enrichment scores such that they lie on a comparable scale. In particular, this normalized enrichment score (NES) is the enrichment score divided by the expected value (i.e. average) of the corresponding null distribution. Concretely, for each gene set we derive an enrichment score $$S_k^{GSEA}$$ and a corresponding null distribution $$S_{k,\boldsymbol{\pi(k)}}^{GSEA}$$ via gene set permutation.
 
-Then the relevant normalized enrichment score $$\zeta_k^{GSEA}$$ is the raw score divided by the mean of the class label permutation values
+The normalized enrichment score $$\zeta_k^{GSEA}$$ is the score divided by the expected value of the corresponding null
 
 $$
-\begin{equation} \label{eq:13}
+\begin{equation} \label{eq:14}
   \zeta_k^{GSEA} = \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA}]}
 \end{equation}
 $$
 
-where $$S_{k,\boldsymbol{\pi(k)}}^{GSEA} = \{S_{k,\pi_p}^{GSEA}: p=1,\ldots,N_k \}$$ is the vector of class label permutation enrichment scores and the subscript $$\boldsymbol{\pi(k)}$$ indicates the $$N_k$$ permutations out of a possible $$m!$$ rearrangements. This makes it possible to define a null distribution for the GSEA global statistics assuming a null distribution induced by phenotype permutation,
+In practice, we will partition the null into positive and negative values and use the average of these to normalize the positive and negative enrichment scores, respectively.
 
 $$
 \begin{equation*}
-  H_0^{GSEA}: \zeta_1^{GSEA},\zeta_2^{GSEA},\ldots,\zeta_K^{GSEA} \text{ are identically distributed and }  \zeta_k^{GSEA} \sim F_0^{phenotype}
+  \zeta_k^{GSEA} =
+    \begin{cases}
+      \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \geq 0]} & \text{for } S_{k}^{GSEA} \geq 0\\
+      \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \lt 0]} & \text{for } S_{k}^{GSEA} \lt 0\\
+    \end{cases}
 \end{equation*}
 $$
 
-### Weighting and normalization
+Remember that, in addition to the gene set enrichment scores (Figure 6, blue), we will also need a normalized null distribution $$\zeta_{k, \boldsymbol{\pi(k)}}^{GSEA}$$ for every gene set (Figure 6, red). Each element of a given null distribution will be determined in a similar fashion
 
-Lack of symmetry when weighting -- see Supplemental Text. So basically they try to compare how the permutation set looks against the C2 database which they propose a priori should look similar. However, there are strong biases in one of the modes which arises from the gene set tendency to be present in one of the two phenotypes. This is also reflected in the correlation plots. So they do this separately so that the areas and hence the p-values are more representative.
+$$
+\begin{equation*}
+  \zeta_{k,\pi_p}^{GSEA} =
+    \begin{cases}
+      \frac{S_{k,\pi_p}^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \geq 0]} & \text{for } S_{k,\pi_p}^{GSEA} \geq 0\\
+      \frac{S_{k,\pi_p}^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \lt 0]} & \text{for } S_{k,\pi_p}^{GSEA} \lt 0\\
+    \end{cases}
+\end{equation*}
+$$
+
+We can now restate the null hypothesis
+
+$$
+\begin{equation*}
+  \begin{split}
+    H_0^{GSEA} &: \zeta_{k}^{GSEA}, \ldots, \zeta_{k}^{GSEA}, \ldots, \zeta_{K}^{GSEA} \text{ are identically distributed and } \\
+    \zeta_{k}^{GSEA} &\sim F_0^{permutation}\\
+  \end{split}
+\end{equation*}
+$$
+
+where $$F_0^{permutation}$$ is derived empirically through $$\zeta_{k,\boldsymbol{\pi(k)}}^{GSEA}$$ over all gene sets.
+
+<hr/>
+
+Given the observed and null normalized enrichment scores, the FDR can be calculated using an approach similar to that described in the previous section (equation \eqref{eq:13}).
 
 ## <a href="#references" name="references">VII. References</a>
 <!-- <div class="panel_group" data-inline=" 20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
