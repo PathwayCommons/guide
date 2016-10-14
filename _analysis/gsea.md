@@ -16,6 +16,8 @@ figures:
   figure_4: figure_gsea_null.png
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
+  figure_7: GSEA_download.gif
+  figure_8: gsea_start.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -25,6 +27,7 @@ figures:
   - {:.list-unstyled} [IV. Global statistic](#globalStatistic)
   - {:.list-unstyled} [V. Significance testing](#significanceTesting)
   - {:.list-unstyled} [VI. Multiple testing correction](#multipleTesting)
+  - {:.list-unstyled} [VII. Doing GSEA](#doingGSEA)
   - {:.list-unstyled} [VII. References](#references)
 
   <hr/>
@@ -43,7 +46,7 @@ In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http
 2. Be aware of the advantages over previous methods
 3. Understand how GSEA finds enriched gene sets within gene lists
 4. Be aware of the statistical basis of the approach
-5. Be able to use software to test a list of DE genes for enriched pathways
+5. Be able to use the GSEA software to test a list of DE genes for enriched pathways
 
 <br/>
 
@@ -58,9 +61,7 @@ High-throughput approaches for gene expression measurement can generate a tremen
 
 To this end, approaches collectively termed 'Overrepresentation Analyses' (ORA) were developed to take large lists of genes emerging from experimental results and determine whether there was evidence of enrichment for gene sets grouped on the basis of some shared theme (Khatri 2005, Khatri 2012). In simple terms, ORA approaches aim to distill which pathways are present within a list of genes. A popular source of sets is the [Gene Ontology (GO)](http://geneontology.org/) which groups of genes according to various biological processes and molecular functions.
 
-> *In simple terms, ORA approaches aim to distill which pathways are present within a list of genes*
-
-### The 'SAFE' approach
+### The 'SAFE' framework
 
 While tremendously useful for interpreting differential expression output, ORA approaches have three major limitations. First, the inclusion criteria for input gene lists are rather arbitrary and typically involves selecting genes that exceed some user-defined statistical cutoff. This risks excluding potentially important genes that for whatever reason fail to reach statistical significance. Second, ORA approaches use gene names but not any of the rich quantitative information associated with gene expression experiments. In this way, equal importance is assigned to each an every gene. Third, many of the ORA procedures uses statistical procedures that assume independence among genes: Changes in any gene do not affect or are not influenced by any others. Clearly, this is unrealistic for biological systems and has the effect of making ORA procedures more prone to erroneous discoveries or false-positives.
 
@@ -451,5 +452,97 @@ where $$F_0^{permutation}$$ is derived empirically through $$\zeta_{k,\boldsymbo
 
 Given the observed and null normalized enrichment scores, the FDR can be calculated using an approach similar to that described in the previous section (equation \eqref{eq:13}).
 
-## <a href="#references" name="references">VII. References</a>
-<!-- <div class="panel_group" data-inline=" 20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
+## <a href="#doingGSEA" name="doingGSEA">VIII. Doing GSEA</a>
+
+Here's an overview of the requirements and actions needed to perform GSEA:
+
+  1. Data requirements
+  2. Gene set selection
+  3. Software requirements
+  4. GSEA software settings
+  5. Run
+
+### 1. Data requirements
+
+#### Rank gene list
+
+<div class="alert alert-success text-justify" role="alert">
+   Get the rank gene list for the TCGA-Ov project <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">here</a>.
+</div>
+
+The ranked gene list contains all the information in our experimental observations. The rank file (.rnk) is a tab-delimited text file consisting of genes and rank metrics.
+
+| GeneName (string) |  rank (numeric)       |
+|:---------:|:-----------:|
+| gene 1    |   rank 1    |
+| gene 2    |   rank 2    |
+| ...       |   ...       |
+| gene i    |   rank i    |
+| ...       |   ...       |
+| gene n    |   rank n    |
+
+Note that the GeneName should be unique and be a valid [Human Gene Nomenclature Committee (HGNC)](http://www.genenames.org/about/guidelines) identifier. The rank metric should be a unique number as GSEA does not know how to resolve ties.
+
+Previously we have described how to generate a rank file of genes that are differentially expressed between mesenchymal and immunoreactive subtypes of high-grade serous ovarian cancer (HGS-OvCa). You can just download the file   [MesenchymalvsImmunoreactive_edger_ranks.rnk.zip]({{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets) to get started. To find out more, please consult the section on the [TCGA-Ov project]({{site.baseurl}}/datasets/archive/).
+
+
+### 2. Gene set selection
+
+GSEA offers a built-in set of curated gene sets called the [Molecular Signatures Database (MSigDB)](http://software.broadinstitute.org/gsea/msigdb/index.jsp). Their web page allows you to search, browse, examine, download, and investigate the contents of gene sets in more detail. The MSigDB is tightly integrated with the GSEA software so you will not need to independently download any files to use it.
+
+[Gene set database formats](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats).
+
+A typical Gene matrix Transposed (.gmt) file is a tab-delimited text file describing gene sets.
+
+| Gene set name (string)  | Description (string)  | gene 1    | ...  | gene n_k |
+|:------------------------|:----------------------|----------:|-----:|---------:|
+| Gene set 1    |   A gene set    | gene 1    | ... |  gene n_1    |
+| Gene set 2    |   Another gene set    | gene 1    | ... |  gene n_2    |
+| ...    |   ...    | ...    | ... |  ...    |
+| Gene set K    |   The last gene set   | gene 1    | ... |  gene n_K   |
+
+#### Pathway gene set database
+
+<div class="alert alert-success text-justify" role="alert">
+   Download the custom gene set database <a href="{{site.baseurl}}/{{site.media_root}}{{site.id}}/Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt">here</a>.
+</div>
+
+Here, we provide a custom gene set database file consisting of data from MSigDB in addition to:
+
+  - [Gene Ontology](http://geneontology.org/) [no inferred electronic annotation (iea)] (Ashburner 2000)
+  - [Reactome](http://www.reactome.org/) (Fabregat 2016)
+  - [Panther](http://www.pantherdb.org/) (Mi 2013)
+  - [NetPath](http://www.netpath.org/) (Kandasamy 2010)
+  - [NCI](http://www.ndexbio.org/#/user/nci-pid) (Schaefer 2009)
+  - [HumanCyc](http://humancyc.org/) (Caspi 2016)
+
+This database is updated periodically at the [Bader laboratory](http://www.baderlab.org/) where we have collected  gene sets for [human](http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/), [mouse](http://download.baderlab.org/EM_Genesets/current_release/Mouse/symbol/) and [rat](http://download.baderlab.org/EM_Genesets/current_release/Rat/symbol/). Download the file named "SPECIES_GOBP_AllPathways_no_GO_iea_DATE_symbol.gmt" where 'SPECIES' and 'DATE' are substituted.
+
+### 3. Software requirements
+
+#### Install Java
+
+You are on your own here. Please use Java 8.
+
+#### Register and install GSEA
+
+- [Register](http://software.broadinstitute.org/gsea/register.jsp)
+- [Login](http://software.broadinstitute.org/gsea/login.jsp)
+- [Download](http://software.broadinstitute.org/gsea/downloads.jsp)
+  - Retrieve the javaGSEA Desktop Application and launch with 4GB (for 64-bit Java only).
+  - {:.list-unstyled} ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
+- Launch the Application
+
+
+### 4. Select GSEA options
+
+When GSEA first launches you will see an introductory panel.  
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+
+### 5. Run GSEA
+
+Now go publish!
+
+## <a href="#references" name="references">IX. References</a>
+<!-- <div class="panel_group" data-inline=" 10802651,26656494,23193289,20067622,18832364,26527732,20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
