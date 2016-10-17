@@ -4,28 +4,6 @@ title: Pathway Guide
 subtitle: Resources for pathway analysis
 ---
 
-  {% assign collection_list = site.collections %}
-
-  <div class="grid-element-parent">
-  {% for collection in collection_list %}
-    {% if collection.index != null %}
-      {% if collection.label != null %}
-      {% assign pretty_label = collection.label | replace: "_", " " | capitalize %}
-      <div class="grid-element">
-        <a href="{{site.baseurl}}{{ collection.index }}">
-          <div class="grid-element-card">
-            <div class="grid-element-panel">
-              <img class="img-responsive" src="{{ site.baseurl }}/{{ site.media_root }}/{{ collection.icon }}" />
-            </div>
-
-            <div class="box-label effect5">
-              <span class="grid-element-label">{{ pretty_label }}</span>
-            </div>
-
-          </div>
-        </a>
-      </div>
-      {% endif %}
-    {% endif %}
-  {% endfor %}
-  </div>
+<img
+     alt="where" height="500"
+     src="{{ site.baseurl }}/{{ site.media_root }}/index/figure_overview.png"/>
