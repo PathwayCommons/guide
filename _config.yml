@@ -50,13 +50,6 @@ collections:
     description: Deep-dive into pathway analysis
     icon: index/case_study.png
 
-  # reading_list:
-  #   output: true
-  #   permalink: /reading_list/:path/
-  #   index: /reading_list/archive/
-  #   description: Curated article sets
-  #   icon: index/reading_list.png
-
   datasets:
     output: true
     permalink: /datasets/:path/

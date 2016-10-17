@@ -1,6 +1,6 @@
 ---
 title: Get Data
-subtitle: Use the Genomic Data Commons data portal to retrieve TCGA ovarian cancer project (TCGA-OV) RNA expression data
+subtitle: Use the Genomic Data Commons (GDC) data portal to retrieve TCGA ovarian cancer project (TCGA-OV) RNA sequencing data
 pmid: 21720365
 cover: cover.jpg
 pdf: nihms-313090.pdf
@@ -15,14 +15,13 @@ data:
 figures:
   figure_overview: overview.jpg
   figure_1: hgsovca_bowtell_2011.jpg
-  figure_2: microarray_overview.jpg
-  figure_3: gdc_data_model.jpg
-  figure_4: rna_alignment.jpg
-  figure_5: rna_quantification.jpg
-  figure_6: TCGAOv_search.gif
-  figure_7: tcga_barcode.png
-  figure_8: rnaseqdata_layout.png
-  figure_9: subtypes_layout.jpg
+  figure_2: gdc_data_model.jpg
+  figure_3: rna_alignment.jpg
+  figure_4: rna_quantification.jpg
+  figure_5: TCGAOv_search.gif
+  figure_6: tcga_barcode.png
+  figure_7: rnaseqdata_layout.png
+  figure_8: subtypes_layout.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -51,7 +50,7 @@ This section spans background on ovarian cancer to detailed instructions on sour
 4. Be able to prepare the data for downstream expression analysis
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Summary and Goals.</strong> This section provides background on The Cancer Genome Atlas (TCGA) effort to characterize ovarian cancer cases under the project name-code 'TCGA-OV'. We describe how to source RNA sequencing data for these cases from the Genomic Data Commons (GDC). Finally, we describe how to integrate the RNA-seq data downloaded from the GDC into a single file. Subtype analysis was performed elsewhere by Tothill <em>et al.</em> (Tothill 2013) and we show how to obtain a file describing the subtype for cases. Downstream differential expression analysis will involve comparison across subtypes in the 'Process Data' follow-up section.
 </div>
@@ -84,20 +83,8 @@ It is clear that one of the most pressing challenges for the management and trea
 
 The lack of successful treatment strategies prompted TCGA to measure genomic and epigenomic abnormalities on clinically annotated HGS-OvCa samples to identify molecular abnormalities that might influence pathophysiology, affect outcomes and identify rational therapeutic targets.
 
-Below we briefly summarize the microarray-based approach used to generate gene expression data in the original TCGA publication (Nature. 2011 Jun 30; 474(7353): 609–615.). This is followed by a description of RNA sequencing data now being made available as part of a larger centralization of TCGA data at the [Genomic Data Commons](https://gdc-portal.nci.nih.gov/).
-
 ### Tissue samples
 Stage II-IV, clinically annotated HGS-OvCa and matched normal samples were retrieved. Patients were selected to match the demographic and epidemiological attributes of the typical population diagnosed with disease. Patients had all been treated with platinum and most with taxane prior to surgery.
-
-### Microarray analysis
-Figure 2 summarizes the overall methodology for interrogating mRNA expression levels on microarrays for HGS-OvCa samples compared to matched normal controls.
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Overview of microarray mRNA expression analysis.</strong> Patient tumor and matched normal tissue samples were interrogated on three microarray platforms (parentheses indicate number of genes). Normalized data for each platform was used in a computational workflow whereby a single 'unified' expression value was calculated for each gene. After filtering, a set of four subtypes were identified: The 'differentiated', 'immunoreactive', 'mesenchymal' and 'proliferative' subtypes were named based on work by Tothill *et al.* (Tothill 2010) and also by 'inspection'.  
-</div>
-
-Three microarray platforms were utilized to interrogate mRNA expression across tumor samples were assayed to derive normalized gene expression differences between tumor/matched normal pairs. The data processing steps integrated data from three array platforms and resulted in a 'Unified' expression dataset for 11 864 genes. Subsequent processing distilled a set of 1 500 genes used in a clustering algorithm to derive four expression subtypes: 'differentiated', 'immunoreactive',  'mesenchymal' and 'Proliferative'. The 'immunoreactive' and 'mesenchymal' names were taken from a previous analysis performed by Tothill *et al.* (Tothill 2010).  
 
 ### RNA-sequencing
 
@@ -109,31 +96,30 @@ On June 6, 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/new
 At the time of writing, the Genomic Data Commons was not providing microarray data associated with the TCGA ovarian cancer study. Instead, the GDC is providing RNA-sequencing data for 376 patient samples (i.e. 'cases') which we focus on moving forward.
 
 #### GDC data model
-The pipeline from study participant to data consists of a complex constellation of partners, participants and analysis protocols. For a full description we refer the reader to the [TCGA documentation on Data Flow](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow). Figure 3 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process and the nomenclature we refer to herein.
+The pipeline from study participant to data consists of a complex constellation of partners, participants and analysis protocols. For a full description we refer the reader to the [TCGA documentation on Data Flow](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow). Figure 2 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process and the nomenclature we refer to herein.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between projects, cases, clinical data and molecular data and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. <em>Adapted from the <a href="https://gdc.nci.nih.gov/submit-data/gdc-data-harmonization/">GDC website</a></em>.
+  <strong>Figure 2. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between projects, cases, clinical data and molecular data and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. <em>Adapted from the <a href="https://gdc.nci.nih.gov/submit-data/gdc-data-harmonization/">GDC website</a></em>.
 </div>
 
 
 #### RNA-seq data workflow
-Even a cursory discussion of RNA sequencing is well beyond the scope of this guide. Instead, we refer the reader to the [RNA-seqlopedia](http://rnaseq.uoregon.edu/) which is a very detailed web resource authored by the laboratory of [William A. Cresko](http://creskolab.uoregon.edu/) ([University of Oregon](http://uoregon.edu/)).
 
-The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR) alignment standard operating procedures (Dobin 2013) (Figure 4).
+The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR) alignment standard operating procedures (Dobin 2013) (Figure 3).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Overview of RNA-seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/genomic-data-alignment/rna-seq-pipeline">Data Harmonization and Generation</a>.
+  <strong>Figure 3. Overview of RNA-seq alignment.</strong> FastQC and RNA-SeQC are used to collect alignment metrics. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/genomic-data-alignment/rna-seq-pipeline">Data Harmonization and Generation</a>.
 </div>
 
-The GDC portal makes available files of RNA sequencing count data ('Gene Count') along with normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 5).
+The GDC portal makes available files of RNA sequencing count data ('Gene Count') along with normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 4).
 
 > Our follow-up differential gene expression analyses will specifically require the unnormalized 'Gene Count' RNA sequencing data.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Overview of RNA-seq quantification.</strong> The grey boxes represent data types that are available through the GDC data portal. For the purposes of our downstream data analyses, we will require an unnormalized 'Gene Count' data format. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/high-level-data-generation/rna-seq-quantification">Data Harmonization and Generation</a>.
+  <strong>Figure 4. Overview of RNA-seq quantification.</strong> The grey boxes represent data types that are available through the GDC data portal. For the purposes of our downstream data analyses, we will require an unnormalized 'Gene Count' data format. This figure was adapted from the GDC document on <a href="https://gdc.nci.nih.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization/high-level-data-generation/rna-seq-quantification">Data Harmonization and Generation</a>.
 </div>
 
 ## <a href="#dataRetrieval" name="dataRetrieval">IV. Data retrieval</a>
@@ -185,7 +171,7 @@ The goal of this step is to obtain a manifest which is a tab-delimited text file
 
 *Add files to cart.* This step tells the GDC portal what files you wish to place in the manifest for eventual download. On the GDC Data Portal Search site 'Summary' tab, you can click the 'Add all files to the Cart'. To view your cart click the button on the top right of the screen.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.figures.figure_6 }})
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.figures.figure_5 }})
 
 *Download the manifest and metadata.* From the cart, the following download options are available to the end user:
 
@@ -396,9 +382,9 @@ Let us extract and combine the individual data files and label the columns with 
       - ENSG gene identifier  
   - Workflow Type: HTSeq - Counts  
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. RNA-seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
+  <strong>Figure 7. RNA-seq data file layout.</strong> Column labels show case UUID and row labels are gene IDs using the ENSG namespace
 </div>
 
 - {: .list-unstyled} Subtype assignments: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{page.data.tcgaov_subtypes }}" download>`TCGAOv_subtypes.txt.zip`</a>(27 KB)
@@ -411,9 +397,9 @@ Let us extract and combine the individual data files and label the columns with 
     - Rows
       - 369 cases
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 9. Subtype assignments file layout.</strong> Columns include additional metadata and row labels are case UUIDs.
+  <strong>Figure 8. Subtype assignments file layout.</strong> Columns include additional metadata and row labels are case UUIDs.
 </div>
 
 <hr/>
