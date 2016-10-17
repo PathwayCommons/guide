@@ -35,7 +35,8 @@ data:
   - {:.list-unstyled} [V. Significance testing](#significanceTesting)
   - {:.list-unstyled} [VI. Multiple testing correction](#multipleTesting)
   - {:.list-unstyled} [VII. Doing GSEA](#doingGSEA)
-  - {:.list-unstyled} [VII. References](#references)
+  - {:.list-unstyled} [VIII. Post-GSEA](#postGSEA)
+  - {:.list-unstyled} [IX. References](#references)
 
   <hr/>
 
@@ -599,9 +600,11 @@ Click the 'Run' button arrow in the bottom right of the 'Run Gsea on a Pre-Ranke
   </ul>
 </div>
 
+## <a href="#postGSEA" name="postGSEA">IX. Post-GSEA</a>
+
 ### The GSEA report
 
-Upon completion, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...'. You may click this link to view the HTML report inside a browser (Figure 10).
+When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 8, bottom left). You may click this link to view the HTML report inside a browser (Figure 10).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive.slim }
 
@@ -627,6 +630,11 @@ There are two sections by this name which refers to those gene sets with positiv
 |:-----|:----------------------|----------:|-----:|---------:|
 |    |    |    |   |    |    |    |    |   |    |
 
+### What now?
+
+At this point you have traded a list of genes for a slightly shorter list of pathways. It is possible that you already know the types of pathways that interest you in which case you may sort through the detailed enrichment results.
+
+On the other hand, you may want to get a better appreciation for the grander themes that have emerge from you collection of pathways. In this case, we recommend that an enrichment map analysis be performed. 
 
 ## <a href="#references" name="references">IX. References</a>
-<div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
+<!-- <div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div> -->
