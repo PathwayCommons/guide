@@ -20,6 +20,7 @@ figures:
   figure_8: gsea_start.png
   figure_9: figure_gsea_settings.png
   figure_10: figure_gsea_report.png
+  figure_11: figure_gsea_report_snapshot.png
   gsea_download: GSEA_download.gif
 data:
   data_1: nothing
@@ -39,12 +40,10 @@ data:
   <hr/>
 
   <div class="alert alert-warning text-justify" role="alert">
-    For this section we will require a rank file ('.rnk') of genes ranked by a function of their respective p-value from differential expression testing. In the <a href="{{site.baseurl}}/datasets/archive/">Data Sets</a> section, we have provided samples for TCGA <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">ovarian</a> and <a href="{{site.baseurl}}/datasets/TCGA_HNSCC/process_data/#datasets"> head and neck</a> cancer.
+    You can jump right to section <a href="#doingGSEA">VII. Doing GSEA</a> to learn how to use the GSEA software.
   </div>
 
 ## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
-
-> *Gene Set Enrichment Analysis attempts to answer the question: Does my list of differentially expressed genes indicate alterations in pathways?*
 
 In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify pathways enriched in gene lists arising from a differential gene expression analysis. We aim to convey how the approach works from an intuitive standpoint before a briefly describing a statistical basis. By then end of this discussion you should:
 
@@ -460,11 +459,11 @@ Given the observed and null normalized enrichment scores, the FDR can be calcula
 
 ## <a href="#doingGSEA" name="doingGSEA">VIII. Doing GSEA</a>
 
-Figure 7 depicts the five main elements involved in a GSEA run. Each of these elements are described in greater detail below.
+This section describes how to perform a single run of GSEA using the expression data and gene sets we provide. For a more comprehensive description of the GSEA software, please refer to the [GSEA User Guide](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideFrame.html). Figure 7 depicts the five main elements involved setting up a GSEA run and we elaborate upon each below.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. Doing GSEA.</strong> An overview of the steps we will go through to perform a single run of GSEA.
+  <strong>Figure 7. Doing GSEA.</strong> Overview of the steps we will go through to perform a single run of GSEA.
 </div>
 
 ### 1. Ranked gene list
@@ -473,7 +472,7 @@ Figure 7 depicts the five main elements involved in a GSEA run. Each of these el
    <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">MesenchymalvsImmunoreactive_edger_ranks.rnk.zip</a> is the ranked gene list for the TCGA-Ov project comparing mesechymal and immunoreactive subtypes.
 </div>
 
-Our ranked gene list contains all the information in our expression dataset derived from experiments. The format (.rnk) is a tab-delimited text file with two columns: gene and rank.
+A ranked gene list contains all the information needed from our expression dataset. The `.rnk` format is a tab-delimited text file with two columns: gene and rank.
 
 | gene (HUGO) |  rank (numeric)  |
 |:---------:|:-----------:|
@@ -579,6 +578,7 @@ Now that are files are in memory, we will tell GSEA what these files actually re
   <strong>Figure 9. The GSEA Pre-ranked.</strong> Shown is the 'Run Gsea on a Pre-ranked gene list' tab.
 </div>
 
+<hr/>
 
 ### Running GSEA
 
@@ -599,9 +599,9 @@ Click the 'Run' button arrow in the bottom right of the 'Run Gsea on a Pre-Ranke
   </ul>
 </div>
 
-### Examine results
+### The GSEA report
 
-Upon completion, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...'. You may hover over this and click to open an HTML report for the run inside a browser (Figure 10).
+Upon completion, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...'. You may click this link to view the HTML report inside a browser (Figure 10).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive.slim }
 
@@ -609,8 +609,24 @@ Upon completion, the 'Status' inside the  'GSEA reports' panel will update to 'S
   <strong>Figure 10. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the 'Save results in this folder' option in 'Basic fields' input set for the 'Run Gsea on a Pre-Ranked gene list' tab.
 </div>
 
-What to note in the report.
+You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results) that includes a description of the GSEA report. Below we will briefly highlight a few aspects to take special note of.
+
+#### 'Enrichment in phenotype'
+
+There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates down-regulation in the second phenotype.
+
+> Note - this is weird. Should we be doing this with p-values? who cares which direction as long as their is change?
+
+**Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores. By default, GSEA displays plots for the top 20 gene sets.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
+
+**Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are provided for each enriched gene set  
+
+| GS  | GS DETAILS  | SIZE    | ES  | NES | NOM p-val | FDR q-val | FWER p-val | RANK AT MAX | LEADING EDGE |
+|:-----|:----------------------|----------:|-----:|---------:|
+|    |    |    |   |    |    |    |    |   |    |
 
 
 ## <a href="#references" name="references">IX. References</a>
-<!-- <div class="panel_group" data-inline=" 10802651,26656494,23193289,20067622,18832364,26527732,20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
+<div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
