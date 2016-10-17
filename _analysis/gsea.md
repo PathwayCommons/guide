@@ -16,8 +16,14 @@ figures:
   figure_4: figure_gsea_null.png
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
-  figure_7: GSEA_download.gif
+  figure_7: figure_gsea_overview.png  
   figure_8: gsea_start.png
+  figure_9: figure_gsea_settings.png
+  figure_10: figure_gsea_report.png
+  gsea_download: GSEA_download.gif
+data:
+  data_1: nothing
+  data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -128,7 +134,9 @@ One aspect of this algorithm we side-stepped is the value that gets added or sub
 
 ### The enrichment score
 
-Consider a single gene set $$G_k$$ indexed by $$k$$. The gene set consists of a list of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly. Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$. We summarize the relevant notation up to this point
+Consider a single gene set $$G_k$$ indexed by $$k$$. The gene set consists of a list of $$n_k$$ genes ($$g_{kj}$$), that is $$G_k=\{g_{kj}: j = 1, \ldots, n_k\}$$. Note that each gene in the set must be a represented in the ranked list $$L$$ as you will see shortly.
+
+Define the set of genes outside of the set as $$\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}$$. We summarize the relevant notation up to this point
 
 - {:.list-unstyled} **Notation**
   - {:.list-unstyled} Number of genes: $$n$$  
@@ -214,8 +222,6 @@ $$
   H_0 :  \mathbb{P} = \mathbb{P_0}
 \end{equation*}
 $$
-
-A common situation is that we have a sample and want to know whether it comes from a normal distribution, that is $$\mathbb{P_0} = N(\mu, \sigma^2)$$.
 
 Concretely, define the empirical cumulative distribution function (ecdf) that is generated from the data.
 
@@ -454,25 +460,22 @@ Given the observed and null normalized enrichment scores, the FDR can be calcula
 
 ## <a href="#doingGSEA" name="doingGSEA">VIII. Doing GSEA</a>
 
-Here's an overview of the requirements and actions needed to perform GSEA:
+Figure 7 depicts the five main elements involved in a GSEA run. Each of these elements are described in greater detail below.
 
-  1. Data requirements
-  2. Gene set selection
-  3. Software requirements
-  4. GSEA software settings
-  5. Run
-
-### 1. Data requirements
-
-#### Rank gene list
-
-<div class="alert alert-success text-justify" role="alert">
-   Get the rank gene list for the TCGA-Ov project <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">here</a>.
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 7. Doing GSEA.</strong> An overview of the steps we will go through to perform a single run of GSEA.
 </div>
 
-The ranked gene list contains all the information in our experimental observations. The rank file (.rnk) is a tab-delimited text file consisting of genes and rank metrics.
+### 1. Ranked gene list
 
-| GeneName (string) |  rank (numeric)       |
+<div class="alert alert-success text-justify" role="alert">
+   <a href="{{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets">MesenchymalvsImmunoreactive_edger_ranks.rnk.zip</a> is the ranked gene list for the TCGA-Ov project comparing mesechymal and immunoreactive subtypes.
+</div>
+
+Our ranked gene list contains all the information in our expression dataset derived from experiments. The format (.rnk) is a tab-delimited text file with two columns: gene and rank.
+
+| gene (HUGO) |  rank (numeric)  |
 |:---------:|:-----------:|
 | gene 1    |   rank 1    |
 | gene 2    |   rank 2    |
@@ -481,68 +484,133 @@ The ranked gene list contains all the information in our experimental observatio
 | ...       |   ...       |
 | gene n    |   rank n    |
 
-Note that the GeneName should be unique and be a valid [Human Gene Nomenclature Committee (HGNC)](http://www.genenames.org/about/guidelines) identifier. The rank metric should be a unique number as GSEA does not know how to resolve ties.
+The 'gene' entry should be unique and a valid [Human genome organization Gene Nomenclature Committee (HGNC)](http://www.genenames.org/about/guidelines) identifier. The 'rank' entry should be unique as GSEA does not know how to resolve ties.
 
-Previously we have described how to generate a rank file of genes that are differentially expressed between mesenchymal and immunoreactive subtypes of high-grade serous ovarian cancer (HGS-OvCa). You can just download the file   [MesenchymalvsImmunoreactive_edger_ranks.rnk.zip]({{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets) to get started. To find out more, please consult the section on the [TCGA-Ov project]({{site.baseurl}}/datasets/archive/).
+[Previously]({{site.baseurl}}//datasets/archive/) we have described how to generate a ranked list of genes that are differentially expressed between mesenchymal and immunoreactive subtypes of high-grade serous ovarian cancer (HGS-OvCa) from the TCGA effort. You can retrieve a file named  [`MesenchymalvsImmunoreactive_edger_ranks.rnk.zip`]({{site.baseurl}}/datasets/TCGA_Ovarian_Cancer/process_data/#datasets) therein to use in subsequent steps.
 
 
-### 2. Gene set selection
+### 2. Gene sets
 
-GSEA offers a built-in set of curated gene sets called the [Molecular Signatures Database (MSigDB)](http://software.broadinstitute.org/gsea/msigdb/index.jsp). Their web page allows you to search, browse, examine, download, and investigate the contents of gene sets in more detail. The MSigDB is tightly integrated with the GSEA software so you will not need to independently download any files to use it.
+<div class="alert alert-success text-justify" role="alert">
+   <a href="{{site.baseurl}}/{{site.media_root}}{{page.id}}/{{ page.data.data_2 }}">{{ page.data.data_2 }}</a> is our custom gene set database.
+</div>
 
-[Gene set database formats](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats).
+GSEA allows users to use a prescribed gene set database or create their own. For more information please consult their description of the [gene set database formats](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats).
 
-A typical Gene matrix Transposed (.gmt) file is a tab-delimited text file describing gene sets.
+Here, we focus on the [`Gene Matrix Transposed (.gmt)`](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29) format which is a tab-delimited text file describing gene sets. In this case, each row represents a gene set as follows:
 
-| Gene set name (string)  | Description (string)  | gene 1    | ...  | gene n_k |
+| gene set name (string)  | description (string)  | gene 1    | ...  | gene n_k |
 |:------------------------|:----------------------|----------:|-----:|---------:|
 | Gene set 1    |   A gene set    | gene 1    | ... |  gene n_1    |
 | Gene set 2    |   Another gene set    | gene 1    | ... |  gene n_2    |
 | ...    |   ...    | ...    | ... |  ...    |
 | Gene set K    |   The last gene set   | gene 1    | ... |  gene n_K   |
 
-#### Pathway gene set database
+GSEA offers a built-in set of curated gene sets called the [Molecular Signatures Database (MSigDB)](http://software.broadinstitute.org/gsea/msigdb/index.jsp). Their web page allows you to search, browse, examine, download, and investigate the contents of gene sets in more detail. The MSigDB is tightly integrated with the GSEA software so you will not need to independently download any files to use it.
 
-<div class="alert alert-success text-justify" role="alert">
-   Download the custom gene set database <a href="{{site.baseurl}}/{{site.media_root}}{{site.id}}/Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt">here</a>.
-</div>
+In this workflow, we provide a custom gene set database.
+
+
+#### Pathway gene set database
 
 Here, we provide a custom gene set database file consisting of data from MSigDB in addition to:
 
-  - [Gene Ontology](http://geneontology.org/) [no inferred electronic annotation (iea)] (Ashburner 2000)
+  - [Gene Ontology](http://geneontology.org/) (Ashburner 2000)
   - [Reactome](http://www.reactome.org/) (Fabregat 2016)
   - [Panther](http://www.pantherdb.org/) (Mi 2013)
   - [NetPath](http://www.netpath.org/) (Kandasamy 2010)
   - [NCI](http://www.ndexbio.org/#/user/nci-pid) (Schaefer 2009)
   - [HumanCyc](http://humancyc.org/) (Caspi 2016)
 
-This database is updated periodically at the [Bader laboratory](http://www.baderlab.org/) where we have collected  gene sets for [human](http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/), [mouse](http://download.baderlab.org/EM_Genesets/current_release/Mouse/symbol/) and [rat](http://download.baderlab.org/EM_Genesets/current_release/Rat/symbol/). Download the file named "SPECIES_GOBP_AllPathways_no_GO_iea_DATE_symbol.gmt" where 'SPECIES' and 'DATE' are substituted.
+This database is updated periodically at the [Bader laboratory](http://www.baderlab.org/) where we have collected  gene sets for [human](http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/), [mouse](http://download.baderlab.org/EM_Genesets/current_release/Mouse/symbol/) and [rat](http://download.baderlab.org/EM_Genesets/current_release/Rat/symbol/). You can retrieve the file named [`{{ page.data.data_2 }}`]({{site.baseurl}}/{{site.media_root}}{{page.id}}/{{ page.data.data_2 }}) for use in subsequent steps.
 
-### 3. Software requirements
 
-#### Install Java
+### 3. Software
 
-You are on your own here. Please use Java 8.
+#### Java
 
-#### Register and install GSEA
+You're on your own here. Try to use Java 8.
+
+#### GSEA
 
 - [Register](http://software.broadinstitute.org/gsea/register.jsp)
 - [Login](http://software.broadinstitute.org/gsea/login.jsp)
 - [Download](http://software.broadinstitute.org/gsea/downloads.jsp)
   - Retrieve the javaGSEA Desktop Application and launch with 4GB (for 64-bit Java only).
-  - {:.list-unstyled} ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
-- Launch the Application
+  - {:.list-unstyled} ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.gsea_download }}){: .img-responsive }
+
+Launch the GSEA application. You will see the GSEA logo splash then the application itself.  
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 8. The GSEA interface.</strong> The control panel on the left (e.g. 'Steps in GSEA analysis', 'Gene set tools') provides quick access to the most common actions. The main window displays the 'Home' tab by default. Each control panel action typically opens a new tab in the main window.  
+  </div>
+
+### 4. Load files
+
+In this part, we will load the necessary files into computer memory. We will tell GSEA what these files are in the next step for 'Settings'.
+
+- Open 'Load data' tab
+  - In the control panel under 'Steps in GSEA analysis', click the 'Load data' button to bring up the 'Load data' tab in the main window
+  - Load the ranked gene list
+    - Under 'Method 1' find the 'Browse for files ...' button and select your ranked gene list file (.rnk)
+  - Load the gene set database
+    - Repeat the above but instead load the gene set database file (.gmt)
 
 
-### 4. Select GSEA options
+### 5. Settings
 
-When GSEA first launches you will see an introductory panel.  
+Now that are files are in memory, we will tell GSEA what these files actually represent and tailor the GSEA run accordingly.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+- Open 'GseaPreranked' tab
+  - In the menu dropdown, select 'Tools' then 'GseaPreranked' which will bring up a 'Run Gsea on a Pre-Ranked gene list' tab
+    - Set 'Required fields'
+       - 'Gene sets database': Click the ellipsis '...' and wait until a window pops up. Click the arrow to navigate to the 'Gene matrix (local gmx/gmt)' panel and select the desired .gmt file
+       - 'Collapse dataset to gene symbols': Set 'false'
+    - Set 'Basic fields'
+      - 'Analysis name': Set this to something meaningful
+      - 'Save results in this folder': Set this to your liking
 
-### 5. Run GSEA
 
-Now go publish!
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 9. The GSEA Pre-ranked.</strong> Shown is the 'Run Gsea on a Pre-ranked gene list' tab.
+</div>
+
+
+### Running GSEA
+
+Click the 'Run' button arrow in the bottom right of the 'Run Gsea on a Pre-Ranked gene list' tab (Figure 9, bottom right). The 'GSEA reports' panel (Figure 8, bottom left) will show the 'Name' of this run and the 'Status' as 'Running' while in progress.
+
+<div class="alert alert-warning text-justify" role="alert">
+  Typical run times
+  <ul>
+    <li>
+      Mac: MacBook Air (Early 2015), 2.2 GHz Intel Core i7, 8 GB 1600 MHz DDR3, OS X El Capitan (10.11.6) - 10 minutes
+    </li>
+    <li>
+      Windows:
+    </li>
+    <li>
+      Linux:
+    </li>
+  </ul>
+</div>
+
+### Examine results
+
+Upon completion, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...'. You may hover over this and click to open an HTML report for the run inside a browser (Figure 10).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive.slim }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 10. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the 'Save results in this folder' option in 'Basic fields' input set for the 'Run Gsea on a Pre-Ranked gene list' tab.
+</div>
+
+What to note in the report.
+
 
 ## <a href="#references" name="references">IX. References</a>
 <!-- <div class="panel_group" data-inline=" 10802651,26656494,23193289,20067622,18832364,26527732,20048385,15226741,26125594,19192285,15647293,15994189,22383865,12808457,20010596,16199517,23070592"></div> -->
