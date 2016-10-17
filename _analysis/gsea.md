@@ -624,17 +624,25 @@ There are two sections by this name which refers to those gene sets with positiv
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
 
-**Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are provided for each enriched gene set  
+**Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are included for each enriched gene set  
 
-| GS  | GS DETAILS  | SIZE    | ES  | NES | NOM p-val | FDR q-val | FWER p-val | RANK AT MAX | LEADING EDGE |
+| GS  | SIZE    | ES  | NES | NOM p-val | FDR q-val | FWER p-val |
 |:-----|:----------------------|----------:|-----:|---------:|
-|    |    |    |   |    |    |    |    |   |    |
+| EXTRACELLULAR MATRIX ORGANIZATION GO:0030198| 303 | 0.80865526 | 2.3172472 | 0.0 | 0.0 | 0.0 |
+| EXTRACELLULAR STRUCTURE ORGANIZATION GO:0043062 | 303 | 0.80865526 | 2.3110042 | 0.0 | 0.0 | 0.0 |
+|  EXTRACELLULAR MATRIX ORGANIZATION R-HSA-1474244.1 | 213 | 0.8166237 | 2.3017046 | 0.0 | 0.0 | 0.0 |
+|COLLAGEN BIOSYNTHESIS AND MODIFYING ENZYMES | 51 | 0.90042245 | 2.2063174 | 0.0 | 0.0 | 0.0 |
+| EXTRACELLULAR MATRIX DISASSEMBLY GO:0022617| 93 | 0.8341315 | 2.2000377 | 0.0 | 0.0 | 0.0 |
+| COLLAGEN METABOLIC PROCESS GO:0032963| 65 | 0.85170335 | 2.1836345 | 0.0 | 0.0 | 0.0 |
+| ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
 ### What now?
 
-At this point you have traded a list of genes for a slightly shorter list of pathways. It is possible that you already know the types of pathways that interest you in which case you may sort through the detailed enrichment results.
+At this point you have traded a list of genes for a slightly shorter list of pathways.
 
-On the other hand, you may want to get a better appreciation for the grander themes that have emerge from you collection of pathways. In this case, we recommend that an enrichment map analysis be performed.
+On one hand, you may already know precisely the types of pathways that interest you, in which case, you can sort through the detailed enrichment results table by hand.
+
+On the other hand, you may desire an appreciation of the grander themes emerging within your collection of enriched pathways. In this case, we recommend you generate an [enrichment map](//TODO).
 
 ## <a href="#references" name="references">IX. References</a>
 <div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
