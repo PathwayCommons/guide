@@ -4,7 +4,7 @@ subtitle: Derive a list of differentially expressed genes from TCGA ovarian RNA 
 cover: cover2.png
 date: 2014-02-27
 layout: document
-category: TCGA_Ovarian_Cancer
+category: Genomic_Data_Commons
 badge: TCGA
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
