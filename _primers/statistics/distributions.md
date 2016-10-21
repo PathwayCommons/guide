@@ -79,6 +79,17 @@ data <- data.frame( x = aces, y = probability )
 
 # Bar plot
 library(ggplot2)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning: package 'ggplot2' was built under R version 3.2.3
+{% endhighlight %}
+
+
+
+{% highlight r %}
 ggplot(data, aes(x=factor(x), y=y)) +
   theme(axis.text=element_text(size=14),
         axis.title=element_text(size=18,face="bold"),

@@ -227,10 +227,12 @@ library(SummarizedExperiment)
 library(DEFormats)
 
 ### ============ Declare directories =========
-BASE_DIR <- "/Documents/data/TCGA/"
+BASE_DIR <- "/Documents/data/TCGA/" # Change to match your directory structure
 TCGAOV_RNASEQ_DIR <- file.path(BASE_DIR)
 TCGAOV_SUBTYPES_FILE <- file.path(BASE_DIR, "Verhaak_JCI_2013_tableS1.txt")
 ```
+
+You will need to change the `BASE_DIR` to suit your directory structure and the location of `Verhaak_JCI_2013_tableS1.txt`.
 
 **Step 1: Query**
 
@@ -239,14 +241,7 @@ The `GDCquery(...)` function allows us to search the GDC for data based on the f
 ```r
 query <- GDCquery(project = "TCGA-OV",
                   data.category = "Transcriptome Profiling",
-                  workflow.type = "HTSeq - Counts",
-                  barcode = c("TCGA-13-1403-01A-01R-1565-13",
-                              "TCGA-36-1581-01A-01R-1566-13",
-                              "TCGA-25-1632-01A-01R-1566-13",
-                              "TCGA-24-1105-01A-01R-1565-13",
-                              "TCGA-09-1659-01B-01R-1564-13"
-                              )
-                  )
+                  workflow.type = "HTSeq - Counts")
 ```
 
 **Step 2: Download**
@@ -261,9 +256,9 @@ GDCdownload(query = query,
 
 > Note: These commands will trigger a download of the GDC Data Transfer Tool (gdc-client) and a manifest (gdc_manifest.txt) to your home directory.
 
-In our case we will be (temporarily) downloading over 400 files so make sure you have enough space on your computer.
+In our case we will be (temporarily) downloading 379 files so make sure you have enough space on your computer.
 
->*Note: There can be a large number of files downloaded and data and the process can take many minutes to hours depending on your connection speed.*
+>Note: There can be a large number of files downloaded. Downloading the 379 files above took on the order of 15 minutes but your mileage may vary depending on your connection speed.
 
 **Step 3: Prepare**
 
@@ -287,12 +282,12 @@ se <- GDCprepare(query=query,
 
 The SummarizedExperiment object containing the RNA-seq assay data and associated metadata for the TCGA-OV samples is now available. The differential gene expression analysis prescribed by [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html) uses a `DGEList` container to house both the assay and category information.
 
-To this end, we use the `DEFormats` package function `DEGList(...)` to convert our SummarizedExperiment and integrate the subtypes. Note that we perform a merge between the assay data and subtypes using the TCGA barcodes, which are referred to as "patient" and "ID", respectively.
+To this end, we use the `DEFormats` package function `DEGList(...)` to convert our SummarizedExperiment and integrate the subtypes. Note that we need to find the samples with an assigned subtype and subset accordingly.
 
 ```r
 ### ============ 4.Integrate =========
 
-### load subtype assignments
+### Load subtype assignments
 TCGAOV_subtypes <- read.table(TCGAOV_SUBTYPES_FILE,
                               header = TRUE,
                               sep = "\t",
@@ -300,11 +295,17 @@ TCGAOV_subtypes <- read.table(TCGAOV_SUBTYPES_FILE,
                               check.names = FALSE,
                               stringsAsFactors = FALSE)
 
-### merge subtype assignments
-merged <- merge(colData(se), TCGAOV_subtypes, by.x="patient", by.y="ID")
+### TCGA barcodes shared between se and subtype assignments
+barcodes <- intersect(colData(se)$patient, TCGAOV_subtypes$ID)
+### Corresponding indices of se
+indices_se_with_subtype <- match(barcodes, colData(se)$patient)
+### Corresponding indices of TCGAOV_subtypes
+indices_subtype_in_se <- match(barcodes, TCGAOV_subtypes$ID)
+### Subset se samples
+se <- se[, indices_se_with_subtype]
 
 ### convert to DGEList
-TCGAOV_data = DGEList(se, group=merged$SUBTYPE)
+TCGAOV_data = DGEList(se, group=TCGAOV_subtypes$SUBTYPE[indices_subtype_in_se])
 
 ### save to file
 save(TCGAOV_data, file=file.path(TCGAOV_RNASEQ_DIR, "TCGAOV_data.rda"))
@@ -325,7 +326,7 @@ File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (gro
 
   - Download: [TCGAOV_data.rda]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }})
     - format: Rdata
-    - size: 1.9 MB
+    - size: 34 MB
 
 ## <a href="#references" name="references">VI. References</a>
 <div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div>
