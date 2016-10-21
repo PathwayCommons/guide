@@ -26,8 +26,6 @@ figures:
   - {:.list-unstyled} [II. Genomic Data Commons](#gdc)  
   - {:.list-unstyled} [III. TCGA-OV project](#tcgaovProject)
   - {:.list-unstyled} [IV. Data retrieval](#dataRetrieval)
-  - {:.list-unstyled} [V. Data extraction](#dataExtraction)
-  - {:.list-unstyled} [VI. TCGA ovarian cancer datasets](#datasets)
   - {:.list-unstyled} [VII. References](#references)
 
 <hr/>
@@ -320,12 +318,11 @@ The preceding R code is presented again in its entirety.
 
 <script src="https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1.js"></script>
 
-## <a href="#datasets" name="datasets">VI. TCGA ovarian cancer datasets</a>
+## <a href="#datasets" name="datasets">VI. TCGA-OV RNA sequencing data</a>
 
-- TCGA-OV RNA-seq expression data (counts) and subtypes (group) inside a DGEList
+File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an edgeR DGEList variable `TCGAOV_data` and saved to an RData file named `TCGAOV_data.rda`.
+
   - Download: [TCGAOV_data.rda]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }})
-    - variable name: `TCGAOV_data`
-    - type: edgeR DGEList container
     - format: Rdata
     - size: 1.9 MB
 
