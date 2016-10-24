@@ -5,9 +5,10 @@ pmid: 16199517
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
 cover: cover.jpg
 date: 2016-04-20
-layout: document
-category: Software
+layout: embedded
+category: pathway_enrichment
 draft: false
+order: 3
 figures:
   figure_overview: figure_overview.png
   figure_1: figure_gsea_local.png

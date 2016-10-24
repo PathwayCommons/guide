@@ -3,9 +3,10 @@ title: Process Data
 subtitle: Derive a list of differentially expressed genes from TCGA ovarian RNA sequencing data
 cover: cover2.png
 date: 2014-02-27
-layout: document
-category: Genomic_Data_Commons
+layout: embedded
+category: pathway_enrichment
 badge: RNA-seq
+order: 2
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk.zip  
 figures:

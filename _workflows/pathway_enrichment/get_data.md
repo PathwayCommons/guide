@@ -5,9 +5,10 @@ pmid: 21720365
 cover: cover.jpg
 pdf: nihms-313090.pdf
 date: 2014-02-27
-layout: publication
-category: Genomic_Data_Commons
+layout: embedded
+category: pathway_enrichment
 badge: TCGA
+order: 1
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
   tcgaov_data: TCGAOV_data.rda  

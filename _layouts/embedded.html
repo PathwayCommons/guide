@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  {% include head.html %}
+
+  <body class="theme-base-01">
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="container content">
+        <div id='ajax-spinner'><img src="{{ site.baseurl }}/{{ site.media_root }}/spinner.gif"/></div>
+
+        <div class="embedded">
+          <h1 class="page-title">{{ page.title }}<small>{% include icons/edit.html %}</small></h1>
+          <div class="subtitle">{{ page.subtitle }}</div>
+          <hr/>
+          <div class="linkout clearfix">
+            <ul class="list-inline pull-right">
+            {% include icons/social.html %}
+            <li></li>
+            {% include icons/download.html %}
+            </ul>
+          </div>
+          <hr/>
+          {{ content }}
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
