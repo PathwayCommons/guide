@@ -1,0 +1,41 @@
+{
+  "name": "progress-tracker",
+  "description": "A flexible SASS component to illustrate the steps in a multi step process e.g. a multi step form, a timeline or a quiz.",
+  "authors": [
+    "Nigel O Toole <pure@purestructure.com> (http://www.purestructure.com)"
+  ],
+  "license": "MIT",
+  "main": "app/styles/progress-tracker.scss",
+  "keywords": [
+    "progress",
+    "tracker",
+    "multi",
+    "step",
+    "multi-step",
+    "multi",
+    "stage",
+    "multi-stage",
+    "sass",
+    "css",
+    "flexbox"
+  ],
+  "homepage": "https://github.com/NigelOToole/progress-tracker",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "1.4.0",
+  "_release": "1.4.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.4.0",
+    "commit": "c645b62b17b28775e9f57cdc852e8690b1981d0a"
+  },
+  "_source": "https://github.com/NigelOToole/progress-tracker.git",
+  "_target": "^1.4.0",
+  "_originalSource": "progress-tracker",
+  "_direct": true
+}

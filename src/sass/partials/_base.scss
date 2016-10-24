@@ -7,8 +7,22 @@
 *                               |__/
 * https://github.com/PathwayCommons/
 *
-* Learn customization
+* Guide customization
 */
+
+
+/*
+* Progress tracker overrides
+*/
+a:link.progress-tracker-link,
+a:hover.progress-tracker-link,
+a:active.progress-tracker-link,
+a:visited.progress-tracker-link{
+  text-decoration: none;
+}
+.progress-marker {
+  padding-bottom: 0px; // To align text within the marker
+}
 
 /* images */
 img {
@@ -336,10 +350,5 @@ img.left {
  }
 
  li.aside.terms {
-   background-color: rgba(90, 49, 13, 0.20);   
+   background-color: rgba(90, 49, 13, 0.20);
  }
-
-
- /*
-  * lists
-  */

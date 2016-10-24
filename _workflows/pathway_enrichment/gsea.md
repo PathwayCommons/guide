@@ -28,7 +28,7 @@ data:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
+  - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Local statistic](#localStatistic)
   - {:.list-unstyled} [IV. Global statistic](#globalStatistic)
@@ -44,7 +44,7 @@ data:
     You can jump right to section <a href="#doingGSEA">VII. Doing GSEA</a> to learn how to use the GSEA software.
   </div>
 
-## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
+## <a href="#goals" name="goals">I. Goals</a>
 
 In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) to identify pathways enriched in gene lists arising from a differential gene expression analysis. We aim to convey how the approach works from an intuitive standpoint before a briefly describing a statistical basis. By then end of this discussion you should:
 

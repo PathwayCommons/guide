@@ -14,7 +14,7 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
+  - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Data processing](#datasets)
   - {:.list-unstyled} [III. Datasets](#datasets)
   - {:.list-unstyled} [IV. References](#references)
@@ -26,7 +26,7 @@ figures:
   To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#datasets">III. Datasets</a>.
 </div>
 
-## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
+## <a href="#goals" name="goals">I. Goals</a>
 This section is a follow-up to ['Get Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get_data/) which describes how to source [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
 
 In this section we will assess differential expression of RNA species between subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a probability value (p-value) suitable for downstream analysis using [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/index.jsp). By then end of this discussion you should:
@@ -65,7 +65,40 @@ Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previousl
 
 <script src="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d.js"></script>
 
+<!-- ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
+### ============ Load ===============
+rm(list=ls(all=TRUE))
+library("edgeR")
 
+### ============ Load ===============
+BASE_DIR <- getwd()
+TCGAOV_data_FILE <- file.path(BASE_DIR, "TCGAOV_data.rda")
+
+## Note 1
+load(TCGAOV_data_FILE)
+
+### ============ Filter ===============
+## Note 2
+comparisons=c("Mesenchymal","Immunoreactive")
+N_Mesenchymal = sum(TCGAOV_data$samples$group == 'Mesenchymal')
+N_Immunoreactive = sum(TCGAOV_data$samples$group == 'Immunoreactive')
+row_with_mincount = rowSums(cpm(TCGAOV_data) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
+TCGAOV_data = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
+
+### ============ Normalize ===============
+## Note 3
+TCGAOV_data = calcNormFactors(TCGAOV_data, method="TMM")
+
+## Note 4
+TCGAOV_data = estimateCommonDisp(TCGAOV_data)
+TCGAOV_data = estimateTagwiseDisp(TCGAOV_data)
+
+### ============ Test ===============
+## Note 5
+TCGAOV_DE = exactTest(TCGAOV_data, pair=comparisons)
+## Note 6
+TCGAOV_TT = topTags(TCGAOV_DE, n=nrow(TCGAOV_data), adjust.method="BH", sort.by="PValue")
+``` -->
 
 #### Note 1
 Load the DGEList variable `TCGAOV_data` from the previous section.
@@ -124,7 +157,16 @@ names(TCGAOV_data)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): could not find function "plotBCV"
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
+{% endhighlight %}
 
 #### Note 5
 
@@ -156,11 +198,37 @@ We can now plot our differentially expressed genes (red) over our full data.
 {% highlight r %}
 ### ============ Plotting ===============
 rn = rownames(TCGAOV_TT$table)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in rownames(TCGAOV_TT$table): object 'TCGAOV_TT' not found
+{% endhighlight %}
+
+
+
+{% highlight r %}
 deg =rn[TCGAOV_TT$table$FDR<0.05]
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): object 'rn' not found
+{% endhighlight %}
+
+
+
+{% highlight r %}
 plotSmear(TCGAOV_data, pair=comparisons, de.tags=deg)
 {% endhighlight %}
 
-<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): could not find function "plotSmear"
+{% endhighlight %}
 
 #### Note 7
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
