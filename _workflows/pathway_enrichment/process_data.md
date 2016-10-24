@@ -124,7 +124,7 @@ names(TCGAOV_data)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process_data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" /><img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process_data/unnamed-chunk-2-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
 
 #### Note 5
 
@@ -160,7 +160,7 @@ deg =rn[TCGAOV_TT$table$FDR<0.05]
 plotSmear(TCGAOV_data, pair=comparisons, de.tags=deg)
 {% endhighlight %}
 
-<img src="/guide/media/datasets/TCGA_Ovarian_Cancer/process_data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
 
 #### Note 7
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.

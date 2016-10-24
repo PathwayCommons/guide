@@ -48,32 +48,21 @@ collections:
     permalink: /case_studies/:path/
     index: /case_studies/archive/
     description: Deep-dive into pathway analysis
-    icon: index/case_study.png
 
-  datasets:
+  presentations:
     output: true
-    permalink: /datasets/:path/
-    index: /datasets/archive/
-    description: Datasets
-    icon: index/datasets.png
-
-  communications:
-    output: true
-    permalink: /communications/:path/
-    index: /communications/archive/
-    description: Communications
-    icon: index/documents.png
+    permalink: /presentations/:path/
+    index: /presentations/archive/
+    description: Presentations
 
   primers:
     output: true
     permalink: /primers/:path/
     index: /primers/archive/
     description: Primers
-    icon: index/primers.png
 
-  analysis:
+  workflows:
     output: true
-    permalink: /analysis/:path/
-    index: /analysis/archive/
-    description: Analysis
-    icon: index/analysis.png
+    permalink: /workflows/:path/
+    index: /workflows/archive/
+    description: Workflows
