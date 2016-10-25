@@ -7,6 +7,7 @@ layout: embedded
 category: pathway_enrichment
 badge: RNA-seq
 order: 2
+gist: 32c23ac64138c59b1a150987b023d57d
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk.zip  
 figures:
@@ -16,55 +17,67 @@ figures:
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
-  - {:.list-unstyled} [II. Data processing](#datasets)
-  - {:.list-unstyled} [III. Datasets](#datasets)
-  - {:.list-unstyled} [IV. References](#references)
-
+  - {:.list-unstyled} [II. Background](#background)
+  - {:.list-unstyled} [III. Practical](#practical)
+  - {:.list-unstyled} [IV. Data](#data)
+  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#datasets">III. Datasets</a>.
+  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">V. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
-This section is a follow-up to ['Get Data']({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get_data/) which describes how to source [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
+This section is a follow-up to the section describing how to get [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview) (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
 
-In this section we will assess differential expression of RNA species between subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a probability value (p-value) suitable for downstream analysis using [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/index.jsp). By then end of this discussion you should:
+In this section we will assess differential expression of RNA species between subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a probability value (p-value) suitable for downstream analysis (Figure 1).
 
-1. Be able to use the [R](https://www.r-project.org/) package [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) to filter, normalize and test for differential expression
-2. Obtain a list of genes for TCGA HGS-OvCa ranked by a p-value for differential expression and suitable for GSEA
+By then end of this discussion you should:
+
+1. Be able to use the [R](https://www.r-project.org/) package [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) to test for differential expression
+2. Obtain a list of genes for TCGA HGS-OvCa ranked by a function of the p-value for differential expression
 
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure_1. Summary and Goals.</strong> This section describes TCGA ovarian cancer RNA-seq data processing. The TCGA ovarian cancer RNA sequencing data sourced in the previous section 'Get data' is filtered and normalized. Finally, we derive a list of genes ranked by differential expression (p-value) suitable for downstream pathway analysis.
+  <strong>Figure 1. Goals.</strong> Steps required to process TCGA-OV RNA-seq data for differential expression between 'immunoreactive' and 'mesenchymal' subtypes. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the data is filtered for genes with a minimum number of counts. The filtered data is then normalized and fit to a statistical model in steps 2-3.  In step 4, p-values for differential expression between subtypes is assessed and adjusted for multiple testing in step 5. Finally, the genes are ordered based upon a function of the p-values.
 </div>
 
-## <a href="#dataProcessing" name="dataProcessing">II. Data processing</a>
+## <a href="#background" name="background">II. Background</a>
+
+We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/) for a detailed description of the theory underlying the processing steps described here.
+
+## <a href="#practical" name="practical">III. Practical</a>
 
 ### Software requirements
 
-To transform the [TCGA HGS-OvCa RNA-seq count data]({{ site.baseurl}}/datasets/TCGA_Ovarian_Cancer/get_data/) retrieved previously into a list of genes differentially expressed between 'mesenchymal' and 'immunoreactive' subtypes we will need the following materials.
+To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes differentially expressed between 'mesenchymal' and 'immunoreactive' subtypes we will need the following materials.
 
-- Files
-  - RNA-seq assay and category information
-    - [TCGAOV_data.rda]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get_data/#datasets)  
-- Software  
-  - [R](https://www.r-project.org/) version 3.3.1
-    - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) version 3.16.0   
+- RNA-seq assay and category information
+  - [TCGAOV_data.rda]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data)  
+- [R](https://www.r-project.org/) version 3.3.1
+  - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) version 3.16.0   
 
-For the sake of consistency with instructions in 'Get Data', we assume files are located in a local directory `/Documents/data/TCGA/`.
+We will assume files are located in a local directory `/Documents/data/TCGA/`.
 
-### Process
+```shell
+Documents
+|
+|--- data
+    |
+    |--- TCGA
+        |
+        |--- TCGAOV_data.rda            
+        |
+        |--- Verhaak_JCI_2013_tableS1.txt            
+        |
+        |--- TCGA-OV
+            |--- ...        
+...
+```
 
-<div class="alert alert-warning text-justify" role="alert">
-  This section leans heavily on our primer <a href="{{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/">RNA Sequencing Analysis</a> which details the rationale and theory underlying the RNA sequencing normalization and testing procedures described here.
-</div>
-
-Load the TCGA HGS-OvCa RNA-seq data and subtype assignments [described previously]({{ site.baseurl }}/datasets/TCGA_Ovarian_Cancer/get_data/) then filter, normalize, test for differential expression and write out the resulting ranked list of p-values for each gene. We present the full code followed by a brief explanation.
-
-<script src="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d.js"></script>
+### Data processing
 
 <!-- ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
 ### ============ Load ===============
@@ -75,34 +88,35 @@ library("edgeR")
 BASE_DIR <- getwd()
 TCGAOV_data_FILE <- file.path(BASE_DIR, "TCGAOV_data.rda")
 
-## Note 1
+### ============ 0. Load DGEList =========
 load(TCGAOV_data_FILE)
 
-### ============ Filter ===============
-## Note 2
+### ============ 1. Filter ===============
 comparisons=c("Mesenchymal","Immunoreactive")
 N_Mesenchymal = sum(TCGAOV_data$samples$group == 'Mesenchymal')
 N_Immunoreactive = sum(TCGAOV_data$samples$group == 'Immunoreactive')
 row_with_mincount = rowSums(cpm(TCGAOV_data) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
-TCGAOV_data = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
+TCGAOV_filtered = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
 
-### ============ Normalize ===============
-## Note 3
-TCGAOV_data = calcNormFactors(TCGAOV_data, method="TMM")
+### ============ 2. Normalize ===============
+TCGAOV_filtered_TMM = calcNormFactors(TCGAOV_filtered, method="TMM")
 
-## Note 4
-TCGAOV_data = estimateCommonDisp(TCGAOV_data)
-TCGAOV_data = estimateTagwiseDisp(TCGAOV_data)
+### ============ 3. Fit ===============
+TCGAOV_filtered_commondisp = estimateCommonDisp(TCGAOV_filtered_TMM)
+TCGAOV_fitted = estimateTagwiseDisp(TCGAOV_filtered_commondisp)
 
-### ============ Test ===============
-## Note 5
-TCGAOV_DE = exactTest(TCGAOV_data, pair=comparisons)
-## Note 6
-TCGAOV_TT = topTags(TCGAOV_DE, n=nrow(TCGAOV_data), adjust.method="BH", sort.by="PValue")
+### ============ 4. Test ===============
+TCGAOV_DE = exactTest(TCGAOV_fitted, pair=comparisons)
+
+### ============ 5. Adjust ===============
+TCGAOV_TT = topTags(TCGAOV_DE, n=nrow(TCGAOV_filtered), adjust.method="BH", sort.by="PValue")
 ``` -->
 
-#### Note 1
-Load the DGEList variable `TCGAOV_data` from the previous section.
+**Step 0: Installation**
+
+Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `TCGAOV_data` from the previous section.
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="3-14"></code>
 
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
@@ -113,10 +127,15 @@ The DGEList contains an attribute `counts` which is a table identical to our inp
 |TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38040210| 1|
 |TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 57508980| 1|
 
-#### Note 2
+**Step 1: Filter**
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="16-21"></code>
+
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to remove noisy genes with low expression.
 
-#### Note 3
+**Step 2: Normalize**
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="23-24"></code>
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization) using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
@@ -139,7 +158,9 @@ $$
 
 Recall from our discussion on normalization that $$S_k$$ represents our total RNA output whose increase will lead to under-sampling genes via RNA-seq and *vice versa*. The 'effective library size' replaces `lib.size` for each case and is computed by simply multiplying by `norm.factors`. This normalized result is used in downstream, differential expression testing and is a 'model-based' normalization in contrast to those that directly transform the raw data.
 
-#### Note 4
+**Step 3: Fit**
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="27-28"></code>
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
@@ -169,9 +190,11 @@ Let us take a look at the data we've generated. Below we plot the common dispers
 ## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
 {% endhighlight %}
 
-#### Note 5
-
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression), $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
+
+**Step 4: Test**
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="31"></code>
 
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
@@ -182,7 +205,9 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 |ENSG00000000457| 0.06727284| 3.814321| 0.3411576097|
 |ENSG00000000460| 0.24572199| 3.301272| 0.0095910907|
 
-#### Note 6
+**Step 5: Adjust**
+
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="33-37"></code>
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR) to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
@@ -231,15 +256,27 @@ plotSmear(TCGAOV_data, pair=comparisons, de.tags=deg)
 ## Error in eval(expr, envir, enclos): could not find function "plotSmear"
 {% endhighlight %}
 
-#### Note 7
-The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
+**Step 6: Rank**
 
-#### Note 8
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="39-43"></code>
+
+The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
 Set the gene name from the Ensembl gene ID to the `external_gene_name` which is compatible with the HGNC namespace.
 
-## <a href="#datasets" name="datasets">III. Datasets</a>
+The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
-- {:.list-unstyled} Differential gene expression ranks: <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_edger_ranks.rnk.zip`</a>(145 KB)
+<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="45-51"></code>
+
+<hr/>
+
+We present the preceding code in its entirety.
+
+<code data-gist-id="{{ page.gist }}"></code>
+
+## <a href="#data" name="data">IV. Data</a>
+
+- {:.list-unstyled} Differential gene expression ranks
+  - <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_edger_ranks.rnk.zip`</a>(293 KB)
   - Comparisons
     - 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes
   - Format: tab-delimited  
@@ -255,5 +292,10 @@ Set the gene name from the Ensembl gene ID to the `external_gene_name` which is 
 
 <hr/>
 
-## <a href="#references" name="references">IV. References</a>
-<div class="panel_group" data-inline="23975260,21720365,23359318"></div>
+## <a href="#references" name="references">V. References</a>
+
+- Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
+- Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
+- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013)
+
+<!-- <div class="panel_group" data-inline="23975260,21720365,23359318"></div> -->

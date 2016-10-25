@@ -215,7 +215,7 @@ Figure 6 summarizes the main steps that we will follow in to use the TCGAbiolink
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.short }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. GDC data retrieval.</strong> Steps are required to fetch data from the GDC. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the GDC is queried for the data of interest and this query (data frame) is used to instruct the file downloads in step 2. Note that data files are temporarily downloaded to the client computer. In step 3, the raw data are prepared as a SummarizedExperiment container (Huber 2015) then combined with the category information in the subtypes file into a DGEList from the edgeR package.
+  <strong>Figure 6. GDC data retrieval.</strong> Steps required to fetch data from the GDC. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the GDC is queried for the data of interest and this query (data frame) is used to instruct the file downloads in step 2. Note that data files are temporarily downloaded to the client computer. In step 3, the raw data are prepared as a SummarizedExperiment container (Huber 2015) then combined with the category information in the subtypes file into a DGEList from the edgeR package.
 </div>
 
 Below we detail the R commands used to retrieve the data. We will assume that you have downloaded the subtype file `Verhaak_JCI_2013_tableS1.txt` and your directory structure looks something like the following.
