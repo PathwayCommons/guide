@@ -12,10 +12,12 @@
 						'<a href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
 					'</div>' +
 				  '<div class="panel-body">' +
+						'<iframe id="panel-frame" src="" width="100%" height="100%" frameBorder="0"></iframe>' +
 				  '</div>' +
 				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
 				'</div>',
-			$panel
+			$panel,
+			$panel_frame
 			;
 
 		event.preventDefault();
@@ -27,18 +29,10 @@
 		$target_node = $( '#embed-target' );
 		$panel = $( $.parseHTML( panel_html_template ) );
 
-		$.get(location)
-			.done(function(data) {
-				var $embedded = $('<div></div>').append($.parseHTML(data)).find( '.embedded' );
-				$panel.find( '.panel-body' ).html( $embedded.html() );
-				$panel.find( '.panel-heading a' ).attr('href', location);
-				$target_node.html($panel.html());
-		  })
-		  .fail(function() {
-				$( this ).removeClass( 'is-complete' );
-		    console.log( "error" );
-		  })
-		  .always(function() {
-		  });
+		$panel_frame = $panel.find( '.panel-body #panel-frame' );
+		$panel_frame.attr( 'src', location );
+		$target_node.html( $panel.html() ).find(' .panel-body #panel-frame ').load(function() {
+	    this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+		});
 	});
 })(jQuery);
