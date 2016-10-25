@@ -12,12 +12,11 @@ badge: RNA-seq
 
 {% assign docs = (site.workflows | where: 'category' , 'pathway_enrichment' | sort: 'order' ) %}
 
-
 <div class="progress-tracker-wrapper progress-tracker-mobile">
   <ul class="progress-tracker progress-tracker--vertical">
     {% for doc in docs %}    
       <li class="progress-step" >
-        <a class="progress-tracker-link">
+        <a class="progress-tracker-link" href="{{site.baseurl}}{{ doc.url }}">
           <span class="progress-marker">{{ doc.order }}</span>
           <span class="progress-text">
             <h4 class="progress-title">{{ doc.title }}</h4>
@@ -26,13 +25,7 @@ badge: RNA-seq
         </a>
       </li>
     {% endfor %}
-
   </ul>
 </div>
 
-<iframe class="embedded-frame" id="workflow-frame"  
-width="100%" height="20000" frameborder="0" src=""></iframe>
-
-<hr/>
-
-<a href="#">Top</a>
+<div id="embed-target"></div>

@@ -5,29 +5,36 @@
 	$('.progress-tracker-wrapper li').click(function(event){
 		var
 			location,
-			$iframe,
-			iframe_height,
-			window_height;
-		event.preventDefault();
+			$target_node,
+			panel_html_template =
+				'<div class="panel panel-primary">' +
+				  '<div class="panel-body">' +
+				  '</div>' +
+				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
+				'</div>',
+			$panel
+			;
 
+		event.preventDefault();
+		$( this ).addClass( 'is-complete' );
 		location = $( this )
 			.find( '.progress-tracker-link' )
 			.attr( 'href' );
 
-		$( this ).addClass( 'is-complete' );
+		$target_node = $( '#embed-target' );
+		$panel = $( $.parseHTML( panel_html_template ) );
 
-		window_height = $( window ).height();
-
-		$('#workflow-frame').load(function(){
-
-				iframe_height = this.contentWindow.document.body.offsetHeight + 2.0*window_height;
-				console.log('iframe_height %s, %s', iframe_height, window_height);
-				$('#workflow-frame').height(iframe_height);
-				// window_height = 0;
-		});
-
-		$('#workflow-frame').attr('src', location);
-
-
+		$.get(location)
+			.done(function(data) {
+				var $embedded = $('<div></div>').append($.parseHTML(data)).find( '.embedded' );
+				$panel.find( '.panel-body' ).html( $embedded.html() );
+				$target_node.html($panel.html());
+		  })
+		  .fail(function() {
+				$( this ).removeClass( 'is-complete' );
+		    console.log( "error" );
+		  })
+		  .always(function() {
+		  });
 	});
 })(jQuery);

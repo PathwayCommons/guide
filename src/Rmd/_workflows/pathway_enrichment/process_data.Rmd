@@ -1,6 +1,6 @@
 ---
 title: Process Data
-subtitle: Derive a list of differentially expressed genes from TCGA ovarian RNA sequencing data
+subtitle: Derive a list of differentially expressed genes from TCGA-OV RNA sequencing data
 cover: cover2.png
 date: 2014-02-27
 layout: embedded
