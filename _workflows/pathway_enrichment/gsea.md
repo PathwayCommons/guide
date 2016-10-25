@@ -642,7 +642,7 @@ On the other hand, you may desire an appreciation of the grander themes emerging
 
 ## <a href="#references" name="references">V. References</a>
 
-<div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
+<div class="panel_group" data-inline=" 19192285,10802651,15647293,26527732,15226741,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
 
 <!-- - Ackermann M et al. A general modular framework for gene set enrichment analysis. BMC Bioinformatics vol. 10 (2009)
 - Ashburner M et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nat. Genet. vol. 25 (2000)

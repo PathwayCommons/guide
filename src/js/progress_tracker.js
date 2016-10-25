@@ -13,7 +13,7 @@
 						'<a id="panel-heading-link" href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
 					'</div>' +
 					'<div class="panel-body">' +
-						'<iframe id="panel-frame" src="" width="100%" height="2000px" frameBorder="0" scrolling="no"></iframe>' +
+						'<iframe id="panel-frame" src="" width="100%" height="2000px" frameBorder="0" ></iframe>' +
 					'</div>' +
 					'<a href="#top"><div class="panel-footer">Top</div></a>' +
 				'</div>',
