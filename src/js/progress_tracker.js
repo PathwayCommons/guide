@@ -17,7 +17,8 @@
 				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
 				'</div>',
 			$panel,
-			$panel_frame
+			$panel_frame,
+			h_window = $(window).height()
 			;
 
 		event.preventDefault();
@@ -29,10 +30,18 @@
 		$target_node = $( '#embed-target' );
 		$panel = $( $.parseHTML( panel_html_template ) );
 
+		$panel.find( '.panel-heading a' ).attr( 'href', location );
 		$panel_frame = $panel.find( '.panel-body #panel-frame' );
 		$panel_frame.attr( 'src', location );
-		$target_node.html( $panel.html() ).find(' .panel-body #panel-frame ').load(function() {
-	    this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+		$target_node.html( $panel.html() )
+
+		$target_node.find(' .panel-body #panel-frame ').on( 'load', function() {
+			var self = this;
+
+			//Haaaaaaaccckkkkk - try with react?
+			window.setTimeout(function(){
+				self.style.height = self.contentWindow.document.body.offsetHeight + 'px';
+			}, 100);
 		});
 	});
 })(jQuery);

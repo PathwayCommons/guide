@@ -39,7 +39,7 @@ By then end of this discussion you should:
 2. Obtain a list of genes for TCGA HGS-OvCa ranked by a function of the p-value for differential expression
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Goals.</strong> Steps required to process TCGA-OV RNA-seq data for differential expression between 'immunoreactive' and 'mesenchymal' subtypes. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the data is filtered for genes with a minimum number of counts. The filtered data is then normalized and fit to a statistical model in steps 2-3.  In step 4, p-values for differential expression between subtypes is assessed and adjusted for multiple testing in step 5. Finally, the genes are ordered based upon a function of the p-values.
 </div>

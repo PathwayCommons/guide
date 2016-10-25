@@ -48,7 +48,7 @@ By then end of this discussion you should:
 3. Be able to prepare the data for downstream differential gene expression analysis
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.super-slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Summary & goals.</strong> The Genomic Data Commons (GDC) is a repository that stores data from  The Cancer Genome Atlas (TCGA) effort to characterize a wide variety of cancers. TCGA aims to generate data concerning mutations, copy number variants, post-transcriptional modifications and gene expression, including RNA sequencing. Detailed clinical and biospecimen metadata are also made available for each sample. Our goal is to show how to obtain RNA-seq data in a format suitable for downstream analysis of differential gene expression. This involves querying the GDC for data availability (cancer, data type), downloading the data and preparing it for downstream analysis.       
 </div>
