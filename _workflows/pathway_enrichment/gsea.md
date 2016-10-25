@@ -18,7 +18,7 @@ figures:
   figure_6: figure_gsea_bimodalnull.png
   figure_7: figure_gsea_fdr.png
   figure_8: figure_gsea_overview.png  
-  figure_9: gsea_start.png
+  figure_9: figure_gsea_start.png
   figure_10: figure_gsea_settings.png
   figure_11: figure_gsea_report.png
   figure_12: figure_gsea_report_snapshot.png
@@ -38,7 +38,7 @@ data:
   <hr/>
 
   <div class="alert alert-warning text-justify" role="alert">
-    You can jump right to section <a href="#doingGSEA">VII. Doing GSEA</a> to learn how to use the GSEA software.
+    You can jump right to the section <a href="#practical">III. Practical</a> to learn how to process data with the GSEA software.
   </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
@@ -70,7 +70,7 @@ While tremendously useful for interpreting differential expression output, ORA a
 
 Gene Set Enrichment Analysis (GSEA) is a tool that belongs to a class of second-generation pathway analysis approaches referred to as *significance analysis of function and expression (SAFE)* (Barry 2005). These methods are distinguished from their forerunners in that they make use of entire data sets including quantitive data gene expression values or their proxies.
 
-Methods that fall under the SAFE framework use a four-step approach to map gene lists onto pathways (Barry 2005).
+Methods that fall under the SAFE framework use a four-step approach to map gene lists onto pathways
 
 1. Calculate a local (gene-level) statistic
 2. Calculate a global (gene set or pathway-level) statistic
@@ -79,7 +79,7 @@ Methods that fall under the SAFE framework use a four-step approach to map gene 
 
 ### Origins of GSEA
 
-GSEA was first described by Mootha *et al.* (Mootha 2003) in an attempt to shed light on the mechanistic basis of Type 2 diabetes mellitus. They reasoned that alterations in gene expression associated with a disease can manifest at the level of biological pathways or co-regulated gene sets, rather than individual genes. The lack of power to detect true signals at the gene level may be a consequence of high-throughput expression measurements which involve heterogeneous samples, modest sample sizes and subtle but nevertheless meaningful alterations expression levels. Ultimately these confound attempts to derive reliable and reproducible associations with a biological state of interest.
+GSEA was first described by Mootha *et al.* (Mootha 2003) in an attempt to shed light on the mechanistic basis of Type 2 diabetes mellitus. They reasoned that alterations in gene expression associated with a disease can manifest at the level of biological pathways or co-regulated gene sets, rather than individual genes. The lack of power to detect true signals at the gene level may be a consequence of high-throughput expression measurements which involve heterogeneous samples, modest sample sizes and subtle but nevertheless meaningful alterations expression levels. Ultimately these confound attempts to derive reproducible associations with a biological state of interest.
 
 In their study, Mootha *et al.* employed microarrays to compare gene expression in mice with diabetes mellitus (DM2) to controls with normal glucose tolerance (NGT). On one hand, two statistical analysis approaches failed to identify a single differentially expressed gene between these two groups of mice. On the other hand, GSEA identified oxidative phosphorylation (OXPHOS) as the top scoring gene set down-regulated in DM2; The next four top-scoring gene sets largely overlapped with OXPHOS.
 
@@ -89,15 +89,13 @@ Importantly, the prominence of OXPHOS genes provided the necessary clues for the
 
 Criticisms concerning the original methodology (Damian 2004) were considered in an updated version of GSEA described in detail by Subramanian *et al.* (Subramanian 2005). Below, we provide a description of the approach with particular emphasis on the protocol we recommend for analyzing gene lists ranked according to differential expression.
 
-### Local statistic
+### SAFE Step 1. Local statistic
 
 <div class="alert alert-danger text-justify" role="alert">
   <strong>Caution!</strong> Our procedure for GSEA diverges significantly from  Subramanian <em>et al.</em> (Subramanian 2005) with regards to calculation of local statistics.
 </div>
 
-In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a 'rank metric'. Previously, we described how to [obtain and process RNA-seq datasets]({{site.baseurl}}/datasets/archive/) into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 2).
-
-> *In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference*
+In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a 'rank metric'. Previously, we described how to obtain and process RNA-seq datasets into a single list of genes ordered according to a function of each gene's p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -114,7 +112,7 @@ $$
 
 Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list and down-regulated genes with small p-values at the bottom. If you have followed the instructions we provided for RNA-seq datasets to generate a ranked list then you have already calculated the rank metric. To make the following discussion more concise, we summarize the relevant notation, adapted from Tamayo *et al.* (Tamayo 2016).
 
-### Global statistic
+### SAFE Step 2. Global statistic
 
 The global statistic is at the very heart of GSEA and the rather simple algorithm used to calculate it belies a rather profound statistical method to judge each candidate gene set. We will set aside the technical details for a moment to see how GSEA calculates the enrichment score for a given pathway.
 
@@ -268,7 +266,7 @@ Theorem 3 is the culmination of an extensive body of knowledge surrounding empir
 
 The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an *a priori* significance level $$\alpha$$ and calculate the probability of our observed $$D_n$$ or anything more extreme, denoting this the p-value $$P$$. If $$P \lt \alpha$$ then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of $$H_0$$.
 
-Recall that by definition, the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normalized prior to calculating the p-values. We reserve this discussion for the next section we when broach the topic of [Null distributions](#nullDistributions).
+Recall that by definition, the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normalized prior to calculating the p-values. We reserve this discussion for the next section we when broach the topic of null distributions.
 
 #### Two sample K-S goodness-of-fit test
 
@@ -303,17 +301,15 @@ Second, the authors were unsatisfied with the observation that the unweighted me
 
 > *In the examples described in the text, and in many other examples not reported, we found that p = 1 (weighting by the correlation) is a very reasonable choice that allows significant genes with less than perfect coherence, i.e. only a subset of genes in the set are coordinately expressed, to score well.*
 
-##### Trade-offs
-
 While weighting the enrichment score calculation with the rank metric can increase the power of the approach to detect valid gene sets, it does have several consequences that must be kept in mind.
 
 Recall that the enrichment score is a function of the size of the gene set $$n_k$$. This means that enrichment scores must be normalized for gene set size. In the unweighted case, an analytic expression for the normalization factor can be estimate but when terms are weighted, this is no longer the case and once again, we defer to bootstrap measures to derive it.  
 
-Another trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the empirical bootstrap procedure for deriving the null distribution discussed in the following section concerning [Significance Testing](#significanceTesting).
+Another trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the empirical bootstrap procedure for deriving the null distribution discussed in the following section concerning significance testing.
 
 The above discussion motivates the next section on how GSEA generates null distributions for candidate gene set enrichment scores.  
 
-### Significance testing
+### SAFE Step 3. Significance testing
 
 <div class="alert alert-danger text-justify" role="alert">
   <strong>Caution!</strong> The procedure for deriving null distributions described here is not the same as that described by Subramanian <em>et al.</em> (Subramanian 2005).
@@ -323,7 +319,7 @@ To recap, GSEA uses the set of rank metrics for a gene list to calculate a set o
 
 #### Null distributions
 
-From our discussion of the [global statistic](#globalStatistic), using a weighted enrichment score leaves us without an analytic description of their null distribution. That is, weighting the enrichment score $$S_k^{GSEA}$$ with the local statistic deviates from the classic Kolmogorov-Smirnov statistic which would typically follow a K-S-like distribution.
+From our discussion of the global statistic, using a weighted enrichment score leaves us without an analytic description of their null distribution. That is, weighting the enrichment score $$S_k^{GSEA}$$ with the local statistic deviates from the classic Kolmogorov-Smirnov statistic which would typically follow a K-S-like distribution.
 
 GSEA employs 'resampling' or 'bootstrap' methods to derive an empirical sample of the null distribution for the enrichment scores of each gene set. The GSEA software provides a choice of two flavours of permutation methods that underlie the null distribution calculations (Figure 5).   
 
@@ -371,7 +367,7 @@ Note that throughout this discussion we have chosen to depict the GSEA global st
   <strong>Figure 6. Null distributions.</strong> Permutation methods will result in enrichment scores that lie both above and below zero resulting in a bimodal distribution. In practice, p-values for negative enrichment scores (green) and positive ones (red) are calculated using only the region of the null distribution less than and greater than zero, respectively.  
 </div>
 
-### Multiple testing correction
+### SAFE Step 4. Multiple testing correction
 
 <div class="alert alert-warning text-justify" role="alert">
   You may wish to review our primer on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/">multiple  testing</a>, in particular the section on <a href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/#controllingFDR">false discovery rates</a>.
@@ -381,7 +377,7 @@ When we test a family of hypotheses, the chance of observing a statistic with a 
 
 In GSEA, the collection of gene sets interrogated against the observed data are a family of hypotheses. The recommended procedure for quantifying Type I errors is the false discovery rate (FDR). The FDR is defined as the expected value of the fraction of rejected null hypotheses that are in fact true. In practice, GSEA establishes this proportion empirically.
 
-In general, given a specified threshold $$T$$ of the global statistic, the FDR is be the number of true null hypotheses larger than $$T$$ divided by the sum of true and false null hypotheses larger than $$T$$. For GSEA, $$T$$ would be some value of the enrichment score and a true null hypothesis would represent a gene set that is in fact not enriched. In practice, we won't directly observe the latter so it is estimated from the values of the empirical null that exceed $$T$$ (Figure 7).
+In general, given a specified threshold $$T$$ of the global statistic, the FDR is the number of true null hypotheses larger than $$T$$ divided by the sum of true and false null hypotheses larger than $$T$$. For GSEA, $$T$$ would be some value of the enrichment score and a true null hypothesis would represent a gene set that is in fact not enriched. In practice, we won't directly observe the latter so it is estimated from the values of the empirical null that exceed $$T$$ (Figure 7).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -426,7 +422,7 @@ $$
 \end{equation*}
 $$
 
-Remember that, in addition to the gene set enrichment scores (Figure 6, blue), we will also need a normalized null distribution $$\zeta_{k, \boldsymbol{\pi(k)}}^{GSEA}$$ for every gene set (Figure 6, red). Each element of a given null distribution will be determined in a similar fashion
+Remember that, in addition to the gene set enrichment scores (Figure 7, blue), we will also need a normalized null distribution $$\zeta_{k, \boldsymbol{\pi(k)}}^{GSEA}$$ for every gene set (Figure 7, red). Each element of a given null distribution will be determined in a similar fashion
 
 $$
 \begin{equation*}
@@ -555,6 +551,9 @@ In this part, we will load the necessary files into computer memory. We will tel
   - Load the gene set database
     - Repeat the above but instead load the gene set database file (.gmt)
 
+<div class="alert alert-warning text-justify" role="alert">
+  Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the 'Object cache' panel of the 'Load data' tab (Lower right).
+</div>
 
 ### 5. Settings
 
@@ -623,14 +622,14 @@ There are two sections by this name which refers to those gene sets with positiv
 
 **Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are included for each enriched gene set  
 
-| GS  | SIZE    | ES  | NES | NOM p-val | FDR q-val | FWER p-val |
-|:-----|:----------------------|----------:|-----:|---------:|
-| EXTRACELLULAR MATRIX ORGANIZATION GO:0030198| 303 | 0.80865526 | 2.3172472 | 0.0 | 0.0 | 0.0 |
-| EXTRACELLULAR STRUCTURE ORGANIZATION GO:0043062 | 303 | 0.80865526 | 2.3110042 | 0.0 | 0.0 | 0.0 |
-|  EXTRACELLULAR MATRIX ORGANIZATION R-HSA-1474244.1 | 213 | 0.8166237 | 2.3017046 | 0.0 | 0.0 | 0.0 |
-|COLLAGEN BIOSYNTHESIS AND MODIFYING ENZYMES | 51 | 0.90042245 | 2.2063174 | 0.0 | 0.0 | 0.0 |
-| EXTRACELLULAR MATRIX DISASSEMBLY GO:0022617| 93 | 0.8341315 | 2.2000377 | 0.0 | 0.0 | 0.0 |
-| COLLAGEN METABOLIC PROCESS GO:0032963| 65 | 0.85170335 | 2.1836345 | 0.0 | 0.0 | 0.0 |
+|  GS  |  SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
+|:-----|:------:|:-----:|:-----:|:---------:|:---------:|:----------:|
+| HALLMARK_INTERFERON_GAMMA_RESPONSE  | 177  | 0.7945781  | 2.903854  | 0.0| 0.0| 0.0|
+| HALLMARK_INTERFERON_ALPHA_RESPONSE  | 94   | 0.852435   | 2.8311238 | 0.0| 0.0| 0.0|
+| INTERFERON SIGNALING                | 155  | 0.73303986 | 2.6219237 | 0.0| 0.0| 0.0|
+| TYPE I INTERFERON SIGNALING PATHWAY |  45   | 0.84804463 | 2.5468943 | 0.0|0.0| 0.0|
+| INTERFERON GAMMA SIGNALING          |  73   | 0.7764625  | 2.5429115 | 0.0| 0.0| 0.0|
+| INTERFERON ALPHA BETA SIGNALING     |  48   | 0.8390211  | 2.5337644 | 0.0| 0.0| 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
 ### What now?
