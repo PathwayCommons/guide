@@ -1,47 +1,56 @@
 'use strict';
 
-// This JS is only needed for the demo to show features
+// Populate the progress tracker wrapper content
 (function($) {
 	$('.progress-tracker-wrapper li').click(function(event){
-		var
-			location,
-			$target_node,
-			panel_html_template =
-				'<div class="panel panel-primary">' +
-				  '<div class="panel-heading">' +
-						'<a href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
-					'</div>' +
-				  '<div class="panel-body">' +
-						'<iframe id="panel-frame" src="" width="100%" height="2000px" frameBorder="0" scrolling="no"></iframe>' +
-				  '</div>' +
-				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
-				'</div>',
-			$panel,
-			$panel_frame,
-			h_window = $(window).height()
-			;
 
 		event.preventDefault();
-		$( this ).addClass( 'is-complete' );
-		location = $( this )
-			.find( '.progress-tracker-link' )
-			.attr( 'href' );
 
-		$target_node = $( '#embed-target' );
-		$panel = $( $.parseHTML( panel_html_template ) );
+		var
+			panel_html_template =
+				'<div class="panel panel-primary">' +
+					'<div class="panel-heading">' +
+						'<a id="panel-heading-link" href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
+					'</div>' +
+					'<div class="panel-body">' +
+						'<iframe id="panel-frame" src="" width="100%" height="2000px" frameBorder="0" scrolling="no"></iframe>' +
+					'</div>' +
+					'<a href="#top"><div class="panel-footer">Top</div></a>' +
+				'</div>',
 
-		$panel.find( '.panel-heading a' ).attr( 'href', location );
-		$panel_frame = $panel.find( '.panel-body #panel-frame' );
-		$panel_frame.attr( 'src', location );
-		$target_node.html( $panel.html() )
+			jQueryMap = {
+				$progress_step		: $( this ),
+				$progress_link		: $( this ).find( '.progress-tracker-link' ),
+				$progress_tracker	: $( this ).parent(),
+				$progress_tracker_wrapper	: $( this ).closest( '.progress-tracker-wrapper' ),
+				$progress_tracker_content	: $( this ).closest( '.progress-tracker-wrapper' ).find( '#progress-tracker-content' ),
+				$panel : $( $.parseHTML( panel_html_template ) )
+			},
 
-		$target_node.find(' .panel-body #panel-frame ').on( 'load', function() {
+			stateMap = {
+				url: undefined
+			}
+			;
+
+		// Set the list element state
+		jQueryMap.$progress_step.addClass( 'is-complete' );
+		// Retrieve the url
+		stateMap.url = jQueryMap.$progress_link.attr( 'href' );
+
+		// set the $panel iframe src and heading link url
+		jQueryMap.$panel.find( '#panel-frame' ).attr( 'src', stateMap.url );
+		jQueryMap.$panel.find( '#panel-heading-link' ).attr( 'href', stateMap.url );
+
+		// replace the content div
+		jQueryMap.$progress_tracker_content.html( jQueryMap.$panel.html() );
+
+		// register the attached iframe listener
+		jQueryMap.$progress_tracker_wrapper.find( '#panel-frame' ).load(function() {
 			var self = this;
-
-			//Haaaaaaaccckkkkk - try with react?
 			window.setTimeout(function(){
 				self.style.height = self.contentWindow.document.body.offsetHeight + 'px';
 			}, 500);
 		});
+
 	});
 })(jQuery);
