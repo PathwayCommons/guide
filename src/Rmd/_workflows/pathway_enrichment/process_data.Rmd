@@ -25,7 +25,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">V. Data</a>.
+  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
@@ -79,7 +79,7 @@ Documents
 
 ### Data processing
 
-<!-- ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
+```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
 ### ============ Load ===============
 rm(list=ls(all=TRUE))
 library("edgeR")
@@ -102,15 +102,18 @@ TCGAOV_filtered = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
 TCGAOV_filtered_TMM = calcNormFactors(TCGAOV_filtered, method="TMM")
 
 ### ============ 3. Fit ===============
-TCGAOV_filtered_commondisp = estimateCommonDisp(TCGAOV_filtered_TMM)
-TCGAOV_fitted = estimateTagwiseDisp(TCGAOV_filtered_commondisp)
+TCGAOV_fitted_commondisp = estimateCommonDisp(TCGAOV_filtered_TMM)
+TCGAOV_fitted_tagwise = estimateTagwiseDisp(TCGAOV_fitted_commondisp)
 
 ### ============ 4. Test ===============
-TCGAOV_DE = exactTest(TCGAOV_fitted, pair=comparisons)
+TCGAOV_DE = exactTest(TCGAOV_fitted_tagwise, pair=comparisons)
 
 ### ============ 5. Adjust ===============
-TCGAOV_TT = topTags(TCGAOV_DE, n=nrow(TCGAOV_filtered), adjust.method="BH", sort.by="PValue")
-``` -->
+TCGAOV_TT = topTags(TCGAOV_DE,
+                    n=nrow(TCGAOV_filtered),
+                    adjust.method="BH",
+                    sort.by="PValue")
+```
 
 **Step 0: Installation**
 
@@ -181,8 +184,8 @@ Let us take a look at the data we've generated. Below we plot the common dispers
 
 ```{r, out.width = 500, fig.retina = NULL, fig.align="center", echo=FALSE, message=FALSE, warning=FALSE}
 ### ============ Plotting ===============
-plotBCV(TCGAOV_data)
-plotMeanVar(TCGAOV_data, show.tagwise.vars=TRUE, NBline = TRUE)
+plotBCV(TCGAOV_fitted_tagwise)
+plotMeanVar(TCGAOV_fitted_tagwise, show.tagwise.vars=TRUE, NBline = TRUE)
 ```
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression), $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
@@ -219,7 +222,7 @@ We can now plot our differentially expressed genes (red) over our full data.
 ### ============ Plotting ===============
 rn = rownames(TCGAOV_TT$table)
 deg =rn[TCGAOV_TT$table$FDR<0.05]
-plotSmear(TCGAOV_data, pair=comparisons, de.tags=deg)
+plotSmear(TCGAOV_filtered, pair=comparisons, de.tags=deg)
 ```
 
 **Step 6: Rank**

@@ -25,7 +25,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">V. Data</a>.
+  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
@@ -79,38 +79,7 @@ Documents
 
 ### Data processing
 
-<!-- ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
-### ============ Load ===============
-rm(list=ls(all=TRUE))
-library("edgeR")
 
-### ============ Load ===============
-BASE_DIR <- getwd()
-TCGAOV_data_FILE <- file.path(BASE_DIR, "TCGAOV_data.rda")
-
-### ============ 0. Load DGEList =========
-load(TCGAOV_data_FILE)
-
-### ============ 1. Filter ===============
-comparisons=c("Mesenchymal","Immunoreactive")
-N_Mesenchymal = sum(TCGAOV_data$samples$group == 'Mesenchymal')
-N_Immunoreactive = sum(TCGAOV_data$samples$group == 'Immunoreactive')
-row_with_mincount = rowSums(cpm(TCGAOV_data) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
-TCGAOV_filtered = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
-
-### ============ 2. Normalize ===============
-TCGAOV_filtered_TMM = calcNormFactors(TCGAOV_filtered, method="TMM")
-
-### ============ 3. Fit ===============
-TCGAOV_filtered_commondisp = estimateCommonDisp(TCGAOV_filtered_TMM)
-TCGAOV_fitted = estimateTagwiseDisp(TCGAOV_filtered_commondisp)
-
-### ============ 4. Test ===============
-TCGAOV_DE = exactTest(TCGAOV_fitted, pair=comparisons)
-
-### ============ 5. Adjust ===============
-TCGAOV_TT = topTags(TCGAOV_DE, n=nrow(TCGAOV_filtered), adjust.method="BH", sort.by="PValue")
-``` -->
 
 **Step 0: Installation**
 
@@ -179,16 +148,7 @@ names(TCGAOV_data)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotBCV"
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
-{% endhighlight %}
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression), $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
 
@@ -224,37 +184,11 @@ We can now plot our differentially expressed genes (red) over our full data.
 {% highlight r %}
 ### ============ Plotting ===============
 rn = rownames(TCGAOV_TT$table)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in rownames(TCGAOV_TT$table): object 'TCGAOV_TT' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
 deg =rn[TCGAOV_TT$table$FDR<0.05]
+plotSmear(TCGAOV_filtered, pair=comparisons, de.tags=deg)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'rn' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
-plotSmear(TCGAOV_data, pair=comparisons, de.tags=deg)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotSmear"
-{% endhighlight %}
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
 
 **Step 6: Rank**
 
