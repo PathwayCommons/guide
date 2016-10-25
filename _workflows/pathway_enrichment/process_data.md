@@ -10,8 +10,8 @@ order: 2
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk.zip  
 figures:
-  figure_overview: overview.jpg
-  figure_1: ranks_layout.png  
+  figure_1: figure_processdata_overview.jpg
+  figure_2: ranks_layout.png  
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -36,9 +36,9 @@ In this section we will assess differential expression of RNA species between su
 2. Obtain a list of genes for TCGA HGS-OvCa ranked by a p-value for differential expression and suitable for GSEA
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Summary and Goals.</strong> This section describes TCGA ovarian cancer RNA-seq data processing. The TCGA ovarian cancer RNA sequencing data sourced in the previous section 'Get data' is filtered and normalized. Finally, we derive a list of genes ranked by differential expression (p-value) suitable for downstream pathway analysis.
+  <strong>Figure_1. Summary and Goals.</strong> This section describes TCGA ovarian cancer RNA-seq data processing. The TCGA ovarian cancer RNA sequencing data sourced in the previous section 'Get data' is filtered and normalized. Finally, we derive a list of genes ranked by differential expression (p-value) suitable for downstream pathway analysis.
 </div>
 
 ## <a href="#dataProcessing" name="dataProcessing">II. Data processing</a>

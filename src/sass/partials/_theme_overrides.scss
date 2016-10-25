@@ -53,6 +53,10 @@ h2, h3 {
 @media (min-width: 38em) {
   html, body {
     font-size: $font-size-base;
+    // margin: 0;
+    // padding: 0;
+    // height: 100%;
+    // overflow: hidden;
   }
 }
 
