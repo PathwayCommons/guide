@@ -12,7 +12,7 @@
 						'<a href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
 					'</div>' +
 				  '<div class="panel-body">' +
-						'<iframe id="panel-frame" src="" width="100%" height="100%" frameBorder="0"></iframe>' +
+						'<iframe id="panel-frame" src="" width="100%" height="2000px" frameBorder="0"></iframe>' +
 				  '</div>' +
 				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
 				'</div>',
@@ -41,7 +41,7 @@
 			//Haaaaaaaccckkkkk - try with react?
 			window.setTimeout(function(){
 				self.style.height = self.contentWindow.document.body.offsetHeight + 'px';
-			}, 100);
+			}, 500);
 		});
 	});
 })(jQuery);
