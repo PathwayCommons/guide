@@ -228,8 +228,9 @@ We present the preceding code in its entirety.
 
 ## <a href="#references" name="references">V. References</a>
 
+<div class="panel_group" data-inline="23975260,21720365,23359318"></div>
+
+<!--
 - Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
 - Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013)
-
-<!-- <div class="panel_group" data-inline="23975260,21720365,23359318"></div> -->
+- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013) -->

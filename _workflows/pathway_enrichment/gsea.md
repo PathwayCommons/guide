@@ -642,7 +642,9 @@ On the other hand, you may desire an appreciation of the grander themes emerging
 
 ## <a href="#references" name="references">V. References</a>
 
-- Ackermann M et al. A general modular framework for gene set enrichment analysis. BMC Bioinformatics vol. 10 (2009)
+<div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
+
+<!-- - Ackermann M et al. A general modular framework for gene set enrichment analysis. BMC Bioinformatics vol. 10 (2009)
 - Ashburner M et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nat. Genet. vol. 25 (2000)
 - Barry W et al. Significance analysis of functional categories in gene expression studies: a structured permutation approach. Bioinformatics vol. 21 (2005)
 - Caspi R et al. The MetaCyc database of metabolic pathways and enzymes and the BioCyc collection of patway/genome databases. Nucleic Acids Res. vol. 44 (2016)
@@ -658,7 +660,4 @@ On the other hand, you may desire an appreciation of the grander themes emerging
 - Noble W et al. How does multiple testing correction work? Nat. Biotechnol. vol. 27 (2009)
 - Subramanian A et al. Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Proc. Natl. Acad. Sci. U.S.A. vol. 102 (2005)
 - Tamayo P et al. The limitations of simple gene set enrichment analysis assuming gene independence. Stat Methods Med Res vol. 25 (2016)
-- Mutation Consequences and Pathway Analysis working group of the International Cancer Genome Consortium. Pathway and network analysis of cancer genomes. Nat. Methods vol. 12 (2015)
-
-
-<!-- <div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div> -->
+- Mutation Consequences and Pathway Analysis working group of the International Cancer Genome Consortium. Pathway and network analysis of cancer genomes. Nat. Methods vol. 12 (2015) -->
