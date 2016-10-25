@@ -8,6 +8,9 @@
 			$target_node,
 			panel_html_template =
 				'<div class="panel panel-primary">' +
+				  '<div class="panel-heading">' +
+						'<a href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
+					'</div>' +
 				  '<div class="panel-body">' +
 				  '</div>' +
 				  '<a href="#top"><div class="panel-footer">Top</div></a>' +
@@ -28,6 +31,7 @@
 			.done(function(data) {
 				var $embedded = $('<div></div>').append($.parseHTML(data)).find( '.embedded' );
 				$panel.find( '.panel-body' ).html( $embedded.html() );
+				$panel.find( '.panel-heading a' ).attr('href', location);
 				$target_node.html($panel.html());
 		  })
 		  .fail(function() {

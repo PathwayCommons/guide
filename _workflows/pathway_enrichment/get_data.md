@@ -48,7 +48,7 @@ By then end of this discussion you should:
 3. Be able to prepare the data for downstream differential gene expression analysis
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Summary & goals.</strong> The Genomic Data Commons (GDC) is a repository that stores data from  The Cancer Genome Atlas (TCGA) effort to characterize a wide variety of cancers. TCGA aims to generate data concerning mutations, copy number variants, post-transcriptional modifications and gene expression, including RNA sequencing. Detailed clinical and biospecimen metadata are also made available for each sample. Our goal is to show how to obtain RNA-seq data in a format suitable for downstream analysis of differential gene expression. This involves querying the GDC for data availability (cancer, data type), downloading the data and preparing it for downstream analysis.       
 </div>
@@ -82,7 +82,7 @@ As of 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/newsanno
 
 The pipeline from study participant to data consists of a complex constellation of partners, participants and analysis protocols. For a full description we refer the reader to the [TCGA documentation on Data Flow](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow). Figure 2 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process and the [nomenclature](https://gdc-docs.nci.nih.gov/Data_Dictionary/viewer/) that will be referred to herein.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between  projects, cases, clinical data and molecular data for a program and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. TheGDC maintains a <a href="https://gdc-docs.nci.nih.gov/Data_Dictionary/viewer/">Data Dictionary</a> that describes the data model elements.
 </div>
