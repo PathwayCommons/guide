@@ -48,7 +48,7 @@ By then end of this discussion you should:
 3. Be able to prepare the data for downstream differential gene expression analysis
 
 <br/>
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Summary & goals.</strong> The Genomic Data Commons (GDC) is a repository that stores data from  The Cancer Genome Atlas (TCGA) effort to characterize a wide variety of cancers. TCGA aims to generate data concerning mutations, copy number variants, post-transcriptional modifications and gene expression, including RNA sequencing. Detailed clinical and biospecimen metadata are also made available for each sample. Our goal is to show how to obtain RNA-seq data in a format suitable for downstream analysis of differential gene expression. This involves querying the GDC for data availability (cancer, data type), downloading the data and preparing it for downstream analysis.       
 </div>
@@ -296,10 +296,9 @@ File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (gro
     - size: 34 MB
 
 ## <a href="#references" name="references">V. References</a>
+<!-- <div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div> -->
 
-<div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div>
-
-<!-- - Huber W et al. Orchestrating high-throughput genomic analysis with Bioconductor. Nat. Methods vol. 12 (2015)
+- Huber W et al. Orchestrating high-throughput genomic analysis with Bioconductor. Nat. Methods vol. 12 (2015)
 - Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
 - Ahmed A et al. Driver mutations in TP53 are ubiquitous in high grade serous carcinoma of the ovary. J. Pathol. vol. 221 (2010)
 - Bowtell D et al. Rethinking ovarian cancer II: reducing mortality from high-grade serous ovarian cancer. Nat. Rev. Cancer vol. 15 (2015)
@@ -311,4 +310,4 @@ AnimalsAntineoplastic Agents
 - Verhaak R et al. Prognostically relevant gene signatures of high-grade serous ovarian carcinoma. J. Clin. Invest. vol. 123 (2013)
 - Wang K et al. MapSplice: accurate mapping of RNA-seq reads for splice junction discovery. Nucleic Acids Res. vol. 38 (2010)
 - Wang X et al. Unifying gene expression measures from multiple platforms using factor analysis. PLoS ONE vol. 6 (2011)
-- Zhang L et al. Intratumoral T cells, recurrence, and survival in epithelial ovarian cancer. N. Engl. J. Med. vol. 348 (2003) -->
+- Zhang L et al. Intratumoral T cells, recurrence, and survival in epithelial ovarian cancer. N. Engl. J. Med. vol. 348 (2003)
