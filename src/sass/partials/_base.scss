@@ -218,16 +218,16 @@ img.left {
    margin-bottom: 3rem;
 
    .panelista-shade {
-     background: $midnight-blue; //$panelista-background;
+     background: rgba(173, 192, 210, 0.3); //$panelista-background;
      padding: 5em 3em 5em;
 
      h1 {
       font-size: 1.8rem;
-      color: $clouds;
+      color: $midnight-blue;
      }
      p {
        font-size: 1.2rem;
-       color: $clouds;
+       color: $midnight-blue;
      }
    }
  }
