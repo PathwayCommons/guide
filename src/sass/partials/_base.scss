@@ -33,9 +33,16 @@ a:visited.progress-tracker-link{
 .progress-marker {
   padding-bottom: 0px; // To align text within the marker
 }
-.progress-tracker--vertical .progress-text {
+
+.progress-tracker-wrapper {
+  .panel-heading, .panel-body{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .progress-text {
     padding-top: 2px;
     padding-left: 42px;
+  }
 }
 
 /* images */

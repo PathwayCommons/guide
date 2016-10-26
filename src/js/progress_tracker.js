@@ -48,7 +48,7 @@
 		jQueryMap.$progress_tracker_wrapper.find( '#panel-frame' ).load(function() {
 			var self = this;
 			window.setTimeout(function(){
-				self.style.height = self.contentWindow.document.body.offsetHeight + 'px';
+				self.style.height = self.contentWindow.document.body.offsetHeight + 250 + 'px';
 			}, 500);
 		});
 
