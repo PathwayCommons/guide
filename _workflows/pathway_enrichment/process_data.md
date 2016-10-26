@@ -1,11 +1,9 @@
 ---
 title: Process Data
 subtitle: Derive a list of differentially expressed genes from TCGA-OV RNA sequencing data
-cover: cover2.png
 date: 2014-02-27
 layout: embedded
 category: pathway_enrichment
-badge: RNA-seq
 order: 2
 gist: 32c23ac64138c59b1a150987b023d57d
 data:

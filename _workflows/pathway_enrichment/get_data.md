@@ -1,18 +1,17 @@
 ---
 title: Get Data
 subtitle: Use the Genomic Data Commons (GDC) data portal to retrieve TCGA ovarian cancer project (TCGA-OV) RNA sequencing data
-pmid: 21720365
-cover: cover.jpg
 pdf: nihms-313090.pdf
 date: 2014-02-27
 layout: embedded
 category: pathway_enrichment
-badge: TCGA
 order: 1
-gist: 293acd56bfc4181727f3832daed795b1
+gists:
+  id: 293acd56bfc4181727f3832daed795b1
+  file_1: get_data.R
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
-  tcgaov_data: TCGAOV_data.rda  
+  tcgaov_data: TCGAOV_data.rda
 figures:
   figure_1: figure_getdata_overview.jpg
   figure_2: gdc_data_model.jpg
@@ -25,7 +24,7 @@ figures:
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
-  - {:.list-unstyled} [II. Background](#background)  
+  - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Data](#data)
   - {:.list-unstyled} [V. References](#references)
@@ -37,7 +36,7 @@ figures:
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
-Efforts to characterize cancers from the clinical to molecular level are underway. An important aspect is to make this data accessible to the research community. [The Cancer Genome Atlas (TCGA)](http://cancergenome.nih.gov/abouttcga/overview) is a cooperative aimed at the comprehensive characterization of common cancers. This data is being made available via the [Genomic Data Commons](https://gdc.nci.nih.gov/) (GDC) repository of the National Cancer Institute (NCI) (Figure 1).
+Efforts to characterize cancers from the clinical to molecular level are underway. An important aspect is to make this data accessible to the research community. [The Cancer Genome Atlas (TCGA)](http://cancergenome.nih.gov/abouttcga/overview){:target="_blank"} is a cooperative aimed at the comprehensive characterization of common cancers. This data is being made available via the [Genomic Data Commons](https://gdc.nci.nih.gov/){:target="_blank"} (GDC) repository of the National Cancer Institute (NCI) (Figure 1).
 
 This section provides detailed instructions on sourcing raw gene expression *data* and *metadata* (Box 1) suitable for downstream differential expression analysis (Figure 1). Though the focus here is on obtaining gene expression data, the methods are applicable to other data types.
 
@@ -50,47 +49,59 @@ By then end of this discussion you should:
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Summary & goals.</strong> The Genomic Data Commons (GDC) is a repository that stores data from  The Cancer Genome Atlas (TCGA) effort to characterize a wide variety of cancers. TCGA aims to generate data concerning mutations, copy number variants, post-transcriptional modifications and gene expression, including RNA sequencing. Detailed clinical and biospecimen metadata are also made available for each sample. Our goal is to show how to obtain RNA-seq data in a format suitable for downstream analysis of differential gene expression. This involves querying the GDC for data availability (cancer, data type), downloading the data and preparing it for downstream analysis.       
+  <strong>Figure 1. Summary & goals.</strong> The Genomic Data Commons (GDC) is a repository that stores data from  The Cancer Genome Atlas (TCGA) effort to characterize a wide variety of cancers. TCGA aims to generate data concerning mutations, copy number variants, post-transcriptional modifications and gene expression, including RNA sequencing. Detailed clinical and biospecimen metadata are also made available for each sample. Our goal is to show how to obtain RNA-seq data in a format suitable for downstream analysis of differential gene expression. This involves querying the GDC for data availability (cancer, data type), downloading the data and preparing it for downstream analysis.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
 
 ### The Genomic Data Commons (GDC)
 
-As of 2016, the TCGA [announced](http://cancergenome.nih.gov/newsevents/newsannouncements/genomic-data-commons-launch) that their data would be housed under the GDC in an attempt to centralize and harmonize access to large-scale biological data generation efforts. The GDC website provides extensive documentation on the growing body of [programs](https://gdc.nci.nih.gov/about-gdc/contributed-genomic-data-cancer-research) who contribute genomic data. They also make available [documentation](https://gdc.nci.nih.gov/access-data) on how to search the portal and access the data.
+TCGA data is now housed under the GDC in an attempt to centralize and harmonize access to large-scale biological data generation efforts. The GDC website provides extensive documentation on the growing body of [programs](https://gdc.nci.nih.gov/about-gdc/contributed-genomic-data-cancer-research){:target="_blank"} who contribute genomic data. They also make available [documentation](https://gdc.nci.nih.gov/access-data){:target="_blank"} on how to search the portal and access the data.
 
 > *The GDC Data Portal provides access to the subset of TCGA data that has been harmonized by the GDC using its data generation and harmonization pipelines. TCGA data in the GDC Data Portal includes BAM files aligned to the latest human genome build, VCF files containing variants called by the GDC, and RNA-seq expression data harmonized by the GDC.*
 > <footer class="text-right"><a href="https://gdc.nci.nih.gov/gdc-tcga-data-access-matrix-users">GDC for TCGA Data Access Matrix Users</a></footer>
 
-- {: .aside.terms  } **Box 1. Terminology**
+<ul class="aside terms">
+  <div class="aside-title">Box 1. Terminology</div>
 
-  **Raw data.** Un-manipulated data exactly as it is generated by the measurement technology.
+  <li class="aside terms">
+    <strong>Raw data.</strong> Un-manipulated data exactly as it is generated by the measurement technology.
+  </li>
 
-  **Metadata.** Descriptors of the biological data. This can include technical details (e.g. sequencing platform) and biological details (e.g. patient age).
+  <li class="aside terms">
+  <strong>Metadata.</strong> Descriptors of the biological data. This can include technical details (e.g. sequencing platform) and biological details (e.g. patient age).
+  </li>
 
-  **Case.** The collection of all data related to a specific subject in the context of the specific project.
+  <li class="aside terms">
+  <strong>Case.</strong> The collection of all data related to a specific subject in the context of the specific project.
+  </li>
 
-  **Sample.** A biological material sourced from a case.
+  <li class="aside terms">
+  <strong>Sample.</strong> A biological material sourced from a case.
+  </li>
 
-  **Program.** Name for the large-scale genome research organization with a broad framework of goals to be achieved (e.g. The Cancer Genome Atlas).
+  <li class="aside terms">
+  <strong>Program.</strong> Name for the large-scale genome research organization with a broad framework of goals to be achieved (e.g. The Cancer Genome Atlas).
+  </li>
 
-  **Project.** A specifically defined piece of work that is undertaken or attempted to meet a single requirement.
-
-
+  <li class="aside terms">
+  <strong>Project.</strong> A specifically defined piece of work that is undertaken or attempted to meet a single requirement.
+  </li>
+</ul>
 
 #### GDC data model
 
-The pipeline from study participant to data consists of a complex constellation of partners, participants and analysis protocols. For a full description we refer the reader to the [TCGA documentation on Data Flow](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow). Figure 2 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process and the [nomenclature](https://gdc-docs.nci.nih.gov/Data_Dictionary/viewer/) that will be referred to herein.
+The pipeline from study participant to data consists of a complex constellation of partners, participants and analysis protocols. For a full description we refer the reader to the [TCGA documentation on Data Flow](https://wiki.nci.nih.gov/display/TCGA/Introduction+to+TCGA#IntroductiontoTCGA-TCGADataFlow){:target="_blank"}. Figure 2 presents the GDC data model which is the central method of organization of all data artifacts ingested by the GDC. It provides a high-level overview of the elements involved in the data generation process and the nomenclature that will be referred to herein.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.super-slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between  projects, cases, clinical data and molecular data for a program and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. TheGDC maintains a <a href="https://gdc-docs.nci.nih.gov/Data_Dictionary/viewer/">Data Dictionary</a> that describes the data model elements.
+  <strong>Figure 2. GDC data model.</strong> The data model is represented as a graph with nodes and edges, and this graph is the store of record for the GDC. It maintains the critical relationship between  projects, cases, clinical data and molecular data for a program and insures that this data is linked correctly to the actual data file objects themselves, by means of unique identifiers. The GDC maintains a <a href="https://gdc-docs.nci.nih.gov/Data_Dictionary/viewer/">Data Dictionary</a> that describes the data model elements.
 </div>
 
 
 #### Raw RNA sequencing data
 
-The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/) and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR) alignment standard operating procedures (Dobin 2013) (Figure 3A).
+The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Consortium (ICGC)](https://icgc.org/){:target="_blank"} and [Spliced Transcripts Alignment to a Reference (STAR)](https://github.com/alexdobin/STAR){:target="_blank"} alignment standard operating procedures (Dobin 2013) (Figure 3A).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -99,11 +110,11 @@ The GDC mRNA-seq alignment workflow follows the [International Cancer Genome Con
 
 The GDC portal makes available files of RNA sequencing count data ('Gene Count' also referred to as 'HT-Seq Counts') along with normalized gene level quantification in Fragments Per Kilobase of transcript per Million mapped reads (FPKM). To facilitate cross-sample comparison and differential expression analysis, the GDC also provides Upper Quartile normalized FPKM (FPKM-UQ) values and raw mapping count (Figure 3B).
 
-When describing the method for obtaining RNA-seq data from GDC, we use as a concrete example the TCGA effort to characterize high-grade serous ovarian carcinomas (HGS-OvCa). A brief description of the study follows.  
+When describing the method for obtaining RNA-seq data from GDC, we use as a concrete example the TCGA effort to characterize high-grade serous ovarian carcinomas (HGS-OvCa). A brief description of the study follows.
 
 ### The TCGA-OV project
 
-Nearly 70% of deaths from ovarian cancer are attributed to high-grade serous ovarian cancer (HGS-OvCa) (Vaughan 2011). Therapy and survival rates for ovarian cancers in general have not appreciably changed over the last 40 years:  HGS-OvCa are treated with aggressive surgery and taxane-platinum therapy. Approximately a quarter of naive patients will relapse within a year with 80-90% showing resistance to therapy. The five-year survival rate remains poor at only 31%.
+Nearly 70% of deaths from ovarian cancer are attributed to HGS-OvCa (Vaughan 2011). Therapy and survival rates for ovarian cancers in general have not appreciably changed over the last 40 years:  HGS-OvCa are treated with aggressive surgery and taxane-platinum therapy. Approximately a quarter of naive patients will relapse within a year with 80-90% showing resistance to therapy. The five-year survival rate remains poor at only 31%.
 
 It is now appreciated that ovarian cancers arise in varying anatomical locations and possess modest similarity to one another with regards to epidemiology and molecular alterations. In particular, a substantial proportion of HGS-OvCa are believed to arise in the distal fallopian tubes (Figure 4).
 
@@ -124,7 +135,7 @@ The TCGA study collected stage II-IV, clinically annotated HGS-OvCa and matched 
 
 Previous work by Tothill *et al.* (Tothill 2008) was aimed at performing molecular subtype analysis of 285 well-annotated invasive ovarian, fallopian tube and peritoneal cancers. An unsupervised clustering analysis of gene expression revealed the presence of six robust molecular subtypes (C1 to C6) with discernible differences in malignant potential and grade.
 
-The TCGA analysis of HGS-OvCa described four expression subtypes based on unsupervised clustering (Table 1). These subtypes were named according to the overall theme of genes within each cluster and from incorporating the previous descriptions by Tothill *et al*.    
+The TCGA analysis of HGS-OvCa described four expression subtypes based on unsupervised clustering (Table 1). These subtypes were named according to the overall theme of genes within each cluster and from incorporating the previous descriptions by Tothill *et al*.
 
 **Table 1. HGS-OvCa gene expression subtypes**
 
@@ -135,13 +146,13 @@ The TCGA analysis of HGS-OvCa described four expression subtypes based on unsupe
 | Proliferative | High expression of *HMGA2* and *SOX11* and low expression of proliferation markers *MCM2* and *PCNA* |
 | Differentiated | High levels of *MUC16* and *MUC1* along with the fallopian tube marker *SLP1* |
 
-A follow-up study by Verhaak *et al* used the four expression subtypes as a basis to associate mutation and patient survival data, suggesting that these expression categories have clinical and pathological relevance.
+A follow-up study by Verhaak *et al.* (Verhaak 2013) used the four expression subtypes as a basis to associate mutation and patient survival data, suggesting that these expression categories have clinical and pathological relevance.
 
 ## <a href="#practical" name="practical">III. Practical</a>
 
 A pair-wise differential gene expression analysis requires at least two pieces of information. The 'category information' (Table 2) assigns each sample to a group. This assignment is typically made *a priori* and depends upon the biological question of interest.
 
-**Table 2. Category information**  
+**Table 2. Category information**
 
 | Sample ID  |  Category  |
 |:----------:|:----------:|
@@ -151,9 +162,9 @@ A pair-wise differential gene expression analysis requires at least two pieces o
 | ...        |    ...     |
 | Sample m   |    A       |
 
-The second piece we need is the 'assay information' or experimental observations. In this case, this is the transcript counts for each gene and each sample (Table 3).  
+The second piece we need is the 'assay information' or experimental observations. In this case, this is the transcript counts for each gene and each sample (Table 3).
 
-**Table 3. Assay information**  
+**Table 3. Assay information**
 
 |  Gene    | Sample 1 | Sample 2 |  ...     | Sample m  |
 |:--------:|:--------:|:--------:|:--------:|:---------:|
@@ -170,7 +181,7 @@ Below we describe how to obtain each of these pieces of information for the TCGA
   The TCGA HGS-OvCa subtypes are declared in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>.
 </div>
 
-Verhaak *et al.* (Verhaak 2013) used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype (Table 1).
+Verhaak *et al.* used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype (Table 1).
 
 The supplemental table includes dataset samples from other studies. We have filtered Supplemental Table 1 for the TCGA discovery cohort and provide it in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>. For the purposes of this guide, we will assume you have downloaded this file to the location `/Documents/data/TCGA/`. The general layout of the TCGA-OV category information can be seen in Table 3 for 489 cases.
 
@@ -184,32 +195,32 @@ The supplemental table includes dataset samples from other studies. We have filt
 |   488  | TCGA-24-1560 | TCGA-discovery | Proliferative | 51 | ... |
 |   489  | TCGA-04-1350 | TCGA-discovery | Proliferative | 46 | ... |
 
-You will still see a lot of the [TCGA barcode](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode) (Figure 5) which are IDs assigned by Biospecimen Core Resource (BCR) centers in charge of handling patient samples. These human-readable TCGA barcodes are being phased out in favour of  [UUIDs](https://wiki.nci.nih.gov/display/TCGA/Universally+Unique+Identifier#transition) in the near future.
+You will still see a lot of the [TCGA barcode](https://wiki.nci.nih.gov/display/TCGA/TCGA+barcode){:target="_blank"} (Figure 5) which are IDs assigned by Biospecimen Core Resource (BCR) centers in charge of handling patient samples. These human-readable TCGA barcodes are being phased out in favour of  [UUIDs](https://wiki.nci.nih.gov/display/TCGA/Universally+Unique+Identifier#transition){:target="_blank"} in the near future.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. The TCGA barcode.</strong>  
+  <strong>Figure 5. The TCGA barcode.</strong>
 </div>
 
 ### Assay information: RNA-seq data
 
-Below we provide step-by-step instructions to obtain RNA-seq data. The GDC currently provides programmatic access to the repository via a [web service API](https://gdc-docs.nci.nih.gov/API/Users_Guide/Getting_Started/) however, this can be inefficient when attempting to download large numbers of files or data. A more robust method is to use the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/) which can be used via the command line terminal. The Data Transfer Tool provides many capabilities including resuming interrupted or failed downloads.
+Below we provide step-by-step instructions to obtain RNA-seq data. The GDC currently provides programmatic access to the repository via a [web service API](https://gdc-docs.nci.nih.gov/API/Users_Guide/Getting_Started/){:target="_blank"} however, this can be inefficient when attempting to download large numbers of files or data. A more robust method is to use the GDC [Data Transfer Tool](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/){:target="_blank"} which can be used via the command line terminal. The Data Transfer Tool provides many capabilities including resuming interrupted or failed downloads.
 
-The GDC web service API and Data Transfer Tool offer precise and flexible control over what data is downloaded. Nevertheless, deriving useful data using these low-level tools requires data transformation and merging on the part of the user which can be laborious and error prone. Instead, we leverage the rich bioinformatics software ecosystem available in the  [R/Bioconductor](http://bioconductor.org/) suite that makes available powerful solutions for fetching, storing and transforming biological data in robust and interchangeable formats. In particular, we detail the use of the [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html) Bioconductor package.
+The GDC web service API and Data Transfer Tool offer precise and flexible control over what data is downloaded. Nevertheless, deriving useful data using these low-level tools requires data transformation and merging on the part of the user which can be laborious and error prone. Instead, we leverage the rich bioinformatics software ecosystem available in the  [R/Bioconductor](http://bioconductor.org/){:target="_blank"} suite that makes available powerful solutions for fetching, storing and transforming biological data in robust and interchangeable formats. In particular, we detail the use of the [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html){:target="_blank"} Bioconductor package.
 
 #### Software requirements
 
 Please take special note of versions: The TCGAbiolinks package has recently undergone important changes to accommodate the move of TCGA data to the GDC web service API.
 
-- [R](https://www.r-project.org/): version 3.3.1
-  - [Bioconductor](https://bioconductor.org): version 3.3
-    - [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html) version 2.0.13
-    - [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html) version 1.2.3
-    - [DEFormats](https://bioconductor.org/packages/release/bioc/html/DEFormats.html) version 1.0.2
+- [R](https://www.r-project.org/){:target="_blank"}: version 3.3.1
+  - [Bioconductor](https://bioconductor.org){:target="_blank"}: version 3.3
+    - [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html){:target="_blank"} version 2.0.13
+    - [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html){:target="_blank"} version 1.2.3
+    - [DEFormats](https://bioconductor.org/packages/release/bioc/html/DEFormats.html){:target="_blank"} version 1.0.2
 
 #### Data retrieval
 
-The TCGAbiolinks package is effectively a thin wrapper around the GDC webservice API and Data Transfer Tool but provides additional algorithms and data structures that ease the association of data with metadata and compatibility with other Bioconductor analysis packages. Please view the vignette on [Working with TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/tcgaBiolinks.html) for a nice description of the package capabilities.
+The TCGAbiolinks package is effectively a thin wrapper around the GDC webservice API and Data Transfer Tool but provides additional algorithms and data structures that ease the association of data with metadata and compatibility with other Bioconductor analysis packages. Please view the vignette on [Working with TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/tcgaBiolinks.html){:target="_blank"} for a nice description of the package capabilities.
 
 Figure 6 summarizes the main steps that we will follow in to use the TCGAbiolinks package to download the TCGA-OV data from GDC.
 
@@ -218,7 +229,7 @@ Figure 6 summarizes the main steps that we will follow in to use the TCGAbiolink
   <strong>Figure 6. GDC data retrieval.</strong> Steps required to fetch data from the GDC. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the GDC is queried for the data of interest and this query (data frame) is used to instruct the file downloads in step 2. Note that data files are temporarily downloaded to the client computer. In step 3, the raw data are prepared as a SummarizedExperiment container (Huber 2015) then combined with the category information in the subtypes file into a DGEList from the edgeR package.
 </div>
 
-Below we detail the R commands used to retrieve the data. We will assume that you have downloaded the subtype file `Verhaak_JCI_2013_tableS1.txt` and your directory structure looks something like the following.
+Below we detail the R commands used to retrieve the data. We will assume that you have downloaded the subtype file `Verhaak_JCI_2013_tableS1.txt`. Alternatively, you can find the subtypes file and all of the following code in our [github gist](https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1). We will assume a directory structure on your computer that looks something like the following
 
 ```shell
 Documents
@@ -227,7 +238,7 @@ Documents
     |
     |--- TCGA
         |
-        |--- Verhaak_JCI_2013_tableS1.txt            
+        |--- Verhaak_JCI_2013_tableS1.txt
 ...
 ```
 
@@ -236,33 +247,33 @@ Documents
 
 Install and load the TCGAbiolinks package from R/Bioconductor.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="3-13"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-13"></code>
 
 You will need to change the `BASE_DIR` to suit your directory structure and the location of `Verhaak_JCI_2013_tableS1.txt`.
 
 **Step 1: Query**
 
-The `GDCquery(...)` function allows us to search the GDC for data based on the filter restrictions we pass. These restrictions mirror those provided by the [GDC data portal](https://gdc-portal.nci.nih.gov/search/s?facetTab=cases) and [web service API](https://gdc-docs.nci.nih.gov/API/Users_Guide/Search_and_Retrieval/). In this case we are looking for unnormalized RNA-seq counts ('HTSeq - Counts') for the TCGA-OV project. We store the search results in the `query` data frame.  
+The `GDCquery(...)` function allows us to search the GDC for data based on the filter restrictions we pass. These restrictions mirror those provided by the GDC data portal and web service API. In this case we are looking for unnormalized RNA-seq counts ('HTSeq - Counts') for the TCGA-OV project. We store the search results in the `query` data frame.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="15-18"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="15-18"></code>
 
 **Step 2: Download**
 
 The `GDCdownload(...)` function allows us to actually retrieve files based on the search results in step 1. We set `method=client` so that it uses the GDC Data Transfer Tool under the hood and declare a local directory (`TCGAOV_RNASEQ_DIR`) where the files should be saved.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="20-23"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="20-23"></code>
 
 > Note: These commands will trigger a download of the GDC Data Transfer Tool (gdc-client) and a manifest (gdc_manifest.txt) to your home directory.
 
-In our case we will be (temporarily) downloading 379 files so make sure you have enough space on your computer.
+In our case we will be (temporarily) downloading almost 380 files so make sure you have enough space on your computer.
 
->Note: There can be a large number of files downloaded. Downloading the 379 files above took on the order of 15 minutes but your mileage may vary depending on your connection speed.
+>Note: There can be a large number of files downloaded. Downloading 379 files above took on the order of 15 minutes but your mileage may vary depending on your connection speed.
 
 **Step 3: Prepare**
 
-A bunch of data files isn't going to be much help to us. The goal of this step is to prepare the data by combining the data and metadata. `GDCprepare(...)` combines the downloaded file data into a single container, the [`SummarizedExperiment`](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html) (Figure 7) (Huber 2015). We will also save this container to an RData file (.rda) and keep the downloaded files.
+A bunch of data files isn't going to be much help to us. The goal of this step is to prepare the data by combining the data and metadata. `GDCprepare(...)` combines the downloaded file data into a single container, the [`SummarizedExperiment`](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html){:target="_blank"} (Figure 7) (Huber 2015). We will also save this container to an RData file (.rda) and keep the downloaded files.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="25-31"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="25-31"></code>
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -271,32 +282,40 @@ A bunch of data files isn't going to be much help to us. The goal of this step i
 
 **Step 4: Integrate**
 
-The SummarizedExperiment object containing the RNA-seq assay data and associated metadata for the TCGA-OV samples is now available. The differential gene expression analysis prescribed by [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html) uses a `DGEList` container to house both the assay and category information.
+The SummarizedExperiment object containing the RNA-seq assay data and associated metadata for the TCGA-OV samples is now available. The differential gene expression analysis prescribed by [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"} uses a `DGEList` container to house both the assay and category information.
 
 To this end, we use the `DEFormats` package function `DEGList(...)` to convert our SummarizedExperiment and integrate the subtypes. Note that we need to find the samples with an assigned subtype and subset accordingly.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="33-53"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="33-53"></code>
 
 The resulting `DGEList` called `TCGAOV_data` is saved as an RData file `TCGAOV_data.rda` for use in downstream differential expression analysis.
 
-<code data-gist-id="{{ page.gist }}" data-gist-hide-footer="true" data-gist-line="55-56"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="55-56"></code>
 
 <hr/>
 
-The preceding R code is presented in its entirety.
+The preceding R code is presented in its entirety and available as a Github gist
+<a href="https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1"
+  target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a>
 
-<code data-gist-id="{{ page.gist }}"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true"></code>
 
 ## <a href="#data" name="data">IV. Data</a>
 
 File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an edgeR DGEList variable `TCGAOV_data` and saved to an RData file named `TCGAOV_data.rda`.
 
-  - Download: [TCGAOV_data.rda]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }})
+  - Download direct: [TCGAOV_data.rda]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }})
     - format: Rdata
     - size: 34 MB
 
+The R code and subtype designation file are available as a Github gist <a href="https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1"
+  target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a>
+
 ## <a href="#references" name="references">V. References</a>
-<!-- <div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div> -->
 
 - Huber W et al. Orchestrating high-throughput genomic analysis with Bioconductor. Nat. Methods vol. 12 (2015)
 - Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)

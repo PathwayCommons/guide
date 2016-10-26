@@ -1,0 +1,20 @@
+{
+  "name": "gist-embed",
+  "authors": [
+    "Blair Vanderhoof"
+  ],
+  "description": "Ultra powered gist embedding for your website http://blairvanderhoof.com/gist-embed/",
+  "main": "gist-embed.js",
+  "keywords": [
+    "gist",
+    "embed",
+    "github",
+    "ajax"
+  ],
+  "license": "BSD-2-Clause",
+  "homepage": "https://github.com/blairvanderhoof/gist-embed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blairvanderhoof/gist-embed.git"
+  }
+}

@@ -10,40 +10,6 @@
 * Guide customization
 */
 
-/*
-* Embedded page
-*/
-.embedded {
-  margin-top: 2rem;
-}
-.embedded .container {
-  padding-left: 0rem;
-  padding-right: 0rem;
-}
-
-/*
-* Progress tracker overrides
-*/
-a:link.progress-tracker-link,
-a:hover.progress-tracker-link,
-a:active.progress-tracker-link,
-a:visited.progress-tracker-link{
-  text-decoration: none;
-}
-.progress-marker {
-  padding-bottom: 0px; // To align text within the marker
-}
-
-.progress-tracker-wrapper {
-  .panel-heading, .panel-body{
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .progress-text {
-    padding-top: 2px;
-    padding-left: 42px;
-  }
-}
 
 /* images */
 img {
@@ -364,12 +330,26 @@ img.left {
    font-size: $figure-legend;
  }
 
- li.aside {
-   list-style: none;
-   padding: 1em;
-   background-color: $clouds;
- }
+/*
+ * Aside box
+ */
+  ul.aside {
+    padding: 2em;
+    .aside-title{
+      padding: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      background-color: rgba(90, 49, 13, 0.40);
+      color: #000000;
+    }
+  }
 
- li.aside.terms {
-   background-color: rgba(90, 49, 13, 0.20);
- }
+  li.aside {
+     list-style: none;
+     padding: 1em;
+     background-color: $clouds;
+   }
+
+   li.aside.terms {
+     background-color: rgba(90, 49, 13, 0.20);
+   }

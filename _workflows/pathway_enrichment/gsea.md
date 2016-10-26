@@ -1,13 +1,10 @@
 ---
 title: Gene Set Enrichment Analysis
 subtitle: Use the results of a differential expression analysis to identify enriched pathways
-pmid: 16199517
-pdf: gsea_subramanian_pnas_v102_43_2005.pdf
-cover: cover.jpg
 date: 2016-04-20
+pdf: gsea_subramanian_pnas_v102_43_2005.pdf
 layout: embedded
 category: pathway_enrichment
-draft: false
 order: 3
 figures:
   figure_1: figure_overview.png
