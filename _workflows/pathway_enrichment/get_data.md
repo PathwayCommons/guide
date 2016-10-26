@@ -295,7 +295,7 @@ The resulting `DGEList` called `TCGAOV_data` is saved as an RData file `TCGAOV_d
 <hr/>
 
 The preceding R code is presented in its entirety and available as a Github gist
-<a href="https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1"
+<a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
@@ -310,7 +310,7 @@ File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (gro
     - format: Rdata
     - size: 34 MB
 
-The R code and subtype designation file are available as a Github gist <a href="https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1"
+The R code and subtype designation file are available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
