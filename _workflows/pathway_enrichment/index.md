@@ -14,7 +14,8 @@ badge: RNA-seq
 
 <div class="progress-tracker-wrapper">
   <ul class="progress-tracker progress-tracker--vertical">
-    {% for doc in docs %}    
+    {% for doc in docs %}
+    {% unless doc.status == 'draft' %}
       <li class="progress-step" >
         <a class="progress-tracker-link" href="{{ site.baseurl }}{{ doc.url }}">
           <span class="progress-marker">{{ doc.order }}</span>
@@ -24,6 +25,7 @@ badge: RNA-seq
           </span>
         </a>
       </li>
+    {% endunless %}
     {% endfor %}
   </ul>
   <div id="progress-tracker-content"></div>
