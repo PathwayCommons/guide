@@ -17,7 +17,7 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled}  [I. Summary & goals](#summaryGoals)
+  - {:.list-unstyled}  [I. Goals](#goals)
   - {:.list-unstyled}  [II. Hypothesis testing errors](#hypothesisTestingErrors)
   - {:.list-unstyled}  [III. Multiple testing control](#multipleTestingControl)
   - {:.list-unstyled}  [IV. Controlling the Family-Wise Error Rate (FWER)](#controllingFWER)
@@ -27,7 +27,7 @@ figures:
 
 <hr/>
 
-## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
+## <a href="#goals" name="goals">I. Goals</a>
 
 Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.
 
@@ -36,7 +36,7 @@ The broad reach of these approaches presents challenges not previously encounter
 This goal of this section is to introduce concepts related to quantifying and controlling errors in multiple testing. By the end of this section you should:
 
   1. Be familiar with the conditions in which multiple testing can arise
-  2. Understand what a Type I error and false discovery are  
+  2. Understand what a Type I error and false discovery are
   3. Be familiar with multiple control procedures
   4. Be familiar with the Bonferroni control of family-wise error rate
   5. Be familiar with Benjamini-Hochberg control of false discovery rates
@@ -60,7 +60,7 @@ Conveniently, we can use the [binomial distribution]({{ site.baseurl }}/primers/
 
 In an attempt to standardize our decision making, we arbitrarily set a threshold of doubt: Observing 14 or more heads in a test will cause us to label that test as 'significant' and worthy of further consideration. In modern hypothesis testing terms, we would 'reject' the null hypothesis beyond this threshold in favour of some alternative, which in this case would be that the coin was unfair. Note that in principle we should set a lower threshold in the case that the coin is unfairly weighted towards tails but omit this for simplicity.
 
-Recall that the calculations underlying the distribution in Figure 1 assumes an equal probability of heads and tails. Thus, if we flipped 20 coins we should observe 14 or more heads with a probability equal to the area of the bars to the right of the threshold in Figure 1. In other words, our decision threshold enables us to calculate *a priori* the probability of an erroneous rejection. In statistical terms, the probability bounded by our *a priori* decision threshold is denoted *$$\alpha$$* or the *significance level* and is the probability of making an error of *type I*. The probability of observing a given experimental result or anything more extreme is denoted the *p-value*. It is worth emphasizing that the significance level is chosen prior to the experiment whereas the p-value is obtained after an experiment, calculated from the experimental data.   
+Recall that the calculations underlying the distribution in Figure 1 assumes an equal probability of heads and tails. Thus, if we flipped 20 coins we should observe 14 or more heads with a probability equal to the area of the bars to the right of the threshold in Figure 1. In other words, our decision threshold enables us to calculate *a priori* the probability of an erroneous rejection. In statistical terms, the probability bounded by our *a priori* decision threshold is denoted *$$\alpha$$* or the *significance level* and is the probability of making an error of *type I*. The probability of observing a given experimental result or anything more extreme is denoted the *p-value*. It is worth emphasizing that the significance level is chosen prior to the experiment whereas the p-value is obtained after an experiment, calculated from the experimental data.
 
 > Multiple testing correction methods attempt to control or at least quantify the flood of type I errors that arise when multiple hypothesis are performed simultaneously
 
@@ -112,7 +112,7 @@ There are cases where the applicability of multiple testing may be less clear:
 - One researcher tests differential expression of 1 000 genes while a thousand different researchers each test 1 of a possible 1 000 genes
 - One researcher performs 20 tests versus another performing 20 tests then an additional 80 tests for a total of 100
 
-In these cases identical data sets are achieved in more than one way but the particular statistical procedure used could result in different claims regarding significance. A convention that has been proposed is that the collection or *family* of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014). For a family of hypotheses, it is meaningful to take into account some combined measure of error.  
+In these cases identical data sets are achieved in more than one way but the particular statistical procedure used could result in different claims regarding significance. A convention that has been proposed is that the collection or *family* of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014). For a family of hypotheses, it is meaningful to take into account some combined measure of error.
 
 #### The severity of errors
 
@@ -212,7 +212,7 @@ Alternatively, 'p-hacking' is the process of creatively organizing data sets in 
 
 ## <a href="#controllingFDR" name="controllingFDR">V. Controlling the false discovery rate (FDR)</a>
 
-Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m_1=m-m_0$$) null hypotheses.   
+Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m_1=m-m_0$$) null hypotheses.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -289,7 +289,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
     \begin{equation*}
       \begin{split}
         E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
-        \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }  
+        \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }
       \end{split}
     \end{equation*}
   $$
@@ -316,7 +316,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
   $$
 
 
-### Proof  
+### Proof
 
 **Theorem 1** The Benjamini-Hochberg (BH) procedure controls the FDR at $$q^∗$$ for independent test statistics and any distribution of false null hypothesis.
 
@@ -580,7 +580,7 @@ Define $$j_0$$ as the largest index $$0 \leq j \leq m_1$$ for the p-values corre
 $$
 \begin{equation*}
   \begin{split}
-    z_j \leq \frac{m_0+j}{k+1}q^∗\\    
+    z_j \leq \frac{m_0+j}{k+1}q^∗\\
   \end{split}
 \end{equation*}
 $$
@@ -590,7 +590,7 @@ Define $$z^\prime$$ as the value on the right side of the inequality at $$j=j_0$
 $$
 \begin{equation*}
   \begin{split}
-    z^\prime &= \frac{m_0+j_0}{k+1}q^∗\\    
+    z^\prime &= \frac{m_0+j_0}{k+1}q^∗\\
   \end{split}
 \end{equation*}
 $$
@@ -625,11 +625,11 @@ Substitute this back into the first integral.
 
 $$
 \begin{equation*}
-  \begin{split}     
+  \begin{split}
         &\int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
         &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} f_{X_{m_0}}(p) dp\\
         &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} m_0p^{m_0-1} dp \quad \text{  Aside 2 }\\
-        &=\frac{m_0}{m_0+j_0} (z^{\prime})^{m_0} \\        
+        &=\frac{m_0}{m_0+j_0} (z^{\prime})^{m_0} \\
   \end{split}
 \end{equation*}
 $$

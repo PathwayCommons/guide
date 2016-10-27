@@ -191,6 +191,7 @@ img.left {
  .panelista-shade {
    position: absolute;
   //  background: $midnight-blue; //$panelista-background;
+  // background: rgba(173, 192, 210, 0.4); //$panelista-background;
 
    z-index: 1;
    top: 0;
@@ -218,8 +219,17 @@ img.left {
    margin-bottom: 3rem;
 
    .panelista-shade {
-     background: rgba(173, 192, 210, 0.3); //$panelista-background;
+     background: rgba(173, 192, 210, 0.4); //$panelista-background;
      padding: 5em 3em 5em;
+     border-radius: 5px;
+
+     .panelist-banner {
+       position: absolute;
+       z-index: -1;
+       top: 0;
+       right: 0;
+       padding: 1em;
+     }
 
      h1 {
       font-size: 1.8rem;

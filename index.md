@@ -1,5 +1,5 @@
 ---
-layout: panelista
+layout: page
 title: Home
 subtitle:
 

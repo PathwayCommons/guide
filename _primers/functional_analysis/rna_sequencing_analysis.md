@@ -25,7 +25,7 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
+  - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Opportunities and challenges](#opportunitiesChallenges)
   - {:.list-unstyled} [III. RNA Sequencing](#rnaSequencing)
   - {:.list-unstyled} [IV. Normalization](#normalization)
@@ -36,10 +36,10 @@ figures:
 
 <hr/>
 
-## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
+## <a href="#goals" name="goals">I. Goals</a>
 
 <div class="alert alert-warning text-justify" role="alert">
-  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> software package.  
+  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> software package.
 </div>
 
 In this section we begin with a broad introduction to the use of RNA deep sequencing towards the goal differential expression testing. This provides the necessary context for the rationale and statistical theory underlying normalization and differential expression testing of RNA sequencing (RNA-seq) data. By then end of this discussion you should:
@@ -701,7 +701,7 @@ $$
 
     logf_{Z}(z; \phi)
       &= log\Gamma(z + n\phi^{-1}) - log\Gamma(n\phi^{-1}) - log\Gamma(z + 1)\\
-        &+ zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
+        &+ zlog\left(\frac{z}{n\phi^{-1}+z}\right) + n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
   \end{split}
 \end{equation*}
 $$
@@ -751,7 +751,7 @@ $$
 
   &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)\\
     &- zlog\left(\frac{z}{n\phi^{-1}+z}\right)
-    - n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\    
+    - n\phi^{-1} log\left(\frac{n\phi^{-1}}{n\phi^{-1}+z}\right) \\
   \end{split}
 \end{equation*}
 $$
@@ -764,8 +764,8 @@ $$
     \ell_{Y \mid Z=z}(\phi)
 
     &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-      - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\    
-    &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)\\      
+      - nlog\Gamma(\phi^{-1}) - \sum\limits_{j} log\Gamma(y_j + 1)\\
+    &- log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1}) + log\Gamma(z + 1)\\
   \end{split}
 \end{equation*}
 $$
@@ -778,7 +778,7 @@ $$
     \ell_{Y \mid Z=z}^{\prime}(\phi)
 
     &= \sum\limits_{j}log\Gamma(y_j + \phi^{-1})
-      - nlog\Gamma(\phi^{-1}) - log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1})\\      
+      - nlog\Gamma(\phi^{-1}) - log\Gamma(z + n\phi^{-1}) + log\Gamma(n\phi^{-1})\\
   \end{split}
 \end{equation*}
 $$
@@ -792,7 +792,7 @@ $$
     &=  \sum\limits_{T} \left[
     \sum\limits_{j \in T} log\Gamma(y_{ij} + \phi^{-1})
       - n_Tlog\Gamma(\phi^{-1}) - log\Gamma(z_{iT} + n\phi^{-1}) + log\Gamma(n_T\phi^{-1})
-      \right]\\      
+      \right]\\
   \end{split}
 \end{equation*}
 $$
@@ -819,7 +819,7 @@ It is the pseudodata that is applied to the CML estimate for common dispersion (
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
- <strong>Figure 10. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.         
+ <strong>Figure 10. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.
 </div>
 
 

@@ -16,15 +16,15 @@ figures:
 ---
 
 - {:.list-unstyled} Table of Contents
-  - {:.list-unstyled} [I. Summary & goals](#summaryGoals)
-  - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)  
-  - {:.list-unstyled} [III.Fisher's Exact Test](#fishersExactTest)
+  - {:.list-unstyled} [I. Goals](#goals)
+  - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)
+  - {:.list-unstyled} [III. Fisher's Exact Test](#fishersExactTest)
   - {:.list-unstyled} [IV. Caveats](#caveats)
   - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
-## <a href="#summaryGoals" name="summaryGoals">I. Summary & goals</a>
+## <a href="#goals" name="goals">I. Goals</a>
 
 Large-scale genome sequencing and gene expression analyses can result in lists of genes whose immediate relevance to the study objective may be unclear. Approaches collectively referred to as 'enrichment' or 'overrepresentation' analyses all aim to distill from more meaningful biological themes from reams of biological data.
 
@@ -32,7 +32,7 @@ Enrichment methods source candidate sets of genes that share attributes such as 
 
 Our overarching goal is to describe the theory underlying many of the enrichment software tools currently in use (Khatri 2012). We use the concrete example of assessing GO term enrichment in the output of a large-scale gene expression analysis although the approaches are found in many other types of analyses.  By then end of this discussion you should:
 
-1. Be familiar with how an enrichment analysis is structured  
+1. Be familiar with how an enrichment analysis is structured
 2. Be familiar with rationale underlying Fisher's Exact Test
 3. Be aware of the meaning of a p-value arising from Fisher's Exact Test
 
@@ -49,11 +49,11 @@ Suppose we undertake a gene expression analysis comparing subtypes of high-grade
 **Table 1. Contingency table for HGS-OvCa gene expression data**
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.table_1 }}){: .img-responsive.slim.left }
 
-In this case, the expression of 32 genes has been analyzed: 15 DEG were identified and 15 genes were associated with the GO annotation 'translation initiation'. The totals for DEG and gene set membership are the *marginal values*, as they lie on the periphery of our 2-by-2 table.  
+In this case, the expression of 32 genes has been analyzed: 15 DEG were identified and 15 genes were associated with the GO annotation 'translation initiation'. The totals for DEG and gene set membership are the *marginal values*, as they lie on the periphery of our 2-by-2 table.
 
-The middle cells contain *joint values* because they represent genes falling under two categories (Table 1, light blue). Here, 12 genes are both DEG and tagged with 'translation initiation'. This seems like a large proportion of the marginal DEG total (12/15 DEGs) and our intuition might lead us to the opinion that this is a result worth following up on...     
+The middle cells contain *joint values* because they represent genes falling under two categories (Table 1, light blue). Here, 12 genes are both DEG and tagged with 'translation initiation'. This seems like a large proportion of the marginal DEG total (12/15 DEGs) and our intuition might lead us to the opinion that this is a result worth following up on...
 
-We seemed quite confident that observing 12 DEG out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.   
+We seemed quite confident that observing 12 DEG out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.
 
 ## <a href="#fishersExactTest" name="fishersExactTest">III. Fisher's Exact Test</a>
 
@@ -72,7 +72,7 @@ Let us return to the HGS-OvCa gene expression analysis example. Fisher's Exact T
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing DEGs and those within the gene set.  
+  <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing DEGs and those within the gene set.
 </div>
 
 ### Let us count the ways
@@ -114,7 +114,7 @@ At this point we have the basic building blocks to describe Fisher's Exact Test.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangments of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both DE and tagged with 'IN Translation Initation'.   
+  <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangments of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both DE and tagged with 'IN Translation Initation'.
 </div>
 
 ### One-Sided tests
