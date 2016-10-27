@@ -346,23 +346,29 @@ img.left {
 /*
  * Aside box
  */
-  ul.aside {
+ ul.aside {
+   padding: 0.5em;
+   .aside-title{
+     padding: 1rem;
+     font-weight: bold;
+     font-size: 1.1rem;
+     background-color: rgba(90, 49, 13, 0.40);
+     color: #000000;
+   }
+ }
+
+ li.aside {
+    list-style: none;
     padding: 2em;
-    .aside-title{
-      padding: 1rem;
-      font-weight: bold;
-      font-size: 1.1rem;
-      background-color: rgba(90, 49, 13, 0.40);
-      color: #000000;
-    }
+    background-color: $clouds;
   }
 
-  li.aside {
-     list-style: none;
-     padding: 1em;
-     background-color: $clouds;
-   }
+  li.aside.terms {
+    background-color: rgba(90, 49, 13, 0.20);
+  }
 
-   li.aside.terms {
-     background-color: rgba(90, 49, 13, 0.20);
-   }
+ @media (min-width: 768px) {
+  ul.aside {
+    padding: 2em;
+  }
+ }

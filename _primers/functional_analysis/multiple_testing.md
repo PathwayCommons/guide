@@ -265,7 +265,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
 3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
-- {: .aside } #### A sketch(y) proof
+- {: .aside.terms } #### A sketch(y) proof
 
   Here, we provide an intuitive explanation for the choice of the BH procedure bound.
 
@@ -314,7 +314,6 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
       \end{split}
     \end{equation*}
   $$
-
 
 ### Proof
 
