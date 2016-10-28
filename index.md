@@ -4,10 +4,8 @@ title: Home
 subtitle:
 
 figures:
-  figure_overview: figure_overview.png
+  figure_overview: overview.png
 ---
 
 
-## Front matter
-
-Statement of purpose.
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_overview }}){: .img-responsive }

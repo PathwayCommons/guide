@@ -628,7 +628,13 @@ There are two sections by this name which refers to those gene sets with positiv
 | INTERFERON ALPHA BETA SIGNALING     |  48   | 0.8390211  | 2.5337644 | 0.0| 0.0| 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
-### What now?
+### Caveats
+
+- Ascertainment bias
+- Variable quality of gene set database annotation
+- Pathway enrichment analysis ignores genes with no pathway annotations
+
+### Where to go from here
 
 At this point you have traded a list of genes for a slightly shorter list of pathways.
 
