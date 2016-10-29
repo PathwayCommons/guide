@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (function($){
+module.exports = (function(){
 
   var PanelGroup = React.createClass({
     loadArticleSets: function() {
@@ -235,24 +235,28 @@ module.exports = (function($){
     }
   });
 
-  $('.panel_group').each(function(element, index){
+  var initModule = function(){
+    $('.panel_group').each(function(element, index){
 
-    var $target = $(this),
-        pagedata = $target.data('page'),
-        inline = $target.data('inline'),
-        input = [];
+      var $target = $(this),
+          pagedata = $target.data('page'),
+          inline = $target.data('inline'),
+          input = [];
 
-    if (pagedata) {
-      input = pagedata;
-    } else if (inline) {
-      input = [{ category: '', uids: [inline] }];
-    }
+      if (pagedata) {
+        input = pagedata;
+      } else if (inline) {
+        input = [{ category: '', uids: [inline] }];
+      }
 
 
-    ReactDOM.render(
-      <PanelGroup input={input} />,
-      $target[0]
-    );
-  });
+      ReactDOM.render(
+        <PanelGroup input={input} />,
+        $target[0]
+      );
+    });
+  };
 
-}(jQuery));
+  return { initModule: initModule };
+
+}());

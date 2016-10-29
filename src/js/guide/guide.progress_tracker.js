@@ -1,7 +1,8 @@
 'use strict';
 
 // Populate the progress tracker wrapper content
-module.exports = (function($) {
+module.exports = (function() {
+
 	var
 	configMap = {
     panel_html_template:
@@ -47,8 +48,8 @@ module.exports = (function($) {
 		});
 	};
 
-	initModule = function( $container ){
-		jQueryMap.$progress_tracker_wrapper	 = $container;
+	initModule = function(){
+		jQueryMap.$progress_tracker_wrapper	 = $( '.progress-tracker-wrapper' );
 		jQueryMap.$progress_tracker_steps = jQueryMap.$progress_tracker_wrapper.find( '.progress-step' );
 	  jQueryMap.$progress_tracker_content = jQueryMap.$progress_tracker_wrapper.find( '#progress-tracker-content' );
 		jQueryMap.$panel =  $( $.parseHTML( configMap.panel_html_template ) );
@@ -62,4 +63,4 @@ module.exports = (function($) {
 
 	return { initModule: initModule };
 
-})(jQuery);
+})();
