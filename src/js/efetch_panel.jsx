@@ -1,4 +1,6 @@
-(function(){
+'use strict';
+
+module.exports = (function($){
 
   var PanelGroup = React.createClass({
     loadArticleSets: function() {
@@ -253,4 +255,4 @@
     );
   });
 
-}());
+}(jQuery));

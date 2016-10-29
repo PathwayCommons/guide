@@ -1,14 +1,7 @@
-/*jslint          browser : true, continue  : true,
-  devel   : true, indent  : 2,    maxerr    : 50,
-  newcap  : true, nomen   : true, plusplus  : true,
-  regexp  : true, slopppy : true, vars      : true,
-  white   : true
-*/
-/*global jQuery */
 'use strict';
 
 // Populate the progress tracker wrapper content
-var tracker = (function($) {
+module.exports = (function($) {
 	var
 	configMap = {
     panel_html_template:
@@ -30,9 +23,6 @@ var tracker = (function($) {
 		$panel_heading_link: undefined,
 		$panel_footer: undefined
 	},
-	stateMap = {
-		url: undefined
-	},
 	initModule, setListeners
 	;
 
@@ -45,7 +35,7 @@ var tracker = (function($) {
 			// Retrieve the url
 			var url = self.find( '.progress-tracker-link' ).attr( 'href' );
 			// set the $panel iframe src and heading link url
-			jQueryMap.$panel_heading_link.attr( 'href', url ).css( 'display', 'block' );;
+			jQueryMap.$panel_heading_link.attr( 'href', url ).css( 'display', 'block' );
 			jQueryMap.$panel_footer.css( 'display', 'block' );
 			jQueryMap.$panel_frame.attr( 'src', url );
 
@@ -67,12 +57,9 @@ var tracker = (function($) {
 		jQueryMap.$panel_frame = jQueryMap.$progress_tracker_content.find( '#panel-frame' );
 		jQueryMap.$panel_footer = jQueryMap.$progress_tracker_content.find( '#panel-footer' );
 		setListeners();
-		console.log(jQueryMap.$panel_frame);
 		return true;
 	};
 
 	return { initModule: initModule };
 
 })(jQuery);
-
-tracker.initModule( $( '.progress-tracker-wrapper' ) );

@@ -1,5 +1,7 @@
+'use strict';
+
 //Show and hide the spinner for all ajax requests.
-(function(document){
+module.exports  = (function(document){
   $(document)
   .ajaxStart(function(){
       $("#ajax-spinner").show();
