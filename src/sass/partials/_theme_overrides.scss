@@ -102,6 +102,7 @@ img {
 /* Style and "hide" the sidebar */
 .sidebar-toggle {
   z-index: 1000;
+  opacity: 0.75;
 }
 .sidebar {
   font-family: $font-family-base;
