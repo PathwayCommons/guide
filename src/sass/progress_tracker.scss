@@ -22,14 +22,27 @@
 /*
 * Progress tracker overrides
 */
-a:link.progress-tracker-link,
-a:hover.progress-tracker-link,
-a:active.progress-tracker-link,
-a:visited.progress-tracker-link{
-  text-decoration: none;
+@media (min-width: 1200px) {
+  .progress-tracker {
+    position: fixed;
+    left:1%; // Move it to the right for 50% of parent element
+    // margin-right:-250px; // You need here to put 1/2 of what you have below in width
+    max-width: 20%;
+    top: 10rem;
+  }
 }
-.progress-marker {
-  padding-bottom: 0px; // To align text within the marker
+
+.progress-tracker {
+  a:link.progress-tracker-link,
+  a:hover.progress-tracker-link,
+  a:active.progress-tracker-link,
+  a:visited.progress-tracker-link{
+    text-decoration: none;
+  }
+  .progress-marker {
+    padding-bottom: 0px; // To align text within the marker
+  }
+
 }
 
 .progress-tracker-wrapper {
@@ -40,5 +53,8 @@ a:visited.progress-tracker-link{
   .progress-text {
     padding-top: 2px;
     padding-left: 42px;
+  }
+  .progress-text.active {
+    background-color: rgba(90, 49, 13, 0.10);
   }
 }

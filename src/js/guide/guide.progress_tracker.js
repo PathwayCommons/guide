@@ -35,6 +35,8 @@ module.exports = (function() {
 			event.preventDefault();
 			// Set the list element state
 			self.addClass( 'is-complete' );
+			jQueryMap.$progress_tracker_steps.find(' .progress-text ').removeClass('active').addClass('inactive');
+    	self.find(' .progress-text ').toggleClass('active inactive');
 			// Retrieve the url
 			var url = self.find( '.progress-tracker-link' ).attr( 'href' );
 			// set the $panel iframe src and heading link url
