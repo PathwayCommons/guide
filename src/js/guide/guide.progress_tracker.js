@@ -1,5 +1,7 @@
 'use strict';
 
+require('../../bower_components/iframe-resizer/js/iframeResizer.min.js');
+
 // Populate the progress tracker wrapper content
 module.exports = (function() {
 
@@ -11,7 +13,7 @@ module.exports = (function() {
 				'<a style="display: none;" id="panel-heading-link" href="#" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Open in separate window</a>' +
 			'</div>' +
 			'<div class="panel-body">' +
-				'<iframe id="panel-frame" src="" width="100%" height="100px" frameBorder="0" ></iframe>' +
+				'<iframe id="panel-frame" src="" width="100%" frameBorder="0" scrolling="no" ></iframe>' +
 			'</div>' +
 			'<a href="#top"><div style="display: none;" id="panel-footer">Top</div></a>' +
 		'</div>'
@@ -40,11 +42,8 @@ module.exports = (function() {
 			jQueryMap.$panel_footer.css( 'display', 'block' );
 			jQueryMap.$panel_frame.attr( 'src', url );
 
-		  // register the attached iframe listener
-			jQueryMap.$panel_frame.load(function() {
-				var height = $( this ).contents().height() + 500 + 'px';
-				$( this ).attr('height', height);
-			});
+			//External library Iframe-resizer
+			jQueryMap.$panel_frame.iFrameResize();
 		});
 	};
 

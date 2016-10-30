@@ -13,20 +13,6 @@ badge: RNA-seq
 {% assign docs = (site.workflows | where: 'category' , 'pathway_enrichment' | sort: 'order' ) %}
 
 <div class="progress-tracker-wrapper">
-  <ul class="progress-tracker progress-tracker--vertical">
-    {% for doc in docs %}
-    {% unless doc.status == 'draft' %}
-      <li class="progress-step" >
-        <a class="progress-tracker-link" href="{{ site.baseurl }}{{ doc.url }}">
-          <span class="progress-marker">{{ doc.order }}</span>
-          <span class="progress-text">
-            <h4 class="progress-title">{{ doc.title }}</h4>
-            {{ doc.subtitle }}
-          </span>
-        </a>
-      </li>
-    {% endunless %}
-    {% endfor %}
-  </ul>
+  {% include progress_tracker.html %}
   <div id="progress-tracker-content"></div>
 </div>
