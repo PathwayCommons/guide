@@ -16,7 +16,9 @@ module.exports = (function() {
 				'<iframe id="panel-frame" src="" width="100%" frameBorder="0" scrolling="no" ></iframe>' +
 			'</div>' +
 			'<a href="#top"><div style="display: none;" id="panel-footer">Top</div></a>' +
-		'</div>'
+		'</div>',
+		highlight_class: '.progress-step',
+		link_class: '.progress-tracker-link'
   },
 	jQueryMap = {
 		$progress_tracker_wrapper	: undefined,
@@ -35,10 +37,10 @@ module.exports = (function() {
 			event.preventDefault();
 			// Set the list element state
 			self.addClass( 'is-complete' );
-			jQueryMap.$progress_tracker_steps.find(' .progress-text ').removeClass('active').addClass('inactive');
-    	self.find(' .progress-text ').toggleClass('active inactive');
+			jQueryMap.$progress_tracker_wrapper.find(configMap.highlight_class).removeClass('active');
+    	self.toggleClass('active');
 			// Retrieve the url
-			var url = self.find( '.progress-tracker-link' ).attr( 'href' );
+			var url = self.find(configMap.link_class).attr( 'href' );
 			// set the $panel iframe src and heading link url
 			jQueryMap.$panel_heading_link.attr( 'href', url ).css( 'display', 'block' );
 			jQueryMap.$panel_footer.css( 'display', 'block' );

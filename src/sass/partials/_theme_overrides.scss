@@ -71,6 +71,14 @@ p {
 .container {
   max-width: $container-max-width;
   min-width: $container-min-width;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin-left: $container-margin-left;
+  }
 }
 
 img {

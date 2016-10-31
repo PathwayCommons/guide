@@ -14,21 +14,21 @@
 .embedded {
   margin-top: 2rem;
 }
-.embedded .container {
-  padding-left: 0rem;
-  padding-right: 0rem;
+.embedded.container {
+  margin-left: 0;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 /*
 * Progress tracker overrides
 */
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .progress-tracker {
     position: fixed;
-    left:1%; // Move it to the right for 50% of parent element
-    // margin-right:-250px; // You need here to put 1/2 of what you have below in width
-    max-width: 20%;
-    top: 10rem;
+    left: 1rem; // Move it to the right for 50% of parent element
+    width: $container-margin-left - 0.5rem;         /* standards-based answer for IE9+, FF16+ */
+    top: 9rem;
   }
 }
 
@@ -54,7 +54,7 @@
     padding-top: 2px;
     padding-left: 42px;
   }
-  .progress-text.active {
-    background-color: rgba(90, 49, 13, 0.10);
+  .active {
+    background-color: rgba(41, 128, 185, 0.15);
   }
 }
