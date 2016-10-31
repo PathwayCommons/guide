@@ -21,7 +21,7 @@ figures:
   figure_12: figure_gsea_report_snapshot.png
   gsea_download: GSEA_download.gif
 data:
-  data_1: nothing
+  data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk.zip
   data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 ---
 
@@ -458,9 +458,9 @@ This section describes how to perform a single run of GSEA using the expression 
 
 ### 1. Ranked gene list
 
-<div class="alert alert-success text-justify" role="alert">
-   You can visit the <a target="_blank" href="{{site.baseurl}}/workflows/pathway_enrichment/process_data/#data">Process Data</a> section to obatin 'MesenchymalvsImmunoreactive_edger_ranks.rnk' which is the ranked gene list for the TCGA-Ov project comparing mesechymal and immunoreactive subtypes.
-</div>
+ You can visit the 'Process Data' section to obtain 'MesenchymalvsImmunoreactive_edger_ranks.rnk' which is the ranked gene list for the TCGA-Ov project comparing mesechymal and immunoreactive subtypes.
+
+<a href="{{site.baseurl}}/{{site.media_root}}/{{ page.data.data_1 }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
 A ranked gene list contains all the information needed from our expression dataset. The `.rnk` format is a tab-delimited text file with two columns: gene and rank.
 
@@ -480,9 +480,9 @@ Previously, we have described how to generate a ranked list of genes that are di
 
 ### 2. Gene sets
 
-<div class="alert alert-success text-justify" role="alert">
-   <a target="_blank" href="{{site.baseurl}}/{{site.media_root}}{{page.id}}/{{ page.data.data_2 }}">{{ page.data.data_2 }}</a> is our custom gene set database.
-</div>
+`Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt` is a custom collection of gene sets.
+
+<a href="{{site.baseurl}}/{{site.media_root}}{{page.id}}/{{ page.data.data_2 }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene sets (.gmt)</a>
 
 GSEA allows users to use a prescribed gene set database or create their own. For more information please consult their description of the [gene set database formats](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats){:target="_blank"}.
 

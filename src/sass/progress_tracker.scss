@@ -18,8 +18,8 @@
   .progress-tracker {
     position: fixed;
     left: 1rem; // Move it to the right for 50% of parent element
-    width: $container-margin-left - 0.5rem;         /* standards-based answer for IE9+, FF16+ */
-    top: 9rem;
+    width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
+    top: 5rem;
   }
 }
 
@@ -47,11 +47,12 @@
   }
   .progress-shadow {
     position: absolute;
-    top: -0.5rem;
-    left: -0.5rem;
-    height: 90%;
+    top: -0.4rem;
+    left: -0.4rem;
+    height: 85%;
   }
   .active {
+    border-radius: 5px;
     background-color: rgba(41, 128, 185, 0.15);
   }
 }

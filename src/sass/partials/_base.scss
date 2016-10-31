@@ -10,6 +10,13 @@
 * Guide customization
 */
 
+a.btn.btn-block {
+  font-weight: 200;
+  text-decoration: none;
+  color: $inverse;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
 
 /* images */
 img {

@@ -8,7 +8,7 @@ category: pathway_enrichment
 order: 4
 figures:
 data:
-status: draft
+status: live
 ---
 
 - {:.list-unstyled} Table of Contents

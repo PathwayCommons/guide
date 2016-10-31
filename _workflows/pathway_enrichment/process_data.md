@@ -213,11 +213,8 @@ The preceding R code is presented in its entirety and available as a Github gist
 
 ## <a href="#data" name="data">IV. Data</a>
 
-- {:.list-unstyled} Differential gene expression ranks
-  - <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" download>`MesenchymalvsImmunoreactive_edger_ranks.rnk.zip`</a>(293 KB)
-  - Comparisons
-    - 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes
-  - Format: tab-delimited
+Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes. This data is saved in tab-delimited format to a file `MesenchymalvsImmunoreactive_edger_ranks.rnk`.
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.zip)</a>
 
   |   gene     |    rank    |
   |:----------:|:----------:|
@@ -236,7 +233,7 @@ The R code is available as a Github gist <a href="https://gist.github.com/jvwong
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="23975260,21720365,23359318"></div>
-<!-- - Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
+<!-- <div class="panel_group" data-inline="23975260,21720365,23359318"></div> -->
+- Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
 - Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013) -->
+- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013)

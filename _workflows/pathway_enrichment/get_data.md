@@ -177,9 +177,7 @@ Below we describe how to obtain each of these pieces of information for the TCGA
 
 ### Category information: Gene expression subtypes
 
-<div class="alert alert-warning text-justify" role="alert">
-  The TCGA HGS-OvCa subtypes are declared in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>.
-</div>
+<a type="button" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Subtypes (.txt)</a>
 
 Verhaak *et al.* used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype (Table 1).
 
@@ -306,9 +304,7 @@ The preceding R code is presented in its entirety and available as a Github gist
 
 File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an edgeR DGEList variable `TCGAOV_data` and saved to an RData file named `TCGAOV_data.rda`.
 
-  - Download direct: [TCGAOV_data.rda]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }})
-    - format: Rdata
-    - size: 34 MB
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> TCGAOV_data.rda</a>
 
 The R code and subtype designation file are available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">
