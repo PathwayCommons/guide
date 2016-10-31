@@ -9,8 +9,6 @@
 *
 */
 
-
-
 /*
 * Progress tracker overrides
 */
@@ -21,6 +19,10 @@
     width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
     top: 5rem;
   }
+}
+
+.progress-tracker--vertical .progress-step:not(:last-child) .progress-text {
+  padding-bottom: 0.75rem;
 }
 
 .progress-tracker {
@@ -48,7 +50,7 @@
   .progress-shadow {
     position: absolute;
     top: -0.4rem;
-    left: -0.4rem;
+    left: 2rem;
     height: 85%;
   }
   .active {
