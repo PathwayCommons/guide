@@ -45,6 +45,12 @@
     padding-top: 2px;
     padding-left: 42px;
   }
+  .progress-shadow {
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    height: 90%;
+  }
   .active {
     background-color: rgba(41, 128, 185, 0.15);
   }

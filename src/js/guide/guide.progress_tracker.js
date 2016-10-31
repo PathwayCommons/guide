@@ -17,7 +17,7 @@ module.exports = (function() {
 			'</div>' +
 			'<a href="#top"><div style="display: none;" id="panel-footer">Top</div></a>' +
 		'</div>',
-		highlight_class: '.progress-step',
+		highlight_class: '.progress-shadow',
 		link_class: '.progress-tracker-link'
   },
 	jQueryMap = {
@@ -38,7 +38,7 @@ module.exports = (function() {
 			// Set the list element state
 			self.addClass( 'is-complete' );
 			jQueryMap.$progress_tracker_wrapper.find(configMap.highlight_class).removeClass('active');
-    	self.toggleClass('active');
+    	self.find(configMap.highlight_class).toggleClass('active');
 			// Retrieve the url
 			var url = self.find(configMap.link_class).attr( 'href' );
 			// set the $panel iframe src and heading link url
