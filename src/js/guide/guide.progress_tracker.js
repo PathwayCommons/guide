@@ -17,7 +17,7 @@ module.exports = (function() {
 			'</div>' +
 			'<a href="#top"><div style="display: none;" id="panel-footer">Top</div></a>' +
 		'</div>',
-		highlight_class: '.progress-shadow',
+		highlight_class: '.progress-target',
 		link_class: '.progress-tracker-link'
   },
 	jQueryMap = {
