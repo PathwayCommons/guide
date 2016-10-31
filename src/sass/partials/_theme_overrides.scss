@@ -75,10 +75,24 @@ p {
   margin-right: auto;
 }
 
+/*
+* Embedded_wrapper layout
+*/
 @media (min-width: 768px) {
-  .container {
+  .embedded_wrapper.container {
     margin-left: $container-margin-left;
   }
+}
+/*
+* Embedded layout
+*/
+.container.embedded {
+  margin-top: 2rem;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  max-width: 100%;
 }
 
 img {

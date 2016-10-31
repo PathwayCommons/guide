@@ -3,7 +3,7 @@ title: Pathway enrichment
 subtitle: Distill altered pathways from raw RNA sequencing data using Gene Set enrichment Analysis.
 cover: cover.jpg
 date: 2016-10-24
-layout: page
+layout: embedded_wrapper
 category: Enrichment Analysis
 badge: RNA-seq
 ---
