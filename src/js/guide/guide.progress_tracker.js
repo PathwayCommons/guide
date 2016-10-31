@@ -15,7 +15,7 @@ module.exports = (function() {
 			'<div class="panel-body">' +
 				'<iframe id="panel-frame" src="" width="100%" frameBorder="0" scrolling="no" ></iframe>' +
 			'</div>' +
-			'<a href="#top"><div style="display: none;" id="panel-footer">Top</div></a>' +
+			'<a style="display: none;" id="panel-footer" type="button" class="btn btn-default" role="button" href="#top">Top</a>' +
 		'</div>',
 		highlight_class: '.progress-target',
 		link_class: '.progress-tracker-link'

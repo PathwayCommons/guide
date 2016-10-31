@@ -52,7 +52,7 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes differentially expressed between 'mesenchymal' and 'immunoreactive' subtypes we will need the following materials.
+To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes  expressed in 'immunoreactive' relative to 'mesenchymal' subtypes we will need the following materials.
 
 - RNA-seq assay and category information
   - [TCGAOV_data.rda]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
@@ -85,7 +85,7 @@ Documents
 
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `TCGAOV_data` from the previous section.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"data-gist-hide-footer="true" data-gist-line="3-15"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-15"></code>
 
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
@@ -99,6 +99,8 @@ The DGEList contains an attribute `counts` which is a table identical to our inp
 **Step 1: Filter**
 
 <code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="17-23"></code>
+
+the `comparisons=c("Immunoreactive","Mesenchymal")` will set up the 'immunoreactive' subtype as the baseline for comparison with 'mesenchymal' (see step 4 below).
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to remove noisy genes with low expression.
 
@@ -155,6 +157,8 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 **Step 4: Test**
 
 <code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="32-33"></code>
+
+> Note on exactTest parameter `pair`: The first group listed in the pair is the baseline for the comparison—so if the pair is c("A","B") then the comparison is B - A, so genes with positive log-fold change are up-regulated in group B compared with group A (and vice versa for genes with negative log-fold change). In our case, `comparisons=c("Immunoreactive","Mesenchymal")` will set the 'immunoreactive' subtype as our baseline.
 
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
@@ -214,7 +218,7 @@ The preceding R code is presented in its entirety and available as a Github gist
 ## <a href="#data" name="data">IV. Data</a>
 
 Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes. This data is saved in tab-delimited format to a file `MesenchymalvsImmunoreactive_edger_ranks.rnk`.
-<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.zip)</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> MesenchymalvsImmunoreactive_edger_ranks.rnk.zip</a>
 
   |   gene     |    rank    |
   |:----------:|:----------:|

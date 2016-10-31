@@ -23,7 +23,7 @@ status: live
 
 ## <a href="#background" name="background">II. Background</a>
 
-Creation of an enrichment map is motivated by the following
+Creation of an enrichment map is motivated by the following problems that arise in enrichment analyses.
 
   - Increase the interpretability of a long list of pathways
   - View redundancy inherent in enriched gene sets / source databases

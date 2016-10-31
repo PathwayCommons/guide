@@ -601,14 +601,16 @@ When the GSEA software has completed its analysis, the 'Status' inside the  'GSE
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive.slim }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the 'Save results in this folder' option in 'Basic fields' input set for the 'Run Gsea on a Pre-Ranked gene list' tab.
+  <strong>Figure 11. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the 'Save results in this folder' option in 'Basic fields' input set for the 'Run Gsea on a Pre-Ranked gene list' tab. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
 </div>
 
 You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results){:target="_blank"} that includes a description of the GSEA report. Below we will briefly highlight a few aspects to take special note of.
 
 #### 'Enrichment in phenotype'
 
-There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates down-regulation in the second phenotype.
+There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates up-regulation in the second phenotype.
+
+Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#practical) we assessed gene expression in the 'Mesenchymal' subtype relative to the 'Immunoreactive' subtype. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'mesenchymal' subtype and 'na_neg' refers to the 'immunoreactive' subtype.
 
 > Note - this is weird. Should we be doing this with p-values? who cares which direction as long as their is change?
 

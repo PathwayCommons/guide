@@ -82,6 +82,10 @@ p {
   .embedded_wrapper.container {
     margin-left: $container-margin-left;
   }
+  .container.embedded {
+      width: $container-max-width;
+      margin:auto auto;
+    }
 }
 /*
 * Embedded layout
@@ -93,6 +97,12 @@ p {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   max-width: 100%;
+}
+@media (min-width: 768px){
+  .container.embedded {
+      width: $container-max-width;
+      margin:auto auto;
+    }
 }
 
 img {
