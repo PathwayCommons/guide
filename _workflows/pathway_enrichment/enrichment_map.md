@@ -1,6 +1,6 @@
 ---
-title: Enrichment Map
-subtitle: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation
+title: Visualize
+subtitle: Use an enrichment map to visually organize enriched gene sets
 pdf: em_merico_plosOne_v5_11_2010.pdf
 date: 2010-11-15
 layout: embedded
@@ -49,11 +49,16 @@ Enrichment map is a visualization analysis tool that organizes gene sets into a 
 - data: can overlay data with heat maps
 - enrichments: can overlay multiple analyses
 
+- limitations
 
+  - Enriched gene sets with much redundancy is the key advantage
 
 ## <a href="#practical" name="practical">III. Practical</a>
 
-Need to set up Cytoscape here.
+- Set up Cytoscape here.
+- expression file (step 21)
+- Get a class (.cls?) file (step 21)
 
 
 ## <a href="#references" name="references">IV. References</a>
+<div class="panel_group" data-inline="21085593"></div>

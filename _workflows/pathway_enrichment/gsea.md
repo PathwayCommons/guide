@@ -1,6 +1,6 @@
 ---
-title: Gene Set Enrichment Analysis
-subtitle: Use the results of a differential expression analysis to identify enriched pathways
+title: Do enrichment
+subtitle: Use the results of a differential expression analysis to identify enriched pathways using Gene Set Enrichment Analysis (GSEA)
 date: 2016-04-20
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
 layout: embedded
@@ -465,6 +465,7 @@ This section describes how to perform a single run of GSEA using the expression 
 
 A ranked gene list contains all the information needed from our expression dataset. The `.rnk` format is a tab-delimited text file with two columns: gene and rank.
 
+{:.table .table-hover .table-condensed .table-responsive}
 | gene (HUGO) |  rank (numeric)  |
 |:---------:|:-----------:|
 | gene 1    |   rank 1    |
@@ -487,6 +488,7 @@ GSEA allows users to use a prescribed gene set database or create their own. For
 
 Here, we focus on the [Gene Matrix Transposed (.gmt)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29){:target="_blank"} format which is a tab-delimited text file describing gene sets. In this case, each row represents a gene set as follows:
 
+{:.table .table-hover .table-condensed .table-responsive}
 | gene set name (string)  | description (string)  | gene 1    | ...  | gene n_k |
 |:------------------------|:----------------------|----------:|-----:|---------:|
 | Gene set 1    |   A gene set    | gene 1    | ... |  gene n_1    |
@@ -627,6 +629,7 @@ Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pa
 
 **Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are included for each enriched gene set
 
+{:.table .table-hover .table-condensed .table-responsive}
 |  GS  |  SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
 |:-----|:------:|:-----:|:-----:|:---------:|:---------:|:----------:|
 | HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION| 181 | 0.88382155 | 2.5331933 | 0.0 | 0.0 | 0.0 |

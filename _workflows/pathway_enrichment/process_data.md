@@ -91,6 +91,7 @@ Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
 
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
+{:.table .table-hover .table-condensed .table-responsive}
 ||group |lib.size |norm.factors|...|
 |----------|-------------|------|------|----|
 |TCGA-24-2024-01A-02R-1568-13| Differentiated| 88674430| 1|...|
@@ -112,6 +113,7 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
+{:.table .table-hover .table-condensed .table-responsive}
 ||group |lib.size |norm.factors|...|
 |----------|-------------|------|------|----|
 |TCGA-24-2024-01A-02R-1568-13| Differentiated| 86537532| 1.0381847|...|
@@ -169,6 +171,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
+{:.table .table-hover .table-condensed .table-responsive}
 ||logFC |logCPM |PValue|
 |-----------------|-------------|----------|--------------|
 | ENSG00000000003 | -0.01330985 | 6.443032 | 0.8897024823 |
@@ -184,6 +187,7 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR){:target="_blank"} to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
+{:.table .table-hover .table-condensed .table-responsive}
 ||...|logFC |logCPM |PValue|FDR|
 |----------|-------------|------|------|------|------|
 |ENSG00000113140|...| 1.761045 | 10.449976 |5.109476e-36|
@@ -231,6 +235,7 @@ The preceding R code is presented in its entirety and available as a Github gist
 Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes. This data is saved in tab-delimited format to a file `MesenchymalvsImmunoreactive_edger_ranks.rnk`.
 <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
+{:.table .table-hover .table-condensed .table-responsive}
 |   gene  |  rank     |
 |:-------:|:---------:|
 | SPARC   | 35.29162  |

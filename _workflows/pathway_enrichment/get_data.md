@@ -139,6 +139,7 @@ The TCGA analysis of HGS-OvCa described four expression subtypes based on unsupe
 
 **Table 1. HGS-OvCa gene expression subtypes**
 
+{:.table .table-hover .table-condensed .table-responsive}
 | Expression Subtype | Gene Content |
 |:-------|:------|:------|:-----|
 | Immunoreactive | T-cell chomokine ligands *CXCL11* and *CXCL10* and the receptor CXCR3 |
@@ -154,6 +155,7 @@ A pair-wise differential gene expression analysis requires at least two pieces o
 
 **Table 2. Category information**
 
+{:.table .table-hover .table-condensed .table-responsive}
 | Sample ID  |  Category  |
 |:----------:|:----------:|
 | Sample 1   |    A       |
@@ -166,6 +168,7 @@ The second piece we need is the 'assay information' or experimental observations
 
 **Table 3. Assay information**
 
+{:.table .table-hover .table-condensed .table-responsive}
 |  Gene    | Sample 1 | Sample 2 |  ...     | Sample m  |
 |:--------:|:--------:|:--------:|:--------:|:---------:|
 | gene 1   |    0     |    200   |   ...    |    0     |
@@ -185,6 +188,7 @@ The supplemental table includes dataset samples from other studies. We have filt
 
 **Table 3. TCGA subtype information**
 
+{:.table .table-hover .table-condensed .table-responsive}
 |        | ID       |  DATASET | SUBTYPE  |      AGE |      ...  |
 |:------:|:--------:|:--------:|:--------:|:--------:|:---------:|
 |   1    | TCGA-59-2348 | TCGA-discovery | Differentiated | 59 | ...|

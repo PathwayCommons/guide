@@ -47,7 +47,7 @@ module.exports = (function() {
 			jQueryMap.$panel_frame.attr( 'src', url );
 
 			//External library Iframe-resizer
-			jQueryMap.$panel_frame.iFrameResize();
+			jQueryMap.$panel_frame.iFrameResize();			
 		});
 	};
 
