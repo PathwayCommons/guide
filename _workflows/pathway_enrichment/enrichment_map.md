@@ -57,8 +57,26 @@ Enrichment map is a visualization analysis tool that organizes gene sets into a 
 
 - Set up Cytoscape here.
 - expression file (step 21)
+  - cpms (post - tagwise dispersions) 
+  - **Careful: our expression matrix has all subtypes (369 columms)**
+
+  {:.table .table-hover .table-condensed .table-responsive}
+  | name   | geneid  | TCGA-13-1254   |   ...    |  TCGA-61-2104 |
+  |:------:|:-------:|:--------------:|:--------:|:-------------:|
+  | A1BG   |   1     | 8.86359404663  |   ...    | 5.075477985   |
+  | A2LD1  |  87769  | 8.478359239    |   ...    | 8.546309414   |
+  | A2ML1  |  144568 | 2.702200646    |   ...    | 0.236110982   |
+  | ...    |   ...   |    ...         |   ...    |      ...      |
+  | ZZZ3   |  26009  | 17.15487986    |   ...    | 80.31405851   |
+
+
 - Get a class (.cls?) file (step 21)
 
+  {:.table .table-hover .table-condensed .table-responsive}
+  | 119 2 1  |      |     | ...  |     |
+  |:---------:|:-----:|:----:|:-----:|:----:|
+  | # Mesenchymal Immunoreactive  | | | ... | |
+  | Mesenchymal  |  Mesenchymal  | Immunoreactive | ... |  Mesenchymal  |
 
 ## <a href="#references" name="references">IV. References</a>
 <div class="panel_group" data-inline="21085593"></div>
