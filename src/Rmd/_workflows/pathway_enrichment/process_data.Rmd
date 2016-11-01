@@ -9,7 +9,7 @@ gists:
   id: 32c23ac64138c59b1a150987b023d57d
   file_1: process_data.R
 data:
-  rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk.zip
+  rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
 figures:
   figure_1: figure_processdata_overview.jpg
   figure_2: ranks_layout.png
@@ -25,7 +25,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  To get the list of differentially expressed genes in TCGA-OV for 'immunoreactive' vs 'mesenchymal' subtypes ranked by p-value see <a href="#data">IV. Data</a>.
+  To get the list of differentially expressed genes in TCGA-OV for mesenchymal relative to immunoreative subtypes ranked by p-value see <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
@@ -52,7 +52,7 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes  expressed in 'immunoreactive' relative to 'mesenchymal' subtypes we will need the following materials.
+To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes  expressed in 'mesenchymal' relative to 'immunoreactive' subtypes we will need the following
 
 - RNA-seq assay and category information
   - [TCGAOV_data.rda]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
@@ -80,22 +80,29 @@ Documents
 ### Data processing
 
 ```{r, out.width = 500, fig.retina = NULL, fig.align="left", echo=FALSE, message=FALSE, warning=FALSE}
-### ============ Load ===============
 rm(list=ls(all=TRUE))
+
+### ============ Install packages from Bioconductor ========
 library("edgeR")
 
-### ============ Load ===============
+### ============ Declare directories =========
 BASE_DIR <- getwd()
 TCGAOV_data_FILE <- file.path(BASE_DIR, "TCGAOV_data.rda")
+
+### ============ Declare samples =========
+CATEGORY_BASELINE = "Immunoreactive"
+CATEGORY_TEST = "Mesenchymal"
+TCGAOV_ranks_FILE = file.path(BASE_DIR,
+                              "MesenchymalvsImmunoreactive_edger_ranks.rnk")
 
 ### ============ 0. Load DGEList =========
 load(TCGAOV_data_FILE)
 
 ### ============ 1. Filter ===============
-comparisons=c("Mesenchymal","Immunoreactive")
-N_Mesenchymal = sum(TCGAOV_data$samples$group == 'Mesenchymal')
-N_Immunoreactive = sum(TCGAOV_data$samples$group == 'Immunoreactive')
-row_with_mincount = rowSums(cpm(TCGAOV_data) > 10) >= min(N_Immunoreactive, N_Mesenchymal)
+N_baseline = sum(TCGAOV_data$samples$group == CATEGORY_BASELINE)
+N_test = sum(TCGAOV_data$samples$group == CATEGORY_TEST)
+row_with_mincount = rowSums(cpm(TCGAOV_data) > 10) >= min(N_baseline,
+                                                          N_test)
 TCGAOV_filtered = TCGAOV_data[row_with_mincount, , keep.lib.sizes=FALSE]
 
 ### ============ 2. Normalize ===============
@@ -106,7 +113,8 @@ TCGAOV_fitted_commondisp = estimateCommonDisp(TCGAOV_filtered_TMM)
 TCGAOV_fitted_tagwise = estimateTagwiseDisp(TCGAOV_fitted_commondisp)
 
 ### ============ 4. Test ===============
-TCGAOV_DE = exactTest(TCGAOV_fitted_tagwise, pair=comparisons)
+TCGAOV_DE = exactTest(TCGAOV_fitted_tagwise,
+                      pair=c(CATEGORY_BASELINE, CATEGORY_TEST))
 
 ### ============ 5. Adjust ===============
 TCGAOV_TT = topTags(TCGAOV_DE,
@@ -115,41 +123,46 @@ TCGAOV_TT = topTags(TCGAOV_DE,
                     sort.by="PValue")
 ```
 
-**Step 0: Installation**
+**Step 0: Installation and setup**
 
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `TCGAOV_data` from the previous section.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-15"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-18"></code>
+
+Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
 
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
-||group |lib.size |norm.factors|
-|----------|-------------|------|------|
-|TCGA-24-2024-01A-02R-1568-13| Differentiated| 86537532| 1|
-|TCGA-23-1026-01B-01R-1569-13| Differentiated| 47372890| 1|
-|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38040210| 1|
-|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 57508980| 1|
+||group |lib.size |norm.factors|...|
+|----------|-------------|------|------|----|
+|TCGA-24-2024-01A-02R-1568-13| Differentiated| 88674430| 1|...|
+|TCGA-23-1026-01B-01R-1569-13| Differentiated| 48116062| 1|...|
+|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38896502| 1|...|
+|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 58593539| 1|...|
+| ... | ... | ...  | ... | ...|
+|TCGA-24-1552-01A-01R-1566-13| Differentiated| 59187305| 1|...|
 
 **Step 1: Filter**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="17-23"></code>
-
-the `comparisons=c("Immunoreactive","Mesenchymal")` will set up the 'immunoreactive' subtype as the baseline for comparison with 'mesenchymal' (see step 4 below).
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="20-25"></code>
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to remove noisy genes with low expression.
 
 **Step 2: Normalize**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="25-26"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="27-28"></code>
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
-||group |lib.size |norm.factors|
-|----------|-------------|------|------|
-|TCGA-24-2024-01A-02R-1568-13| Differentiated| 86537532| 1.0786188|
-|TCGA-23-1026-01B-01R-1569-13| Differentiated| 47372890| 0.8619143|
-|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38040210| 0.9734212|
-|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 57508980| 0.9503564|
+||group |lib.size |norm.factors|...|
+|----------|-------------|------|------|----|
+|TCGA-24-2024-01A-02R-1568-13| Differentiated| 86537532| 1.0381847|...|
+|TCGA-23-1026-01B-01R-1569-13| Differentiated| 47372890| 0.8994764|...|
+|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38040210| 1.0004715|...|
+|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 57508980| 0.9985136|...|
+| ... | ... | ...  | ... | ...|
+|TCGA-24-1552-01A-01R-1566-13| Differentiated| 59187305| 1|...|
+|TCGA-24-1552-01A-01R-1566-13| Differentiated |58348015 | 0.9312245|...|
 
 The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
 
@@ -165,7 +178,7 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 
 **Step 3: Fit**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="28-30"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="30-32"></code>
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
@@ -194,31 +207,37 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 
 **Step 4: Test**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="32-33"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="34-36"></code>
 
-> Note on exactTest parameter `pair`: The first group listed in the pair is the baseline for the comparison—so if the pair is c("A","B") then the comparison is B - A, so genes with positive log-fold change are up-regulated in group B compared with group A (and vice versa for genes with negative log-fold change). In our case, `comparisons=c("Immunoreactive","Mesenchymal")` will set the 'immunoreactive' subtype as our baseline.
+- {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
+
+  **pair:** Vector of length two, either numeric or character, providing the pair of groups to be compared; if a character vector, then should be the names of two groups (e.g. two levels of object$samples$group); if numeric, then groups to be compared are chosen by finding the levels of object$samples$group corresponding to those numeric values and using those levels as the groups to be compared; if NULL, then first two levels of object$samples$group (a factor) are used. Note that the first group listed in the pair is the baseline for the comparison—so if the pair is c("A","B") then the comparison is B - A, so genes with positive log-fold change are up-regulated in group B compared with group A (and vice versa for genes with negative log-fold change).
 
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
 ||logFC |logCPM |PValue|
-|----------|-------------|------|------|
-|ENSG00000000003| 0.01016134| 6.316852| 0.9154125718|
-|ENSG00000000419| 0.07286626| 5.742385| 0.3871193323|
-|ENSG00000000457| 0.06727284| 3.814321| 0.3411576097|
-|ENSG00000000460| 0.24572199| 3.301272| 0.0095910907|
+|-----------------|-------------|----------|--------------|
+| ENSG00000000003 | -0.01330985 | 6.443032 | 0.8897024823 |
+| ENSG00000000419 | -0.07445524 | 5.871415 | 0.3816269365 |
+| ENSG00000000457 | -0.06861521 | 3.939170 | 0.3310271087 |
+| ENSG00000000460 | -0.24815064 | 3.424738 | 0.0084615022 |
+| ... | ... | ... | ... |
+| ENSG00000281649 | -0.16995958 | 6.132860 | 0.02849812   |
 
 **Step 5: Adjust**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="35-39"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="38-42"></code>
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR){:target="_blank"} to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
-||logFC |logCPM |PValue|FDR|
-|----------|-------------|------|------|------|
-|ENSG00000106624| -2.157814|  8.409861| 7.261311e-36 |6.595628e-32|
-|ENSG00000113140 |-1.761172 |10.327175 |1.123712e-35 |6.595628e-32|
-|ENSG00000166147| -2.134744|  5.739566 |3.422990e-35| 1.339416e-31|
-|ENSG00000182492| -1.876400 | 8.821797| 1.503263e-34 |4.411702e-31|
+||...|logFC |logCPM |PValue|FDR|
+|----------|-------------|------|------|------|------|
+|ENSG00000113140|...| 1.761045 | 10.449976 |5.109476e-36|
+|ENSG00000106624|...| 2.157733 | 8.531844 |6.018020e-36|
+|ENSG00000166147|...| 2.133990 | 5.860843 |2.330611e-35|
+|ENSG00000182492|...| 1.876912 | 8.943067 |9.734230e-35|
+| ... | ... | ... | ... | ... |
+| ENSG00000079335 | ... | -1.960268e-04 | 3.474046 | 0.9998188|
 
 We can now plot our differentially expressed genes (red) over our full data.
 
@@ -226,19 +245,19 @@ We can now plot our differentially expressed genes (red) over our full data.
 ### ============ Plotting ===============
 rn = rownames(TCGAOV_TT$table)
 deg =rn[TCGAOV_TT$table$FDR<0.05]
-plotSmear(TCGAOV_filtered, pair=comparisons, de.tags=deg)
+plotSmear(TCGAOV_filtered, pair=c(CATEGORY_BASELINE, CATEGORY_TEST), de.tags=deg)
 ```
 
 **Step 6: Rank**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="41-45"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="44-48"></code>
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
 Set the gene name from the Ensembl gene ID to the `external_gene_name` which is compatible with the HGNC namespace.
 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="47-53"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="50-56"></code>
 
 <hr/>
 
@@ -253,16 +272,18 @@ The preceding R code is presented in its entirety and available as a Github gist
 ## <a href="#data" name="data">IV. Data</a>
 
 Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immunoreactive' TCGA HGS-OvCa subtypes. This data is saved in tab-delimited format to a file `MesenchymalvsImmunoreactive_edger_ranks.rnk`.
-<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> MesenchymalvsImmunoreactive_edger_ranks.rnk.zip</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
-  |   gene     |    rank    |
-  |:----------:|:----------:|
-  | TAP1 | 18.7588753128853 |
-  | ETV7 | 15.9269868091652 |
-  | CXCL10 |15.1998229003649 |
-  | ... | ... |
-  | AEBP1 | -35.2205529437008 |
-  | SPARC | -35.2916247244998 |
+|   gene  |  rank     |
+|:-------:|:---------:|
+| SPARC   | 35.29162  |
+| AEBP1   | 35.22055  |
+| FBN1    | 34.63253  |
+| BGN     | 34.01170  |
+| ...     | ...       |
+| CXCL10  | -15.19978 |
+| ETV7    | -15.92689 |
+| TAP1    | -18.75886 |
 
 The R code is available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">
@@ -272,7 +293,7 @@ The R code is available as a Github gist <a href="https://gist.github.com/jvwong
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<!-- <div class="panel_group" data-inline="23975260,21720365,23359318"></div> -->
-- Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
+<div class="panel_group" data-inline="23975260,21720365,23359318"></div>
+<!-- - Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
 - Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013)
+- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013) -->

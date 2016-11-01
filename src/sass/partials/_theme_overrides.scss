@@ -78,7 +78,7 @@ p {
 /*
 * Embedded_wrapper layout
 */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .embedded_wrapper.container {
     margin-left: $container-margin-left;
   }

@@ -19,9 +19,10 @@ figures:
   figure_10: figure_gsea_settings.png
   figure_11: figure_gsea_report.png
   figure_12: figure_gsea_report_snapshot.png
+  figure_13: figure_gsea_report_snapshot_neg.png
   gsea_download: GSEA_download.gif
 data:
-  data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk.zip
+  data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
   data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 ---
 
@@ -458,7 +459,7 @@ This section describes how to perform a single run of GSEA using the expression 
 
 ### 1. Ranked gene list
 
- You can visit the 'Process Data' section to obtain 'MesenchymalvsImmunoreactive_edger_ranks.rnk' which is the ranked gene list for the TCGA-Ov project comparing mesechymal and immunoreactive subtypes.
+ You can visit the [Process Data]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#data){:target="_blank"} section to obtain `MesenchymalvsImmunoreactive_edger_ranks.rnk` which is the ranked gene list for the TCGA-Ov project assessing differential expression in the 'mesenchymal' subtype relative to the 'immunoreactive' subtype.
 
 <a href="{{site.baseurl}}/{{site.media_root}}/{{ page.data.data_1 }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
@@ -474,8 +475,6 @@ A ranked gene list contains all the information needed from our expression datas
 | gene n    |   rank n    |
 
 The 'gene' entry should be unique and a valid [Human genome organization Gene Nomenclature Committee (HGNC)](http://www.genenames.org/about/guidelines){:target="_blank"} identifier. The 'rank' entry should be unique as GSEA does not know how to resolve ties.
-
-Previously, we have described how to generate a ranked list of genes that are differentially expressed between mesenchymal and immunoreactive subtypes of high-grade serous ovarian cancer (HGS-OvCa) from the TCGA effort. You can retrieve a file named  'MesenchymalvsImmunoreactive_edger_ranks.rnk.zip' from the [Process Data]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#data){:target="_blank"} section to use in subsequent steps.
 
 
 ### 2. Gene sets
@@ -614,20 +613,25 @@ Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pa
 
 > Note - this is weird. Should we be doing this with p-values? who cares which direction as long as their is change?
 
-**Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores. By default, GSEA displays plots for the top 20 gene sets.
+**Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 12. Snapshot for 'mesenchymal' phenotype (na_pos).</strong> Shown are the running sum plots for top enrichment in the 'mesenchymal' subtype. Only first three samples of the twenty are shown.
+</div>
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 13. Snapshot for 'immunoreactive' phenotype (na_neg).</strong> Shown are the running sum plots for top enrichment in the 'immunoreactive' subtype. Only first three samples of the twenty are shown.
+</div>
 
 **Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are included for each enriched gene set
 
 |  GS  |  SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
 |:-----|:------:|:-----:|:-----:|:---------:|:---------:|:----------:|
-| HALLMARK_INTERFERON_GAMMA_RESPONSE  | 177  | 0.7945781  | 2.903854  | 0.0| 0.0| 0.0|
-| HALLMARK_INTERFERON_ALPHA_RESPONSE  | 94   | 0.852435   | 2.8311238 | 0.0| 0.0| 0.0|
-| INTERFERON SIGNALING                | 155  | 0.73303986 | 2.6219237 | 0.0| 0.0| 0.0|
-| TYPE I INTERFERON SIGNALING PATHWAY |  45   | 0.84804463 | 2.5468943 | 0.0|0.0| 0.0|
-| INTERFERON GAMMA SIGNALING          |  73   | 0.7764625  | 2.5429115 | 0.0| 0.0| 0.0|
-| INTERFERON ALPHA BETA SIGNALING     |  48   | 0.8390211  | 2.5337644 | 0.0| 0.0| 0.0|
+| HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION| 181 | 0.88382155 | 2.5331933 | 0.0 | 0.0 | 0.0 |
+| NABA_CORE_MATRISOME | 162| 0.8811468 | 	2.4879313 | 0.0 | 0.0 | 0.0 |
+| EXTRACELLULAR MATRIX ORGANIZATION | 172 | 0.8581041 | 2.4628592 | 0.0 | 0.0 | 0.0 |
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
 ### Caveats
