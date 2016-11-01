@@ -12,20 +12,14 @@
 /*
 * Progress tracker overrides
 */
-@media (min-width: 1024px) {
-  .progress-tracker {
-    position: fixed;
-    left: 1rem; // Move it to the right for 50% of parent element
-    width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
-    top: 5rem;
-  }
-}
 
 .progress-tracker--vertical .progress-step:not(:last-child) .progress-text {
   padding-bottom: 0.75rem;
 }
 
 .progress-tracker {
+  max-width: $container-max-width - 15rem;
+  margin-left: 5%;
   a:link.progress-tracker-link,
   a:hover.progress-tracker-link,
   a:active.progress-tracker-link,
@@ -36,6 +30,16 @@
     padding-bottom: 0px; // To align text within the marker
   }
 
+}
+
+@media (min-width: 1024px) {
+  .progress-tracker {
+    position: fixed;
+    left: 1rem; // Move it to the right for 50% of parent element
+    width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
+    top: 5rem;
+    margin-left: auto;
+  }
 }
 
 .progress-tracker-wrapper {
