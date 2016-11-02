@@ -57,7 +57,7 @@ Enrichment map is a visualization analysis tool that organizes gene sets into a 
 
 - Set up Cytoscape here.
 - expression file (step 21)
-  - cpms (post - tagwise dispersions) 
+  - cpms (post - tagwise dispersions? just need  TCGAOV_filtered)
   - **Careful: our expression matrix has all subtypes (369 columms)**
 
   {:.table .table-hover .table-condensed .table-responsive}
