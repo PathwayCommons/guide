@@ -263,6 +263,26 @@ The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunore
 
 <code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="50-56"></code>
 
+Your directory should now contain the rank file.
+
+```shell
+Documents
+|
+|--- data
+    |
+    |--- TCGA
+        |
+        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+        |
+        |--- TCGAOV_data.rda
+        |
+        |--- Verhaak_JCI_2013_tableS1.txt
+        |
+        |--- TCGA-OV
+            |--- ...
+...
+```
+
 <hr/>
 
 The preceding R code is presented in its entirety and available as a Github gist

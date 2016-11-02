@@ -819,7 +819,7 @@ It is the pseudodata that is applied to the CML estimate for common dispersion (
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
- <strong>Figure 10. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.
+ <strong>Figure 9. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.
 </div>
 
 

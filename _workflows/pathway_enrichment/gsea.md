@@ -1,6 +1,6 @@
 ---
-title: Do enrichment
-subtitle: Use the results of a differential expression analysis to identify enriched pathways using Gene Set Enrichment Analysis (GSEA)
+title: Identify pathways
+subtitle: Find pathways enriched in expression data using Gene Set Enrichment Analysis (GSEA)
 date: 2016-04-20
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
 layout: embedded
@@ -457,6 +457,25 @@ This section describes how to perform a single run of GSEA using the expression 
   <strong>Figure 8. Doing GSEA.</strong> Overview of the steps we will go through to perform a single run of GSEA.
 </div>
 
+
+If you have been following along all of the workflow steps, you should have a directory structure similar to the following
+
+```shell
+Documents
+|
+|--- data
+    |
+    |--- TCGA
+        |
+        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+        |
+        |--- TCGAOV_data.rda
+        |
+        |--- Verhaak_JCI_2013_tableS1.txt
+        ...
+```
+
+
 ### 1. Ranked gene list
 
  You can visit the [Process Data]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#data){:target="_blank"} section to obtain `MesenchymalvsImmunoreactive_edger_ranks.rnk` which is the ranked gene list for the TCGA-Ov project assessing differential expression in the 'mesenchymal' subtype relative to the 'immunoreactive' subtype.
@@ -539,6 +558,24 @@ Launch the GSEA application. You will see the GSEA logo splash then the applicat
 
 ### 4. Load files
 
+You should now have a directory structure similar to the following
+
+```shell
+Documents
+|
+|--- data
+    |
+    |--- TCGA
+        |
+        |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+        |
+        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+        |
+        |--- TCGAOV_data.rda
+        |
+        ...
+```
+
 In this part, we will load the necessary files into computer memory. We will tell GSEA what these files are in the next step for 'Settings'.
 
 - Open 'Load data' tab
@@ -569,7 +606,7 @@ Now that are files are in memory, we will tell GSEA what these files actually re
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 10. The GSEA Pre-ranked.</strong> Shown is the 'Run Gsea on a Pre-ranked gene list' tab.
+  <strong>Figure 10. The GSEA Pre-ranked.</strong> Shown is the 'Run Gsea on a Pre-ranked gene list' tab. The Basic field labelled 'Save results in this folder'  will be the location of your GSEA results.
 </div>
 
 <hr/>
@@ -595,14 +632,40 @@ Click the 'Run' button arrow in the bottom right of the 'Run Gsea on a Pre-Ranke
 
 ## <a href="#postGSEA" name="postGSEA">IV. Post-GSEA</a>
 
+Take a look at the directory you set for 'Save results in this folder' in part 5. You should see a GSEA results directory similar to the following
+
+```shell
+Users
+|
+|--- username
+    |
+    |--- gsea_home
+        |
+        |--- output
+            |
+            |--- nov02
+            |
+            |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
+                |
+                |--- index.html
+                |--- pos_snapshot.html
+                |--- neg_snapshot.html
+                |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
+                |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
+                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
+                |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
+                ...
+...
+```
+
 ### The GSEA report
 
-When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 9, bottom left). You may click this link to view the HTML report inside a browser (Figure 11).
+When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 9, bottom left). You may click this link to view the HTML report inside a browser (Figure 11). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive.slim }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the 'Save results in this folder' option in 'Basic fields' input set for the 'Run Gsea on a Pre-Ranked gene list' tab. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
+  <strong>Figure 11. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
 </div>
 
 You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results){:target="_blank"} that includes a description of the GSEA report. Below we will briefly highlight a few aspects to take special note of.
@@ -615,7 +678,7 @@ Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pa
 
 > Note - this is weird. Should we be doing this with p-values? who cares which direction as long as their is change?
 
-**Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores.
+**Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores (GSEA results folder for `pos_snapshot.html` and `neg_snapshot.html`).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -627,7 +690,7 @@ Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pa
   <strong>Figure 13. Snapshot for 'immunoreactive' phenotype (na_neg).</strong> Shown are the running sum plots for top enrichment in the 'immunoreactive' subtype. Only first three samples of the twenty are shown.
 </div>
 
-**Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (html and excel formats). The following fields are included for each enriched gene set
+**Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (GSEA results folder for `gsea_report_for_na_pos_.xls` and `gsea_report_for_na_neg_.xls`). The following fields are included for each enriched gene set
 
 {:.table .table-hover .table-condensed .table-responsive}
 |  GS  |  SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
@@ -649,7 +712,11 @@ At this point you have traded a list of genes for a slightly shorter list of pat
 
 On one hand, you may already know precisely the types of pathways that interest you, in which case, you can sort through the detailed enrichment results table by hand.
 
-On the other hand, you may desire an appreciation of the grander themes emerging within your collection of enriched pathways. In this case, we recommend you generate an [enrichment map]({{site.baseurl}}/workflows/pathway_enrichment/enrichment_map){:target="_blank"}.
+On the other hand, you may desire an appreciation of the grander themes emerging within your collection of enriched pathways. In this case, we recommend you [visually organize your pathways]({{site.baseurl}}/workflows/pathway_enrichment/visualize){:target="_blank"}.
+
+<div class="alert alert-warning text-justify" role="alert">
+  Make note of the analysis history file with extension '.rpt'. This contains information regarding the name and location of your GSEA results files. It can be used as a point of access for downstream analysis software.
+</div>
 
 ## <a href="#references" name="references">V. References</a>
 <div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
