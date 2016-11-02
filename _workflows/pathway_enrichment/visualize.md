@@ -101,6 +101,12 @@ Users
 
 We will put in our raw expression counts. We will be able to click on a gene set and see the underlying expression values in a table.
 
+The expression data serves two purposes:
+Expression data is used by the Heatmap when clicking on nodes and edges in the Enrichment map so the expression of subsets of data can be viewed.
+Gene sets are filtered based on the genes present in the expression file. For example, if Geneset X contains genes {1,2,3,4,5} but the expression file only contain expression value for genes {1,2,3} Geneset X will be represented as {1,2,3} in the Enrichment Map.
+Expression data is not required. In the absence of an expression file Enrichment map will create a dummy expression file to associate with the data set. The dummy expression gives an expression value of 1 for all the genes associated with the enriched genesets in the Enrichment map.
+[Note: if you are running a two dataset analysis with no expression files the genes for each dataset is calculated based on the enriched genesets. If a geneset is enriched in one dataset and not the other this could create different subsets of genes associated to each datasets and create multiple edges between genesets. To avoid this, create a fake expression file with the set of genes used for both analyses.]
+
 {:.table .table-hover .table-condensed .table-responsive}
 | name   | geneid  | TCGA-13-1254   |   ...    |  TCGA-61-2104 |
 |:------:|:-------:|:--------------:|:--------:|:-------------:|
