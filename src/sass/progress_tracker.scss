@@ -57,8 +57,9 @@
   }
   .progress-shadow {
     position: absolute;
+    width: 100%;
     top: -0.4rem;
-    left: 2rem;
+    left: -0.4rem;
     height: 85%;
   }
   .active {

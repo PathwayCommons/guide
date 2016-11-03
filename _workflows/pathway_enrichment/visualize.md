@@ -7,7 +7,9 @@ layout: embedded
 category: pathway_enrichment
 order: 4
 figures:
-data:
+  figure_2: figure_visualize_overview.jpg
+  figure_3: figure_visualize_cytoscape_basic.png
+  figure_4: figure_visualize_em_input.jpg
 status: live
 ---
 
@@ -55,6 +57,13 @@ Enrichment map is a visualization analysis tool that organizes gene sets into a 
 
 ## <a href="#practical" name="practical">III. Practical</a>
 
+This section describes how to use the enrichment map software to organize the gene sets emerging from our enrichment analysis. Figure 2 depicts the five elements involved setting up the software and we elaborate upon each below.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Creating an enrichment map.</strong> Overview of the steps we will go through to generate an enrichment map of our gene set enrichment analysis output.
+</div>
+
 If you have been following along this workflow, you should have a directory structure containing the raw and processed data.
 
 ```shell
@@ -85,15 +94,17 @@ Users
             |
             |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
                 |
+                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
                 |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
                 |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
-                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
                 |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
+
                 ...
-...
 ```
 
-### 1. Files
+### 1. GSEA report
+
+When GSEA writes analysis results to an output folder (see 'Help' toolbar for 'Show GSEA Home folder'), it also creates a matching .rpt file. The 'Analysis History' page displays analysis results based on the .rpt files.
 
 #### Expresion set
 
@@ -117,8 +128,6 @@ Expression data is not required. In the absence of an expression file Enrichment
 | ZZZ3   |  26009  | 17.15487986    |   ...    | 80.31405851   |
 
 R: cpms (post - tagwise dispersions? just need  TCGAOV_filtered)
-
-TXT
 
 Basic file representing expression values for an experiment.
 The first line consists of column headings.
@@ -149,8 +158,26 @@ The third line contains a class label for each sample.*
 
 ### 2. Software
 
-- Set up Cytoscape here.
--
+Set up Cytoscape here.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Cytoscape.</strong>
+</div>
+
+### 4. Load files
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Enrichment map input panel.</strong>
+</div>
+
+### 4. Settings
+
+Focus more on explanation here.
+
 
 ## <a href="#references" name="references">IV. References</a>
 <!-- <div class="panel_group" data-inline="21085593"></div> -->

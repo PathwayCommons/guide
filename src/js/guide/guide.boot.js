@@ -13,7 +13,7 @@ module.exports = (function(){
       })
       .ajaxStop(function(){
           $("#ajax-spinner").hide();
-      });
+      });    
   };
 
   return { initModule     : initModule };

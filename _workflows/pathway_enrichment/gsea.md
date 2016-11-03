@@ -16,10 +16,11 @@ figures:
   figure_7: figure_gsea_fdr.png
   figure_8: figure_gsea_overview.png
   figure_9: figure_gsea_start.png
-  figure_10: figure_gsea_settings.png
-  figure_11: figure_gsea_report.png
-  figure_12: figure_gsea_report_snapshot.png
-  figure_13: figure_gsea_report_snapshot_neg.png
+  figure_10: figure_gsea_load.jpg
+  figure_11: figure_gsea_settings.jpg
+  figure_12: figure_gsea_report.png
+  figure_13: figure_gsea_report_snapshot.png
+  figure_14: figure_gsea_report_snapshot_neg.png
   gsea_download: GSEA_download.gif
 data:
   data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
@@ -576,44 +577,45 @@ Documents
         ...
 ```
 
-In this part, we will load the necessary files into computer memory. We will tell GSEA what these files are in the next step for 'Settings'.
+In this part, we will load the necessary files into computer memory (Figure 10). We will tell GSEA what these files are in the next step for 'Settings'.
 
-- Open 'Load data' tab
-  - In the control panel under 'Steps in GSEA analysis', click the 'Load data' button to bring up the 'Load data' tab in the main window
-  - Load the ranked gene list
-    - Under 'Method 1' find the 'Browse for files ...' button and select your ranked gene list file (.rnk)
-  - Load the gene set database
-    - Repeat the above but instead load the gene set database file (.gmt)
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
 
-<div class="alert alert-warning text-justify" role="alert">
-  Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the 'Object cache' panel of the 'Load data' tab (Lower right).
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 10. Load data tab.</strong> To bring up this tab, click the 'Load data' button in the control panel ‘Steps in GSEA analysis’.
 </div>
+
+1. Browse for the ranked gene list
+  - `MesenchymalvsImmunoreactive_edger_ranks.rnk`
+2.  Browse for the gene set database file (.gmt)
+  - `Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt`
+
+Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the 'Object cache' panel of the 'Load data' tab.
 
 ### 5. Settings
 
 Now that are files are in memory, we will tell GSEA what these files actually represent and tailor the GSEA run accordingly.
 
-- Open 'GseaPreranked' tab
-  - In the menu dropdown, select 'Tools' then 'GseaPreranked' which will bring up a 'Run Gsea on a Pre-Ranked gene list' tab
-    - Set 'Required fields'
-       - 'Gene sets database': Click the ellipsis '...' and wait until a window pops up. Click the arrow to navigate to the 'Gene matrix (local gmx/gmt)' panel and select the desired .gmt file
-       - 'Collapse dataset to gene symbols': Set 'false'
-    - Set 'Basic fields'
-      - 'Analysis name': Set this to something meaningful
-      - 'Save results in this folder': Set this to your liking
-
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 10. The GSEA Pre-ranked.</strong> Shown is the 'Run Gsea on a Pre-ranked gene list' tab. The Basic field labelled 'Save results in this folder'  will be the location of your GSEA results.
+  <strong>Figure 11. The GSEA Pre-ranked tab.</strong> Select 'Tools' in the menu dropdown, then 'GseaPreranked' to bring up the 'Run Gsea on a Pre-Ranked gene list' tab.
 </div>
+
+1. Gene sets database
+  - `Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt`
+2. Collapse dataset to gene symbols
+  - False
+3. Analysis name
+  - Choose a name for this run
+4. Save results in this folder
+  - location where you wish to house your GSEA results
 
 <hr/>
 
 ### Running GSEA
 
-Click the 'Run' button arrow in the bottom right of the 'Run Gsea on a Pre-Ranked gene list' tab (Figure 10, bottom right). The 'GSEA reports' panel (Figure 9, bottom left) will show the 'Name' of this run and the 'Status' as 'Running' while in progress.
+Click the 'Run' button in the 'Run Gsea on a Pre-Ranked gene list' tab (Figure 11, step 5). The 'GSEA reports' panel (Figure 9, bottom left) will show the 'Name' of this run and the 'Status' as 'Running' while in progress.
 
 <div class="alert alert-warning text-justify" role="alert">
   Typical run times
@@ -660,12 +662,12 @@ Users
 
 ### The GSEA report
 
-When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 9, bottom left). You may click this link to view the HTML report inside a browser (Figure 11). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
+When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 9, bottom left). You may click this link to view the HTML report inside a browser (Figure 12). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive.slim }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
+  <strong>Figure 12. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
 </div>
 
 You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results){:target="_blank"} that includes a description of the GSEA report. Below we will briefly highlight a few aspects to take special note of.
