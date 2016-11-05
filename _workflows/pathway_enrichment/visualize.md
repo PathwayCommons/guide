@@ -14,7 +14,7 @@ figures:
   figure_5: figure_visualize_cytoscape_apps_em.png
   figure_6: figure_visualize_em_splash.png
   figure_7: figure_visualize_cytoscape_em_load.jpg
-  figure_8: figure_visualize_em_settings.jpg
+  figure_8: figure_visualize_cytoscape_em_settings.jpg
 gists:
   id: 3d8b9f03ae5ede35cfe9f25a04ff7ebf
   file_1: visualize.R
@@ -287,19 +287,43 @@ Time to tell Enrichment Map where all of our data is (Figure 7).
   - This will automatically load in the two enrichment reports, the gene set data base ('Gene Sets' field 'GMT') and the rank file ('Advanced' field 'Ranks')
   - Load this file first as it will load in the next two fields by default
 2. Expression
-  - The 'Dataset 1' field for 'Expression'
+  - The 'Dataset 1' field for 'Expression' defines the expression values
   - Load in `MesenchymalvsImmunoreactive_RNAseq_expression.txt` (Step 2)
 3. Phenotypes
-  - Click the 'Advanced' field for 'Classes'
+  - The 'Advanced' field for 'Classes' defines our sample classes
   - Load in `MesenchymalvsImmunoreactive_RNAseq_phenotype.cls` (Step 3)
 
 ### 6. Settings
+
+Here we will configure Enrichment Map through the Control Panel (Figure 8).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive.shorter }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 8. Enrichment Map settings.</strong>
 </div>
+
+1. Phenotypes
+  - This defines the class labels previously declared in the phenotypes file (Table 2)
+  - In our case these will be 'Mesenchymal' VS. 'Immunoreactive'
+2. FDR Q-value Cutoff
+  - This defines the maximum false discovery rate q-value allowed
+  - Controls what nodes will appear
+  - We recommend starting at a conservative $$10^{-4}$$
+3. Jaccard+ Overlap Combined
+  - Defines the overlap threshold required for gene set linkage
+  - Controls what edges will appear
+  - Select the combined option and set the cutoff to 0.375
+
+<div class="alert alert-warning text-justify" role="alert">
+  <strong>Important!</strong> In the Enrichment Map Control panel, the 'Phenotypes' entered (Figure 8, label 1) must match exactly the 'Class' labels declared in the phenotype file (Table 2). This is required to match classes with the correct node color.
+</div>
+
+<hr/>
+
+### Build the Enrichment Map
+
+Click the 'Build' button in the Control Panel tab (Figure 8). You should see a progress indicator followed by the Enrichment Map as shown in Figure 3.
 
 ## <a href="#references" name="references">IV. References</a>
 <!-- <div class="panel_group" data-inline="21085593"></div> -->
