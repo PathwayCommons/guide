@@ -15,6 +15,9 @@ figures:
   figure_2: ranks_layout.png
 ---
 
+<!-- Global options -->
+
+
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
@@ -25,7 +28,7 @@ figures:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  To get the list of differentially expressed genes in TCGA-OV for mesenchymal relative to immunoreative subtypes ranked by p-value see <a href="#data">IV. Data</a>.
+  The list of differentially expressed genes in TCGA-OV for mesenchymal relative to immunoreative subtypes ranked by p-value is in <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
@@ -91,15 +94,14 @@ Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
 
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
+
+|               &nbsp;               |     group      |  lib.size  |  norm.factors  |
+|:----------------------------------:|:--------------:|:----------:|:--------------:|
+|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  88674430  |       1        |
+|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  48116062  |       1        |
+|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  38896502  |       1        |
+|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  58593539  |       1        |
 {:.table .table-hover .table-condensed .table-responsive}
-||group |lib.size |norm.factors|...|
-|----------|-------------|------|------|----|
-|TCGA-24-2024-01A-02R-1568-13| Differentiated| 88674430| 1|...|
-|TCGA-23-1026-01B-01R-1569-13| Differentiated| 48116062| 1|...|
-|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38896502| 1|...|
-|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 58593539| 1|...|
-| ... | ... | ...  | ... | ...|
-|TCGA-24-1552-01A-01R-1566-13| Differentiated| 59187305| 1|...|
 
 **Step 1: Filter**
 
@@ -113,16 +115,14 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
+
+|               &nbsp;               |     group      |  lib.size  |  norm.factors  |
+|:----------------------------------:|:--------------:|:----------:|:--------------:|
+|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  86537532  |     1.038      |
+|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  47372890  |     0.8995     |
+|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  38040210  |       1        |
+|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  57508980  |     0.9985     |
 {:.table .table-hover .table-condensed .table-responsive}
-||group |lib.size |norm.factors|...|
-|----------|-------------|------|------|----|
-|TCGA-24-2024-01A-02R-1568-13| Differentiated| 86537532| 1.0381847|...|
-|TCGA-23-1026-01B-01R-1569-13| Differentiated| 47372890| 0.8994764|...|
-|TCGA-04-1357-01A-01R-1565-13| Immunoreactive| 38040210| 1.0004715|...|
-|TCGA-61-2000-01A-01R-1568-13| Immunoreactive| 57508980| 0.9985136|...|
-| ... | ... | ...  | ... | ...|
-|TCGA-24-1552-01A-01R-1566-13| Differentiated| 59187305| 1|...|
-|TCGA-24-1552-01A-01R-1566-13| Differentiated |58348015 | 0.9312245|...|
 
 The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
 
@@ -142,22 +142,37 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
-```r
-#[1] "counts"            "samples"    "common.dispersion"   "pseudo.counts"
-#[5] "pseudo.lib.size"   "AveLogCPM"
-```
+
+{% highlight r %}
+names(TCGAOV_fitted_commondisp)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] "counts"            "samples"           "genes"            
+## [4] "common.dispersion" "pseudo.counts"     "pseudo.lib.size"  
+## [7] "AveLogCPM"
+{% endhighlight %}
 
 `estimateTagwiseDisp` estimates the dispersion for each gene and adds the list `tagwise.dispersion` to DGEList.
 
-```r
-names(TCGAOV_data)
-#[1] "counts"            "samples"     "common.dispersion"  "pseudo.counts"
-#[5] "pseudo.lib.size"   "AveLogCPM"   "prior.n"            "tagwise.dispersion"
-```
+
+{% highlight r %}
+names(TCGAOV_fitted_tagwise)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] "counts"             "samples"            "genes"             
+## [4] "common.dispersion"  "pseudo.counts"      "pseudo.lib.size"   
+## [7] "AveLogCPM"          "prior.n"            "tagwise.dispersion"
+{% endhighlight %}
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-2-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto;" />
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression){:target="_blank"}, $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
 
@@ -171,15 +186,15 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
+
+|        &nbsp;         |  logFC   |  logCPM  |  PValue  |
+|:---------------------:|:--------:|:--------:|:--------:|
+|  **ENSG00000000003**  | -0.01331 |  6.443   |  0.8897  |
+|  **ENSG00000000419**  | -0.07446 |  5.871   |  0.3816  |
+|  **ENSG00000000457**  | -0.06862 |  3.939   |  0.331   |
+|  **ENSG00000000460**  | -0.2482  |  3.425   | 0.008461 |
 {:.table .table-hover .table-condensed .table-responsive}
-||logFC |logCPM |PValue|
-|-----------------|-------------|----------|--------------|
-| ENSG00000000003 | -0.01330985 | 6.443032 | 0.8897024823 |
-| ENSG00000000419 | -0.07445524 | 5.871415 | 0.3816269365 |
-| ENSG00000000457 | -0.06861521 | 3.939170 | 0.3310271087 |
-| ENSG00000000460 | -0.24815064 | 3.424738 | 0.0084615022 |
-| ... | ... | ... | ... |
-| ENSG00000281649 | -0.16995958 | 6.132860 | 0.02849812   |
+
 
 **Step 5: Adjust**
 
@@ -187,15 +202,15 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR){:target="_blank"} to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
+
+
+|        &nbsp;         |  logFC  |  logCPM  |  PValue   |    FDR    |
+|:---------------------:|:-------:|:--------:|:---------:|:---------:|
+|  **ENSG00000113140**  |  1.761  |  10.45   | 5.109e-36 | 3.602e-32 |
+|  **ENSG00000106624**  |  2.158  |  8.532   | 6.018e-36 | 3.602e-32 |
+|  **ENSG00000166147**  |  2.134  |  5.861   | 2.33e-35  |  9.3e-32  |
+|  **ENSG00000182492**  |  1.877  |  8.943   | 9.734e-35 | 2.913e-31 |
 {:.table .table-hover .table-condensed .table-responsive}
-||...|logFC |logCPM |PValue|FDR|
-|----------|-------------|------|------|------|------|
-|ENSG00000113140|...| 1.761045 | 10.449976 |5.109476e-36|
-|ENSG00000106624|...| 2.157733 | 8.531844 |6.018020e-36|
-|ENSG00000166147|...| 2.133990 | 5.860843 |2.330611e-35|
-|ENSG00000182492|...| 1.876912 | 8.943067 |9.734230e-35|
-| ... | ... | ... | ... | ... |
-| ENSG00000079335 | ... | -1.960268e-04 | 3.474046 | 0.9998188|
 
 We can now plot our differentially expressed genes (red) over our full data.
 
@@ -207,7 +222,7 @@ deg =rn[TCGAOV_TT$table$FDR<0.05]
 plotSmear(TCGAOV_filtered, pair=c(CATEGORY_BASELINE, CATEGORY_TEST), de.tags=deg)
 {% endhighlight %}
 
-<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="500" style="display: block; margin: auto;" />
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="500" style="display: block; margin: auto;" />
 
 **Step 6: Rank**
 
