@@ -107,7 +107,7 @@ The DGEList contains an attribute `counts` which is a table identical to our inp
 
 <code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="20-25"></code>
 
-The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to remove noisy genes with low expression.
+The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
 
 **Step 2: Normalize**
 

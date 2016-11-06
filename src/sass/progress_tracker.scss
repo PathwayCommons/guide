@@ -36,7 +36,7 @@
   .progress-tracker {
     position: fixed;
     left: 1rem; // Move it to the right for 50% of parent element
-    width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
+    max-width: $container-margin-left - 1rem;         /* standards-based answer for IE9+, FF16+ */
     top: 5rem;
     margin-left: auto;
   }

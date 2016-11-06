@@ -23,7 +23,9 @@ figures:
 ---
 
 <!-- Global options -->
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.retina=NULL,echo=FALSE,message=FALSE, warning=FALSE)
+```
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)

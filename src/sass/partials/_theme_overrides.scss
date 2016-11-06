@@ -83,7 +83,7 @@ p {
     margin-left: $container-margin-left;
   }
   .container.embedded {
-      width: $container-max-width;
+      max-width: $container-max-width;
       margin:auto auto;
     }
 }
@@ -100,7 +100,7 @@ p {
 }
 @media (min-width: 768px){
   .container.embedded {
-      width: $container-max-width;
+      max-width: $container-max-width;
       margin:auto auto;
     }
 }
