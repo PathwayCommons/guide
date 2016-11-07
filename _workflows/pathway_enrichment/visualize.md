@@ -40,13 +40,11 @@ In this section we discuss the use of an Enrichment Map as a tool to visually or
 
 ## <a href="#background" name="background">II. Background</a>
 
-### Why Enrichment Map?
-
 Enrichment Map is a tool described by Merico *et al.* (Merico 2010) intended to  aid in the interpretation of gene sets emerging from enrichment analyses. In particular, the number, size and complexity of gene sets deposited in databases is continually growing, and this is reflected in the results of enrichment analyses. Even with most stringent criteria we can derive large numbers of gene sets and this poses several obstacles from the standpoint of interpretability. To see the value of Enrichment Map, let us consider our analysis of differential expression in TCGA-OV subtypes.
 
-#### A long list of pathways
+### Problem: A long list of pathways
 
-This pathway enrichment workflow begins with a detailed description of how to source RNA sequencing (RNA-seq) data for high grade serous ovarian cancer (HGS-OvCa) from patient samples (Figure 1). The HGS-OvCa have been classified into four expression subtypes including 'mesechymal' and 'immunoreactive'.
+Our pathway enrichment workflow began with a detailed description of how to source RNA sequencing (RNA-seq) data for high grade serous ovarian cancer (HGS-OvCa) from patient samples (Figure 1). The HGS-OvCa are classified into four expression subtypes including 'mesechymal' and 'immunoreactive'.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.short }
 
@@ -54,7 +52,7 @@ This pathway enrichment workflow begins with a detailed description of how to so
   <strong>Figure 1. Path from gene expression and gene sets to an Enrichment Map.</strong>
 </div>
 
-We next describe how to transform this expression data into a list of genes ranked according to a function of the P-value for differential expression (i.e. 'rank metric'): Those at the 'top' of the list are up-regulated in 'mesenchymal' subtypes and those at the 'bottom' are up-regulated in 'immunoreactive' (Table 1).
+We then described how to transform expression data into a list of genes ranked according to a function of the P-value for differential expression (i.e. 'rank metric'): Those at the 'top' of the list are up-regulated in 'mesenchymal' subtypes and those at the 'bottom' are up-regulated in 'immunoreactive' (Table 1).
 
 **Table 1. Ranked gene list**
 
@@ -67,9 +65,9 @@ We next describe how to transform this expression data into a list of genes rank
 |   11972 | TAP1    | -18.75886 |
 
 
-One can simply take this list of over 10 000 genes and simply inspect elements one-by-one for genes that might be relevant to the scientific question at hand. Typically, this takes the form of focusing on those genes that demonstrate the largest magnitude of change in expression. However, trying to reason about even a fraction of the genes in this list can quickly outstrip intuition. Combined with the heterogeneous nature of biological measurements, it was argued that more robust, less arbitrary methods were appropriate to interpret such long  lists.
+One approach to analyzing a list of over 10 000 genes it to inspect elements one at a time for genes that peak our interest or have some potential relevance to the question at hand. This approach typically involves focusing on those genes with the largest magnitude of change in expression - the largest signals. However, trying to reason about even a fraction of the genes in this list can quickly outstrip intuition. Combined with the heterogeneous nature of biological measurements, we supported the argument that more robust, less arbitrary methods were needed.
 
-This motivates our disucssion of [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) as a tool to identify pathways altered between HGS-OvCa subtypes. Briefly, this tool identified candidate gene sets specifically enriched in the genes up-regulated in the 'mesenchymal' subtype and like-wise those in the 'immunoreactive' subtype. In fact, GSEA identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
+We described [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) as a tool to identify pathways enriched in gene lists. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'. Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
 
 **Table 2. GSEA report for 'Mesenchymal' class**
 
@@ -81,19 +79,17 @@ This motivates our disucssion of [Gene Set Enrichment Analysis](http://software.
 | ...  | ... | ...  | ...  | ...  |
 | 2570 | NONSENSE MEDIATED DECAY (NMD) | 110  | 0.09057227 | 0.2507572 |
 
-Even with more stringent criteria ($$\text{p-value} \leq 0.01$$), GSEA identified over a 1 000 enriched gene sets. So it seems that we may have simply kicked that can down the road by trading a long list of genes into a similarly long list of pathways.
+This number of gene sets is on the order of our original gene list. Applying more stringent significance criteria ($$\text{p-value} \leq 0.01$$) to gene sets would reduce this total number to about a 1 000. So it seems that we may have simply kicked that can by trading a long list of genes for a lengthy list of pathways and gene sets.
 
-### Data reduction: Dealing with redundancy
+### Solution: Data reduction
 
-Ideally, we want a simple way to reduce the size or 'dimensionality' of the output from GSEA while trying to maintain as best we can the amount of useful *information* therein.
-
-
+Ideally, we want a simple way to reduce the size or 'dimensionality' of the output from GSEA (or any other enrichment analysis) while retaining, as best we can, the amount of useful and meaningful *information*.
 
 #### Hierachical gene sets
 
-For gene sets organized in a hierarchical manner, we can deal with this in two ways. Modify gene sets:  Can merge gene sets. Take advantage of the hierarchical structure of the gene sets to merge them into single clusters. Not relevant to those without a defined hierarchy such as pathways or transcriptional regulator target genes. Modify tests. Altered tests exist to deal with redundancy. *Ontologizer*. Parent-child approach to determine enrichment with respect to a parent set rather than the observed experiments involving genes. *GOstats* does the reverse where children are tested and parents so as to not include children.
+Some gene sets are organized in a hierarchical manner, namely those arising from the [Gene Ontology](http://geneontology.org/). In this case, one data reduction strategy is to simply merge gene sets into single clusters. However, this approach clearly does not apply to gene sets not without a defined hierarchy such as pathways or transcriptional regulator target genes.
 
-#### Other gene sets
+An alternative approach is to modify the statistical tests. Altered tests exist to deal with redundancy. *Ontologizer*. Parent-child approach to determine enrichment with respect to a parent set rather than the observed experiments involving genes. *GOstats* does the reverse where children are tested and parents so as to not include children.
 
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
@@ -105,14 +101,7 @@ For gene sets organized in a hierarchical manner, we can deal with this in two w
 
 ### When Enrichment Map?
 
-Enrichment Map is a visualization analysis tool that organizes gene sets into a similarity network.
-
-- modular: compatible with any statistical test or gene set source
-- integrates data along clusters, gene sets and expression
-
-- limitations
-  - Enriched gene sets with much redundancy is the key advantage
-
+Enrichment Map is a visualization analysis tool that organizes gene sets into a similarity network. modular: compatible with any statistical test or gene set source integrates data along clusters, gene sets and expression. limitations - Enriched gene sets with much redundancy is the key advantage
 
 
 ## <a href="#practical" name="practical">III. Practical</a>
