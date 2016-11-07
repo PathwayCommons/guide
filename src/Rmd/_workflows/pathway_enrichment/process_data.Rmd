@@ -84,7 +84,7 @@ Documents
 
 ### Data processing
 
-```{r cache=FALSE}
+```{r cache=TRUE}
 rm(list=ls(all=TRUE))
 
 ### ============ Install packages from Bioconductor ========
@@ -291,16 +291,16 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank_list }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
 {:.table .table-hover .table-condensed .table-responsive}
-|   gene  |  rank     |
-|:-------:|:---------:|
-| SPARC   | 35.29162  |
-| AEBP1   | 35.22055  |
-| FBN1    | 34.63253  |
-| BGN     | 34.01170  |
-| ...     | ...       |
-| CXCL10  | -15.19978 |
-| ETV7    | -15.92689 |
-| TAP1    | -18.75886 |
+|         |   gene  |  rank     |
+|:-------:|:-------:|:---------:|
+|   1   | SPARC   | 35.29162  |
+|   2   | AEBP1   | 35.22055  |
+|   3   | FBN1    | 34.63253  |
+|   4   | BGN     | 34.01170  |
+| ...   | ...     | ...       |
+| 11970 | CXCL10  | -15.19978 |
+| 11971 | ETV7    | -15.92689 |
+| 11972 | TAP1    | -18.75886 |
 
 The R code is available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">

@@ -1,6 +1,6 @@
 ---
 title: Workflows
-subtitle: Learn how to perform end-to-end data analyses 
+subtitle: Learn how to perform end-to-end data analyses
 layout: panelista
 categories:
   - Enrichment Analysis
