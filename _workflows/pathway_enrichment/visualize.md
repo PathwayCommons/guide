@@ -7,15 +7,14 @@ layout: embedded
 category: pathway_enrichment
 order: 4
 figures:
-  figure_1:
-  figure_2: figure_visualize_em_overview.jpg
-  figure_3: figure_visualize_cytoscape_em_preview.jpg
-  figure_4: figure_visualize_overview.jpg
-  figure_5: figure_visualize_cytoscape_apps_em.png
-  figure_6: figure_visualize_em_splash.png
-  figure_7: figure_visualize_cytoscape_em_load.jpg
-  figure_8: figure_visualize_cytoscape_em_settings.jpg
-  figure_9: figure_visualize_cytoscape_em_built.png
+  figure_1: figure_visualize_em_overview.jpg
+  figure_2: figure_visualize_cytoscape_em_preview.jpg
+  figure_3: figure_visualize_overview.jpg
+  figure_4: figure_visualize_cytoscape_apps_em.png
+  figure_5: figure_visualize_em_splash.png
+  figure_6: figure_visualize_cytoscape_em_load.jpg
+  figure_7: figure_visualize_cytoscape_em_settings.jpg
+  figure_8: figure_visualize_cytoscape_em_built.png
 gists:
   id: 3d8b9f03ae5ede35cfe9f25a04ff7ebf
   file_1: visualize.R
@@ -32,27 +31,27 @@ gists:
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-In this section we discuss the use of an Enrichment Map as a tool to visually organize gene sets enriched in our differential gene expression data. By then end of this discussion you should:
+In this section we present the Enrichment Map which visually organizes gene sets. They are ideal for dealing with lists of gene sets that emerge from enrichment analyses. By then end of this discussion you should:
 
-1. Understand how an Enrichment Map can be useful
+1. Understand when and how an Enrichment Map can be helpful
 2. Learn how to create and tune an Enrichment Map
-3. Be able to generate a publication quality figure
+3. Be able to generate a figure describing enrichment results
 
 ## <a href="#background" name="background">II. Background</a>
 
-Enrichment Map is a tool described by Merico *et al.* (Merico 2010) intended to  aid in the interpretation of gene sets emerging from enrichment analyses. In particular, the number, size and complexity of gene sets deposited in databases is continually growing, and this is reflected in the results of enrichment analyses. Even with most stringent criteria we can derive large numbers of gene sets and this poses several obstacles from the standpoint of interpretability. To see the value of Enrichment Map, let us consider our analysis of differential expression in TCGA-OV subtypes.
+Enrichment Map was developed by Merico *et al.* (Merico 2010) to aid in the  interpretation of gene sets emerging *en masse* from enrichment analyses. In particular, the growing number and size of gene sets along with the amount of detailed annotation is reflected in the results of enrichment analyses. Even using very stringent criteria, it is not uncommon to derive hundred of pathways which can pose problems from the standpoint of interpretability. To see the value of Enrichment Map, let us consider the analysis of differential expression in TCGA-OV subtypes.
 
 ### Problem: A long list of pathways
 
-Our pathway enrichment workflow began with a detailed description of how to source RNA sequencing (RNA-seq) data for high grade serous ovarian cancer (HGS-OvCa) from patient samples (Figure 1). The HGS-OvCa are classified into four expression subtypes including 'mesechymal' and 'immunoreactive'.
+Our pathway enrichment workflow described how to source RNA sequencing (RNA-seq) data for high grade serous ovarian cancer (HGS-OvCa) from patient samples (Figure 1). The HGS-OvCa are divided into four expression subtypes (i.e. classes or phenotypes) including 'mesechymal' and 'immunoreactive'.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.short }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.short }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Path from gene expression and gene sets to an Enrichment Map.</strong>
+  <strong>Figure 1. Path from gene expression and gene sets to an Enrichment Map.</strong> A pair-wise comparison of gene expression between two classes of subjects is described. Note that the notion of gene expression change and gene set enrichement is relative to the other class. For an Enrichment Map, nodes represent gene sets and edges overlap in genes. The size and color of nodes corresponds to the number of genes and the class in which that set demonstrated enrichment. Likewise, the number of shared genes is indicated by edge thickness.
 </div>
 
-We then described how to transform expression data into a list of genes ranked according to a function of the P-value for differential expression (i.e. 'rank metric'): Those at the 'top' of the list are up-regulated in 'mesenchymal' subtypes and those at the 'bottom' are up-regulated in 'immunoreactive' (Table 1).
+Subsequently, expression data was used to derive a measure (P-value) of differential expression between subtypes. From this, genes were ranked according to a rank metric. In our particular case, those at the 'top' of the list are up-regulated in 'mesenchymal' samples and those at the 'bottom' are up-regulated in 'immunoreactive' samples (Table 1).
 
 **Table 1. Ranked gene list**
 
@@ -65,9 +64,7 @@ We then described how to transform expression data into a list of genes ranked a
 |   11972 | TAP1    | -18.75886 |
 
 
-One approach to analyzing a list of over 10 000 genes it to inspect elements one at a time for genes that peak our interest or have some potential relevance to the question at hand. This approach typically involves focusing on those genes with the largest magnitude of change in expression - the largest signals. However, trying to reason about even a fraction of the genes in this list can quickly outstrip intuition. Combined with the heterogeneous nature of biological measurements, we supported the argument that more robust, less arbitrary methods were needed.
-
-We described [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) as a tool to identify pathways enriched in gene lists. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'. Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
+Rather than analyze a list of over 10 000 genes one at a time for genes that peak our interest or those with the largest magnitude of change we argued that more robust, less arbitrary methods were needed. To this end we used [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) to identify gene sets  enriched within our list. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'.
 
 **Table 2. GSEA report for 'Mesenchymal' class**
 
@@ -79,38 +76,46 @@ We described [Gene Set Enrichment Analysis](http://software.broadinstitute.org/)
 | ...  | ... | ...  | ...  | ...  |
 | 2570 | NONSENSE MEDIATED DECAY (NMD) | 110  | 0.09057227 | 0.2507572 |
 
-This number of gene sets is on the order of our original gene list. Applying more stringent significance criteria ($$\text{p-value} \leq 0.01$$) to gene sets would reduce this total number to about a 1 000. So it seems that we may have simply kicked that can by trading a long list of genes for a lengthy list of pathways and gene sets.
+ Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples. However, the number of gene sets is on the same order of magnitude as our original gene list. Applying more stringent significance criteria ($$\text{p-value} \leq 0.01$$) would reduce this total number to about a 1 000. Have we simply kicked the can and traded a long list of genes for a lengthy list of gene sets?
 
 ### Solution: Data reduction
 
-Ideally, we want a simple way to reduce the size or 'dimensionality' of the output from GSEA (or any other enrichment analysis) while retaining, as best we can, the amount of useful and meaningful *information*.
+Ideally, we want a simple way to reduce the size or 'dimensionality' of the output from enrichment analyses while retaining, to the best of our ability, the amount of meaningful *information*. A major issue that has accompanied the rise in gene set availability and gene annotation is increased *redundancy*.
 
 #### Hierachical gene sets
 
-Some gene sets are organized in a hierarchical manner, namely those arising from the [Gene Ontology](http://geneontology.org/). In this case, one data reduction strategy is to simply merge gene sets into single clusters. However, this approach clearly does not apply to gene sets not without a defined hierarchy such as pathways or transcriptional regulator target genes.
+Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/) which is organized hierarchically. In this case, one strategy to reduce redundancy is to merge gene sets that are children of a parent cluster with broader scope. An alternative approach is to modify the way in which statistical tests applied. For example,  *Ontologizer* (Bauer 2008) uses a 'parent-child' modification of [Fisher's Exact]({{site.baseurl}}/primers/functional_analysis/fishers_exact_test/) test in which enrichment is determined using the parent gene set as the sample space rather than the entire list of genes.
 
-An alternative approach is to modify the statistical tests. Altered tests exist to deal with redundancy. *Ontologizer*. Parent-child approach to determine enrichment with respect to a parent set rather than the observed experiments involving genes. *GOstats* does the reverse where children are tested and parents so as to not include children.
+Ontologizer and similar methods like it generally rely on variations of Fisher's Exact test to test for enrichment. Moreover, these approach do not apply in the absence of a clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
 
+### Enrichment Map
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
+Enrichment Map is a visualization analysis tool that organizes gene sets into an information rich similarity network (Figure 1). Gene sets are represented as nodes where the number of genes correlates with size (radius). Edges between nodes represent shared genes, where the amount of overlap is represented by thickness. Finally, Enrichment Map uses node color to distinguish gene sets enriched in different sample classes.
+
+The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.
+
+Figure 2 provides a preview of the [Enrichment Map app](http://apps.cytoscape.org/apps/enrichmentmap) in the graph anaysis software [Cytoscape](http://www.cytoscape.org/).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. The Cytoscape app Enrichment Map.</strong> Just sketch out what we'll be able to see and do.
+  <strong>Figure 2. Tour of the Enrichment Map app.</strong> (A) The Enrichment Map is provided as an extension in Cytoscape. (B) 'User Input' panel where data files are loaded. (C) 'Parameters' panel where the users can define the initial stringency for displaying nodes (false discovery rate for gene set enrichment) and edges (minimum amount of overlap). (D) 'Table Panel' showing the underlying expression data for any particular gene set. (E) The main panel displays the interactive similarity network. (F) 'Results Panel' where parameters can be fine-tuned after map rendering.
 </div>
 
-<hr/>
+It should be immediately apparent from Figure 2 the the Enrichment Map app provides several helpful features including
 
-### When Enrichment Map?
+  1. Integration of raw data underlying gene sets
+  2. Clustered layout representing groups of similar gene sets
+  3. Color indicates which class each gene sets is enriched in
 
-Enrichment Map is a visualization analysis tool that organizes gene sets into a similarity network. modular: compatible with any statistical test or gene set source integrates data along clusters, gene sets and expression. limitations - Enriched gene sets with much redundancy is the key advantage
-
+In the upcoming sections, we will describe in detail how to generate an Enrichment Map using the data emerging from our GSEA analysis of TCGA-OV gene expression.
 
 ## <a href="#practical" name="practical">III. Practical</a>
 
-This section describes how to use the Enrichment Map software to organize the gene sets emerging from our enrichment analysis. Figure 4 depicts the five elements involved setting up the software and we elaborate upon each below.
+This section describes how to use the Enrichment Map software to organize the gene sets emerging from our enrichment analysis. Figure 3 depicts the five elements involved setting up the software and we elaborate upon each below.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Creating an Enrichment Map.</strong> Overview of the steps we will go through to generate an Enrichment Map of our gene set enrichment analysis output.
+  <strong>Figure 3. Creating an Enrichment Map.</strong> Overview of the steps we will go through to generate an Enrichment Map of our gene set enrichment analysis output.
 </div>
 
 If you have been following along this workflow, you should have a directory structure containing the raw and processed data.
@@ -170,12 +175,12 @@ Follow the instructions on the Cytoscape site to [download and install](http://w
 
 #### Enrichment Map
 
-We will load in the Enrichment Map app into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select 'Apps' --> 'App Manager' to bring up a search panel (Figure 5).
+We will load in the Enrichment Map app into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select 'Apps' --> 'App Manager' to bring up a search panel (Figure 4).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Cytoscape App Manager screen.</strong>. Search for the app of choice using the 'Install Apps' tab.
+  <strong>Figure 4. Cytoscape App Manager screen.</strong>. Search for the app of choice using the 'Install Apps' tab.
 </div>
 
 <div class="alert alert-warning text-justify" role="alert">
@@ -184,12 +189,12 @@ We will load in the Enrichment Map app into Cytoscape using the App Manager. Ope
 
 Search for 'EnrichmentMap' then highlight the correct search result and click 'Install'. If the installation was successful, you should be able to select 'EnrichmentMap' in the 'Apps' menu bar drop-down. Also, if you bring up the 'App Manager' you should see it as a listing under the 'Currently Installed' tab.
 
-Launch the Enrichment Map app by selecting from the menu bar 'Apps' --> 'EnrichmentMap' --> 'Create Enrichment Map' (Figure 6).
+Launch the Enrichment Map app by selecting from the menu bar 'Apps' --> 'EnrichmentMap' --> 'Create Enrichment Map' (Figure 5).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
+  <strong>Figure 5. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
 </div>
 
 
@@ -205,7 +210,7 @@ The expression data file is `MesenchymalvsImmunoreactive_RNAseq_expression.txt` 
 
 Below, we provide instructions on how to generate the expression data file.
 
-Enrichment Map allows us to link from an enriched gene set to the underlying gene expression values through a heatmap display (Table Panel in Figure 3, label D). Expression data is not required and a dummy expression file with identical values will be created in its absence.
+Enrichment Map allows us to link from an enriched gene set to the underlying gene expression values through a heatmap display ('Table Panel', Figure 2, label D). Expression data is not required and a dummy expression file with identical values will be created in its absence.
 
 #### Expression dataset file layout
 
@@ -260,7 +265,7 @@ The phenotype file is `MesenchymalvsImmunoreactive_RNAseq_phenotype.cls` and con
 
 Below we describe how to generate the phenotype file (.cls).
 
-Enrichment Map represents the magnitude of the enrichment score for a gene set through node colour intensity (Results Panel in Figure 3, labels E and F). Furthermore, enrichment in the 'test' and 'baseline' classes/categories are indicated by red and blue colouring, respectively. Thus, for the TCGA-OV data, gene sets enriched in the 'mesenchymal' samples are increasingly red while gene sets enriched in the 'immunoreactive' samples are increasingly blue.
+Enrichment Map represents the magnitude of the enrichment score for a gene set through node colour intensity ('Results Panel', Figure 2, labels E and F). Furthermore, enrichment in the 'test' and 'baseline' classes/categories are indicated by red and blue colouring, respectively. Thus, for the TCGA-OV data, gene sets enriched in the 'mesenchymal' samples are increasingly red while gene sets enriched in the 'immunoreactive' samples are increasingly blue.
 
 #### Phenotype file layout
 
@@ -304,12 +309,12 @@ Documents
 
 ### 5. Load files
 
-Time to tell Enrichment Map where all of our data is (Figure 7).
+Time to tell Enrichment Map where all of our data is via the 'User Input' panel (Figure 6).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.super-short }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.super-short }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. Enrichment Map file load.</strong> Shown is the 'Control Panel'. The location and order the files should be loaded are numbered. The GSEA report file (.rpt) is found in the GSEA results folder and shortcuts loading the remaining files. Alternatively, all file fields  can be loaded one a time.
+  <strong>Figure 6. Enrichment Map file load.</strong> Shown is the 'Control Panel'. The location and order the files should be loaded are numbered. The GSEA report file (.rpt) is found in the GSEA results folder and shortcuts loading the remaining files. Alternatively, all file fields  can be loaded one a time.
 </div>
 
 1. GSEA report
@@ -325,12 +330,12 @@ Time to tell Enrichment Map where all of our data is (Figure 7).
 
 ### 6. Settings
 
-Here we will configure Enrichment Map through the Control Panel (Figure 8).
+Here we will set up the initial configuration through the 'Parameters' panel (Figure 7).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive.shorter }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.shorter }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. Enrichment Map settings.</strong> The 'Phenotype' labels must match exactly your classes defined in the phenotypes file (.cls). The 'FDR Q-value Cutoff' defines the maximum threshold for including a gene set node for display. The 'Similarity Cutoff' defines a minimum threshold for displaying an edge between gene sets.
+  <strong>Figure 8. Enrichment Map settings.</strong> The 'Phenotype' labels must match exactly your classes defined in the phenotypes file (.cls). The 'FDR Q-value Cutoff' defines the maximum threshold for displaying including a gene set. The 'Similarity Cutoff' defines a minimum threshold for displaying an edge between gene sets.
 </div>
 
 1. Phenotypes
@@ -341,19 +346,19 @@ Here we will configure Enrichment Map through the Control Panel (Figure 8).
   - This defines the amount of overlap required to declare gene sets linked. This effectively controls the stringency for edges that will appear (larger is more stringent). Select 'Jaccard+ Overlap Combined' and set a minimum cutoff of 0.375.
 
 <div class="alert alert-warning text-justify" role="alert">
-  <strong>Gotcha!</strong> In the Enrichment Map Control panel, the 'Phenotypes' (Figure 8, label 1) must match the 'Class' labels declared in the phenotype file (Table 2). This is required to match classes with the correct node color.
+  <strong>Gotcha!</strong> In the Enrichment Map Control panel, the 'Phenotypes' (Figure 7, label 1) must match the 'Class' labels declared in the phenotype file (Table 2). This is required to match classes with the correct node color.
 </div>
 
 <hr/>
 
 ### Build
 
-Click the 'Build' button in the Control Panel tab (Figure 8). You should see a progress indicator followed by the Enrichment Map. If you zoom in slightly you will be able to see individual labels for each gene set node (Figure 9).
+Click the 'Build' button in the Control Panel tab (Figure 7). You should see a progress indicator followed by the Enrichment Map. If you zoom in slightly you will be able to see individual labels for each gene set node (Figure 8).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 9. A sample Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Zooming in to the main panel will reveal gene set labels for each class ('Mesenchymal' in red and 'Immunoreactive' in blue).
+  <strong>Figure 8. A sample Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Zooming in to the main panel will reveal gene set labels for each class ('Mesenchymal' in red and 'Immunoreactive' in blue).
 </div>
 
 ## <a href="#tuning" name="tuning">IV. Tuning an Enrichment Map</a>
@@ -361,4 +366,4 @@ Click the 'Build' button in the Control Panel tab (Figure 8). You should see a p
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<!-- <div class="panel_group" data-inline="21085593"></div> -->
+<div class="panel_group" data-inline="18511468,21085593,22383865"></div>
