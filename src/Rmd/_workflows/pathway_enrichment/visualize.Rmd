@@ -24,9 +24,8 @@ gists:
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
-  - {:.list-unstyled} [IV. Explore](#explore)
-  - {:.list-unstyled} [V. Enhancing with additional apps](#apps)
-  - {:.list-unstyled} [VI. References](#references)
+  - {:.list-unstyled} [IV. Common tasks](#tasks)
+  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -363,13 +362,15 @@ Here we will set up the initial configuration through the 'Parameters' panel (Fi
 
 <hr/>
 
-### Build
+### Build and explore
 
-Click the 'Build' button in the Control Panel tab (Figure 7). You should see a progress indicator followed by an Enrichment Map.
+Click the 'Build' button in the Control Panel tab (Figure 7). You should see a progress indicator followed by an Enrichment Map (Figure 8).
 
-## <a href="#explore" name="explore">IV. Explore</a>
+> See the <a href="http://wiki.cytoscape.org/Cytoscape_3/UserManual">Cytoscape 3 User Manual</a> for a detailed description of the functionality
 
-Take some time to examine the map in the main window displaying the network (Figure 8). In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
+#### Basic functions
+
+Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 
@@ -377,7 +378,7 @@ Take some time to examine the map in the main window displaying the network (Fig
   <strong>Figure 8. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
 </div>
 
-- {: .aside } #### Basic navigation
+- {: .aside } #### Navigation
 
   - Toggle gene set labels
     - From the menu bar select 'View' -> 'Show (Hide) Graphic Details'
@@ -385,7 +386,7 @@ Take some time to examine the map in the main window displaying the network (Fig
     - Scroll with your mouse
   - Panning
     - Click and drag the main window
-  - Arranging
+  - Moving a node
     - Click and drag nodes in main window
   - Viewing data for a gene set
     - Click on a node
@@ -401,6 +402,14 @@ Take some time to examine the map in the main window displaying the network (Fig
     - Select the gene set row then right/ctrl-click
       - Choose 'Selected nodes from selected rows'
 
+- {: .aside } #### Select
+
+  - All edges and nodes
+    - From the menu bar, 'Select' -> 'Select (Deselect) all nodes and edges'
+  - A group of edges and nodes
+    - Hold 'Command' key (Mac) while clicking and dragging over region
+    - Selected groups may be dragged as for individual nodes
+
 - {: .aside } #### Filter
 
   - Remove nodes
@@ -414,13 +423,19 @@ Take some time to examine the map in the main window displaying the network (Fig
   - From the menu, select 'Layout' -> 'Perfuse Force Directed Layouts' -> 'All Nodes' -> '(none)'
 
 
-## <a href="#apps" name="apps">V. Enhancing with additional apps</a>
+## <a href="#tasks" name="tasks">IV. Common tasks</a>
 
-### App: Autoannotate
+### Label clusters of gene sets
 
-TODO
+#### Requirements
+
+- Cytoscape apps
+  - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2): version 0.9.5
+  - [WordCloud](http://apps.cytoscape.org/apps/wordcloud): version 3.1.0
+
+### Publish in Nature
 
 <hr/>
 
-## <a href="#references" name="references">VI. References</a>
+## <a href="#references" name="references">V. References</a>
 <!-- <div class="panel_group" data-inline="18511468,21085593,22383865"></div> -->

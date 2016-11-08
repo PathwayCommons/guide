@@ -95,9 +95,12 @@ Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
 The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|               &nbsp;               |     group      |  lib.size  |  norm.factors  |
+|:----------------------------------:|:--------------:|:----------:|:--------------:|
+|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  88674430  |       1        |
+|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  48116062  |       1        |
+|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  38896502  |       1        |
+|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  58593539  |       1        |
 {:.table .table-hover .table-condensed .table-responsive}
 
 **Step 1: Filter**
@@ -113,9 +116,12 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|               &nbsp;               |     group      |  lib.size  |  norm.factors  |
+|:----------------------------------:|:--------------:|:----------:|:--------------:|
+|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  86537532  |     1.038      |
+|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  47372890  |     0.8995     |
+|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  38040210  |       1        |
+|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  57508980  |     0.9985     |
 {:.table .table-hover .table-condensed .table-responsive}
 
 The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
@@ -166,16 +172,7 @@ names(TCGAOV_fitted_tagwise)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotBCV"
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
-{% endhighlight %}
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression){:target="_blank"}, $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
 
@@ -190,9 +187,12 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|        &nbsp;         |  logFC   |  logCPM  |  PValue  |
+|:---------------------:|:--------:|:--------:|:--------:|
+|  **ENSG00000000003**  | -0.01331 |  6.443   |  0.8897  |
+|  **ENSG00000000419**  | -0.07446 |  5.871   |  0.3816  |
+|  **ENSG00000000457**  | -0.06862 |  3.939   |  0.331   |
+|  **ENSG00000000460**  | -0.2482  |  3.425   | 0.008461 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 
@@ -204,9 +204,12 @@ The function `topTags` takes the output from `exactTest` and uses the [Bejamini-
 
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|        &nbsp;         |  logFC  |  logCPM  |  PValue   |    FDR    |
+|:---------------------:|:-------:|:--------:|:---------:|:---------:|
+|  **ENSG00000113140**  |  1.761  |  10.45   | 5.109e-36 | 3.602e-32 |
+|  **ENSG00000106624**  |  2.158  |  8.532   | 6.018e-36 | 3.602e-32 |
+|  **ENSG00000166147**  |  2.134  |  5.861   | 2.33e-35  |  9.3e-32  |
+|  **ENSG00000182492**  |  1.877  |  8.943   | 9.734e-35 | 2.913e-31 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 We can now plot our differentially expressed genes (red) over our full data.
