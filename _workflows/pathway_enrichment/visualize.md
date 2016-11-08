@@ -15,6 +15,11 @@ figures:
   figure_6: figure_visualize_cytoscape_em_load.jpg
   figure_7: figure_visualize_cytoscape_em_settings.jpg
   figure_8: figure_visualize_cytoscape_em_built.png
+  figure_9: figure_visualize_cytoscape_em_tablepanel.png
+  figure_10: figure_visualize_cytoscape_em_group.png
+  figure_11: figure_visualize_cytoscape__controlpanel_wordcloud.png
+  figure_12: figure_visualize_cytoscape_em_autoannotate.png
+  figure_13: figure_visualize_cytoscape_em_collapsed.png
 gists:
   id: 3d8b9f03ae5ede35cfe9f25a04ff7ebf
   file_1: visualize.R
@@ -368,15 +373,6 @@ Click the 'Build' button in the Control Panel tab (Figure 7). You should see a p
 
 > See the <a href="http://wiki.cytoscape.org/Cytoscape_3/UserManual">Cytoscape 3 User Manual</a> for a detailed description of the functionality
 
-#### Basic functions
-
-Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
-</div>
 
 - {: .aside } #### Navigation
 
@@ -423,17 +419,116 @@ Take some time to examine the map in the main window displaying the network. In 
   - From the menu, select 'Layout' -> 'Perfuse Force Directed Layouts' -> 'All Nodes' -> '(none)'
 
 
+#### Cytoscape Enrichment Map
+
+Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 8. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
+</div>
+
+#### Results Panel
+
+Look at the 'Legend' tab. Increase or decrease the stringency for displaying nodes ('Q-value Cutoff') and edges ('Similarity Cutoff') using the sliders. For instance, one can restrict the displayed gene sets to those with very low chance of being a false positive.
+
+#### Table Panel
+
+We will higlight a few aspects of the 'Table Panel' (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The 'Control Panel' tab 'Select' enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below ([IV. Common tasks](#tasks)).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 9. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.
+</div>
+
+
 ## <a href="#tasks" name="tasks">IV. Common tasks</a>
 
-### Label clusters of gene sets
+### A. Label clusters of gene sets
+
+Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate) app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
 
 #### Requirements
 
 - Cytoscape apps
   - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2): version 0.9.5
   - [WordCloud](http://apps.cytoscape.org/apps/wordcloud): version 3.1.0
+  - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate): version 1.1.0
 
-### Publish in Nature
+#### 1. Group similar classes (subtypes)
+
+In the main window graph, let us spatially separate the gene sets enriched in each class ('mesenchymal' in red and 'immunoreactive' in blue) so that when we go to add labels, they are readily distinguishable.
+
+Select the 'immunoreactive' group in blue and drag the entire group over to separate it from the 'mesenchymal' group: Highlight the class by creating a column filter for nodes with a negative NES (see 'Table Panel', Figure 9).
+
+- 'Control Panel' tab for 'Select'
+  - Click '+' to add a filter
+    - Select 'Column Filter' from the drop-down
+  - 'Choose column....' drop-down
+    - Select 'Node:EM1_NES_dataset1'
+    - Enter range to include only negative values
+
+Drag the selected gene sets from the 'immunoreactive' class over to the left as shown in Figure 10.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 10. Separating gene sets enriched in each class.</strong> The 'immunoreactive' class was selected by creating a column filter in the 'Control Panel' tab 'Select' for NES below 0.
+</div>
+
+#### 2. Wordcloud
+
+WordCloud calculates the most frequent words present in a cluster node. It uses the data contained in the 'Table Panel' tab 'Node Table' including 'EM1_GS_DESCR' (Figure 9).
+
+- 'Apps' -> 'WordCloud' -> 'Show WordCloud'
+  - 'Control Panel' set 'Normalize' slider to 0.5
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 11. 'Control Panel' tab for 'Wordcloud'.</strong>
+</div>
+
+The WordCloud 'Normalize' setting: If set to 0 then the significance of each word is calculated solely on how many occurrences it has in the given cluster. This may cause very frequent words within the network such as 'pathway' or 'regulation' to be prominent in annotations. By increasing the normalization factor, we increase a weight calculated from the ratio of a word frequency in the cluster to its frequency in the entire network to diminish the presence of these recurrent words in the cluster labels
+
+
+#### 3. AutoAnnotate groups
+
+AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).
+
+- 'Apps' -> 'AutoAnnotate' -> 'New Annotation Set...'
+  - Click 'Create Annotations'
+
+> *Note: For clarity, you should remove the individual gene set labels by selecting 'View' -> 'Hide Graphic Details'*
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 12. Results of AutoAnnotate.</strong>
+</div>
+
+
+#### 4. Collapse groups
+
+Figure 12 shows a pretty busy annotated network. Often users gravitate towards large clusters that appear in the enrichment results but in this case size not indicate importance or strength rather the amount of database annotations there exist for a particular pathway or process. Single nodes represent processes that are less well know and studied but are no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 13).
+
+- 'Control Panel' select the 'AutoAnnotate' tab
+  -  Click the menu drop-down (button with 3 lines)
+    - Select 'Collapse All'
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 13. Results of collapsing AutoAnnotate.</strong>
+</div>
+
+This is a bit sparse, let's conclude this by re-scaling the view so that the nodes are a little closer together.
+
+- From the menu, select 'View' -> 'Show Tool Panel'
+  -  Click 'Scale' tab
+    - Drag the slider to lower to reduce the space between nodes
 
 <hr/>
 
