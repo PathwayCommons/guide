@@ -19,7 +19,7 @@ figures:
   figure_10: figure_visualize_cytoscape_em_group.png
   figure_11: figure_visualize_cytoscape__controlpanel_wordcloud.png
   figure_12: figure_visualize_cytoscape_em_autoannotate.png
-  figure_13: figure_visualize_cytoscape_em_collapsed.png
+  figure_13: figure_visualize_cytoscape_em_collapsed_scaled.png
 gists:
   id: 3d8b9f03ae5ede35cfe9f25a04ff7ebf
   file_1: visualize.R
@@ -524,11 +524,11 @@ Figure 12 shows a pretty busy annotated network. Often users gravitate towards l
   <strong>Figure 13. Results of collapsing AutoAnnotate.</strong>
 </div>
 
-This is a bit sparse, let's conclude this by re-scaling the view so that the nodes are a little closer together.
+The resulting network can look a bit sparse. Let's fine tune this by bringing the nodes a little closer together.
 
 - From the menu, select 'View' -> 'Show Tool Panel'
   -  Click 'Scale' tab
-    - Drag the slider to lower to reduce the space between nodes
+    - Drag the slider to lower values to reduce space between nodes
 
 <hr/>
 
