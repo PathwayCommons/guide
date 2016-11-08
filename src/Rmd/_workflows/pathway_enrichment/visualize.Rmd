@@ -24,8 +24,9 @@ gists:
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
-  - {:.list-unstyled} [IV. Tuning an Enrichment Maps](#tuning)
-  - {:.list-unstyled} [V. References](#references)
+  - {:.list-unstyled} [IV. Explore](#explore)
+  - {:.list-unstyled} [V. Enhancing with additional apps](#apps)
+  - {:.list-unstyled} [VI. References](#references)
 
 <hr/>
 
@@ -343,27 +344,83 @@ Here we will set up the initial configuration through the 'Parameters' panel (Fi
 2. FDR Q-value Cutoff
   - This defines the maximum false discovery rate q-value allowed. This effectively controls the stringincy for which nodes will appear (smaller is more stringent). Set a maximum of $$10^{-4}$$.
 3. Similarity Cutoff
-  - This defines the amount of overlap required to declare gene sets linked. This effectively controls the stringency for edges that will appear (larger is more stringent). Select 'Jaccard+ Overlap Combined' and set a minimum cutoff of 0.375.
+  - This section allows us to select the simiarity metric. This effectively controls the minimum overlap required to define an edge (larger is more stringent). Select 'Jaccard+ Overlap Combined' and set a minimum cutoff of 0.375.
 
-<div class="alert alert-warning text-justify" role="alert">
-  <strong>Gotcha!</strong> In the Enrichment Map Control panel, the 'Phenotypes' (Figure 7, label 1) must match the 'Class' labels declared in the phenotype file (Table 2). This is required to match classes with the correct node color.
-</div>
+- {: .aside } #### Similarity metrics
+
+  Here, we provide an definitions for the 'Similarity Cutoff' metrics. Suppose that $$X=\{A, B\}$$ are gene sets where $$\mid X \mid$$ is the number of genes.
+
+  **Jaccard Coefficient ($$JC$$)**
+
+    $$JC = \frac{|A \cap B|}{|A \cup B|}$$
+
+  **Overlap Coefficient ($$OC$$)**
+
+    $$OC = \frac{|A \cap B|}{\text{min }(|A|,|B|)}$$
+
+  The important point to note is that both metrics are proportional to the amount of shared genes.
+
 
 <hr/>
 
 ### Build
 
-Click the 'Build' button in the Control Panel tab (Figure 7). You should see a progress indicator followed by the Enrichment Map. If you zoom in slightly you will be able to see individual labels for each gene set node (Figure 8).
+Click the 'Build' button in the Control Panel tab (Figure 7). You should see a progress indicator followed by an Enrichment Map.
+
+## <a href="#explore" name="explore">IV. Explore</a>
+
+Take some time to examine the map in the main window displaying the network (Figure 8). In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. A sample Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Zooming in to the main panel will reveal gene set labels for each class ('Mesenchymal' in red and 'Immunoreactive' in blue).
+  <strong>Figure 8. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
 </div>
 
-## <a href="#tuning" name="tuning">IV. Tuning an Enrichment Map</a>
+- {: .aside } #### Basic navigation
+
+  - Toggle gene set labels
+    - From the menu bar select 'View' -> 'Show (Hide) Graphic Details'
+  - Zooming
+    - Scroll with your mouse
+  - Panning
+    - Click and drag the main window
+  - Arranging
+    - Click and drag nodes in main window
+  - Viewing data for a gene set
+    - Click on a node
+    - View 'Table Panel' tab 'Heat Map (nodes)'
+      - Set 'Normalization' drop-down to 'Log Transform Data'
+
+- {: .aside } #### Search
+
+  - Search gene set(s) by name
+    - Type in the search box (upper-right corner)
+    - 'Table Panel' tab 'Node Table' and main window displays matches (yellow)
+  - Highlight a gene set from 'Node Table' tab
+    - Select the gene set row then right/ctrl-click
+      - Choose 'Selected nodes from selected rows'
+
+- {: .aside } #### Filter
+
+  - Remove nodes
+    - In the 'Results Panel', decrease the 'Q-value Cutoff' slider
+  - Remove edges
+    - Increase the 'Similarity Cutoff' slider
+
+- {: .aside } #### Layout
+
+  - From the menu, select 'Layout' -> 'yFiles Layouts' -> 'Organic'
+  - From the menu, select 'Layout' -> 'Perfuse Force Directed Layouts' -> 'All Nodes' -> '(none)'
+
+
+## <a href="#apps" name="apps">V. Enhancing with additional apps</a>
+
+### App: Autoannotate
+
+TODO
 
 <hr/>
 
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="18511468,21085593,22383865"></div>
+## <a href="#references" name="references">VI. References</a>
+<!-- <div class="panel_group" data-inline="18511468,21085593,22383865"></div> -->
