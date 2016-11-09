@@ -1,0 +1,17 @@
+---
+title: Case Studies
+subtitle: Recent highlights from the literature using interaction and pathway analyses
+layout: panelista
+categories:
+  - Enrichment_Analysis
+  - Pathway_Commons
+---
+
+{% for category in page.categories %}
+  {% assign docs = (site.case_studies | where: 'category' , category ) %}
+  <h2 class="page-category">{{ category | replace: '_', ' ' }}</h2>
+  <hr/>
+  <div class="dataset">
+    {% include archive_list.html %}
+  </div>
+{% endfor %}

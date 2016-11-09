@@ -1,6 +1,6 @@
 ---
 title: Primers
-subtitle: Background information covering theory and principles in depth
+subtitle: Theory and principles in depth
 layout: panelista
 icon: icons/document.png
 categories:

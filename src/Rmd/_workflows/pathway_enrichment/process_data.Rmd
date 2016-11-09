@@ -93,7 +93,7 @@ library("pander")
 
 ### ============ Declare directories =========
 BASE_DIR <- getwd()
-TCGAOV_data_FILE <- file.path(BASE_DIR, "TCGAOV_data.rda")
+TCGAOV_data_FILE <- file.path(BASE_DIR, "data", "TCGAOV_data.rda")
 
 ### ============ Declare samples =========
 CATEGORY_BASELINE = "Immunoreactive"
