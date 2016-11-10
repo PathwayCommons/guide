@@ -491,12 +491,8 @@ WordCloud calculates the most frequent words present in a cluster node. It uses 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. 'Control Panel' tab for 'Wordcloud'.</strong>
+  <strong>Figure 11. 'Control Panel' tab for 'Wordcloud'.<strong> </strong>Normalize: </strong> If set to 0 then the significance of each word is calculated solely on how many occurrences it has in the given cluster. This may cause very frequent words within the network such as 'pathway' or 'regulation' to be prominent in annotations. By increasing the normalization factor, we increase a weight calculated from the ratio of a word frequency in the cluster to its frequency in the entire network to diminish the presence of these recurrent words in the cluster labels
 </div>
-
-- {: .aside } #### WordCloud options
-
-  **Normalize:** If set to 0 then the significance of each word is calculated solely on how many occurrences it has in the given cluster. This may cause very frequent words within the network such as 'pathway' or 'regulation' to be prominent in annotations. By increasing the normalization factor, we increase a weight calculated from the ratio of a word frequency in the cluster to its frequency in the entire network to diminish the presence of these recurrent words in the cluster labels
 
 
 #### 3. AutoAnnotate groups
@@ -511,21 +507,8 @@ AutoAnnotate first clusters the network and then uses WordCloud to calculate the
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. AutoAnnotate options.</strong>
+  <strong>Figure 12. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
 </div>
-
-- {: .aside } #### AutoAnnotate options
-
-  - **Cluster Options:** There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms.
-
-    - {: .list-unstyled } **Use clusterMaker App**
-    - {: .list-unstyled } *Cluster algorithm:* Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL.
-
-    - {: .list-unstyled } *Edge weight column:* Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster.<br/><br/>
-
-  - **Label Options**
-  - {: .list-unstyled } *Label column:* Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
-
 
 Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 13).
 

@@ -2,9 +2,8 @@
 layout: page
 title: 'Home'
 subtitle:
-
 figures:
-  figure_overview: overview2.png
+  figure_overview: overview.png
 ---
 
 

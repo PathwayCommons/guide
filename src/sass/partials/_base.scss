@@ -203,9 +203,7 @@ img.left {
 
  .panelista-shade {
    position: absolute;
-  //  background: $midnight-blue; //$panelista-background;
-  // background: rgba(173, 192, 210, 0.4); //$panelista-background;
-
+   background-image: url("/guide/media/overview.png");
    z-index: 1;
    top: 0;
    bottom: 0;
@@ -232,11 +230,7 @@ img.left {
    margin-bottom: 3rem;
 
    .panelista-shade {
-     background: rgba(173, 192, 210, 0.4); //$panelista-background;
-    //  background:    ;
-     padding: 5em 3em 5em;
-     border-radius: 5px;
-
+     background-image: url("/guide/media/overview.png");    
      .panelist-banner {
        position: absolute;
        z-index: -1;
