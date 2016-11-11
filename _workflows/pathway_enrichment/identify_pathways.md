@@ -726,20 +726,3 @@ On the other hand, you may desire an appreciation of the grander themes emerging
 
 ## <a href="#references" name="references">V. References</a>
 <div class="panel_group" data-inline=" 19192285,10802651,15647293,15226741,26527732,26656494,20048385,20067622,18832364,15994189,22383865,23193289,12808457,20010596,16199517,23070592,26125594"></div>
-<!-- - Ackermann M et al. A general modular framework for gene set enrichment analysis. BMC Bioinformatics vol. 10 (2009)
-- Ashburner M et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nat. Genet. vol. 25 (2000)
-- Barry W et al. Significance analysis of functional categories in gene expression studies: a structured permutation approach. Bioinformatics vol. 21 (2005)
-- Caspi R et al. The MetaCyc database of metabolic pathways and enzymes and the BioCyc collection of patway/genome databases. Nucleic Acids Res. vol. 44 (2016)
-- Damian D et al. Statistical concerns about the GSEA procedure. Nat. Genet. vol. 36 (2004)
-- Fabregat A et al. The Reactome pathway Knowledgebase. Nucleic Acids Res. vol. 44 (2016)
-- Irizarry R et al. Gene set enrichment analysis made simple. Stat Methods Med Res vol. 18 (2009)
-- Kandasamy K et al. NetPath: a public resource of curated signal transduction pathways. Genome Biol. vol. 11 (2010)
-- Schaefer C et al. PID: the Pathway Interaction Database. Nucleic Acids Res. vol. 37 (2009)
-- Khatri P et al. Ontological analysis of gene expression data: current tools, limitations, and open problems. Bioinformatics vol. 21 (2005)
-- Khatri P et al. Ten years of pathway analysis: current approaches and outstanding challenges. PLoS Comput. Biol. vol. 8 (2012)
-- Mi H et al. PANTHER in 2013: modeling the evolution of gene function, and other gene attributes, in the context of phylogenetic trees. Nucleic Acids Res. vol. 41 (2013)
-- Mootha V et al. PGC-1alpha-responsive genes involved in oxidative phosphorylation are coordinately downregulated in human diabetes. Nat. Genet. vol. 34 (2003)
-- Noble W et al. How does multiple testing correction work? Nat. Biotechnol. vol. 27 (2009)
-- Subramanian A et al. Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Proc. Natl. Acad. Sci. U.S.A. vol. 102 (2005)
-- Tamayo P et al. The limitations of simple gene set enrichment analysis assuming gene independence. Stat Methods Med Res vol. 25 (2016)
-- Mutation Consequences and Pathway Analysis working group of the International Cancer Genome Consortium. Pathway and network analysis of cancer genomes. Nat. Methods vol. 12 (2015) -->
