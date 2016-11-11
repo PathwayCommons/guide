@@ -19,7 +19,7 @@ figures:
   figure_10: figure_gsea_load.jpg
   figure_11: figure_gsea_settings.jpg
   figure_12: figure_gsea_report.png
-  figure_13: figure_gsea_report_snapshot.png
+  figure_13: figure_gsea_report_snapshot_pos.png
   figure_14: figure_gsea_report_snapshot_neg.png
   gsea_download: GSEA_download.gif
 data:
@@ -594,7 +594,7 @@ Wait a few seconds for the files to load into memory. You will receive a pop-up 
 
 ### 5. Settings
 
-Now that are files are in memory, we will tell GSEA what these files actually represent and tailor the GSEA run accordingly.
+Now that are files are in memory, we will tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab (Figure 11) and fill in the details for the 'Required' and 'Basic' fields.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
 
@@ -602,14 +602,18 @@ Now that are files are in memory, we will tell GSEA what these files actually re
   <strong>Figure 11. The GSEA Pre-ranked tab.</strong> Select 'Tools' in the menu dropdown, then 'GseaPreranked' to bring up the 'Run Gsea on a Pre-Ranked gene list' tab.
 </div>
 
-1. Gene sets database
-  - `Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt`
-2. Collapse dataset to gene symbols
-  - False
-3. Analysis name
-  - Choose a name for this run
-4. Save results in this folder
-  - location where you wish to house your GSEA results
+- Required fields
+  - Gene sets database
+    - Click the ellipsis and wait a few moments for a dialog to pop up
+    - Navigate to 'Gene matrix (local gmx/gmt)' (click arrow along top)
+    - Select `Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt`
+  - Collapse dataset to gene symbols
+    - False
+- Basic fields
+  - Analysis name
+    - Choose a name for this run
+  - Save results in this folder
+    - location where you wish to house your GSEA results
 
 <hr/>
 
@@ -664,7 +668,7 @@ Users
 
 When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 9, bottom left). You may click this link to view the HTML report inside a browser (Figure 12). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 12. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. In our case the 'na_pos' phenotype corresponds to the  'Mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
@@ -682,14 +686,14 @@ Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pa
 
 **Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores (GSEA results folder for `pos_snapshot.html` and `neg_snapshot.html`).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. Snapshot for 'mesenchymal' phenotype (na_pos).</strong> Shown are the running sum plots for top enrichment in the 'mesenchymal' subtype. Only first three samples of the twenty are shown.
-</div>
-
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 13. Snapshot for 'immunoreactive' phenotype (na_neg).</strong> Shown are the running sum plots for top enrichment in the 'immunoreactive' subtype. Only first three samples of the twenty are shown.
+  <strong>Figure 13. Snapshot for 'mesenchymal' phenotype (na_pos).</strong> Shown are the running sum plots for top enrichment in the 'mesenchymal' subtype. Only first three samples of the twenty are shown.
+</div>
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Snapshot for 'immunoreactive' phenotype (na_neg).</strong> Shown are the running sum plots for top enrichment in the 'immunoreactive' subtype. Only first three samples of the twenty are shown.
 </div>
 
 **Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype (GSEA results folder for `gsea_report_for_na_pos_.xls` and `gsea_report_for_na_neg_.xls`). The following fields are included for each enriched gene set

@@ -64,10 +64,10 @@ Subsequently, expression data was used to derive a measure of differential expre
 {:.table .table-hover .table-condensed .table-responsive}
 |         |   gene  |  rank     |
 |:-------:|:-------:|:---------:|
-|     1   | SPARC   | 35.29162  |
-|     2   | AEBP1   | 35.22055  |
+|     1   | BGN     | 51.7598126672467 |
+|     2   | AEBP1   | 46.8833012028318  |
 |   ...   | ...     | ...       |
-|   11972 | TAP1    | -18.75886 |
+|   11972 | TAP1    | -26.92687699671 |
 
 
 Rather than analyze a list of over 10 000 genes one at a time, we argued that more robust, less arbitrary methods were required. To this end we used [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) to identify gene sets  enriched within our list. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'. Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
@@ -80,9 +80,9 @@ Rather than analyze a list of over 10 000 genes one at a time, we argued that mo
 |   1  | HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION| 181 | 0.88382155 | 2.5331933 |
 |   2  | NABA_CORE_MATRISOME | 162| 0.8811468 | 	2.4879313 |
 | ...  | ... | ...  | ...  | ...  |
-| 2570 | NONSENSE MEDIATED DECAY (NMD) | 110  | 0.09057227 | 0.2507572 |
+| 2352 | FORMATION OF THE TERNARY COMPLEX, AND SUBSEQUENTLY, THE 43S COMPLEX| 50 | 0.1236243 | 0.2913502 |
 
-Notice that the number of gene sets (~4 500) is of the same order as our original gene list (~11 000). Applying more stringent significance criteria ($$\text{p-value} \leq 0.01$$) would only reduce this total number to about a 1 000. Have we simply kicked the can and traded a long list of genes for a lengthy list of gene sets?
+Notice that the number of gene sets (~4 000) is of the same order as our original gene list (~10 000). Applying more stringent significance criteria ($$\text{p-value} \leq 0.01$$) would only reduce this total number to about a 1 000. Have we simply kicked the can and traded a long list of genes for a lengthy list of gene sets?
 
 ### Data reduction
 
@@ -250,19 +250,19 @@ Install and load the required R/Bioconductor packages. Declare the paths for fil
 
 <code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="1-22"></code>
 
-We repeat *verbatim* a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.
+We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="24-30"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="24-39"></code>
 
-Our DGEList `TCGAOV_data` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
+Our DGEList `TCGAOV_normalized_TMM` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="32-49"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="41-58"></code>
 
-Here we merge the `TCGAOV_data` data frame variable `genes` with the normalized data frame of expression values in `TCGAOV_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `TCGAOV_EM_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
+Here we merge the `TCGAOV_normalized_TMM` data frame variable `genes` with the normalized data frame of expression values in `TCGAOV_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `TCGAOV_EM_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
 
 Finally we write to file.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="51-57"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="60-66"></code>
 
 
 ### 4. Phenotypes
@@ -291,7 +291,7 @@ We will use a [ text format (.cls) ](http://software.broadinstitute.org/cancer/s
 
 We will continue where we left off last time.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="59-79"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="68-89"></code>
 
 <hr/>
 
@@ -539,6 +539,8 @@ The resulting network can look a bit sparse. Let's fine tune this by bringing th
     - Drag the slider to lower values to reduce space between nodes
 
 <hr/>
+
+Cytoscape affords the user a great deal of control over [styles](http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles){: target="_blank"} and [layout](http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://wiki.cytoscape.org/Cytoscape_User_Manual){: target="_blank"} for full description of capabilities.
 
 ## <a href="#references" name="references">V. References</a>
 <div class="panel_group" data-inline="10802651,18511468,21085593,22383865"></div>

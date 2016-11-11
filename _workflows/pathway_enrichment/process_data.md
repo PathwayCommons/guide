@@ -105,23 +105,23 @@ The DGEList contains an attribute `counts` which is a table identical to our inp
 
 **Step 1: Filter**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="20-25"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="20-30"></code>
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
 
 **Step 2: Normalize**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="27-28"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="32-33"></code>
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
 
 |               &nbsp;               |     group      |  lib.size  |  norm.factors  |
 |:----------------------------------:|:--------------:|:----------:|:--------------:|
-|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  86537532  |     1.038      |
-|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  47372890  |     0.8995     |
-|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  38040210  |       1        |
-|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  57508980  |     0.9985     |
+|  **TCGA-04-1357-01A-01R-1565-13**  | Immunoreactive |  37476326  |     0.983      |
+|  **TCGA-61-2000-01A-01R-1568-13**  | Immunoreactive |  56796486  |     0.9858     |
+|  **TCGA-31-1953-01A-01R-1568-13**  | Immunoreactive |  66315291  |     1.106      |
+|  **TCGA-25-1628-01A-01R-1566-13**  |  Mesenchymal   |  73974514  |     1.153      |
 {:.table .table-hover .table-condensed .table-responsive}
 
 The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
@@ -138,7 +138,7 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 
 **Step 3: Fit**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="30-32"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="35-37"></code>
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
@@ -178,7 +178,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 
 **Step 4: Test**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="34-36"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="39-41"></code>
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
 
@@ -189,16 +189,16 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 
 |        &nbsp;         |  logFC   |  logCPM  |  PValue  |
 |:---------------------:|:--------:|:--------:|:--------:|
-|  **ENSG00000000003**  | -0.01331 |  6.443   |  0.8897  |
-|  **ENSG00000000419**  | -0.07446 |  5.871   |  0.3816  |
-|  **ENSG00000000457**  | -0.06862 |  3.939   |  0.331   |
-|  **ENSG00000000460**  | -0.2482  |  3.425   | 0.008461 |
+|  **ENSG00000000003**  | -0.02072 |  6.285   |  0.8293  |
+|  **ENSG00000000419**  | -0.08461 |  5.877   |  0.3485  |
+|  **ENSG00000000457**  | -0.07762 |   3.88   |  0.2453  |
+|  **ENSG00000000460**  | -0.2578  |  3.483   | 0.004774 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 
 **Step 5: Adjust**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="38-42"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="43-47"></code>
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR){:target="_blank"} to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
@@ -206,10 +206,10 @@ The function `topTags` takes the output from `exactTest` and uses the [Bejamini-
 
 |        &nbsp;         |  logFC  |  logCPM  |  PValue   |    FDR    |
 |:---------------------:|:-------:|:--------:|:---------:|:---------:|
-|  **ENSG00000113140**  |  1.761  |  10.45   | 5.109e-36 | 3.602e-32 |
-|  **ENSG00000106624**  |  2.158  |  8.532   | 6.018e-36 | 3.602e-32 |
-|  **ENSG00000166147**  |  2.134  |  5.861   | 2.33e-35  |  9.3e-32  |
-|  **ENSG00000182492**  |  1.877  |  8.943   | 9.734e-35 | 2.913e-31 |
+|  **ENSG00000182492**  |  1.865  |   9.44   | 1.739e-52 | 1.841e-48 |
+|  **ENSG00000106624**  |  2.148  |  9.224   | 1.308e-47 | 6.927e-44 |
+|  **ENSG00000038427**  |  2.04   |  7.567   | 1.887e-43 | 6.66e-40  |
+|  **ENSG00000084636**  |  1.779  |  5.911   | 3.297e-43 | 8.728e-40 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 We can now plot our differentially expressed genes (red) over our full data.
@@ -226,14 +226,14 @@ plotSmear(TCGAOV_filtered, pair=c(CATEGORY_BASELINE, CATEGORY_TEST), de.tags=deg
 
 **Step 6: Rank**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="44-48"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="50-53"></code>
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
 Set the gene name from the Ensembl gene ID to the `external_gene_name` which is compatible with the HGNC namespace.
 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="50-56"></code>
+<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="55-61"></code>
 
 Your directory should now contain the rank file.
 
@@ -273,14 +273,15 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 {:.table .table-hover .table-condensed .table-responsive}
 |         |   gene  |  rank     |
 |:-------:|:-------:|:---------:|
-|   1   | SPARC   | 35.29162  |
-|   2   | AEBP1   | 35.22055  |
-|   3   | FBN1    | 34.63253  |
-|   4   | BGN     | 34.01170  |
-| ...   | ...     | ...       |
-| 11970 | CXCL10  | -15.19978 |
-| 11971 | ETV7    | -15.92689 |
-| 11972 | TAP1    | -18.75886 |
+|  1      | BGN | 51.7598126672467 |
+|  2      | AEBP1 | 46.8833012028318 |
+|  3      | VCAN | 42.7242756718847 |
+|  4      | COL16A1 | 42.4819173450002 |
+|   ...   | ...     | ...          |
+| 10589   |  PSMB9 | -22.3106957916029     |
+| 10590   |  PSMB8-AS1 | -23.244789795428  |
+| 10591   |  TAP1 | -26.92687699671 |
+
 
 The R code is available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
   target="_blank">
