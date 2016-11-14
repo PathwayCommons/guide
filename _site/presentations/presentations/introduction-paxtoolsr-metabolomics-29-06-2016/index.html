@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Introduction to PaxtoolsR &middot; Guide
+    
+  </title>
+
+  <!-- CSS -->
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/guide/media/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-item">
+      Guide: v1.0.0
+    </div>
+    <a class="sidebar-nav-item" href="/guide/">Home</a>
+
+    
+
+    
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/case_studies/archive/">Case studies
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item active"
+          href="/guide/presentations/archive/">Presentations
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/primers/archive/">Primers
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/workflows/archive/">Workflows
+          </a>
+
+        
+      
+    
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/guide/" title="Home">Guide</a>
+            <small>
+              Training Resources
+              
+                <span class="text-danger">-- Development Mode</span>
+              
+            </small>
+          </h3>
+
+        </div>
+      </div>
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+  
+    
+
+    
+    
+    <ol class="breadcrumb">
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        <li><a href="/guide/">Guide</a></li>
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        <li><a href="/guide/presentations/archive/">Presentations</a></li>
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        <li><a href="/guide/presentations/archive/">Presentations</a></li>
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        
+          <li class="active">Introduction to PaxtoolsR</li>
+        
+      
+    
+    </ol>
+  
+
+
+  <h1 class="page-title">Introduction to PaxtoolsR</h1>
+  <div class="collection">
+  <div class="document">
+    <div class="subtitle">Metabolomics 2016, the 12th Annual Conference of the Metabolomics Society at University College Dublin.</div>    
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      <li>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/&title=Introduction to PaxtoolsR"
+  data-toggle="tooltip"
+  title="Share this page on Facebook"
+  target="_blank" >
+    <i class="fa fa-facebook-official fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/intent/tweet?text=Metabolomics 2016, the 12th Annual Conference of the Metabolomics Society at University...+/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+      <li></li>
+      <li>
+  <a data-toggle="tooltip"
+    title="View PDF"
+    href="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf">
+    <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+  </a>
+</li>
+
+      </ul>
+    </div>
+    <hr/>
+    <p><!-- <object data="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf" type="application/pdf" width="100%" height="800px">
+    <p>It appears you don't have a PDF plugin for this browser.
+    No biggie... you can <a href="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf">click here to
+    download the PDF file.</a></p>
+  </object> -->
+  <script type="text/javascript">
+    /*!
+    * screenfull
+    * v3.0.0 - 2015-11-24
+    * (c) Sindre Sorhus; MIT License
+    */
+    !function(){"use strict";var a="undefined"!=typeof module&amp;&amp;module.exports,b="undefined"!=typeof Element&amp;&amp;"ALLOW_KEYBOARD_INPUT"in Element,c=function(){for(var a,b,c=[["requestFullscreen","exitFullscreen","fullscreenElement","fullscreenEnabled","fullscreenchange","fullscreenerror"],["webkitRequestFullscreen","webkitExitFullscreen","webkitFullscreenElement","webkitFullscreenEnabled","webkitfullscreenchange","webkitfullscreenerror"],["webkitRequestFullScreen","webkitCancelFullScreen","webkitCurrentFullScreenElement","webkitCancelFullScreen","webkitfullscreenchange","webkitfullscreenerror"],["mozRequestFullScreen","mozCancelFullScreen","mozFullScreenElement","mozFullScreenEnabled","mozfullscreenchange","mozfullscreenerror"],["msRequestFullscreen","msExitFullscreen","msFullscreenElement","msFullscreenEnabled","MSFullscreenChange","MSFullscreenError"]],d=0,e=c.length,f={};e&gt;d;d++)if(a=c[d],a&amp;&amp;a[1]in document){for(d=0,b=a.length;b&gt;d;d++)f[c[0][d]]=a[d];return f}return!1}(),d={request:function(a){var d=c.requestFullscreen;a=a||document.documentElement,/5\.1[\.\d]* Safari/.test(navigator.userAgent)?a[d]():a[d](b&amp;&amp;Element.ALLOW_KEYBOARD_INPUT)},exit:function(){document[c.exitFullscreen]()},toggle:function(a){this.isFullscreen?this.exit():this.request(a)},raw:c};return c?(Object.defineProperties(d,{isFullscreen:{get:function(){return Boolean(document[c.fullscreenElement])}},element:{enumerable:!0,get:function(){return document[c.fullscreenElement]}},enabled:{enumerable:!0,get:function(){return Boolean(document[c.fullscreenEnabled])}}}),void(a?module.exports=d:window.screenfull=d)):void(a?module.exports=!1:window.screenfull=!1)}();
+  </script></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script type="text/javascript"&gt;
+  	$(document).ready(function() {
+  	  $('#fs-overview-link').click(function () {
+  		  if (screenfull.enabled) {
+  			  screenfull.request($('#fs-overview-target')[0]);
+  		  }
+  	  });
+  	});
+&lt;/script&gt;
+</code></pre>
+</div>
+
+<div class="panel panel-default">
+      <div class="panel-heading">
+          <h2 class="panel-title">
+              Introduction to PaxtoolsR (<a href="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf">PDF</a>) <a id="fs-overview-link" class="pull-right" href="#"><i class="fa fa-arrows-alt"></i></a>
+          </h2>
+      </div>
+      <div class="panel-body">
+          <div class="embed-responsive embed-responsive-4by3">
+              <iframe id="fs-overview-target" src="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/paxtoolsr.html" allowfullscreen="" seamless="">
+                  <p>Your browser does not support iframes.</p>
+              </iframe>
+          </div>
+      </div>
+  </div>
+
+  </div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+  </body>
+</html>
