@@ -9,6 +9,8 @@ order: 1
 gists:
   id: 293acd56bfc4181727f3832daed795b1
   file_1: get_data.R
+github:
+  repo: 'jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R'
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
   tcgaov_data: TCGAOV_data.rda
@@ -183,11 +185,11 @@ Below we describe how to obtain each of these pieces of information for the TCGA
 
 ### Category information: Gene expression subtypes
 
+Verhaak *et al.* used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype (Table 1). The supplemental table includes dataset samples from other studies. We have filtered Supplemental Table 1 for the TCGA discovery cohort and provide it in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>.
+
 <a type="button" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Subtypes (.txt)</a>
 
-Verhaak *et al.* used the TCGA HGS-OvCa data to generate a prognostic gene expression signature. In doing so they made available a [Supplementary Excel file 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533304/bin/JCI65833sd1.xls) which contains Supplemental Table 1 that assigns each case a subtype (Table 1).
-
-The supplemental table includes dataset samples from other studies. We have filtered Supplemental Table 1 for the TCGA discovery cohort and provide it in <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.subtype }}" download>`Verhaak_JCI_2013_tableS1.txt`</a>. For the purposes of this guide, we will assume you have downloaded this file to the location `/Documents/data/TCGA/`. The general layout of the TCGA-OV category information can be seen in Table 3 for 489 cases.
+For the purposes of this guide, we will assume you have downloaded this file to the location `/home/TCGA/`. The general layout of the TCGA-OV category information can be seen in Table 3 for 489 cases.
 
 **Table 3. TCGA subtype information**
 
@@ -215,13 +217,15 @@ The GDC web service API and Data Transfer Tool offer precise and flexible contro
 
 #### Software requirements
 
-Please take special note of versions: The TCGAbiolinks package has recently undergone important changes to accommodate the move of TCGA data to the GDC web service API.
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/01442e4397c036c65da74563aa633f45d9a8117d){:target="_blank"} containing a the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
-- [R](https://www.r-project.org/){:target="_blank"}: version 3.3.1
-  - [Bioconductor](https://bioconductor.org){:target="_blank"}: version 3.3
-    - [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html){:target="_blank"} version 2.0.13
-    - [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html){:target="_blank"} version 1.2.3
-    - [DEFormats](https://bioconductor.org/packages/release/bioc/html/DEFormats.html){:target="_blank"} version 1.0.2
+**Run code on your computer**. If you choose to run the R code on your own computer, you will need to take special note of [R/Bioconductor](https://bioconductor.org){: target="_blank"} versions. In particular, [TCGAbiolinks](https://bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html) has recently undergone important changes to accommodate the move of TCGA data to the GDC web service API.
+
+  - [R](https://www.r-project.org/){:target="_blank"}: >version 3.3.1
+    - [Bioconductor](https://bioconductor.org){:target="_blank"}: >version 3.3
+      - [TCGAbiolinks](https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html){:target="_blank"}
+      - [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html){:target="_blank"}
+      - [DEFormats](https://bioconductor.org/packages/release/bioc/html/DEFormats.html){:target="_blank"}
 
 #### Data retrieval
 
@@ -236,41 +240,51 @@ Figure 6 summarizes the main steps that we will follow in to use the TCGAbiolink
 
 Below we detail the R commands used to retrieve the data. We will assume that you have downloaded the subtype file `Verhaak_JCI_2013_tableS1.txt`. Alternatively, you can find the subtypes file and all of the following code in our [github gist](https://gist.github.com/jvwong/293acd56bfc4181727f3832daed795b1). We will assume a directory structure on your computer that looks something like the following
 
+
 ```shell
-Documents
+home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
 ...
 ```
 
 
-**Step 0: Installation**
+**Step 0: Load**
 
-Install and load the TCGAbiolinks package from R/Bioconductor.
+Load R/Bioconductor packages.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-13"></code>
-
-You will need to change the `BASE_DIR` to suit your directory structure and the location of `Verhaak_JCI_2013_tableS1.txt`.
+  {% highlight r %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 1 18 %}
+  {% endhighlight %}
 
 **Step 1: Query**
 
 The `GDCquery(...)` function allows us to search the GDC for data based on the filter restrictions we pass. These restrictions mirror those provided by the GDC data portal and web service API. In this case we are looking for unnormalized RNA-seq counts ('HTSeq - Counts') for the TCGA-OV project. We store the search results in the `query` data frame.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="15-18"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 19 26 %}
+{% endhighlight %}
 
 **Step 2: Download**
 
 The `GDCdownload(...)` function allows us to actually retrieve files based on the search results in step 1. We set `method=client` so that it uses the GDC Data Transfer Tool under the hood and declare a local directory (`TCGAOV_RNASEQ_DIR`) where the files should be saved.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="20-23"></code>
+  {% highlight r %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 28 32 %}
+  {% endhighlight %}
 
 > Note: These commands will trigger a download of the GDC Data Transfer Tool (gdc-client) and a manifest (gdc_manifest.txt) to your home directory.
 
-In our case we will be (temporarily) downloading almost 380 files so make sure you have enough space on your computer.
 
 >Note: There can be a large number of files downloaded. Downloading 379 files above took on the order of 15 minutes but your mileage may vary depending on your connection speed.
 
@@ -278,7 +292,9 @@ In our case we will be (temporarily) downloading almost 380 files so make sure y
 
 A bunch of data files isn't going to be much help to us. The goal of this step is to prepare the data by combining the data and metadata. `GDCprepare(...)` combines the downloaded file data into a single container, the [`SummarizedExperiment`](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html){:target="_blank"} (Figure 7) (Huber 2015). We will also save this container to an RData file (.rda) and keep the downloaded files.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="25-31"></code>
+  {% highlight r %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 34 41 %}
+  {% endhighlight %}
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -287,25 +303,31 @@ A bunch of data files isn't going to be much help to us. The goal of this step i
 
 **Step 4: Integrate**
 
-The SummarizedExperiment object containing the RNA-seq assay data and associated metadata for the TCGA-OV samples is now available. The differential gene expression analysis prescribed by [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"} uses a `DGEList` container to house both the assay and category information.
+The `SummarizedExperiment` object containing the RNA-seq assay data and associated metadata for the TCGA-OV samples is now available. The differential gene expression analysis prescribed by [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"} uses a `DGEList` container to house both the assay and category information.
 
 To this end, we use the `DEFormats` package function `DEGList(...)` to convert our SummarizedExperiment and integrate the subtypes. Note that we need to find the samples with an assigned subtype and subset accordingly.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="33-53"></code>
+  {% highlight r %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 42 64 %}
+  {% endhighlight %}
 
 The resulting `DGEList` called `TCGAOV_data` is saved as an RData file `TCGAOV_data.rda` for use in downstream differential expression analysis.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}"  data-gist-hide-footer="true" data-gist-line="55-56"></code>
+  {% highlight r %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 64 66 %}
+  {% endhighlight %}
 
 <hr/>
 
-The preceding R code is presented in its entirety and available as a Github gist
-<a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
+The preceding R code is presented in its entirety and available as a Github repo
+<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R %}
+{% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
 
@@ -313,7 +335,7 @@ File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (gro
 
 <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> TCGAOV_data.rda</a>
 
-The R code and subtype designation file are available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
+The R code and subtype designation file are available in Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>

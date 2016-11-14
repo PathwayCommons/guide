@@ -1,6 +1,6 @@
 ---
 title: Pathway enrichment
-subtitle: Identify altered expression of pathways in TCGA ovarian cancer subtypes using Gene Set Enrichment Analysis.
+subtitle: Use the Genomic Data Commons to source TCGA ovarian cancer RNA sequencing data then identify altered pathways with Gene Set Enrichment Analysis.
 cover: cover.jpg
 date: 2016-10-24
 layout: embedded_wrapper

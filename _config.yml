@@ -31,7 +31,7 @@ exclude:
 #**************** Override defaults ****************
 
 # Plugins
-gems:                [jekyll-watch]
+gems:                [jekyll-watch, jekyll_github_sample]
 
 # Outputting
 # post permalink style 'pretty' (/:categories/:year/:month/:day/:title/)
