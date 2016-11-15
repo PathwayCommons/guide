@@ -55,28 +55,36 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes  expressed in 'mesenchymal' relative to 'immunoreactive' subtypes we will need the following
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/e4735bc9d94b44259c432f11985cf0131629d53a){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
-- RNA-seq assay and category information
+**Run code on your computer**. You can run the R code on your own computer and will need the following files and software
+
+- RNA-seq assay and category information (from 'Get Data')
   - [TCGAOV_data.rda]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
-- R: version 3.3.1
-  - edgeR: version 3.16.0
+- [R](https://www.r-project.org/){:target="_blank"}: >version 3.3.1
+  - [Bioconductor](https://bioconductor.org){:target="_blank"}: >version 3.3
+    - edgeR
 
-We will assume files are located in a local directory `/Documents/data/TCGA/`.
+We will assume files are located in a local directory `/home/TCGA/`.
 
 ```shell
-Documents
+home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- TCGAOV_data.rda
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
-        |
-        |--- TCGA-OV
-            |--- ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
 ...
 ```
 
@@ -88,7 +96,9 @@ Documents
 
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `TCGAOV_data` from the previous section.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="3-18"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 1 21 %}
+{% endhighlight %}
 
 Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
 
@@ -105,13 +115,17 @@ The DGEList contains an attribute `counts` which is a table identical to our inp
 
 **Step 1: Filter**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="20-30"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 22 34 %}
+{% endhighlight %}
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
 
 **Step 2: Normalize**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="32-33"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 35 38 %}
+{% endhighlight %}
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
@@ -138,7 +152,9 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 
 **Step 3: Fit**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="35-37"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 39 42 %}
+{% endhighlight %}
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
@@ -172,13 +188,27 @@ names(TCGAOV_fitted_tagwise)
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
-<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
+
+{% highlight r %}
+### ============ Plotting ===============
+plotBCV(TCGAOV_fitted_tagwise)
+{% endhighlight %}
+
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
+
+{% highlight r %}
+plotMeanVar(TCGAOV_fitted_tagwise, show.tagwise.vars=TRUE, NBline = TRUE)
+{% endhighlight %}
+
+<img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression){:target="_blank"}, $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
 
 **Step 4: Test**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="39-41"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 48 51 %}
+{% endhighlight %}
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
 
@@ -198,7 +228,10 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 
 **Step 5: Adjust**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="43-47"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 52 57 %}
+{% endhighlight %}
+
 
 The function `topTags` takes the output from `exactTest` and uses the [Bejamini-Hochberg (BH) procedure]({{ site.baseurl }}/primers/functional_analysis/multiple_testing/#controllingFDR){:target="_blank"} to adjust the p-values yielding the a 'BH-adjusted p-value' also known as 'q-value' (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of $$q^∗$$ for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. `topTags` returns the top differentially expressed genes. The output is similar to that of `exactTest` but with a column of adjusted p-values and sorted by increasing p-value.
 
@@ -226,14 +259,18 @@ plotSmear(TCGAOV_filtered, pair=c(CATEGORY_BASELINE, CATEGORY_TEST), de.tags=deg
 
 **Step 6: Rank**
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="50-53"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 64 69 %}
+{% endhighlight %}
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
 Set the gene name from the Ensembl gene ID to the `external_gene_name` which is compatible with the HGNC namespace.
 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true" data-gist-line="55-61"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 71 78 %}
+{% endhighlight %}
 
 Your directory should now contain the rank file.
 
@@ -257,13 +294,15 @@ Documents
 
 <hr/>
 
-The preceding R code is presented in its entirety and available as a Github gist
-<a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
+The preceding R code is presented in its entirety and available at Github
+<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
 
-<code data-gist-id="{{ page.gists.id }}" data-gist-file="{{ page.gists.file_1 }}" data-gist-hide-footer="true"></code>
+{% highlight r %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R %}
+{% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
 
@@ -283,7 +322,7 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 | 10591   |  TAP1 | -26.92687699671 |
 
 
-The R code is available as a Github gist <a href="https://gist.github.com/jvwong/{{ page.gists.id }}"
+The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>

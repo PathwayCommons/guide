@@ -9,8 +9,6 @@ order: 1
 gists:
   id: 293acd56bfc4181727f3832daed795b1
   file_1: get_data.R
-github:
-  repo: 'jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R'
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
   tcgaov_data: TCGAOV_data.rda
@@ -249,6 +247,7 @@ home
 |   |--- scripts
 |   |    |
 |   |    |--- get_data.R
+|   |    ...
 |   |
 |   |--- data
 |   |    |
@@ -316,6 +315,31 @@ The resulting `DGEList` called `TCGAOV_data` is saved as an RData file `TCGAOV_d
   {% highlight r %}
     {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R 64 66 %}
   {% endhighlight %}
+
+<hr/>
+
+You should have a directory structure similar to the following
+
+```shell
+home
+|
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
+...
+```
 
 <hr/>
 

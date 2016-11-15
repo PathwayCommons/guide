@@ -134,35 +134,46 @@
 
 <h3 id="software-requirements">Software requirements</h3>
 
-<p>To transform the TCGA HGS-OvCa RNA-seq count data retrieved previously into a list of genes  expressed in ‘mesenchymal’ relative to ‘immunoreactive’ subtypes we will need the following</p>
+<p><strong>Run inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the correct software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/e4735bc9d94b44259c432f11985cf0131629d53a" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
+
+<p><strong>Run code on your computer</strong>. You can run the R code on your own computer and will need the following files and software</p>
 
 <ul>
-  <li>RNA-seq assay and category information
+  <li>RNA-seq assay and category information (from ‘Get Data’)
     <ul>
       <li><a href="/guide/workflows/pathway_enrichment/get_data/#data" target="_blank">TCGAOV_data.rda</a></li>
     </ul>
   </li>
-  <li>R: version 3.3.1
+  <li><a href="https://www.r-project.org/" target="_blank">R</a>: &gt;version 3.3.1
     <ul>
-      <li>edgeR: version 3.16.0</li>
+      <li><a href="https://bioconductor.org" target="_blank">Bioconductor</a>: &gt;version 3.3
+        <ul>
+          <li>edgeR</li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>
 
-<p>We will assume files are located in a local directory <code class="highlighter-rouge">/Documents/data/TCGA/</code>.</p>
+<p>We will assume files are located in a local directory <code class="highlighter-rouge">/home/TCGA/</code>.</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Documents
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- TCGAOV_data.rda
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
-        |
-        |--- TCGA-OV
-            |--- ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
 ...
 </code></pre>
 </div>
@@ -173,7 +184,26 @@
 
 <p>Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable <code class="highlighter-rouge">TCGAOV_data</code> from the previous section.</p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="3-18"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ Install packages from Bioconductor ========
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
+
+
+<span class="c1">### ============ Declare directories =========
+</span><span class="n">BASE_DIR</span> <span class="o">=</span> <span class="s2">"/home/TCGA"</span> <span class="c1"># same as volumes in docker-compose.yml
+</span><span class="n">TCGAOV_DATA_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
+<span class="n">TCGAOV_OUTPUT_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
+
+<span class="n">TCGAOV_DGE_OUTPUT_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">TCGAOV_OUTPUT_DIR</span><span class="p">,</span>
+                                  <span class="s2">"TCGAOV_data.rda"</span><span class="p">)</span>
+<span class="n">TCGAOV_RANKS_OUTPUT_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">TCGAOV_OUTPUT_DIR</span><span class="p">,</span>
+                 <span class="s2">"MesenchymalvsImmunoreactive_edger_ranks.rnk"</span><span class="p">)</span>
+
+<span class="c1">### ============ Declare samples =========
+</span><span class="n">CATEGORY_BASELINE</span> <span class="o">=</span> <span class="s2">"Immunoreactive"</span>
+<span class="n">CATEGORY_TEST</span> <span class="o">=</span> <span class="s2">"Mesenchymal"</span>
+
+<span class="n">load</span><span class="p">(</span><span class="n">TCGAOV_DGE_OUTPUT_FILE</span><span class="p">)</span></code></pre></figure>
 
 <p>Set the <code class="highlighter-rouge">CATEGORY_TEST</code> to measure expression relative to <code class="highlighter-rouge">CATEGORY_BASELINE</code>.</p>
 
@@ -218,13 +248,26 @@
 
 <p><strong>Step 1: Filter</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="20-30"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 1. Filter ===============
+</span><span class="n">index_BASELINE</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_BASELINE</span>
+<span class="n">index_TEST</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_TEST</span>
+<span class="n">index_BASELINE_TEST</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="n">index_BASELINE</span> <span class="o">|</span> <span class="n">index_TEST</span><span class="p">)</span>
+<span class="n">N_BASELINE</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_BASELINE</span><span class="p">)</span>
+<span class="n">N_TEST</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_TEST</span><span class="p">)</span>
+<span class="n">TCGAOV_data_BT</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="p">[,</span><span class="n">index_BASELINE_TEST</span><span class="p">]</span>
+
+<span class="n">row_with_mincount</span> <span class="o">=</span> <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">TCGAOV_data_BT</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">N_BASELINE</span><span class="p">,</span>
+                                                             <span class="n">N_TEST</span><span class="p">)</span>
+<span class="n">TCGAOV_filtered</span> <span class="o">=</span> <span class="n">TCGAOV_data_BT</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span></code></pre></figure>
 
 <p>The variable <code class="highlighter-rouge">row_with_mincount</code> stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.</p>
 
 <p><strong>Step 2: Normalize</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="32-33"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 2. Normalize ===============
+</span><span class="n">TCGAOV_normalized_TMM</span> <span class="o">=</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
 
 <p>The function <code class="highlighter-rouge">calcNormFactors</code> is a <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#normalization" target="_blank">normalization procedure</a> using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter <code class="highlighter-rouge">refColumn</code> otherwise the library whose upper quartile is closest to the mean upper quartile is used.</p>
 
@@ -278,7 +321,10 @@
 
 <p><strong>Step 3: Fit</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="35-37"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 3. Fit ===============
+</span><span class="n">TCGAOV_fitted_commondisp</span> <span class="o">=</span> <span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="p">)</span>
+<span class="n">TCGAOV_fitted_tagwise</span> <span class="o">=</span> <span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">TCGAOV_fitted_commondisp</span><span class="p">)</span></code></pre></figure>
 
 <p>Here we’re attempting to derive a squared biological coefficient of variation (<script type="math/tex">\phi</script>) from the data in order to parametrize our negative binomial model which we’ll use in DE testing. The function <code class="highlighter-rouge">estimateCommonDisp</code> estimates the dispersion across all genes and adds the value as <code class="highlighter-rouge">common.dispersion</code> in DGEList.</p>
 
@@ -298,13 +344,22 @@
 
 <p>Let us take a look at the data we’ve generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.</p>
 
-<p><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### ============ Plotting ===============
+</span><span class="n">plotBCV</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /></p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plotMeanVar</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">,</span> <span class="n">show.tagwise.vars</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">NBline</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/media/workflows/pathway_enrichment/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /></p>
 
 <p>A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values <script type="math/tex">P</script> for each gene. As described in our discussion of <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression" target="_blank">differential expression testing</a>, <script type="math/tex">P</script> represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.</p>
 
 <p><strong>Step 4: Test</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="39-41"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 4. Test ===============
+</span><span class="n">TCGAOV_DE</span> <span class="o">=</span> <span class="n">exactTest</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">,</span>
+                      <span class="n">pair</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">CATEGORY_BASELINE</span><span class="p">,</span> <span class="n">CATEGORY_TEST</span><span class="p">))</span></code></pre></figure>
 
 <ul>
   <li class="aside">
@@ -355,7 +410,12 @@
 
 <p><strong>Step 5: Adjust</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="43-47"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 5. Adjust ===============
+</span><span class="n">TCGAOV_TT</span> <span class="o">=</span> <span class="n">topTags</span><span class="p">(</span><span class="n">TCGAOV_DE</span><span class="p">,</span>
+                    <span class="n">n</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">),</span>
+                    <span class="n">adjust.method</span><span class="o">=</span><span class="s2">"BH"</span><span class="p">,</span>
+                    <span class="n">sort.by</span><span class="o">=</span><span class="s2">"PValue"</span><span class="p">)</span></code></pre></figure>
 
 <p>The function <code class="highlighter-rouge">topTags</code> takes the output from <code class="highlighter-rouge">exactTest</code> and uses the <a href="/guide/primers/functional_analysis/multiple_testing/#controllingFDR" target="_blank">Bejamini-Hochberg (BH) procedure</a> to adjust the p-values yielding the a ‘BH-adjusted p-value’ also known as ‘q-value’ (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of <script type="math/tex">q^∗</script> for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. <code class="highlighter-rouge">topTags</code> returns the top differentially expressed genes. The output is similar to that of <code class="highlighter-rouge">exactTest</code> but with a column of adjusted p-values and sorted by increasing p-value.</p>
 
@@ -412,14 +472,26 @@
 
 <p><strong>Step 6: Rank</strong></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="50-53"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 6. Rank ===============
+</span><span class="n">TCGAOV_ranks</span> <span class="o">&lt;-</span> <span class="n">sign</span><span class="p">(</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">logFC</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="n">log10</span><span class="p">(</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">PValue</span><span class="p">)</span>
+<span class="n">genenames</span> <span class="o">&lt;-</span> <span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">external_gene_name</span>
+<span class="n">TCGAOV_ranks</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">TCGAOV_ranks</span><span class="p">)</span>
+<span class="n">TCGAOV_ordered_ranks</span> <span class="o">&lt;-</span> <span class="n">TCGAOV_ranks</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">TCGAOV_ranks</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),]</span></code></pre></figure>
 
 <p>The rank of each gene is inversely proportional to the log of the <script type="math/tex">P</script> as smaller values are less likely under the null hypothesis.
 Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge">external_gene_name</code> which is compatible with the HGNC namespace.</p>
 
 <p>The resulting data frame is saved as a tab-delimited file <code class="highlighter-rouge">MesenchymalvsImmunoreactive_edger_ranks.rnk</code> for use in downstream differential expression analysis.</p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true" data-gist-line="55-61"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">## Save to file as tab-delimited text
+</span><span class="n">write.table</span><span class="p">(</span><span class="n">TCGAOV_ordered_ranks</span><span class="p">,</span>
+            <span class="n">TCGAOV_RANKS_OUTPUT_FILE</span><span class="p">,</span>
+            <span class="n">col.name</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">"\t"</span><span class="p">,</span>
+            <span class="n">row.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
+            <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
 
 <p>Your directory should now contain the rank file.</p>
 
@@ -443,12 +515,90 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 
 <hr />
 
-<p>The preceding R code is presented in its entirety and available as a Github gist
-<a href="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d" target="_blank">
+<p>The preceding R code is presented in its entirety and available at Github
+<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc" target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a></p>
 
-<p><code data-gist-id="32c23ac64138c59b1a150987b023d57d" data-gist-file="process_data.R" data-gist-hide-footer="true"></code></p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">(</span><span class="n">all</span><span class="o">=</span><span class="n">TRUE</span><span class="p">))</span>
+
+<span class="c1">### ============ Install packages from Bioconductor ========
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
+
+
+<span class="c1">### ============ Declare directories =========
+</span><span class="n">BASE_DIR</span> <span class="o">=</span> <span class="s2">"/home/TCGA"</span> <span class="c1"># same as volumes in docker-compose.yml
+</span><span class="n">TCGAOV_DATA_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
+<span class="n">TCGAOV_OUTPUT_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
+
+<span class="n">TCGAOV_DGE_OUTPUT_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">TCGAOV_OUTPUT_DIR</span><span class="p">,</span>
+                                  <span class="s2">"TCGAOV_data.rda"</span><span class="p">)</span>
+<span class="n">TCGAOV_RANKS_OUTPUT_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">TCGAOV_OUTPUT_DIR</span><span class="p">,</span>
+                 <span class="s2">"MesenchymalvsImmunoreactive_edger_ranks.rnk"</span><span class="p">)</span>
+
+<span class="c1">### ============ Declare samples =========
+</span><span class="n">CATEGORY_BASELINE</span> <span class="o">=</span> <span class="s2">"Immunoreactive"</span>
+<span class="n">CATEGORY_TEST</span> <span class="o">=</span> <span class="s2">"Mesenchymal"</span>
+
+<span class="n">load</span><span class="p">(</span><span class="n">TCGAOV_DGE_OUTPUT_FILE</span><span class="p">)</span>
+
+
+<span class="c1">### ============ 1. Filter ===============
+</span><span class="n">index_BASELINE</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_BASELINE</span>
+<span class="n">index_TEST</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_TEST</span>
+<span class="n">index_BASELINE_TEST</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="n">index_BASELINE</span> <span class="o">|</span> <span class="n">index_TEST</span><span class="p">)</span>
+<span class="n">N_BASELINE</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_BASELINE</span><span class="p">)</span>
+<span class="n">N_TEST</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_TEST</span><span class="p">)</span>
+<span class="n">TCGAOV_data_BT</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="p">[,</span><span class="n">index_BASELINE_TEST</span><span class="p">]</span>
+
+<span class="n">row_with_mincount</span> <span class="o">=</span> <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">TCGAOV_data_BT</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">N_BASELINE</span><span class="p">,</span>
+                                                             <span class="n">N_TEST</span><span class="p">)</span>
+<span class="n">TCGAOV_filtered</span> <span class="o">=</span> <span class="n">TCGAOV_data_BT</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
+
+
+<span class="c1">### ============ 2. Normalize ===============
+</span><span class="n">TCGAOV_normalized_TMM</span> <span class="o">=</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"TMM"</span><span class="p">)</span>
+
+
+<span class="c1">### ============ 3. Fit ===============
+</span><span class="n">TCGAOV_fitted_commondisp</span> <span class="o">=</span> <span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="p">)</span>
+<span class="n">TCGAOV_fitted_tagwise</span> <span class="o">=</span> <span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">TCGAOV_fitted_commondisp</span><span class="p">)</span>
+
+<span class="c1">###  Plotting BCV
+</span><span class="n">plotBCV</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">)</span>
+<span class="n">plotMeanVar</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">,</span> <span class="n">show.tagwise.vars</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">NBline</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+
+<span class="c1">### ============ 4. Test ===============
+</span><span class="n">TCGAOV_DE</span> <span class="o">=</span> <span class="n">exactTest</span><span class="p">(</span><span class="n">TCGAOV_fitted_tagwise</span><span class="p">,</span>
+                      <span class="n">pair</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">CATEGORY_BASELINE</span><span class="p">,</span> <span class="n">CATEGORY_TEST</span><span class="p">))</span>
+
+
+<span class="c1">### ============ 5. Adjust ===============
+</span><span class="n">TCGAOV_TT</span> <span class="o">=</span> <span class="n">topTags</span><span class="p">(</span><span class="n">TCGAOV_DE</span><span class="p">,</span>
+                    <span class="n">n</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">),</span>
+                    <span class="n">adjust.method</span><span class="o">=</span><span class="s2">"BH"</span><span class="p">,</span>
+                    <span class="n">sort.by</span><span class="o">=</span><span class="s2">"PValue"</span><span class="p">)</span>
+
+<span class="c1">###  Plotting
+</span><span class="n">rn</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="p">)</span>
+<span class="n">deg</span> <span class="o">=</span><span class="n">rn</span><span class="p">[</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">FDR</span><span class="o">&lt;</span><span class="m">0.05</span><span class="p">]</span>
+<span class="n">plotSmear</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">,</span> <span class="n">pair</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">CATEGORY_BASELINE</span><span class="p">,</span> <span class="n">CATEGORY_TEST</span><span class="p">),</span> <span class="n">de.tags</span><span class="o">=</span><span class="n">deg</span><span class="p">)</span>
+
+
+<span class="c1">### ============ 6. Rank ===============
+</span><span class="n">TCGAOV_ranks</span> <span class="o">&lt;-</span> <span class="n">sign</span><span class="p">(</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">logFC</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="n">log10</span><span class="p">(</span><span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">PValue</span><span class="p">)</span>
+<span class="n">genenames</span> <span class="o">&lt;-</span> <span class="n">TCGAOV_TT</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">external_gene_name</span>
+<span class="n">TCGAOV_ranks</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">TCGAOV_ranks</span><span class="p">)</span>
+<span class="n">TCGAOV_ordered_ranks</span> <span class="o">&lt;-</span> <span class="n">TCGAOV_ranks</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">TCGAOV_ranks</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),]</span>
+
+
+<span class="c1">## Save to file as tab-delimited text
+</span><span class="n">write.table</span><span class="p">(</span><span class="n">TCGAOV_ordered_ranks</span><span class="p">,</span>
+            <span class="n">TCGAOV_RANKS_OUTPUT_FILE</span><span class="p">,</span>
+            <span class="n">col.name</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">"\t"</span><span class="p">,</span>
+            <span class="n">row.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
+            <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
 
 <h2 id="a-hrefdata-namedataiv-dataa"><a href="#data" name="data">IV. Data</a></h2>
 
@@ -507,7 +657,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
   </tbody>
 </table>
 
-<p>The R code is available as a Github gist <a href="https://gist.github.com/jvwong/32c23ac64138c59b1a150987b023d57d" target="_blank">
+<p>The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc" target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a></p>
 
