@@ -133,18 +133,26 @@
 
 <p>If you have been following along all of the workflow steps, you should have a directory structure similar to the following</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Documents
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-        |
-        |--- TCGAOV_data.rda
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
-        ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
+...
 </code></pre>
 </div>
 
@@ -295,19 +303,27 @@
 
 <p>You should now have a directory structure similar to the following</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Documents
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
-        |
-        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-        |
-        |--- TCGAOV_data.rda
-        |
-        ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
+...
 </code></pre>
 </div>
 
@@ -411,17 +427,17 @@
         |--- output
             |
             |--- nov02
-            |
-            |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
                 |
-                |--- index.html
-                |--- pos_snapshot.html
-                |--- neg_snapshot.html
-                |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
-                |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
-                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
-                |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
-                ...
+                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
+                    |
+                    |--- index.html
+                    |--- pos_snapshot.html
+                    |--- neg_snapshot.html
+                    |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
+                    |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
+                    |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
+                    |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
+                    ...
 ...
 </code></pre>
 </div>

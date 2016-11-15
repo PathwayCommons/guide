@@ -288,20 +288,25 @@ The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunore
 Your directory should now contain the rank file.
 
 ```shell
-Documents
+home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-        |
-        |--- TCGAOV_data.rda
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
-        |
-        |--- TCGA-OV
-            |--- ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
 ...
 ```
 

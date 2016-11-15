@@ -60,18 +60,26 @@ This section describes how to perform a single run of GSEA using the expression 
 If you have been following along all of the workflow steps, you should have a directory structure similar to the following
 
 ```shell
-Documents
+home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-        |
-        |--- TCGAOV_data.rda
-        |
-        |--- Verhaak_JCI_2013_tableS1.txt
-        ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
+...
 ```
 
 
@@ -160,19 +168,27 @@ Launch the GSEA application. You will see the GSEA logo splash then the applicat
 You should now have a directory structure similar to the following
 
 ```shell
-Documents
+home
 |
-|--- data
-    |
-    |--- TCGA
-        |
-        |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
-        |
-        |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-        |
-        |--- TCGAOV_data.rda
-        |
-        ...
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    ...
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Verhaak_JCI_2013_tableS1.txt
+|   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- TCGAOV_data.rda
+|   |    |--- TCGAOV_se_datahtseq_counts.rda
+...
 ```
 
 In this part, we will load the necessary files into computer memory (Figure 4). We will tell GSEA what these files are in the next step for 'Settings'.
@@ -248,17 +264,17 @@ Users
         |--- output
             |
             |--- nov02
-            |
-            |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
                 |
-                |--- index.html
-                |--- pos_snapshot.html
-                |--- neg_snapshot.html
-                |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
-                |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
-                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
-                |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
-                ...
+                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
+                    |
+                    |--- index.html
+                    |--- pos_snapshot.html
+                    |--- neg_snapshot.html
+                    |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
+                    |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
+                    |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
+                    |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
+                    ...
 ...
 ```
 
