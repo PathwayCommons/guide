@@ -143,10 +143,6 @@ This database is updated periodically at the [Bader laboratory](http://www.bader
 
 ### 3. Software
 
-#### Java
-
-Install or upgrade to [Java 8](https://java.com/en/download/help/download_options.xml){:target="_blank"}.
-
 #### GSEA
 
 - [Register](http://software.broadinstitute.org/gsea/register.jsp){:target="_blank"}
