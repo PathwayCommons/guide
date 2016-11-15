@@ -285,6 +285,12 @@ Finally we write to file.
   {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 61 68 %}
 {% endhighlight %}
 
+<hr/>
+
+The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/visualize.R"
+  target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a>
 
 ### 4. Phenotypes
 
@@ -347,6 +353,12 @@ home
 |   |    |--- TCGAOV_se_datahtseq_counts.rda
 ...
 ```
+
+
+The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/visualize.R"
+  target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a>
 
 
 ### 5. Load files
