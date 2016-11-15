@@ -308,13 +308,13 @@ Documents
 <hr/>
 
 The preceding R code is presented in its entirety and available at Github
-<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc"
+<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R %}
 {% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
@@ -335,7 +335,7 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 | 10591   |  TAP1 | -26.92687699671 |
 
 
-The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc"
+The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>

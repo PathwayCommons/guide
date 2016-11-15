@@ -346,7 +346,7 @@ home
 <hr/>
 
 The preceding R code is presented in its entirety and available as a Github repo
-<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R"
+<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/get_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
@@ -361,7 +361,7 @@ File description: The TCGA-OV RNA-seq expression data (counts) and subtypes (gro
 
 <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> TCGAOV_data.rda</a>
 
-The R code and subtype designation file are available in Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/01442e4397c036c65da74563aa633f45d9a8117d/src/scripts/get_data.R"
+The R code and subtype designation file are available in Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/get_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
