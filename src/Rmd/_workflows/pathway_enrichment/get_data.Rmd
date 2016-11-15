@@ -265,7 +265,7 @@ home
 Load R/Bioconductor packages.
 
   {% highlight r %}
-    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 1 18 %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 1 18 %}
   {% endhighlight %}
 
 **Step 1: Query**
@@ -273,7 +273,7 @@ Load R/Bioconductor packages.
 The `GDCquery(...)` function allows us to search the GDC for data based on the filter restrictions we pass. These restrictions mirror those provided by the GDC data portal and web service API. In this case we are looking for unnormalized RNA-seq counts ('HTSeq - Counts') for the TCGA-OV project. We store the search results in the `query` data frame.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 19 26 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 19 26 %}
 {% endhighlight %}
 
 **Step 2: Download**
@@ -281,7 +281,7 @@ The `GDCquery(...)` function allows us to search the GDC for data based on the f
 The `GDCdownload(...)` function allows us to actually retrieve files based on the search results in step 1. We set `method=client` so that it uses the GDC Data Transfer Tool under the hood and declare a local directory (`TCGAOV_RNASEQ_DIR`) where the files should be saved.
 
   {% highlight r %}
-    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 28 32 %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 28 32 %}
   {% endhighlight %}
 
 > Note: These commands will trigger a download of the GDC Data Transfer Tool (gdc-client) and a manifest (gdc_manifest.txt) to your home directory.
@@ -294,7 +294,7 @@ The `GDCdownload(...)` function allows us to actually retrieve files based on th
 A bunch of data files isn't going to be much help to us. The goal of this step is to prepare the data by combining the data and metadata. `GDCprepare(...)` combines the downloaded file data into a single container, the [`SummarizedExperiment`](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html){:target="_blank"} (Figure 7) (Huber 2015). We will also save this container to an RData file (.rda) and keep the downloaded files.
 
   {% highlight r %}
-    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 34 41 %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 34 41 %}
   {% endhighlight %}
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
@@ -309,13 +309,13 @@ The `SummarizedExperiment` object containing the RNA-seq assay data and associat
 To this end, we use the `DEFormats` package function `DEGList(...)` to convert our SummarizedExperiment and integrate the subtypes. Note that we need to find the samples with an assigned subtype and subset accordingly.
 
   {% highlight r %}
-    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 42 64 %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 42 64 %}
   {% endhighlight %}
 
 The resulting `DGEList` called `TCGAOV_data` is saved as an RData file `TCGAOV_data.rda` for use in downstream differential expression analysis.
 
   {% highlight r %}
-    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R 64 66 %}
+    {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R 64 66 %}
   {% endhighlight %}
 
 <hr/>
@@ -352,7 +352,7 @@ The preceding R code is presented in its entirety and available as a Github repo
 </a>
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/get_data.R %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/c96b43b26e2a3445ca2bfe1a718ac4d8fff68082/src/scripts/get_data.R %}
 {% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
