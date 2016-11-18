@@ -21,9 +21,6 @@ figures:
   figure_12: figure_visualize_cytoscape_em_autoannotate_options.png
   figure_13: figure_visualize_cytoscape_em_autoannotate.png
   figure_14: figure_visualize_cytoscape_em_collapsed_scaled.png
-gists:
-  id: 3d8b9f03ae5ede35cfe9f25a04ff7ebf
-  file_1: visualize.R
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -138,18 +135,16 @@ home
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
-|   |    ...
+|   |    |--- visualize.R
 |   |
 |   |--- data
 |   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
 |   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 |   |
 |   |--- output
 |   |    |
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 ```
 
@@ -186,7 +181,7 @@ Users
 - [R](https://www.r-project.org/){:target="_blank"}: version 3.3.1
   - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"}: version 3.16.0
 
-**Run R inside Docker** (*Recommended*). To ease the burden of loading the R software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/e4735bc9d94b44259c432f11985cf0131629d53a){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files. You will still need to install Cytoscape.
+**Run R inside Docker** (*Recommended*). To ease the burden of loading the R software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files. The code below is contained in a script named `visualize.R`. You will still need to install Cytoscape.
 
 #### Cytoscape
 
@@ -251,38 +246,40 @@ The first line consists of column headings for a gene *NAME* and *DESCRIPTION* f
 
 #### Generate expression file
 
-[Previously]({{site.baseurl}}/workflows/pathway_enrichment/get_data/), the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable `TCGAOV_data` and saved to an RData file named 'TCGAOV_data.rda'.
+[Previously]({{site.baseurl}}/workflows/pathway_enrichment/get_data/), the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable `tcgaov_dge` and saved to an RData file named 'tcgaov_dge.RData'.
 
-<a href="{{ site.baseurl }}/{{ site.media_root }}/workflows/pathway_enrichment/get_data/TCGAOV_data.rda" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> TCGAOV_data.rda</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}/workflows/pathway_enrichment/get_data/tcgaov_dge.RData" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.RData</a>
 
-From `TCGAOV_data`, we will retrieve the expression data from the `counts` variable and the HGNC gene identifiers from the `genes` variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The `counts` variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.
+From `tcgaov_dge`, we will retrieve the expression data from the `counts` variable and the HGNC gene identifiers from the `genes` variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The `counts` variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.
 
 <hr/>
 
-Install and load the required R/Bioconductor packages. Declare the paths for files we wish to load and eventually write (i.e. expression and phenotypes). Then load the TCGA HGS-OvCa RNA-seq data in the DGEList variable `TCGAOV_data`.
+Install and load the required R/Bioconductor packages. Declare the paths for files we wish to load and eventually write (i.e. expression and phenotypes). Then load the TCGA HGS-OvCa RNA-seq data in the DGEList variable `tcgaov_dge`.
+
+> Note: The code below is contained in a script named `visualize.R`.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 1 21 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 1 15 %}
 {% endhighlight %}
 
 We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 23 39 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 16 30 %}
 {% endhighlight %}
 
-Our DGEList `TCGAOV_normalized_TMM` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
+Our DGEList `tcgaov_normalized_tmm` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 41 60 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 31 50 %}
 {% endhighlight %}
 
-Here we merge the `TCGAOV_normalized_TMM` data frame variable `genes` with the normalized data frame of expression values in `TCGAOV_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `TCGAOV_EM_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
+Here we merge the `tcgaov_normalized_tmm` data frame variable `genes` with the normalized data frame of expression values in `tcgaov_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `tcgaov_em_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
 
 Finally we write to file.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 61 68 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 51 60 %}
 {% endhighlight %}
 
 <hr/>
@@ -319,7 +316,7 @@ We will use a [ text format (.cls) ](http://software.broadinstitute.org/cancer/s
 We will continue where we left off last time.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/6e3de0cc218d1d62a23fb9ea30f94664da517dde/src/scripts/visualize.R 70 92 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 61 87 %}
 {% endhighlight %}
 
 <hr/>
@@ -337,11 +334,10 @@ home
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
-|   |    ...
+|   |    |--- visualize.R
 |   |
 |   |--- data
 |   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
 |   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 |   |
 |   |--- output
@@ -349,8 +345,7 @@ home
 |   |    |--- MesenchymalvsImmunoreactive_RNAseq_phenotype.cls
 |   |    |--- MesenchymalvsImmunoreactive_RNAseq_expression.txt
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 ```
 

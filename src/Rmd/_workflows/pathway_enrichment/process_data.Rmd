@@ -5,9 +5,6 @@ date: 2014-02-27
 layout: embedded
 category: pathway_enrichment
 order: 2
-gists:
-  id: 32c23ac64138c59b1a150987b023d57d
-  file_1: process_data.R
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
 figures:
@@ -30,23 +27,22 @@ knitr::opts_chunk$set(fig.retina=NULL,echo=FALSE,message=FALSE, warning=FALSE)
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  The list of differentially expressed genes in TCGA-OV for mesenchymal relative to immunoreative subtypes ranked by p-value is in <a href="#data">IV. Data</a>.
+  The list of differentially expressed genes in TCGA-OV for mesenchymal relative to immunoreative subtypes ranked by a function of p-value is in <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
-This section is a follow-up to the section describing how to get [The Cancer Genome Atlas](http://cancergenome.nih.gov/abouttcga/overview){:target="_blank"} (TCGA) RNA sequencing (RNA-seq) data from high-grade serous ovarian cancer (HGS-OvCa) (Cancer Genome Atlas Research Network 2011).
 
-In this section we will assess differential expression of RNA species between subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a probability value (p-value) suitable for downstream analysis (Figure 1).
+In this section we will assess differential expression of RNA species between HGS-OvCa expression subtypes. Our over-overarching goal is to generate a list of those expressed genes ranked according to a function of the probability value (p-value) (Figure 1).
 
 By then end of this discussion you should:
 
 1. Be able to use the [R](https://www.r-project.org/){:target="_blank"} package [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"} to test for differential expression
-2. Obtain a list of genes for TCGA HGS-OvCa ranked by a function of the p-value for differential expression
+2. Obtain a list of genes ranked by a function of p-value
 
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Goals.</strong> Steps required to process TCGA-OV RNA-seq data for differential expression between 'immunoreactive' and 'mesenchymal' subtypes. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the data is filtered for genes with a minimum number of counts. The filtered data is then normalized and fit to a statistical model in steps 2-3.  In step 4, p-values for differential expression between subtypes is assessed and adjusted for multiple testing in step 5. Finally, the genes are ordered based upon a function of the p-values.
+  <strong>Figure 1. Goals.</strong> Steps required to process TCGA-OV RNA-seq data for differential expression between 'immunoreactive' and 'mesenchymal' classes or 'subtypes'. Text to the right of arrows are functions provided as part of the R/Bioconductor packages. In step 1, the data is filtered for genes with a minimum number of counts. The filtered data is then normalized and fit to a statistical model in steps 2-3.  In step 4, p-values for differential expression between subtypes is assessed and adjusted for multiple testing in step 5. Finally, the genes are ordered based upon a function of the p-values.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -57,12 +53,12 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/e4735bc9d94b44259c432f11985cf0131629d53a){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b6162d0cbbc1678dadef23e6ac049d3019690eba){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
 **Run code on your computer**. You can run the R code on your own computer and will need the following files and software
 
-- RNA-seq assay and category information (from 'Get Data')
-  - [TCGAOV_data.rda]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
+- RNA-seq assay and phenotype information (from 'Get Data')
+  - [tcgaov_dge.RData]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
 - [R](https://www.r-project.org/){:target="_blank"}: >version 3.3.1
   - [Bioconductor](https://bioconductor.org){:target="_blank"}: >version 3.3
     - edgeR
@@ -79,14 +75,9 @@ home
 |   |    |--- get_data.R
 |   |    |--- process_data.R
 |   |
-|   |--- data
-|   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
-|   |
 |   |--- output
 |   |    |
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 ```
 
@@ -100,62 +91,61 @@ library("edgeR")
 library("pander")
 
 ### ============ Declare directories =========
-BASE_DIR <- getwd()
-TCGAOV_data_FILE <- file.path(BASE_DIR, "data", "TCGAOV_data.rda")
+base_dir <- getwd()
 
 ### ============ Declare samples =========
-CATEGORY_BASELINE = "Immunoreactive"
-CATEGORY_TEST = "Mesenchymal"
-TCGAOV_ranks_FILE = file.path(BASE_DIR,
-                              "MesenchymalvsImmunoreactive_edger_ranks.rnk")
+category_baseline <- "Immunoreactive"
+category_test<- "Mesenchymal"
 
-### ============ 0. Load DGEList =========
-load(TCGAOV_data_FILE)
+load(file.path(base_dir, "data", "tcgaov_dge.RData"))
 
 ### ============ 1. Filter ===============
-index_BASELINE = TCGAOV_data$samples$group == CATEGORY_BASELINE
-index_TEST = TCGAOV_data$samples$group == CATEGORY_TEST
-index_BASELINE_TEST = which(index_BASELINE | index_TEST)
-N_BASELINE = sum(index_BASELINE)
-N_TEST = sum(index_TEST)
-TCGAOV_data_BT = TCGAOV_data[,index_BASELINE_TEST]
+index_baseline <- tcgaov_dge$samples$group == category_baseline
+index_test <- tcgaov_dge$samples$group == category_test
+index_baseline_test <- which(index_baseline | index_test)
+tcgaov_dge_bt <- tcgaov_dge[,index_baseline_test]
 
-row_with_mincount = rowSums(cpm(TCGAOV_data_BT) > 10) >= min(N_BASELINE,
-                                                             N_TEST)
-TCGAOV_filtered = TCGAOV_data_BT[row_with_mincount, , keep.lib.sizes=FALSE]
+row_with_mincount <-
+  rowSums(cpm(tcgaov_dge_bt) > 10) >= min(sum(index_baseline), sum(index_test))
+tcgaov_filtered <- tcgaov_dge_bt[row_with_mincount, , keep.lib.sizes=FALSE]
+
 
 ### ============ 2. Normalize ===============
-TCGAOV_normalized_TMM = calcNormFactors(TCGAOV_filtered, method="TMM")
+tcgaov_normalized_tmm <- calcNormFactors(tcgaov_filtered, method = "TMM")
+
 
 ### ============ 3. Fit ===============
-TCGAOV_fitted_commondisp = estimateCommonDisp(TCGAOV_normalized_TMM)
-TCGAOV_fitted_tagwise = estimateTagwiseDisp(TCGAOV_fitted_commondisp)
+tcgaov_fitted_commondisp <- estimateCommonDisp(tcgaov_normalized_tmm)
+tcgaov_fitted_tagwise <- estimateTagwiseDisp(tcgaov_fitted_commondisp)
 
 ### ============ 4. Test ===============
-TCGAOV_DE = exactTest(TCGAOV_fitted_tagwise,
-                      pair=c(CATEGORY_BASELINE, CATEGORY_TEST))
+tcgaov_de <- exactTest(tcgaov_fitted_tagwise,
+                      pair = c(category_baseline, category_test))
+
 
 ### ============ 5. Adjust ===============
-TCGAOV_TT = topTags(TCGAOV_DE,
-                    n=nrow(TCGAOV_filtered),
-                    adjust.method="BH",
-                    sort.by="PValue")
+tcgaov_tt <- topTags(tcgaov_de,
+                     n = nrow(tcgaov_filtered),
+                     adjust.method = "BH",
+                     sort.by = "PValue")
+
+
 ```
 
 **Step 0: Installation and setup**
 
-Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `TCGAOV_data` from the previous section.
+Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `tcgaov_dge` from the previous section.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 1 21 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 2 15 %}
 {% endhighlight %}
 
-Set the `CATEGORY_TEST` to measure expression relative to `CATEGORY_BASELINE`.
+Gene expression will be measured in class `category_test` relative to class `category_baseline`.
 
-The DGEList contains an attribute `counts` which is a table identical to our input. The attribute `samples` is a table created with a column `lib.size` that states the total counts for the case.
+The DGEList contains a component `counts` which is a table identical to our input. The component `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
 ```{r results="asis"}
-pandoc.table(head(TCGAOV_data$samples, n=4)[,c('group', 'lib.size', 'norm.factors')],
+  pandoc.table(head(tcgaov_dge$samples, n=4)[,c('group', 'lib.size', 'norm.factors')],
  style = "rmarkdown",
  split.table = Inf)
 ```
@@ -164,7 +154,7 @@ pandoc.table(head(TCGAOV_data$samples, n=4)[,c('group', 'lib.size', 'norm.factor
 **Step 1: Filter**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 22 34 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 16 26 %}
 {% endhighlight %}
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
@@ -172,13 +162,13 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 **Step 2: Normalize**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 35 38 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 27 30 %}
 {% endhighlight %}
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
 ```{r results="asis"}
-pandoc.table(head(TCGAOV_normalized_TMM$samples, n=4)[,c('group', 'lib.size', 'norm.factors')],
+pandoc.table(head(tcgaov_normalized_tmm$samples, n=4)[,c('group', 'lib.size', 'norm.factors')],
  style = "rmarkdown",
  split.table = Inf)
 ```
@@ -199,27 +189,28 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 **Step 3: Fit**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 39 42 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 31 35 %}
 {% endhighlight %}
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
 
 ```{r, echo=TRUE}
-names(TCGAOV_fitted_commondisp)
+names(tcgaov_fitted_commondisp)
 ```
 
 `estimateTagwiseDisp` estimates the dispersion for each gene and adds the list `tagwise.dispersion` to DGEList.
 
 ```{r, echo=TRUE}
-names(TCGAOV_fitted_tagwise)
+names(tcgaov_fitted_tagwise)
 ```
 
 Let us take a look at the data we've generated. Below we plot the common dispersion (red) and per-gene dispersions estimates. Next up are the variances compared to those expected with a Poisson model (line) demonstrating the inflation due to biological sources.
 
 ```{r, echo=TRUE, out.width = 400, fig.align="center"}
 ### ============ Plotting ===============
-plotBCV(TCGAOV_fitted_tagwise)
-plotMeanVar(TCGAOV_fitted_tagwise, show.tagwise.vars=TRUE, NBline = TRUE)
+###  Plotting BCV
+plotBCV(tcgaov_fitted_tagwise)
+plotMeanVar(tcgaov_fitted_tagwise, show.tagwise.vars=TRUE, NBline = TRUE)
 ```
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression){:target="_blank"}, $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
@@ -227,7 +218,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 **Step 4: Test**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 48 51 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 40 43 %}
 {% endhighlight %}
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
@@ -237,7 +228,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
 ```{r results="asis"}
-pandoc.table(head(TCGAOV_DE$table, n=4),
+pandoc.table(head(tcgaov_de$table, n=4),
  style = "rmarkdown",
  split.table = Inf)
 ```
@@ -247,7 +238,7 @@ pandoc.table(head(TCGAOV_DE$table, n=4),
 **Step 5: Adjust**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 52 57 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 44 50 %}
 {% endhighlight %}
 
 
@@ -255,7 +246,7 @@ The function `topTags` takes the output from `exactTest` and uses the [Bejamini-
 
 
 ```{r results="asis"}
-pandoc.table(head(TCGAOV_TT$table[,c('logFC','logCPM','PValue','FDR')], n=4),
+pandoc.table(head(tcgaov_tt$table[,c('logFC','logCPM','PValue','FDR')], n=4),
  style = "rmarkdown",
  split.table = Inf)
 ```
@@ -265,15 +256,15 @@ We can now plot our differentially expressed genes (red) over our full data.
 
 ```{r, out.width = 500, fig.retina = NULL, fig.align="center", echo=TRUE, message=FALSE, warning=FALSE}
 ### ============ Plotting ===============
-rn = rownames(TCGAOV_TT$table)
-deg =rn[TCGAOV_TT$table$FDR<0.05]
-plotSmear(TCGAOV_filtered, pair=c(CATEGORY_BASELINE, CATEGORY_TEST), de.tags=deg)
+rn = rownames(tcgaov_tt$table)
+deg =rn[tcgaov_tt$table$FDR<0.05]
+plotSmear(tcgaov_filtered, pair=c(category_baseline, category_test), de.tags=deg)
 ```
 
 **Step 6: Rank**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 64 69 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 56 62 %}
 {% endhighlight %}
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
@@ -282,7 +273,7 @@ Set the gene name from the Ensembl gene ID to the `external_gene_name` which is 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/e4735bc9d94b44259c432f11985cf0131629d53a/src/scripts/process_data.R 71 78 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 63 71 %}
 {% endhighlight %}
 
 Your directory should now contain the rank file.
@@ -298,15 +289,10 @@ home
 |   |    |--- process_data.R
 |   |    ...
 |   |
-|   |--- data
-|   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
-|   |
 |   |--- output
 |   |    |
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
 |   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
 ...
 ```
 

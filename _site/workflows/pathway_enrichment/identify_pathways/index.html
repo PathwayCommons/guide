@@ -104,7 +104,7 @@
 
 <h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
 
-<p>In this section we discuss the use of <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to identify pathways enriched in an  gene lists arising from a differential gene expression analysis (Figure 1). By then end of this discussion you should:</p>
+<p>In this section we discuss the use of <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to identify pathways enriched in gene lists arising from a differential gene expression analysis (Figure 1). By then end of this discussion you should:</p>
 
 <ol>
   <li>Be able to set up the required GSEA software</li>
@@ -143,15 +143,10 @@
 |   |    |--- process_data.R
 |   |    ...
 |   |
-|   |--- data
-|   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
-|   |
 |   |--- output
 |   |    |
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 </code></pre>
 </div>
@@ -297,7 +292,7 @@
 
 <h3 id="load-files">4. Load files</h3>
 
-<p>You should now have a directory structure similar to the following</p>
+<p>Let us assume you have moved the gene sets file to a <code class="highlighter-rouge">data</code> directory, then you should now have a directory structure similar to the following</p>
 
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
 |
@@ -311,14 +306,12 @@
 |   |
 |   |--- data
 |   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
 |   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 |   |
 |   |--- output
 |   |    |
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 </code></pre>
 </div>
@@ -454,7 +447,7 @@
 
 <p>There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates up-regulation in the second phenotype.</p>
 
-<p>Recall that in our section <a href="/guide/workflows/pathway_enrichment/process_data/#practical">Process Data (Step 4)</a> we assessed gene expression in the ‘Mesenchymal’ subtype relative to the ‘Immunoreactive’ subtype. Consequently, in our case, the ‘na_pos’ phenotype corresponds to the ‘mesenchymal’ subtype and ‘na_neg’ refers to the ‘immunoreactive’ subtype.</p>
+<p>Recall that in our section <a href="/guide/workflows/pathway_enrichment/process_data/#practical" target="_blank">Process Data (Step 4)</a>  we assessed gene expression in the ‘Mesenchymal’ subtype relative to the ‘Immunoreactive’ subtype. Consequently, in our case, the ‘na_pos’ phenotype corresponds to the ‘mesenchymal’ subtype and ‘na_neg’ refers to the ‘immunoreactive’ subtype.</p>
 
 <p><strong>Snapshot</strong> of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores (GSEA results folder for <code class="highlighter-rouge">pos_snapshot.html</code> and <code class="highlighter-rouge">neg_snapshot.html</code>).</p>
 

@@ -264,18 +264,16 @@
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
-|   |    ...
+|   |    |--- visualize.R
 |   |
 |   |--- data
 |   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
 |   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 |   |
 |   |--- output
 |   |    |
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 </code></pre>
 </div>
@@ -320,7 +318,7 @@
   </li>
 </ul>
 
-<p><strong>Run R inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the R software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/e4735bc9d94b44259c432f11985cf0131629d53a" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files. You will still need to install Cytoscape.</p>
+<p><strong>Run R inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the R software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files. The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>. You will still need to install Cytoscape.</p>
 
 <h4 id="cytoscape">Cytoscape</h4>
 
@@ -418,92 +416,87 @@
 
 <h4 id="generate-expression-file">Generate expression file</h4>
 
-<p><a href="/guide/workflows/pathway_enrichment/get_data/">Previously</a>, the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable <code class="highlighter-rouge">TCGAOV_data</code> and saved to an RData file named ‘TCGAOV_data.rda’.</p>
+<p><a href="/guide/workflows/pathway_enrichment/get_data/">Previously</a>, the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable <code class="highlighter-rouge">tcgaov_dge</code> and saved to an RData file named ‘tcgaov_dge.RData’.</p>
 
-<p><a href="/guide/media/workflows/pathway_enrichment/get_data/TCGAOV_data.rda" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> TCGAOV_data.rda</a></p>
+<p><a href="/guide/media/workflows/pathway_enrichment/get_data/tcgaov_dge.RData" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.RData</a></p>
 
-<p>From <code class="highlighter-rouge">TCGAOV_data</code>, we will retrieve the expression data from the <code class="highlighter-rouge">counts</code> variable and the HGNC gene identifiers from the <code class="highlighter-rouge">genes</code> variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The <code class="highlighter-rouge">counts</code> variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.</p>
+<p>From <code class="highlighter-rouge">tcgaov_dge</code>, we will retrieve the expression data from the <code class="highlighter-rouge">counts</code> variable and the HGNC gene identifiers from the <code class="highlighter-rouge">genes</code> variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The <code class="highlighter-rouge">counts</code> variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.</p>
 
 <hr />
 
-<p>Install and load the required R/Bioconductor packages. Declare the paths for files we wish to load and eventually write (i.e. expression and phenotypes). Then load the TCGA HGS-OvCa RNA-seq data in the DGEList variable <code class="highlighter-rouge">TCGAOV_data</code>.</p>
+<p>Install and load the required R/Bioconductor packages. Declare the paths for files we wish to load and eventually write (i.e. expression and phenotypes). Then load the TCGA HGS-OvCa RNA-seq data in the DGEList variable <code class="highlighter-rouge">tcgaov_dge</code>.</p>
+
+<blockquote>
+  <p>Note: The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>.</p>
+</blockquote>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ Install packages from Bioconductor ========
-</span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
+
+<span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
-</span><span class="n">BASE_DIR</span> <span class="o">=</span> <span class="s2">"/home/TCGA"</span> <span class="c1"># same as volumes in docker-compose.yml
-</span><span class="n">TCGAOV_DATA_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
-<span class="n">TCGAOV_OUTPUT_DIR</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
-
-<span class="n">TCGAOV_DGE_OUTPUT_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">TCGAOV_OUTPUT_DIR</span><span class="p">,</span> <span class="s2">"TCGAOV_data.rda"</span><span class="p">)</span>
-<span class="n">TCGAOV_EM_EXPRESSION_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span>
-                    <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_expression.txt"</span><span class="p">)</span>
-<span class="n">TCGAOV_EM_PHENOTYPE_FILE</span> <span class="o">=</span> <span class="n">file.path</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span>
-                    <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_phenotype.cls"</span><span class="p">)</span>
+</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
+<span class="n">tcgaov_data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
+<span class="n">tcgaov_output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare samples =========
-</span><span class="n">CATEGORY_BASELINE</span> <span class="o">=</span> <span class="s2">"Immunoreactive"</span>
-<span class="n">CATEGORY_TEST</span> <span class="o">=</span> <span class="s2">"Mesenchymal"</span>
+</span><span class="n">category_baseline</span> <span class="o">&lt;-</span> <span class="s2">"Immunoreactive"</span>
+<span class="n">category_test</span> <span class="o">&lt;-</span> <span class="s2">"Mesenchymal"</span>
 
-<span class="c1">### ============ Load DGEList  =========
-</span><span class="n">load</span><span class="p">(</span><span class="n">TCGAOV_data_FILE</span><span class="p">)</span></code></pre></figure>
+<span class="n">load</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.RData"</span><span class="p">))</span></code></pre></figure>
 
 <p>We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ Filter and Normalize ===============
-</span><span class="n">index_BASELINE</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_BASELINE</span>
-<span class="n">index_TEST</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">CATEGORY_TEST</span>
-<span class="n">index_BASELINE_TEST</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="n">index_BASELINE</span> <span class="o">|</span> <span class="n">index_TEST</span><span class="p">)</span>
-<span class="n">N_BASELINE</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_BASELINE</span><span class="p">)</span>
-<span class="n">N_TEST</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_TEST</span><span class="p">)</span>
+<span class="c1">### ============ 1. Filter ===============
+</span><span class="n">index_baseline</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_baseline</span>
+<span class="n">index_test</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_test</span>
+<span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
+<span class="n">tcgaov_dge_bt</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="p">[,</span><span class="n">index_baseline_test</span><span class="p">]</span>
 
-<span class="c1">### Subset DGEList for (B)ASELINE and (T)EST samples
-</span><span class="n">TCGAOV_data_BT</span> <span class="o">=</span> <span class="n">TCGAOV_data</span><span class="p">[,</span><span class="n">index_BASELINE_TEST</span><span class="p">]</span>
+<span class="n">row_with_mincount</span> <span class="o">&lt;-</span> 
+  <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_dge_bt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test</span><span class="p">))</span>
+<span class="n">tcgaov_filtered</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge_bt</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
 
-<span class="c1">### Filter based on gene counts
-</span><span class="n">row_with_mincount</span> <span class="o">=</span> <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">TCGAOV_data_BT</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">N_BASELINE</span><span class="p">,</span>
-                                                          <span class="n">N_TEST</span><span class="p">)</span>
 
-<span class="n">TCGAOV_filtered</span> <span class="o">=</span> <span class="n">TCGAOV_data_BT</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
-<span class="n">TCGAOV_normalized_TMM</span> <span class="o">=</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">TCGAOV_filtered</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
+<span class="c1">### ============ 2. Normalize ===============
+</span><span class="n">tcgaov_normalized_tmm</span> <span class="o">&lt;-</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">tcgaov_filtered</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
 
-<p>Our DGEList <code class="highlighter-rouge">TCGAOV_normalized_TMM</code> has a variable <code class="highlighter-rouge">genes</code> where we can retrieve the HGNC IDs (column <code class="highlighter-rouge">external_gene_name</code>) assign to the ‘NAME’ field; We will assign the Ensembl IDs (column <code class="highlighter-rouge">ensembl_gene_id</code>) to ‘DESCRIPTION’ (Table 1).</p>
+<p>Our DGEList <code class="highlighter-rouge">tcgaov_normalized_tmm</code> has a variable <code class="highlighter-rouge">genes</code> where we can retrieve the HGNC IDs (column <code class="highlighter-rouge">external_gene_name</code>) assign to the ‘NAME’ field; We will assign the Ensembl IDs (column <code class="highlighter-rouge">ensembl_gene_id</code>) to ‘DESCRIPTION’ (Table 1).</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
 <span class="c1">### ============ Format expression  ===============
 ### Work with normalized counts per million (CPM)
-</span><span class="n">TCGAOV_counts_cpm</span> <span class="o">&lt;-</span> <span class="n">cpm</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="p">,</span> <span class="n">normalized.lib.size</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+</span><span class="n">tcgaov_counts_cpm</span> <span class="o">&lt;-</span> <span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="p">,</span> <span class="n">normalized.lib.size</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
 
 <span class="c1">### Merge the DGEList variables 'genes' and 'counts' (as data.frame)
-</span><span class="n">TCGAOV_merged</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="o">$</span><span class="n">genes</span><span class="p">,</span>
-                      <span class="n">data.frame</span><span class="p">(</span><span class="n">TCGAOV_counts_cpm</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
+</span><span class="n">tcgaov_merged</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="o">$</span><span class="n">genes</span><span class="p">,</span>
+                      <span class="n">data.frame</span><span class="p">(</span><span class="n">tcgaov_counts_cpm</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
                       <span class="n">by</span><span class="o">=</span><span class="s2">"row.names"</span><span class="p">,</span>
                       <span class="n">all</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
 
 <span class="c1">### Data frame: 'external_gene_name', 'ensembl_gene_id' and sample IDs
-</span><span class="n">TCGAOV_EM_expression</span> <span class="o">=</span> <span class="n">cbind</span><span class="p">(</span><span class="n">TCGAOV_merged</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'external_gene_name'</span><span class="p">,</span>
+</span><span class="n">tcgaov_em_expression</span> <span class="o">&lt;-</span> <span class="n">cbind</span><span class="p">(</span><span class="n">tcgaov_merged</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'external_gene_name'</span><span class="p">,</span>
                                               <span class="s1">'ensembl_gene_id'</span><span class="p">)],</span>
-                             <span class="n">TCGAOV_merged</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">8</span><span class="p">)])</span>
+                             <span class="n">tcgaov_merged</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">9</span><span class="p">)])</span>
 
 <span class="c1">### Rename columns
-</span><span class="n">colnames</span><span class="p">(</span><span class="n">TCGAOV_EM_expression</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"NAME"</span>
-<span class="n">colnames</span><span class="p">(</span><span class="n">TCGAOV_EM_expression</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"DESCRIPTION"</span></code></pre></figure>
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"NAME"</span>
+<span class="n">colnames</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"DESCRIPTION"</span></code></pre></figure>
 
-<p>Here we merge the <code class="highlighter-rouge">TCGAOV_normalized_TMM</code> data frame variable <code class="highlighter-rouge">genes</code> with the normalized data frame of expression values in <code class="highlighter-rouge">TCGAOV_counts_cpm</code>. The <code class="highlighter-rouge">genes</code> variable has extra columns so we punt these in the final data frame <code class="highlighter-rouge">TCGAOV_EM_expression</code>. The ‘NAME’ and ‘DESCRIPTION’ column headers are subtituted in the final container.</p>
+<p>Here we merge the <code class="highlighter-rouge">tcgaov_normalized_tmm</code> data frame variable <code class="highlighter-rouge">genes</code> with the normalized data frame of expression values in <code class="highlighter-rouge">tcgaov_counts_cpm</code>. The <code class="highlighter-rouge">genes</code> variable has extra columns so we punt these in the final data frame <code class="highlighter-rouge">tcgaov_em_expression</code>. The ‘NAME’ and ‘DESCRIPTION’ column headers are subtituted in the final container.</p>
 
 <p>Finally we write to file.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
 <span class="c1">### Write
-</span><span class="n">write.table</span><span class="p">(</span><span class="n">TCGAOV_EM_expression</span><span class="p">,</span>
-            <span class="n">TCGAOV_EM_EXPRESSION_FILE</span><span class="p">,</span>
-            <span class="n">col.name</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span>
-            <span class="n">sep</span><span class="o">=</span><span class="s2">"\t"</span><span class="p">,</span>
-            <span class="n">row.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
-            <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+</span><span class="n">write.table</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">,</span>
+            <span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span>
+              <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_expression.txt"</span><span class="p">),</span>
+            <span class="n">col.name</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
+            <span class="n">row.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
+            <span class="n">quote</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
 
 <hr />
 
@@ -557,24 +550,27 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
 <span class="c1">### ============ Format phenotypes  ===============
 ### Get the 'Mesenchymal' and 'Immunoreactive'
-</span><span class="n">N_samples</span> <span class="o">=</span> <span class="n">dim</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
-<span class="n">N_classes</span> <span class="o">=</span> <span class="m">2</span>
+</span><span class="n">n_samples</span> <span class="o">&lt;-</span> <span class="n">dim</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">n_classes</span> <span class="o">&lt;-</span> <span class="m">2</span>
+
+<span class="n">tcgaov_em_phenotype_file</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span>
+  <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_phenotype.cls"</span><span class="p">)</span>
 
 <span class="c1">### No. samples, No. classes, 1
-</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">N_samples</span><span class="p">,</span> <span class="n">N_classes</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">TCGAOV_EM_PHENOTYPE_FILE</span><span class="p">,</span>
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
     <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
     <span class="n">append</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
 
 <span class="c1">### Class label names
-</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="n">CATEGORY_BASELINE</span><span class="p">,</span> <span class="n">CATEGORY_TEST</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">TCGAOV_EM_PHENOTYPE_FILE</span><span class="p">,</span>
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="n">category_baseline</span><span class="p">,</span> <span class="n">category_test</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
     <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
     <span class="n">append</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
 
 <span class="c1">### Sample class labels
-</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">TCGAOV_normalized_TMM</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">),</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">TCGAOV_EM_PHENOTYPE_FILE</span><span class="p">,</span>
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
     <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
     <span class="n">append</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></figure>
 
@@ -590,11 +586,10 @@
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
-|   |    ...
+|   |    |--- visualize.R
 |   |
 |   |--- data
 |   |    |
-|   |    |--- Verhaak_JCI_2013_tableS1.txt
 |   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 |   |
 |   |--- output
@@ -602,8 +597,7 @@
 |   |    |--- MesenchymalvsImmunoreactive_RNAseq_phenotype.cls
 |   |    |--- MesenchymalvsImmunoreactive_RNAseq_expression.txt
 |   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
-|   |    |--- TCGAOV_data.rda
-|   |    |--- TCGAOV_se_datahtseq_counts.rda
+|   |    |--- tcgaov_dge.RData
 ...
 </code></pre>
 </div>
