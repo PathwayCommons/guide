@@ -318,7 +318,7 @@
   </li>
 </ul>
 
-<p><strong>Run R inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the R software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files. The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>. You will still need to install Cytoscape.</p>
+<p><strong>Run R inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the R software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files. The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>. You will still need to install Cytoscape.</p>
 
 <h4 id="cytoscape">Cytoscape</h4>
 
@@ -435,7 +435,7 @@
 <span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
-</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
+</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="s2">"/home/TCGA"</span>
 <span class="n">tcgaov_data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
 <span class="n">tcgaov_output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
 
@@ -454,7 +454,7 @@
 <span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
 <span class="n">tcgaov_dge_bt</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="p">[,</span><span class="n">index_baseline_test</span><span class="p">]</span>
 
-<span class="n">row_with_mincount</span> <span class="o">&lt;-</span> 
+<span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
   <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_dge_bt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test</span><span class="p">))</span>
 <span class="n">tcgaov_filtered</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge_bt</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
 
@@ -472,8 +472,8 @@
 <span class="c1">### Merge the DGEList variables 'genes' and 'counts' (as data.frame)
 </span><span class="n">tcgaov_merged</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="o">$</span><span class="n">genes</span><span class="p">,</span>
                       <span class="n">data.frame</span><span class="p">(</span><span class="n">tcgaov_counts_cpm</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
-                      <span class="n">by</span><span class="o">=</span><span class="s2">"row.names"</span><span class="p">,</span>
-                      <span class="n">all</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
+                      <span class="n">by</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span>
+                      <span class="n">all</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
 
 <span class="c1">### Data frame: 'external_gene_name', 'ensembl_gene_id' and sample IDs
 </span><span class="n">tcgaov_em_expression</span> <span class="o">&lt;-</span> <span class="n">cbind</span><span class="p">(</span><span class="n">tcgaov_merged</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'external_gene_name'</span><span class="p">,</span>

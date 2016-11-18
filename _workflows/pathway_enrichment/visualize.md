@@ -181,7 +181,7 @@ Users
 - [R](https://www.r-project.org/){:target="_blank"}: version 3.3.1
   - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html){:target="_blank"}: version 3.16.0
 
-**Run R inside Docker** (*Recommended*). To ease the burden of loading the R software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files. The code below is contained in a script named `visualize.R`. You will still need to install Cytoscape.
+**Run R inside Docker** (*Recommended*). To ease the burden of loading the R software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files. The code below is contained in a script named `visualize.R`. You will still need to install Cytoscape.
 
 #### Cytoscape
 
@@ -259,19 +259,19 @@ Install and load the required R/Bioconductor packages. Declare the paths for fil
 > Note: The code below is contained in a script named `visualize.R`.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 1 15 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 1 15 %}
 {% endhighlight %}
 
 We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 16 30 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 16 30 %}
 {% endhighlight %}
 
 Our DGEList `tcgaov_normalized_tmm` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 31 50 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 31 50 %}
 {% endhighlight %}
 
 Here we merge the `tcgaov_normalized_tmm` data frame variable `genes` with the normalized data frame of expression values in `tcgaov_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `tcgaov_em_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
@@ -279,7 +279,7 @@ Here we merge the `tcgaov_normalized_tmm` data frame variable `genes` with the n
 Finally we write to file.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 51 60 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 51 60 %}
 {% endhighlight %}
 
 <hr/>
@@ -316,7 +316,7 @@ We will use a [ text format (.cls) ](http://software.broadinstitute.org/cancer/s
 We will continue where we left off last time.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b0c4a8a2e06f67e9fc0d3a3005ce94058e37bbf5/src/scripts/visualize.R 61 87 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 61 87 %}
 {% endhighlight %}
 
 <hr/>

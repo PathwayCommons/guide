@@ -53,7 +53,7 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b6162d0cbbc1678dadef23e6ac049d3019690eba){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
 **Run code on your computer**. You can run the R code on your own computer and will need the following files and software
 
@@ -137,7 +137,7 @@ tcgaov_tt <- topTags(tcgaov_de,
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `tcgaov_dge` from the previous section.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 2 15 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 2 15 %}
 {% endhighlight %}
 
 Gene expression will be measured in class `category_test` relative to class `category_baseline`.
@@ -154,7 +154,7 @@ The DGEList contains a component `counts` which is a table identical to our inpu
 **Step 1: Filter**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 16 26 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 16 26 %}
 {% endhighlight %}
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
@@ -162,7 +162,7 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 **Step 2: Normalize**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 27 30 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 27 30 %}
 {% endhighlight %}
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
@@ -189,7 +189,7 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 **Step 3: Fit**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 31 35 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 31 35 %}
 {% endhighlight %}
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
@@ -218,7 +218,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 **Step 4: Test**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 40 43 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 40 43 %}
 {% endhighlight %}
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
@@ -238,7 +238,7 @@ pandoc.table(head(tcgaov_de$table, n=4),
 **Step 5: Adjust**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 44 50 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 44 50 %}
 {% endhighlight %}
 
 
@@ -264,7 +264,7 @@ plotSmear(tcgaov_filtered, pair=c(category_baseline, category_test), de.tags=deg
 **Step 6: Rank**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 56 62 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 56 62 %}
 {% endhighlight %}
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
@@ -273,7 +273,7 @@ Set the gene name from the Ensembl gene ID to the `external_gene_name` which is 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/b6162d0cbbc1678dadef23e6ac049d3019690eba/src/scripts/process_data.R 63 71 %}
+  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 63 71 %}
 {% endhighlight %}
 
 Your directory should now contain the rank file.

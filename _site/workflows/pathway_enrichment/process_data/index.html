@@ -133,7 +133,7 @@
 
 <h3 id="software-requirements">Software requirements</h3>
 
-<p><strong>Run inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the correct software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/b6162d0cbbc1678dadef23e6ac049d3019690eba" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
+<p><strong>Run inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the correct software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
 
 <p><strong>Run code on your computer</strong>. You can run the R code on your own computer and will need the following files and software</p>
 
@@ -183,7 +183,7 @@
 </span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
-</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
+</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="s2">"/home/TCGA"</span>
 <span class="n">tcgaov_output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare samples =========
@@ -242,7 +242,7 @@
 <span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
 <span class="n">tcgaov_dge_bt</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="p">[,</span><span class="n">index_baseline_test</span><span class="p">]</span>
 
-<span class="n">row_with_mincount</span> <span class="o">&lt;-</span> 
+<span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
   <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_dge_bt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test</span><span class="p">))</span>
 <span class="n">tcgaov_filtered</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge_bt</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span></code></pre></figure>
 
@@ -514,7 +514,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 </span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
-</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
+</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="s2">"/home/TCGA"</span>
 <span class="n">tcgaov_output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare samples =========
@@ -530,7 +530,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 <span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
 <span class="n">tcgaov_dge_bt</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="p">[,</span><span class="n">index_baseline_test</span><span class="p">]</span>
 
-<span class="n">row_with_mincount</span> <span class="o">&lt;-</span> 
+<span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
   <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_dge_bt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test</span><span class="p">))</span>
 <span class="n">tcgaov_filtered</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge_bt</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
 
