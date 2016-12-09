@@ -78,14 +78,11 @@ p {
 /*
 * Embedded_wrapper layout
 */
-@media (min-width: 1025px) {
+// @media (min-width: 1025px) {
+@media (min-width: 1400px) {
   .embedded_wrapper.container {
-    margin-left: $container-margin-left;
+    // margin-left: $container-margin-left;
   }
-  .container.embedded {
-      max-width: $container-max-width;
-      margin:auto auto;
-    }
 }
 /*
 * Embedded layout
