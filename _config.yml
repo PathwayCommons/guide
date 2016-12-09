@@ -4,6 +4,7 @@ title:               Guide
 tagline:             'Training Resources'
 description:         'Guide'
 baseurl:             /guide
+domain:              'http://pathwaycommons.github.io/'
 
 # About/contact
 author:

@@ -14,6 +14,7 @@ figures:
   table_2: table_2.jpg
   figure_3: figure_3.jpg
   figure_4: figure_bh_indices.jpg
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents

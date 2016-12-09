@@ -21,6 +21,7 @@ figures:
   figure_12: figure_visualize_cytoscape_em_autoannotate_options.png
   figure_13: figure_visualize_cytoscape_em_autoannotate.png
   figure_14: figure_visualize_cytoscape_em_collapsed_scaled.png
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents

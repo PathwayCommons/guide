@@ -1,12 +1,13 @@
 ---
-title: Definitions 
+title: Definitions
 layout: markdown
 category: statistics
+comments: true
 ---
 
-## <a href="#probability" name="probability">Probability</a>  
+## <a href="#probability" name="probability">Probability</a>
 
-The **sample space** (denoted $$S$$) is defined as the set of all possible distinct outcomes or "events" of an experiment. Using this perspective, a classic idea about 'probability' is    
+The **sample space** (denoted $$S$$) is defined as the set of all possible distinct outcomes or "events" of an experiment. Using this perspective, a classic idea about 'probability' is
 
 $$\frac{ \text{number of ways the event can occur} }{ \text{number of outcomes in S }}$$
 
@@ -26,7 +27,7 @@ provided all points in $$S$$ are equally likely.
 ***
 <br/>
 
-## <a href="#randomVariables" name="randomVariables">Random Variables</a> 
+## <a href="#randomVariables" name="randomVariables">Random Variables</a>
 
 A random variable is a numerical-valued variable that represents the outcomes in an experiment or random process. Typically, random variables are denoted by an upper-case letter such as $$X$$. The corresponding lower case letter is often reserved to refer to one of a number of possible values that the random variable can take on. For example, if a coin is tossed 3 times then
 
@@ -39,7 +40,7 @@ $$x=\{1, 2, 3\}$$
 ***
 <br/>
 
-## <a href="#probabilityFunction" name="probabilityFunction">Probability Function</a> 
+## <a href="#probabilityFunction" name="probabilityFunction">Probability Function</a>
 
 One type of desired description of a random variable is a summary for how probability is distributed amongst the possible values a random variable can take on.
 
@@ -51,13 +52,13 @@ The pairs $$\{(x, f(x)):x \in A\}$$ is collectively the **probability distributi
 
 (1) $$f(x)\geq0$$
 
-(2) $$\sum_\limits{x \in A}f(x)=1$$ 
+(2) $$\sum_\limits{x \in A}f(x)=1$$
 
-## <a href="#distributionFunction" name="distributionFunction">Distribution Function</a> 
+## <a href="#distributionFunction" name="distributionFunction">Distribution Function</a>
 
 An alternative to the probability distribution for describing a probability model is the **cumulative distribution function** or simply the **distribution function**.
 
-**Definition** The **distribution function** of a random variable $$X$$ is 
+**Definition** The **distribution function** of a random variable $$X$$ is
 
 $$F(x)=P(X\leq x)\text{, for all x in the domain A }$$
 

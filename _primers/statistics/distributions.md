@@ -8,14 +8,15 @@ output:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 category: statistics
 layout: markdown
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric distribution](#hypergeometric)
   - {:.list-unstyled} [II. Binomial distribution](#binomial)
   - {:.list-unstyled} [III. Poisson distribution](#Poisson)
-  - {:.list-unstyled} [IV. Gamma distribution ](#gamma)  
-  - {:.list-unstyled} [IV. Negative binomial distribution](#negativeBinomial)  
+  - {:.list-unstyled} [IV. Gamma distribution ](#gamma)
+  - {:.list-unstyled} [IV. Negative binomial distribution](#negativeBinomial)
 <hr/>
 
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a>
@@ -79,17 +80,6 @@ data <- data.frame( x = aces, y = probability )
 
 # Bar plot
 library(ggplot2)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Warning: package 'ggplot2' was built under R version 3.2.3
-{% endhighlight %}
-
-
-
-{% highlight r %}
 ggplot(data, aes(x=factor(x), y=y)) +
   theme(axis.text=element_text(size=14),
         axis.title=element_text(size=18,face="bold"),
@@ -368,7 +358,7 @@ Let $$\epsilon$$ follow a gamma distribution with shape $$\alpha$$ and scale $$\
 
 $$
 \begin{equation*}
-    g(\epsilon) = \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}   
+    g(\epsilon) = \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}
 \end{equation*}
 $$
 
@@ -389,7 +379,7 @@ $$
   \begin{split}
     P(X=x) &= \int_{0}^\infty \frac{(\mu\epsilon)^x}{x!}e^{- \mu\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon} d\epsilon\\
 
-    &= \frac{\mu^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon\\    
+    &= \frac{\mu^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon\\
   \end{split}
 \end{equation*}
 $$
@@ -418,8 +408,8 @@ From the moments of the negative binomial stated above, the mean is
 $$
 \begin{equation*}
   \begin{split}
-    E[X] &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right) \alpha\\    
-         &= \frac{\alpha}{\beta} \mu\\    
+    E[X] &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right) \alpha\\
+         &= \frac{\alpha}{\beta} \mu\\
   \end{split}
 \end{equation*}
 $$
@@ -429,8 +419,8 @@ The variance is
 $$
 \begin{equation*}
   \begin{split}
-    Var(X) &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right)^2 \alpha\\    
-         &= \frac{\alpha \mu}{\beta} \left(1 + \frac{\mu}{\beta} \right)\\    
+    Var(X) &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right)^2 \alpha\\
+         &= \frac{\alpha \mu}{\beta} \left(1 + \frac{\mu}{\beta} \right)\\
   \end{split}
 \end{equation*}
 $$
@@ -444,7 +434,7 @@ $$
   \begin{split}
     Y &\sim NB(\mu, \phi^{-1})\\
     f(y; \mu,\phi^{-1}) &=  \frac{\Gamma(y+\phi^{-1})}{\Gamma(y+1)\Gamma(\phi^{-1})} \left(\frac{\mu}{\phi^{-1} + \mu} \right)^y
-     \left(\frac{\phi^{-1}}{\phi^{-1} + \mu} \right)^{\phi^{-1}} \\    
+     \left(\frac{\phi^{-1}}{\phi^{-1} + \mu} \right)^{\phi^{-1}} \\
   \end{split}
 \end{equation*}
 $$
@@ -453,9 +443,9 @@ From the above discussion, we can restate the mean and variance.
 
 $$
 \begin{equation*}
-  \begin{split}  
-    E[Y] &= \mu\\    
-    Var(Y) &= \mu + \phi\mu^2\\    
+  \begin{split}
+    E[Y] &= \mu\\
+    Var(Y) &= \mu + \phi\mu^2\\
   \end{split}
 \end{equation*}
 $$

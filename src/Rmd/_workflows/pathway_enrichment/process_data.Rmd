@@ -10,6 +10,7 @@ data:
 figures:
   figure_1: figure_processdata_overview.jpg
   figure_2: ranks_layout.png
+comments: true
 ---
 
 <!-- Global options -->

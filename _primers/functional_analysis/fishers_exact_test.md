@@ -13,6 +13,7 @@ figures:
   figure_1: figure_1.jpg
   figure_2: figure_2.jpg
   figure_3: figure_3.jpg
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents

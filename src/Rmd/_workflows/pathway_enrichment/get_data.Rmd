@@ -17,6 +17,7 @@ figures:
   figure_5: tcga_barcode.png
   figure_6: figure_getdata_tcgabiolinks_overview.jpg
   figure_7: figure_getdata_summarizedExperiment.jpg
+comments: true
 ---
 
 <!-- Global options -->
@@ -239,16 +240,3 @@ The code and supporting material are available at Github <a href="https://github
 
 ## <a href="#references" name="references">V. References</a>
 <div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div>
-<!-- - Huber W et al. Orchestrating high-throughput genomic analysis with Bioconductor. Nat. Methods vol. 12 (2015)
-- Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Ahmed A et al. Driver mutations in TP53 are ubiquitous in high grade serous carcinoma of the ovary. J. Pathol. vol. 221 (2010)
-- Bowtell D et al. Rethinking ovarian cancer II: reducing mortality from high-grade serous ovarian cancer. Nat. Rev. Cancer vol. 15 (2015)
-- Dobin A et al. STAR: ultrafast universal RNA-seq aligner. Bioinformatics vol. 29 (2013)
-- Li B et al. RNA-Seq gene expression estimation with read mapping uncertainty. Bioinformatics vol. 26 (2010)
-- Tothill R et al. Novel molecular subtypes of serous and endometrioid ovarian cancer linked to clinical outcome. Clin. Cancer Res. vol. 14 (2008)
-- Vaughan S et al. Rethinking ovarian cancer: recommendations for improving outcomes. Nat. Rev. Cancer vol. 11 (2011)
-AnimalsAntineoplastic Agents
-- Verhaak R et al. Prognostically relevant gene signatures of high-grade serous ovarian carcinoma. J. Clin. Invest. vol. 123 (2013)
-- Wang K et al. MapSplice: accurate mapping of RNA-seq reads for splice junction discovery. Nucleic Acids Res. vol. 38 (2010)
-- Wang X et al. Unifying gene expression measures from multiple platforms using factor analysis. PLoS ONE vol. 6 (2011)
-- Zhang L et al. Intratumoral T cells, recurrence, and survival in epithelial ovarian cancer. N. Engl. J. Med. vol. 348 (2003) -->

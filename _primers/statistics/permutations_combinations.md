@@ -1,7 +1,8 @@
 ---
-title: Permutations & Combinations 
+title: Permutations & Combinations
 layout: markdown
 category: statistics
+comments: true
 ---
 
 ## <a href="#permutations" name="permutations">Permutations</a>
@@ -47,7 +48,7 @@ where the $$\binom{n}{r}$$ symbol is "n choose r".
 
 **Proof** From [permutations](#permutations) rule 2,  recall that the ways we can arrange $$r$$ objects from $$n$$ objects is $$n^{(r)}$$. Any choice of $$r$$ objects can be ordered $$r!$$ different ways. It follows that
 
-$$(\text{number of ways to choose r from n})\cdot r!=n^{(r)}$$   
+$$(\text{number of ways to choose r from n})\cdot r!=n^{(r)}$$
 
 Concretely, the image below is nearly identical to the example for [permutations](#permutations) rule 2 except that, since order is ignored, we group those with identical elements with a dotted box, leaving three events rather than the previous six
 

@@ -21,7 +21,7 @@ figures:
   table_1: figure_count_table.jpg
   table_2: figure_count_table_example.jpg
   table_3: figure_count_enumerated_example.jpg
-
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents

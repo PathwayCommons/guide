@@ -13,6 +13,7 @@ figures:
   figure_4: figure_gsea_null.png
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents

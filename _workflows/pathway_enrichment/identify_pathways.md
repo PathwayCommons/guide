@@ -18,6 +18,7 @@ figures:
 data:
   data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
   data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+comments: true
 ---
 
 - {:.list-unstyled} Table of Contents
