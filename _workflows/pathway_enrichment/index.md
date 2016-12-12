@@ -1,5 +1,5 @@
 ---
-title: Pathway enrichment (GDC)
+title: Pathway enrichment I
 subtitle: Use the Genomic Data Commons (GDC) to source TCGA ovarian cancer RNA sequencing data then identify altered pathways with Gene Set Enrichment Analysis.
 cover: cover.jpg
 date: 2016-10-24
