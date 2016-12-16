@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Visualize &middot; Guide
+    
+  </title>
+
+  <!-- CSS -->
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/guide/media/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <div id="embedded">
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="container content embedded">
+          <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+
+            <h1 class="page-title">Visualize</h1>
+            <div class="subtitle">Use an Enrichment Map to visually organize enriched gene sets</div>
+            <hr/>
+            <div class="linkout clearfix">
+              <ul class="list-inline pull-right">
+              <li>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=/workflows/pathway_enrichment_gdc/visualize/&title=Visualize"
+  data-toggle="tooltip"
+  title="Share this page on Facebook"
+  target="_blank" >
+    <i class="fa fa-facebook-official fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/intent/tweet?text=Use an Enrichment Map to visually organize enriched gene sets+/workflows/pathway_enrichment_gdc/visualize/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=/workflows/pathway_enrichment_gdc/visualize/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+              </ul>
+            </div>
+            <hr/>
+            <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#background">II. Background</a></li>
+      <li class="list-unstyled"><a href="#practical">III. Practical</a></li>
+      <li class="list-unstyled"><a href="#tasks">IV. Common tasks</a></li>
+      <li class="list-unstyled"><a href="#references">V. References</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>We describe Enrichment Map, a tool that organizes partially redundant gene sets towards the goal of distilling fewer, but broader themes. By then end of this discussion you should:</p>
+
+<ol>
+  <li>Understand how an Enrichment Map can be helpful</li>
+  <li>Learn how to create and tune an Enrichment Map</li>
+  <li>Be able to generate a map describing overarching themes culled from enrichment analyses</li>
+</ol>
+
+<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+
+<p>The Enrichment Map was originally described by Merico <em>et al.</em> (Merico 2010) as an aid in the  interpretation of gene sets emerging <em>en masse</em> from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To see the value of Enrichment Map, let us consider a concrete example of analyzing changes in gene expression in TCGA-OV subtypes.</p>
+
+<h3 id="a-long-list-of-pathways">A long list of pathways</h3>
+
+<p>Previously, we described how to source mRNA expression data for high grade serous ovarian cancer (HGS-OvCa) from patient samples (Figure 1). The HGS-OvCa are divided into four expression subtypes (i.e. classes) including ‘mesechymal’ and ‘immunoreactive’.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_em_overview.jpg" alt="image" class="img-responsive short" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Path from sample comparison to Enrichment Map themes.</strong> Depicted is a pair-wise comparison between two classes. Sourcing and processing gene expression data for two classes has been described previously in this workflow. An enrichment analyis can generate gene sets altered in each class. The Enrichment Map summarizes this data in which nodes represent gene sets and edges overlap in genes. The size and color of nodes corresponds to the number of genes and the class in which that set demonstrated enrichment. Likewise, the number of shared genes is indicated by edge thickness. Enrichment Map is a basis upon which similar gene sets can be grouped (ovals) and annotated with overarching 'themes'.
+</div>
+
+<p>Subsequently, expression data was used to derive a measure of differential expression between subtypes (i.e. P-value). From this, a rank metric was calculated to order genes: Those highest ranked are up-regulated in ‘mesenchymal’ samples and those lowest ranked are up-regulated in ‘immunoreactive’ samples (Table 1).</p>
+
+<p><strong>Table 1. Ranked gene list</strong></p>
+
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">gene</th>
+      <th style="text-align: center">rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">BGN</td>
+      <td style="text-align: center">51.7598126672467</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">AEBP1</td>
+      <td style="text-align: center">46.8833012028318</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">11972</td>
+      <td style="text-align: center">TAP1</td>
+      <td style="text-align: center">-26.92687699671</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Rather than analyze a list of over 10 000 genes one at a time, we argued that more robust, less arbitrary methods were required. To this end we used <a href="http://software.broadinstitute.org/">Gene Set Enrichment Analysis</a> to identify gene sets  enriched within our list. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in ‘mesenchymal’ samples and like-wise those categorized as ‘immunoreactive’. Using this approach we identified over 2 500 gene sets enriched in the ‘mesenchymal’ subtype (Table 2) and over 1 900 in ‘immunoreactive’ samples.</p>
+
+<p><strong>Table 2. GSEA report for ‘Mesenchymal’ class</strong></p>
+
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: center">GS</th>
+      <th style="text-align: center">SIZE</th>
+      <th style="text-align: center">ES</th>
+      <th style="text-align: center">NES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: center">HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION</td>
+      <td style="text-align: center">181</td>
+      <td style="text-align: center">0.88382155</td>
+      <td style="text-align: center">2.5331933</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: center">NABA_CORE_MATRISOME</td>
+      <td style="text-align: center">162</td>
+      <td style="text-align: center">0.8811468</td>
+      <td style="text-align: center">2.4879313</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2352</td>
+      <td style="text-align: center">FORMATION OF THE TERNARY COMPLEX, AND SUBSEQUENTLY, THE 43S COMPLEX</td>
+      <td style="text-align: center">50</td>
+      <td style="text-align: center">0.1236243</td>
+      <td style="text-align: center">0.2913502</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Notice that the number of gene sets (~4 000) is of the same order as our original gene list (~10 000). Applying more stringent significance criteria (<script type="math/tex">\text{p-value} \leq 0.01</script>) would only reduce this total number to about a 1 000. Have we simply kicked the can and traded a long list of genes for a lengthy list of gene sets?</p>
+
+<h3 id="data-reduction">Data reduction</h3>
+
+<p>Ideally, we want a simple way to reduce the size or ‘dimensionality’ of the output from enrichment analyses while retaining, to the best of our ability, the amount of meaningful <em>information</em>. To this end, many approaches have set their sights on reducing the amount of <em>redundancy</em> amongst gene sets.</p>
+
+<h4 id="hierachical">Hierachical</h4>
+
+<p>Many enrichment anlyses use the <a href="http://geneontology.org/">Gene Ontology</a> (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. An alternative approach is to modify the way in which statistical tests applied. For example,  <em>Ontologizer</em> (Bauer 2008) uses a ‘parent-child’ modification of <a href="/guide/primers/functional_analysis/fishers_exact_test/">Fisher’s Exact</a> test in which enrichment is determined using the parent gene set as the sample space rather than the entire list of genes.</p>
+
+<p>For the most part, Ontologizer and other similar tools rely on variations of Fisher’s Exact test to test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).</p>
+
+<h3 id="enrichment-map">Enrichment Map</h3>
+
+<p>Enrichment Map is a visualization analysis tool that organizes gene sets into an information rich similarity network (Figure 1). The true power of Enrichment Map is that it can represents a basis upon which to reduce dimensionality by grouping similar gene sets; These clusters can then be annotated with an overarching ‘theme’ that is representative of the group.</p>
+
+<p>Gene sets are represented as nodes where the number of genes correlates with size. Edges between nodes represent shared genes, where the amount of overlap is represented by thickness. Finally, Enrichment Map uses node color to contrast gene sets enriched in different classes.</p>
+
+<p>The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.</p>
+
+<p>Figure 2 provides a tour of <a href="http://apps.cytoscape.org/apps/enrichmentmap">Enrichment Map</a> in the graph anaysis software <a href="http://www.cytoscape.org/">Cytoscape</a>.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_preview.jpg" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Tour of the Enrichment Map app.</strong> (A) The Enrichment Map app is accessed in Cytoscape. (B) 'User Input' panel where user data files describing the enrichment analysis results and raw gene expression data are loaded. (C) 'Parameters' panel where the users can define the initial stringency for displaying nodes (false discovery rate for gene set enrichment) and edges (minimum amount of overlap). (D) 'Table Panel' tabulating gene set details and underlying expression data for any particular gene set. (E) The main panel displays the interactive similarity network. (F) 'Results Panel' where initial parameter settings can be fine-tuned.
+</div>
+
+<p>It should be immediately apparent from Figure 2 the the Enrichment Map app provides several helpful features including</p>
+
+<ol>
+  <li>Integration of raw data with gene sets in a single, interactive interface</li>
+  <li>Clustered layout representing groups of similar gene sets</li>
+  <li>Color indicates which class each gene sets is enriched in</li>
+</ol>
+
+<p>In the upcoming sections, we will describe in detail how to generate an Enrichment Map using the data emerging from our GSEA analysis of TCGA-OV gene expression.</p>
+
+<h2 id="a-hrefpractical-namepracticaliii-practicala"><a href="#practical" name="practical">III. Practical</a></h2>
+
+<p>Figure 3 depicts the five elements involved setting up the Enrichment Map and we elaborate upon each below.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_overview.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Creating an Enrichment Map.</strong> Overview of the steps we will go through to generate an Enrichment Map of our gene set enrichment analysis output.
+</div>
+
+<p>If you have been following along this workflow, you should have a directory structure containing the raw and processed data.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
+|
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    |--- visualize.R
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- tcgaov_dge.RData
+...
+</code></pre>
+</div>
+
+<p>You should also have a GSEA results directory.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Users
+|
+|--- username
+    |
+    |--- gsea_home
+        |
+        |--- output
+            |
+            |--- mmdd
+                |
+                |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX
+                    |
+                    |--- my_analysis.GseaPreranked.XXXXXXXXXXXXX.rpt
+                    |--- gsea_report_for_na_pos_XXXXXXXXXXXXX.xls
+                    |--- gsea_report_for_na_neg_XXXXXXXXXXXXX.xls
+                    |--- ranked_gene_list_na_pos_versus_na_neg_XXXXXXXXXXXXX.xls
+
+                    ...
+</code></pre>
+</div>
+
+<h3 id="software">1. Software</h3>
+
+<h4 id="requirements">Requirements</h4>
+
+<ul>
+  <li><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>: version 3.4.0
+    <ul>
+      <li><a href="http://apps.cytoscape.org/apps/enrichmentmap" target="_blank">Enrichment Map</a>: version 2.1.0</li>
+    </ul>
+  </li>
+  <li><a href="https://www.r-project.org/" target="_blank">R</a>: version 3.3.1
+    <ul>
+      <li><a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html" target="_blank">edgeR</a>: version 3.16.0</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Run R inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the R software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files. The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>. You will still need to install Cytoscape.</p>
+
+<h4 id="cytoscape">Cytoscape</h4>
+
+<p><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a> is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of <a href="http://apps.cytoscape.org/" target="_blank">‘apps’</a>. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluter and annotate similar groups of gene sets.</p>
+
+<p>Follow the instructions on the Cytoscape site to <a href="http://www.cytoscape.org/download.php" target="_blank">download and install</a> the desktop software for your specific platform. The most recent versions of Cytoscape require Java version 8.</p>
+
+<h4 id="enrichment-map-1">Enrichment Map</h4>
+
+<p>We will load in the Enrichment Map app into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select ‘Apps’ –&gt; ‘App Manager’ to bring up a search panel (Figure 4).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_apps_em.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Cytoscape App Manager screen.</strong>. Search for the app of choice using the 'Install Apps' tab.
+</div>
+
+<div class="alert alert-warning text-justify" role="alert">
+  Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
+</div>
+
+<p>Search for ‘EnrichmentMap’ then highlight the correct search result and click ‘Install’. If the installation was successful, you should be able to select ‘EnrichmentMap’ in the ‘Apps’ menu bar drop-down. Also, if you bring up the ‘App Manager’ you should see it as a listing under the ‘Currently Installed’ tab.</p>
+
+<p>Launch the Enrichment Map app by selecting from the menu bar ‘Apps’ –&gt; ‘EnrichmentMap’ –&gt; ‘Create Enrichment Map’ (Figure 5).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_em_splash.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
+</div>
+
+<h3 id="gsea-report">2. GSEA report</h3>
+
+<p>When GSEA outputs analysis results to an output folder (see ‘Help’ toolbar for ‘Show GSEA Home folder’), it also creates a matching file with an <code class="highlighter-rouge">.rpt</code> extension. This report contains the original file location of the gene set database, the enrichment reports for each phenotype (e.g. <code class="highlighter-rouge">gsea_report_for_(...).xls</code>) along with a copy of the ranked gene list (<code class="highlighter-rouge">ranked_gene_list_(...).xls</code>). Locate this file on your computer; We will use this as a shortcut to loading these files individually in Enrichment Map.</p>
+
+<h3 id="expression">3. Expression</h3>
+
+<p>The expression data file is <code class="highlighter-rouge">MesenchymalvsImmunoreactive_RNAseq_expression.txt</code> and contains gene expression values for each sample. This is a large file (75 MB).</p>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_gdc/visualize/MesenchymalvsImmunoreactive_RNAseq_expression.txt" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression data (.txt; 75 MB)</a></p>
+
+<p>Below, we provide instructions on how to generate the expression data file.</p>
+
+<p>Enrichment Map allows us to link from an enriched gene set to the underlying gene expression values through a heatmap display (‘Table Panel’, Figure 2, label D). Expression data is not required and a dummy expression file with identical values will be created in its absence.</p>
+
+<h4 id="expression-dataset-file-layout">Expression dataset file layout</h4>
+
+<p>We will use a <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29" target="_blank">tab-delimited text format (.txt) </a> described by the GSEA folks (Table 1).</p>
+
+<p><strong>Table 1. Layout of expression dataset text file</strong></p>
+
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center">NAME</th>
+      <th style="text-align: center">DESCRIPTION</th>
+      <th style="text-align: center">sample 1 ID</th>
+      <th style="text-align: center">…</th>
+      <th style="text-align: center">sample m ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">gene 1</td>
+      <td style="text-align: center">description 1</td>
+      <td style="text-align: center">12.863594046</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">19.56565146</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">gene 2</td>
+      <td style="text-align: center">description 2</td>
+      <td style="text-align: center">50.478359239</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">26.46309414</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">gene n</td>
+      <td style="text-align: center">description n</td>
+      <td style="text-align: center">17.15487986</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">41.31405851</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The first line consists of column headings for a gene <em>NAME</em> and <em>DESCRIPTION</em> followed by sample identifiers. Each subsequent row of the expression file contains the corresponding gene name (i.e. HGNC ID) and corresponding expression values; A description is optional.</p>
+
+<h4 id="generate-expression-file">Generate expression file</h4>
+
+<p><a href="/guide/workflows/pathway_enrichment/get_data/">Previously</a>, the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable <code class="highlighter-rouge">tcgaov_dge</code> and saved to an RData file named ‘tcgaov_dge.RData’.</p>
+
+<p><a href="/guide/media/workflows/pathway_enrichment/get_data/tcgaov_dge.RData" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.RData</a></p>
+
+<p>From <code class="highlighter-rouge">tcgaov_dge</code>, we will retrieve the expression data from the <code class="highlighter-rouge">counts</code> variable and the HGNC gene identifiers from the <code class="highlighter-rouge">genes</code> variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The <code class="highlighter-rouge">counts</code> variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.</p>
+
+<hr />
+
+<p>Install and load the required R/Bioconductor packages. Declare the paths for files we wish to load and eventually write (i.e. expression and phenotypes). Then load the TCGA HGS-OvCa RNA-seq data in the DGEList variable <code class="highlighter-rouge">tcgaov_dge</code>.</p>
+
+<blockquote>
+  <p>Note: The code below is contained in a script named <code class="highlighter-rouge">visualize.R</code>.</p>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+
+<span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
+
+<span class="c1">### ============ Declare directories =========
+</span><span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="s2">"/home/TCGA"</span>
+<span class="n">tcgaov_data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
+<span class="n">tcgaov_output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
+
+<span class="c1">### ============ Declare samples =========
+</span><span class="n">category_baseline</span> <span class="o">&lt;-</span> <span class="s2">"Immunoreactive"</span>
+<span class="n">category_test</span> <span class="o">&lt;-</span> <span class="s2">"Mesenchymal"</span>
+
+<span class="n">load</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.RData"</span><span class="p">))</span></code></pre></figure>
+
+<p>We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ 1. Filter ===============
+</span><span class="n">index_baseline</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_baseline</span>
+<span class="n">index_test</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_test</span>
+<span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
+<span class="n">tcgaov_dge_bt</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="p">[,</span><span class="n">index_baseline_test</span><span class="p">]</span>
+
+<span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
+  <span class="n">rowSums</span><span class="p">(</span><span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_dge_bt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test</span><span class="p">))</span>
+<span class="n">tcgaov_filtered</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge_bt</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,</span> <span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="n">FALSE</span><span class="p">]</span>
+
+
+<span class="c1">### ============ 2. Normalize ===============
+</span><span class="n">tcgaov_normalized_tmm</span> <span class="o">&lt;-</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">tcgaov_filtered</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
+
+<p>Our DGEList <code class="highlighter-rouge">tcgaov_normalized_tmm</code> has a variable <code class="highlighter-rouge">genes</code> where we can retrieve the HGNC IDs (column <code class="highlighter-rouge">external_gene_name</code>) assign to the ‘NAME’ field; We will assign the Ensembl IDs (column <code class="highlighter-rouge">ensembl_gene_id</code>) to ‘DESCRIPTION’ (Table 1).</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ Format expression  ===============
+### Work with normalized counts per million (CPM)
+</span><span class="n">tcgaov_counts_cpm</span> <span class="o">&lt;-</span> <span class="n">cpm</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="p">,</span> <span class="n">normalized.lib.size</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+
+<span class="c1">### Merge the DGEList variables 'genes' and 'counts' (as data.frame)
+</span><span class="n">tcgaov_merged</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="o">$</span><span class="n">genes</span><span class="p">,</span>
+                      <span class="n">data.frame</span><span class="p">(</span><span class="n">tcgaov_counts_cpm</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
+                      <span class="n">by</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span>
+                      <span class="n">all</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+
+<span class="c1">### Data frame: 'external_gene_name', 'ensembl_gene_id' and sample IDs
+</span><span class="n">tcgaov_em_expression</span> <span class="o">&lt;-</span> <span class="n">cbind</span><span class="p">(</span><span class="n">tcgaov_merged</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'external_gene_name'</span><span class="p">,</span>
+                                              <span class="s1">'ensembl_gene_id'</span><span class="p">)],</span>
+                             <span class="n">tcgaov_merged</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">9</span><span class="p">)])</span>
+
+<span class="c1">### Rename columns
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"NAME"</span>
+<span class="n">colnames</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"DESCRIPTION"</span></code></pre></figure>
+
+<p>Here we merge the <code class="highlighter-rouge">tcgaov_normalized_tmm</code> data frame variable <code class="highlighter-rouge">genes</code> with the normalized data frame of expression values in <code class="highlighter-rouge">tcgaov_counts_cpm</code>. The <code class="highlighter-rouge">genes</code> variable has extra columns so we punt these in the final data frame <code class="highlighter-rouge">tcgaov_em_expression</code>. The ‘NAME’ and ‘DESCRIPTION’ column headers are subtituted in the final container.</p>
+
+<p>Finally we write to file.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### Write
+</span><span class="n">write.table</span><span class="p">(</span><span class="n">tcgaov_em_expression</span><span class="p">,</span>
+            <span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span>
+              <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_expression.txt"</span><span class="p">),</span>
+            <span class="n">col.name</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
+            <span class="n">row.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
+            <span class="n">quote</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<hr />
+
+<p>The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/visualize.R" target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a></p>
+
+<h3 id="phenotypes">4. Phenotypes</h3>
+
+<p>The phenotype file is <code class="highlighter-rouge">MesenchymalvsImmunoreactive_RNAseq_phenotype.cls</code> and contains class/category names and class assignments for each sample in the TCGA-OV project.</p>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_gdc/visualize/MesenchymalvsImmunoreactive_RNAseq_phenotype.cls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype data (.cls)</a></p>
+
+<p>Below we describe how to generate the phenotype file (.cls).</p>
+
+<p>Enrichment Map represents the magnitude of the enrichment score for a gene set through node colour intensity (‘Results Panel’, Figure 2, labels E and F). Furthermore, enrichment in the ‘test’ and ‘baseline’ classes/categories are indicated by red and blue colouring, respectively. Thus, for the TCGA-OV data, gene sets enriched in the ‘mesenchymal’ samples are increasingly red while gene sets enriched in the ‘immunoreactive’ samples are increasingly blue.</p>
+
+<h4 id="phenotype-file-layout">Phenotype file layout</h4>
+
+<p>We will use a <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29" target="_blank"> text format (.cls) </a> described by the GSEA (Table 2). The <code class="highlighter-rouge">.cls</code> file format uses spaces or tabs to separate the fields.</p>
+
+<p><strong>Table 2. Layout of phenotype text file</strong></p>
+
+<table class="table table-hover table-condensed table-responsive">
+  <tbody>
+    <tr>
+      <td>&lt;Number samples&gt; &lt;Number classes&gt; 1</td>
+      <td> </td>
+      <td>…</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td># &lt;Class 1 label&gt; &lt;Class 2 label&gt;</td>
+      <td> </td>
+      <td>…</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Sample 1 class</td>
+      <td>Sample 2 class</td>
+      <td>…</td>
+      <td>sample n class</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="generate-phenotype-file">Generate phenotype file</h4>
+
+<p>We will continue where we left off last time.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  
+<span class="c1">### ============ Format phenotypes  ===============
+### Get the 'Mesenchymal' and 'Immunoreactive'
+</span><span class="n">n_samples</span> <span class="o">&lt;-</span> <span class="n">dim</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">n_classes</span> <span class="o">&lt;-</span> <span class="m">2</span>
+
+<span class="n">tcgaov_em_phenotype_file</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span>
+  <span class="s2">"MesenchymalvsImmunoreactive_RNAseq_phenotype.cls"</span><span class="p">)</span>
+
+<span class="c1">### No. samples, No. classes, 1
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
+    <span class="n">append</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+
+<span class="c1">### Class label names
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="n">category_baseline</span><span class="p">,</span> <span class="n">category_test</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
+    <span class="n">append</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+
+<span class="c1">### Sample class labels
+</span><span class="n">cat</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">),</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">tcgaov_em_phenotype_file</span><span class="p">,</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\n"</span><span class="p">,</span>
+    <span class="n">append</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></figure>
+
+<hr />
+
+<p>If you have been following along this workflow, you should have a directory structure containing the new files.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>home
+|
+|--- TCGA
+|   |
+|   |--- scripts
+|   |    |
+|   |    |--- get_data.R
+|   |    |--- process_data.R
+|   |    |--- visualize.R
+|   |
+|   |--- data
+|   |    |
+|   |    |--- Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+|   |
+|   |--- output
+|   |    |
+|   |    |--- MesenchymalvsImmunoreactive_RNAseq_phenotype.cls
+|   |    |--- MesenchymalvsImmunoreactive_RNAseq_expression.txt
+|   |    |--- MesenchymalvsImmunoreactive_edger_ranks.rnk
+|   |    |--- tcgaov_dge.RData
+...
+</code></pre>
+</div>
+
+<p>The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/visualize.R" target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a></p>
+
+<h3 id="load-files">5. Load files</h3>
+
+<p>Time to tell Enrichment Map where all of our data is via the ‘User Input’ panel (Figure 6).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_load.jpg" alt="image" class="img-responsive super-short" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 6. Enrichment Map file load.</strong> Shown is the 'Control Panel'. The location and order the files should be loaded are numbered. The GSEA report file (.rpt) is found in the GSEA results folder and shortcuts loading the remaining files. Alternatively, all file fields  can be loaded one a time.
+</div>
+
+<ol>
+  <li>GSEA report
+    <ul>
+      <li>Load the (.rpt) file into either of the ‘Dataset 1’ fields for ‘Enrichment 1’ and ‘Enrichment 2’</li>
+      <li>This will automatically load in the two enrichment reports, the gene set data base (‘Gene Sets’ field ‘GMT’) and the rank file (‘Advanced’ field ‘Ranks’)</li>
+      <li>Load this file first as it will load in the next two fields by default</li>
+    </ul>
+  </li>
+  <li>Expression
+    <ul>
+      <li>The ‘Dataset 1’ field for ‘Expression’ defines the expression values</li>
+      <li>Load in <code class="highlighter-rouge">MesenchymalvsImmunoreactive_RNAseq_expression.txt</code> (Step 2)</li>
+    </ul>
+  </li>
+  <li>Phenotypes
+    <ul>
+      <li>The ‘Advanced’ field for ‘Classes’ defines our sample classes</li>
+      <li>Load in <code class="highlighter-rouge">MesenchymalvsImmunoreactive_RNAseq_phenotype.cls</code> (Step 3)</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="settings">6. Settings</h3>
+
+<p>Here we will set up the initial configuration through the ‘Parameters’ panel (Figure 7).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_settings.jpg" alt="image" class="img-responsive shorter" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 7. Enrichment Map settings.</strong> The 'Phenotype' labels must match exactly your classes defined in the phenotypes file (.cls). The 'FDR Q-value Cutoff' defines the maximum threshold for displaying including a gene set. The 'Similarity Cutoff' defines a minimum threshold for displaying an edge between gene sets.
+</div>
+
+<ol>
+  <li>Phenotypes
+    <ul>
+      <li>This defines the class labels previously declared in the phenotypes file (Table 2). In our case these will be ‘Mesenchymal’ VS. ‘Immunoreactive’</li>
+    </ul>
+  </li>
+  <li>FDR Q-value Cutoff
+    <ul>
+      <li>This defines the maximum false discovery rate q-value allowed. This effectively controls the stringincy for which nodes will appear (smaller is more stringent). Set a maximum of <script type="math/tex">10^{-4}</script>.</li>
+    </ul>
+  </li>
+  <li>Similarity Cutoff
+    <ul>
+      <li>This section allows us to select the simiarity metric. This effectively controls the minimum overlap required to define an edge (larger is more stringent). Select ‘Jaccard+ Overlap Combined’ and set a minimum cutoff of 0.375.</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li class="aside">
+    <h4 id="similarity-metrics">Similarity metrics</h4>
+
+    <p>Here, we provide an definitions for the ‘Similarity Cutoff’ metrics. Suppose that <script type="math/tex">X=\{A, B\}</script> are gene sets where <script type="math/tex">\mid X \mid</script> is the number of genes.</p>
+
+    <p><strong>Jaccard Coefficient (<script type="math/tex">JC</script>)</strong></p>
+
+    <script type="math/tex; mode=display">JC = \frac{|A \cap B|}{|A \cup B|}</script>
+
+    <p><strong>Overlap Coefficient (<script type="math/tex">OC</script>)</strong></p>
+
+    <script type="math/tex; mode=display">OC = \frac{|A \cap B|}{\text{min }(|A|,|B|)}</script>
+
+    <p>The important point to note is that both metrics are proportional to the amount of shared genes.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="build-and-explore">Build and explore</h3>
+
+<p>Click the ‘Build’ button in the Control Panel tab (Figure 7). You should see a progress indicator followed by an Enrichment Map (Figure 8).</p>
+
+<blockquote>
+  <p>See the <a href="http://wiki.cytoscape.org/Cytoscape_3/UserManual" target="_blank">Cytoscape 3 User Manual</a> for a detailed description of the functionality</p>
+</blockquote>
+
+<ul>
+  <li class="aside">
+    <h4 id="navigation">Navigation</h4>
+
+    <ul>
+      <li>Toggle gene set labels
+        <ul>
+          <li>From the menu bar select ‘View’ -&gt; ‘Show (Hide) Graphic Details’</li>
+        </ul>
+      </li>
+      <li>Zooming
+        <ul>
+          <li>Scroll with your mouse</li>
+        </ul>
+      </li>
+      <li>Panning
+        <ul>
+          <li>Click and drag the main window</li>
+        </ul>
+      </li>
+      <li>Moving a node
+        <ul>
+          <li>Click and drag nodes in main window</li>
+        </ul>
+      </li>
+      <li>Viewing data for a gene set
+        <ul>
+          <li>Click on a node</li>
+          <li>View ‘Table Panel’ tab ‘Heat Map (nodes)’
+            <ul>
+              <li>Set ‘Normalization’ drop-down to ‘Log Transform Data’</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="aside">
+    <h4 id="search">Search</h4>
+
+    <ul>
+      <li>Search gene set(s) by name
+        <ul>
+          <li>Type in the search box (upper-right corner)</li>
+          <li>‘Table Panel’ tab ‘Node Table’ and main window displays matches (yellow)</li>
+        </ul>
+      </li>
+      <li>Highlight a gene set from ‘Node Table’ tab
+        <ul>
+          <li>Select the gene set row then right/ctrl-click
+            <ul>
+              <li>Choose ‘Selected nodes from selected rows’</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="aside">
+    <h4 id="select">Select</h4>
+
+    <ul>
+      <li>All edges and nodes
+        <ul>
+          <li>From the menu bar, ‘Select’ -&gt; ‘Select (Deselect) all nodes and edges’</li>
+        </ul>
+      </li>
+      <li>A group of edges and nodes
+        <ul>
+          <li>Hold ‘Command’ key (Mac) while clicking and dragging over region</li>
+          <li>Selected groups may be dragged as for individual nodes</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="aside">
+    <h4 id="filter">Filter</h4>
+
+    <ul>
+      <li>Remove nodes
+        <ul>
+          <li>In the ‘Results Panel’, decrease the ‘Q-value Cutoff’ slider</li>
+        </ul>
+      </li>
+      <li>Remove edges
+        <ul>
+          <li>Increase the ‘Similarity Cutoff’ slider</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="aside">
+    <h4 id="layout">Layout</h4>
+
+    <ul>
+      <li>From the menu, select ‘Layout’ -&gt; ‘yFiles Layouts’ -&gt; ‘Organic’</li>
+      <li>From the menu, select ‘Layout’ -&gt; ‘Perfuse Force Directed Layouts’ -&gt; ‘All Nodes’ -&gt; ‘(none)’</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="cytoscape-enrichment-map">Cytoscape Enrichment Map</h4>
+
+<p>Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing  our gene sets.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_built.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 8. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
+</div>
+
+<h4 id="results-panel">Results Panel</h4>
+
+<p>Look at the ‘Legend’ tab. Increase or decrease the stringency for displaying nodes (‘Q-value Cutoff’) and edges (‘Similarity Cutoff’) using the sliders. For instance, one can restrict the displayed gene sets to those with very low chance of being a false positive.</p>
+
+<h4 id="table-panel">Table Panel</h4>
+
+<p>We will higlight a few aspects of the ‘Table Panel’ (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The ‘Control Panel’ tab ‘Select’ enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below (<a href="#tasks">IV. Common tasks</a>).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_tablepanel.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 9. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.
+</div>
+
+<h2 id="a-hreftasks-nametasksiv-common-tasksa"><a href="#tasks" name="tasks">IV. Common tasks</a></h2>
+
+<h3 id="a-label-clusters-of-gene-sets">A. Label clusters of gene sets</h3>
+
+<p>Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the <a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a> app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses <a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a> to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.</p>
+
+<h4 id="requirements-1">Requirements</h4>
+
+<ul>
+  <li>Cytoscape apps
+    <ul>
+      <li><a href="http://apps.cytoscape.org/apps/clustermaker2" target="_blank">ClusterMaker2</a>: version 0.9.5</li>
+      <li><a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a>: version 3.1.0</li>
+      <li><a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a>: version 1.1.0</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="group-similar-classes-subtypes">1. Group similar classes (subtypes)</h4>
+
+<p>In the main window graph, let us spatially separate the gene sets enriched in each class (‘mesenchymal’ in red and ‘immunoreactive’ in blue) so that when we go to add labels, they are readily distinguishable.</p>
+
+<p>Select the ‘immunoreactive’ group in blue and drag the entire group over to separate it from the ‘mesenchymal’ group: Highlight the class by creating a column filter for nodes with a negative NES (see ‘Table Panel’, Figure 9).</p>
+
+<ul>
+  <li>‘Control Panel’ tab for ‘Select’
+    <ul>
+      <li>Click ‘+’ to add a filter
+        <ul>
+          <li>Select ‘Column Filter’ from the drop-down</li>
+        </ul>
+      </li>
+      <li>‘Choose column….’ drop-down
+        <ul>
+          <li>Select ‘Node:EM1_NES_dataset1’</li>
+          <li>Enter range to include only negative values</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Drag the selected gene sets from the ‘immunoreactive’ class over to the left as shown in Figure 10.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_group.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 10. Separating gene sets enriched in each class.</strong> The 'immunoreactive' class was selected by creating a column filter in the 'Control Panel' tab 'Select' for NES below 0.
+</div>
+
+<h4 id="wordcloud">2. Wordcloud</h4>
+
+<p>WordCloud calculates the most frequent words present in a cluster node. It uses the data contained in the ‘Table Panel’ tab ‘Node Table’ including ‘EM1_GS_DESCR’ (Figure 9).</p>
+
+<ul>
+  <li>‘Apps’ -&gt; ‘WordCloud’ -&gt; ‘Show WordCloud’
+    <ul>
+      <li>‘Control Panel’ set ‘Normalize’ slider to 0.5</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape__controlpanel_wordcloud.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 11. 'Control Panel' tab for 'Wordcloud'.<strong> </strong>Normalize: </strong> If set to 0 then the significance of each word is calculated solely on how many occurrences it has in the given cluster. This may cause very frequent words within the network such as 'pathway' or 'regulation' to be prominent in annotations. By increasing the normalization factor, we increase a weight calculated from the ratio of a word frequency in the cluster to its frequency in the entire network to diminish the presence of these recurrent words in the cluster labels
+</div>
+
+<h4 id="autoannotate-groups">3. AutoAnnotate groups</h4>
+
+<p>AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).</p>
+
+<ul>
+  <li>‘Apps’ -&gt; ‘AutoAnnotate’ -&gt; ‘New Annotation Set…’</li>
+</ul>
+
+<blockquote>
+  <p><em>Note: For clarity, you should remove the individual gene set labels by selecting ‘View’ -&gt; ‘Hide Graphic Details’</em></p>
+</blockquote>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_autoannotate_options.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 12. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
+</div>
+
+<p>Click ‘Create Annotations’ to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 13).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_autoannotate.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 13. Results of AutoAnnotate.</strong>
+</div>
+
+<h4 id="collapse-groups">4. Collapse groups</h4>
+
+<p>Figure 12 shows a pretty busy annotated network. Often users gravitate towards large clusters that appear in the enrichment results but in this case size not indicate importance or strength rather the amount of database annotations there exist for a particular pathway or process. Single nodes represent processes that are less well know and studied but are no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 14).</p>
+
+<ul>
+  <li>‘Control Panel’ select the ‘AutoAnnotate’ tab
+    <ul>
+      <li>Click the menu drop-down (button with 3 lines)</li>
+      <li>Select ‘Collapse All’</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/visualize/figure_visualize_cytoscape_em_collapsed_scaled.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Results of collapsing AutoAnnotate.</strong>
+</div>
+
+<p>The resulting network can look a bit sparse. Let’s fine tune this by bringing the nodes a little closer together.</p>
+
+<ul>
+  <li>From the menu, select ‘View’ -&gt; ‘Show Tool Panel’
+    <ul>
+      <li>Click ‘Scale’ tab</li>
+      <li>Drag the slider to lower values to reduce space between nodes</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>Cytoscape affords the user a great deal of control over <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles" target="_blank">styles</a> and <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout" target="_blank">layout</a>. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual" target="_blank">user manual</a> for full description of capabilities.</p>
+
+<h2 id="a-hrefreferences-namereferencesv-referencesa"><a href="#references" name="references">V. References</a></h2>
+<div class="panel_group" data-inline="10802651,18511468,21085593,22383865"></div>
+
+        </div>        
+        
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/pathway_enrichment_gdc/visualize";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/pathway_enrichment_gdc/visualize"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+  <script id="dsq-count-scr" src="//pathway-commons.disqus.com/count.js" async></script>
+  </body>
+</html>
