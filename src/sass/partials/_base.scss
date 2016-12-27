@@ -9,6 +9,16 @@
 *
 * Guide customization
 */
+.footer {
+  // width: $container-max-width;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
 
 a.btn.btn-block {
   font-weight: 200;
@@ -230,7 +240,7 @@ img.left {
    margin-bottom: 3rem;
 
    .panelista-shade {
-     background-image: url("/guide/media/overview.png");    
+     background-image: url("/guide/media/overview.png");
      .panelist-banner {
        position: absolute;
        z-index: -1;
