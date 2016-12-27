@@ -16,30 +16,22 @@
     
   </title>
 
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
   <!-- CSS -->
   <!-- Third-party CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/guide/public/css/main.css">
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/guide/media/apple-touch-icon-precomposed.png">
-  <link rel="shortcut icon" href="/guide/media/favicon.ico">
-
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
-
   <!-- Javascript -->
   <!-- Third-party javascript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
   </script>
-
   <!-- Custom javascript -->
   <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
 
@@ -242,22 +234,10 @@
     !function(){"use strict";var a="undefined"!=typeof module&amp;&amp;module.exports,b="undefined"!=typeof Element&amp;&amp;"ALLOW_KEYBOARD_INPUT"in Element,c=function(){for(var a,b,c=[["requestFullscreen","exitFullscreen","fullscreenElement","fullscreenEnabled","fullscreenchange","fullscreenerror"],["webkitRequestFullscreen","webkitExitFullscreen","webkitFullscreenElement","webkitFullscreenEnabled","webkitfullscreenchange","webkitfullscreenerror"],["webkitRequestFullScreen","webkitCancelFullScreen","webkitCurrentFullScreenElement","webkitCancelFullScreen","webkitfullscreenchange","webkitfullscreenerror"],["mozRequestFullScreen","mozCancelFullScreen","mozFullScreenElement","mozFullScreenEnabled","mozfullscreenchange","mozfullscreenerror"],["msRequestFullscreen","msExitFullscreen","msFullscreenElement","msFullscreenEnabled","MSFullscreenChange","MSFullscreenError"]],d=0,e=c.length,f={};e&gt;d;d++)if(a=c[d],a&amp;&amp;a[1]in document){for(d=0,b=a.length;b&gt;d;d++)f[c[0][d]]=a[d];return f}return!1}(),d={request:function(a){var d=c.requestFullscreen;a=a||document.documentElement,/5\.1[\.\d]* Safari/.test(navigator.userAgent)?a[d]():a[d](b&amp;&amp;Element.ALLOW_KEYBOARD_INPUT)},exit:function(){document[c.exitFullscreen]()},toggle:function(a){this.isFullscreen?this.exit():this.request(a)},raw:c};return c?(Object.defineProperties(d,{isFullscreen:{get:function(){return Boolean(document[c.fullscreenElement])}},element:{enumerable:!0,get:function(){return document[c.fullscreenElement]}},enabled:{enumerable:!0,get:function(){return Boolean(document[c.fullscreenEnabled])}}}),void(a?module.exports=d:window.screenfull=d)):void(a?module.exports=!1:window.screenfull=!1)}();
   </script></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script type="text/javascript"&gt;
-  	$(document).ready(function() {
-  	  $('#fs-overview-link').click(function () {
-  		  if (screenfull.enabled) {
-  			  screenfull.request($('#fs-overview-target')[0]);
-  		  }
-  	  });
-  	});
-&lt;/script&gt;
-</code></pre>
-</div>
-
 <div class="panel panel-default">
       <div class="panel-heading">
           <h2 class="panel-title">
-              Introduction to PaxtoolsR (<a href="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf">PDF</a>) <a id="fs-overview-link" class="pull-right" href="#"><i class="fa fa-arrows-alt"></i></a>
+              Introduction to PaxtoolsR (<a href="/guide/media/presentations/presentations/introduction-paxtoolsr-metabolomics-29-06-2016/introduction-paxtoolsr-metabolomics-29-06-2016.pdf">PDF</a>) <a id="fs-overview-link" class="pull-right" href="#"></a>
           </h2>
       </div>
       <div class="panel-body">

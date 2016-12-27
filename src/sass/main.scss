@@ -16,19 +16,19 @@
   Sass code that doesn't cause Sass to actually output CSS.
   Mixin declarations, functions, and variables.
 */
-// @import "modules/variables";
-@import "modules/fonts";
-@import "modules/colors";
-@import "modules/theme_variables";
 
 /*
  Third-party
  Do not modify
 */
+@import "../../../node_modules/progress-tracker/app/styles/main.scss";
 @import "vendor/theme/poole";
 @import "vendor/theme/lanyon";
 
-@import "../bower_components/progress-tracker/app/styles/progress-tracker.scss";
+// @import "modules/variables";
+@import "modules/fonts";
+@import "modules/colors";
+@import "modules/theme_variables";
 
 /*
  Partials

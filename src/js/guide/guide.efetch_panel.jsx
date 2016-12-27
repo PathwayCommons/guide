@@ -1,5 +1,6 @@
 'use strict';
-
+var ReactDOM = require('react-dom');
+var React = require('react');
 module.exports = (function(){
 
   var PanelGroup = React.createClass({

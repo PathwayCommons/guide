@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../bower_components/iframe-resizer/js/iframeResizer.min.js');
+require('iframe-resizer');
 
 // Populate the progress tracker wrapper content
 module.exports = (function() {

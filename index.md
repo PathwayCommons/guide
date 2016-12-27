@@ -3,7 +3,7 @@ layout: default
 title: Home
 footer: true
 figures:
-  figure_overview: overview.png
+  figure_1: index/figure_index_workflows_enrichment_gdc.png
 ---
 
 # Guide
@@ -17,7 +17,6 @@ This guide is intended to cultivate the practice of *biological network analysis
 
 <br/>
 
-{:.table .table-hover .table-condensed .table-responsive}
-|     Input          |     Output          |     Section      |
-|:------------------:|:-------------------:|:----------------:|
-|  RNA sequencing    |  Enriched pathways  |   [Pathway enrichment workflow]({{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/)|
+<a href="{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/">
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.super-duper-short }
+</a>
