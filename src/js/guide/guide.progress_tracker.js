@@ -21,7 +21,7 @@ module.exports = (function() {
 		link_class: '.progress-tracker-link'
   },
 	jQueryMap = {
-		$progress_tracker_wrapper	: undefined,
+		$container	: undefined,
 		$progress_tracker_steps  	: undefined,
 		$progress_tracker_content	: undefined,
 		$panel : undefined,
@@ -37,7 +37,7 @@ module.exports = (function() {
 			event.preventDefault();
 			// Set the list element state
 			self.addClass( 'is-complete' );
-			jQueryMap.$progress_tracker_wrapper.find(configMap.highlight_class).removeClass('active');
+			jQueryMap.$container.find(configMap.highlight_class).removeClass('active');
     	self.find(configMap.highlight_class).toggleClass('active');
 			// Retrieve the url
 			var url = self.find(configMap.link_class).attr( 'href' );
@@ -54,10 +54,10 @@ module.exports = (function() {
 		});
 	};
 
-	initModule = function(){
-		jQueryMap.$progress_tracker_wrapper	 = $( '.progress-tracker-wrapper' );
-		jQueryMap.$progress_tracker_steps = jQueryMap.$progress_tracker_wrapper.find( '.progress-step' );
-	  jQueryMap.$progress_tracker_content = jQueryMap.$progress_tracker_wrapper.find( '#progress-tracker-content' );
+	initModule = function( $container ){
+		jQueryMap.$container	= $container;
+		jQueryMap.$progress_tracker_steps = jQueryMap.$container.find( '.progress-step' );
+	  jQueryMap.$progress_tracker_content = jQueryMap.$container.find( '#progress-tracker-content' );
 		jQueryMap.$panel =  $( $.parseHTML( configMap.panel_html_template ) );
 		jQueryMap.$progress_tracker_content.html(jQueryMap.$panel.html());
 		jQueryMap.$panel_heading_link = jQueryMap.$progress_tracker_content.find( '#panel-heading-link' );

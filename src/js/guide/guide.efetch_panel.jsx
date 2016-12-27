@@ -1,6 +1,7 @@
 'use strict';
 var ReactDOM = require('react-dom');
 var React = require('react');
+require('bootstrap');
 module.exports = (function(){
 
   var PanelGroup = React.createClass({
@@ -236,8 +237,8 @@ module.exports = (function(){
     }
   });
 
-  var initModule = function(){
-    $('.panel_group').each(function(element, index){
+  var initModule = function( $container ){
+    $container.each(function(element, index){
 
       var $target = $(this),
           pagedata = $target.data('page'),
