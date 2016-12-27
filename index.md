@@ -6,8 +6,6 @@ figures:
   figure_1: index/figure_index_workflow_gdc.png
 ---
 
-# Guide
-
 This guide is intended to cultivate the practice of *biological network analysis*. We are making available a growing collection of materials for learning including [documents]({{ site.baseurl }}/presentations/archive/) and [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for computational data analysis.
 
 <div class="alert alert-info text-justify" role="alert">
