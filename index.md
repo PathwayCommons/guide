@@ -1,6 +1,7 @@
 ---
-layout: front
+layout: default
 title: Home
+footer: true
 figures:
   figure_overview: overview.png
 ---
