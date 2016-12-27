@@ -21,7 +21,8 @@
  Third-party
  Do not modify
 */
-@import "../../../node_modules/progress-tracker/app/styles/main.scss";
+@import "../../public/bower_components/bootstrap/dist/css/bootstrap.min.css";
+@import "../../public/bower_components/progress-tracker/app/styles/progress-tracker.scss";
 @import "vendor/theme/poole";
 @import "vendor/theme/lanyon";
 
