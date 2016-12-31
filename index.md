@@ -7,16 +7,11 @@ figures:
 ---
 
 This guide is intended to cultivate the practice of *biological network analysis*. We are making available a growing collection of materials for learning including [documents]({{ site.baseurl }}/presentations/archive/) and [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for computational data analysis.
-
-<div class="alert alert-info text-justify" role="alert">
-  If you have any questions, suggestions or if you would like to contribute to the site, please <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">let us know</a>
-</div>
+{: .lead }
 
 <hr/>
 
 ## What do you want to do?
-
-<br/>
 
 <div class="panel panel-default">
   <!-- <div class="panel-heading">
@@ -28,3 +23,12 @@ This guide is intended to cultivate the practice of *biological network analysis
     </a>
   </div>
 </div>
+
+<br/>
+<br/>
+<hr/>
+
+<em class="pull-right">
+  <small> If you have any questions, suggestions or if you would like to contribute, <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">let us know.</a>
+  </small>
+</em>
