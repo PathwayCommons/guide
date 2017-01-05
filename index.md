@@ -6,7 +6,7 @@ figures:
   figure_1: index/figure_index_workflow_gdc.png
 ---
 
-This guide is intended to cultivate the practice of *biological network analysis*. We are making available a growing collection of materials for learning including [documents]({{ site.baseurl }}/presentations/archive/) and [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for computational data analysis.
+This guide is intended to cultivate the practice of *biological pathway analysis*. We are making available a growing collection of learning materials including  [presentations]({{ site.baseurl }}/presentations/archive/), [primers]({{ site.baseurl }}/primers/archive/) along with [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for data analysis.
 {: .lead }
 
 <hr/>
