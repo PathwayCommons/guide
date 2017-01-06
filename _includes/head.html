@@ -18,6 +18,11 @@
   <link rel="shortcut icon" href="{{ site.baseurl }}/{{ site.media_root }}/favicon.ico">
 
   <!-- CSS -->
+  {% if page.custom_css %}
+    {% for css_file in page.custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/{{ site.static_root }}/{{ css_file }}" />
+    {% endfor %}
+  {% endif %}
   <!-- Third-party CSS -->
   <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/{{ site.static_root }}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/{{ site.static_root }}/bower_components/progress-tracker/app/styles/progress-tracker.css" />
