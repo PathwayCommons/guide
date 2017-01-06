@@ -22,13 +22,16 @@ html body .mermaidTooltip{
   display: block;
   margin: auto;
 
-  .output .nodes {
-    .node.hover {
-      cursor: pointer;
-    }
-    .label div {
-      font-family: $font-family-base;
-      font-weight: 800;
+  .output {    
+
+    .nodes {
+      .node.hover {
+        cursor: pointer;
+      }
+      .label div {
+        font-family: $font-family-base;
+        font-weight: 800;
+      }
     }
   }
 }

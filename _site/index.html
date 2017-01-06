@@ -171,14 +171,12 @@
         %% styling
         classDef default stroke:#2c3e50;
 
-        cancer_genome_db((Link I. Cancer genome database)) --&gt; rna_seq_data[Get mRNA sequencing data]
-        my_experimental_system((Link II. My experimental system)) --&gt; rna_seq_data
-        subgraph Data Processing
-        rna_seq_data --&gt; differential_expression[Compute differential expression]
-        end
+        cancer_genome_db[Workflow I. Cancer genomic database] --&gt; rna_seq_data[Get mRNA sequencing data]
+        my_experimental_system[Workflow II. Your experimental system] --&gt; rna_seq_data
+        rna_seq_data --&gt; differential_expression[Assess differential expression]
         differential_expression --&gt; interpret_gene_list{Interpret gene list}
         subgraph Identify Pathways
-        pathway_enrichment[Enrichment for pathways] --&gt; pathway_visualization[Visualize pathways]
+        pathway_enrichment[Ranked-based enrichment]  --&gt; pathway_visualization[Visualize]
         end
         interpret_gene_list --&gt; pathway_enrichment
 

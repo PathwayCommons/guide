@@ -39,14 +39,12 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         %% styling
         classDef default stroke:#2c3e50;
 
-        cancer_genome_db((Link I. Cancer genome database)) --> rna_seq_data[Get mRNA sequencing data]
-        my_experimental_system((Link II. My experimental system)) --> rna_seq_data
-        subgraph Data Processing
-        rna_seq_data --> differential_expression[Compute differential expression]
-        end
+        cancer_genome_db[Workflow I. Cancer genomic database] --> rna_seq_data[Get mRNA sequencing data]
+        my_experimental_system[Workflow II. Your experimental system] --> rna_seq_data
+        rna_seq_data --> differential_expression[Assess differential expression]
         differential_expression --> interpret_gene_list{Interpret gene list}
         subgraph Identify Pathways
-        pathway_enrichment[Enrichment for pathways] --> pathway_visualization[Visualize pathways]
+        pathway_enrichment[Ranked-based enrichment]  --> pathway_visualization[Visualize]
         end
         interpret_gene_list --> pathway_enrichment
 
