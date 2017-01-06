@@ -10,21 +10,21 @@ This guide is intended to cultivate the practice of *biological pathway analysis
 {: .lead }
 
 <hr/>
+<br/>
 
-## What do you want to do?
-
-<div class="panel panel-default">
-  <!-- <div class="panel-heading">
-    <h3 class="panel-title">Pathway Enrichment</h3>
-  </div> -->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <p class="panel-title text-center">
+      Cancer transcriptome <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Diagram of altered pathways
+    </p>
+  </div>
   <div class="panel-body">
     <a href="{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/">
-      <img src="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}" class="img-responsive super-duper-short" />
+      <img src="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}" class="img-responsive ht-300" />
     </a>
   </div>
 </div>
 
-<br/>
 <br/>
 <hr/>
 

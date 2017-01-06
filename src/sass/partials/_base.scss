@@ -30,13 +30,13 @@ img.super-slim {
 img.short {
   max-height: 700px;
 }
-img.shorter {
+img.ht-600 {
   max-height: 600px;
 }
-img.super-short {
+img.ht-500 {
   max-height: 500px;
 }
-img.super-duper-short {
+img.ht-300 {
   max-height: 300px;
 }
 img.left {
@@ -84,114 +84,6 @@ img.left {
 //
 /* Large devices (large desktops, 1200px and up) */
 // @media (min-width: @screen-lg-min) { ... }
-
-/*
-* gridview -  a grid layout
-*
-*/
-
-.grid-element-parent {
-
-  display:                 -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-  display:                 -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-  display:                 -ms-flexbox;      /* TWEENER - IE 10 */
-  display:                 -webkit-flex;     /* NEW - Chrome */
-  display:                 flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-
-  -webkit-flex-wrap:       wrap;
-  flex-wrap:               wrap;
-  -webkit-flex-direction:  row;
-  flex-direction:          row;
-  -webkit-align-items:     center;
-  align-items:             center;
-  -webkit-justify-content: center;
-  justify-content:         center;
-
-  .grid-element {
-    margin: $grid-margin;
-
-    a {
-      text-decoration: none;
-    }
-
-    .grid-element-card {
-      text-align: center;
-      padding: $border-width;
-      width: $grid-element-width;
-      height: $grid-element-height * 1.2;
-      // background: $light-silver;
-
-      .grid-element-panel {
-        height: $grid-element-height - $label-height;
-        color: $clouds;
-        // background: rgba(44, 62, 80, 0.7);
-        overflow-y: hidden;
-
-        .grid-element-text {
-          text-align: center;
-          margin-top: 25%;
-        }
-
-        img {
-          margin: auto auto;
-          height: $grid-element-height - $label-height;
-        }
-      }
-
-      .grid-element-label {
-        font-weight: bold;
-        font-size: 1.2em;
-      }
-    }
-  }
-}
-
-/*==================================================
- * Label Effect
- * ===============================================*/
-.box-label {
-  height: 4em;
-  background: $inverse;
-  border: 1px solid $clouds;
-  padding: 1em;
-  margin-top: 4px;
-}
-.box-label.long {
-  height: 5.5em;
-}
-
-.effect5
-{
-  position: relative;
-}
-.effect5:before, .effect5:after
-{
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 25px;
-  left: 10px;
-  width: 50%;
-  top: 50%;
-  background: #777;
-
-  -webkit-box-shadow: 0 35px 20px #777; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
-  box-shadow: 0 35px 20px #777; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
-
-  -webkit-transform: rotate(-8deg);
-  -ms-transform: rotate(-8deg);
-  transform: rotate(-8deg);
-}
-.effect5:after
-{
-  -webkit-transform: rotate(8deg);
-  -ms-transform: rotate(8deg);
-  transform: rotate(8deg);
-
-  right: 10px;
-  left: auto;
-}
-
  /*
   * panelista -  a jumbotron rip-off
   *

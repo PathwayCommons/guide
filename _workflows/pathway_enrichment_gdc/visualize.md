@@ -361,7 +361,7 @@ The R code is available at Github <a href="https://github.com/jvwong/docker_enri
 
 Time to tell Enrichment Map where all of our data is via the 'User Input' panel (Figure 6).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.super-short }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.ht-500 }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 6. Enrichment Map file load.</strong> Shown is the 'Control Panel'. The location and order the files should be loaded are numbered. The GSEA report file (.rpt) is found in the GSEA results folder and shortcuts loading the remaining files. Alternatively, all file fields  can be loaded one a time.
@@ -382,7 +382,7 @@ Time to tell Enrichment Map where all of our data is via the 'User Input' panel 
 
 Here we will set up the initial configuration through the 'Parameters' panel (Figure 7).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.shorter }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive.ht-600 }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 7. Enrichment Map settings.</strong> The 'Phenotype' labels must match exactly your classes defined in the phenotypes file (.cls). The 'FDR Q-value Cutoff' defines the maximum threshold for displaying including a gene set. The 'Similarity Cutoff' defines a minimum threshold for displaying an edge between gene sets.

@@ -27,6 +27,11 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/{{ site.static_root }}/css/main.css">
 
   <!-- Javascript -->
+  {% if page.custom_js %}
+    {% for js_file in page.custom_js %}
+      <script src='{{ site.baseurl }}/{{ site.static_root }}/{{ js_file }}' type="text/javascript"></script>
+    {% endfor %}
+  {% endif %}
   <!-- Third-party javascript -->
   <script type="text/javascript" src="{{ site.baseurl }}/{{ site.static_root }}/js/deps.js"></script>
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -34,10 +39,4 @@
   </script>
   <!-- Custom javascript -->
   <script type="text/javascript" src="{{ site.baseurl }}/{{ site.static_root }}/js/babel-compiled.js" defer></script>
-
-  {% if page.custom_js %}
-    {% for js_file in page.custom_js %}
-      <script src='{{ site.baseurl }}/{{ site.static_root }}/{{ js_file }}' type="text/javascript" defer></script>
-    {% endfor %}
-  {% endif %}
 </head>
