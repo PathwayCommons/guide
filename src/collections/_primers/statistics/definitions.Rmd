@@ -3,6 +3,7 @@ title: Definitions
 layout: markdown
 category: statistics
 comments: true
+cover: cover.png
 ---
 
 ## <a href="#probability" name="probability">Probability</a>

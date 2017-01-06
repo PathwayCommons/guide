@@ -13,5 +13,5 @@ categories:
 
   <h2 class="page-category">{{ category | capitalize | replace: "_", " " }}</h2>
   <hr/>
-  {% include grid.html %}
+  {% include archive_list.html %}
 {% endfor %}

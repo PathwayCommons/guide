@@ -1,6 +1,6 @@
 ---
 title: RNA Sequencing Analysis
-subtitle: Rationale and theory underlying data normalization and differential expression testing
+subtitle:
 date: September 15, 2016
 layout: document
 category: functional_analysis
@@ -22,6 +22,7 @@ figures:
   table_2: figure_count_table_example.jpg
   table_3: figure_count_enumerated_example.jpg
 comments: true
+cover: cover.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -408,7 +409,7 @@ the counts.*
 ## <a href="#differentialExpression" name="differentialExpression">V. Differential expression testing</a>
 
 <div class="alert alert-warning text-justify" role="alert">
-  We are going to lean heavily on our primer for <a href="{{ site.baseurl }}/primers/statistics/distributions/">Distributions</a>. In particular, you may wish to review our section on the <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">Negative binomial distribution</a>. We will also use a lot of concepts from our section on <a href="{{ site.baseurl }}/primers/functional_analysis/fishers_exact_test/">Fisher's Exact Test</a> and <a href="{{ site.baseurl }}/primers/functional_analysis/multiple_testing/">Multiple Testing</a>.
+  We are going to lean heavily on our primer for <a href="{{ site.baseurl }}/primers/statistics/distributions/">Distributions</a>. In particular, you may wish to review our section on the <a href="{{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial">Negative binomial distribution</a>. We will also use a lot of concepts from our section on <a href="{{ site.baseurl }}/primers/statistics/fishers_exact_test/">Fisher's Exact Test</a> and <a href="{{ site.baseurl }}/primers/statistics/multiple_testing/">Multiple Testing</a>.
 </div>
 
 Our goal in this section is to gather evidence that supports a claim that an RNA species is differentially expressed between two types. For illustrative purposes we will refer to contrasting expression in TCGA ovarian cancer subtypes ('mesenchymal' vs. 'immunoreactive').

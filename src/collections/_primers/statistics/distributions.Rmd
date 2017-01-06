@@ -9,6 +9,7 @@ output:
 category: statistics
 layout: markdown
 comments: true
+cover: cover.png
 ---
 
 - {:.list-unstyled} Table of Contents

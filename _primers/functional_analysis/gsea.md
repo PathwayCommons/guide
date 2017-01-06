@@ -1,6 +1,6 @@
 ---
 title: Gene Set Enrichment Analysis
-subtitle: Determine whether an a priori defined set of genes shows statistically significant, concordant differences between two biological states
+subtitle:
 date: 2016-04-20
 pmid: 16199517
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
@@ -14,6 +14,7 @@ figures:
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
 comments: true
+cover: cover.png
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -52,7 +53,7 @@ Methods that fall under the SAFE framework use a four-step approach to map gene 
 1. Calculate a local (gene-level) statistic
 2. Calculate a global (gene set or pathway-level) statistic
 3. Determine significance of the global statistic
-4. Adjust for [multiple testing]({{site.baseurl}}/primers/functional_analysis/multiple_testing/){:target="_blank"}
+4. Adjust for [multiple testing]({{site.baseurl}}/primers/statistics/multiple_testing/){:target="_blank"}
 
 ### Origins of GSEA
 
@@ -347,7 +348,7 @@ Note that throughout this discussion we have chosen to depict the GSEA global st
 ### SAFE Step 4. Multiple testing correction
 
 <div class="alert alert-warning text-justify" role="alert">
-  You may wish to review our primer on <a target="_blank" href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/">multiple  testing</a>, in particular the section on <a target="_blank" href="{{site.baseurl}}/primers/functional_analysis/multiple_testing/#controllingFDR">false discovery rates</a>.
+  You may wish to review our primer on <a target="_blank" href="{{site.baseurl}}/primers/statistics/multiple_testing/">multiple  testing</a>, in particular the section on <a target="_blank" href="{{site.baseurl}}/primers/statistics/multiple_testing/#controllingFDR">false discovery rates</a>.
 </div>
 
 When we test a family of hypotheses, the chance of observing a statistic with a small p-value increases. When smaller than the significance level, they can be erroneously classified as discoveries or Type I errors. Multiple testing procedures attempt to quantify and control for these.

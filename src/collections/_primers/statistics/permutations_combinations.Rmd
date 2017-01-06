@@ -3,6 +3,7 @@ title: Permutations & Combinations
 layout: markdown
 category: statistics
 comments: true
+cover: cover.png
 ---
 
 ## <a href="#permutations" name="permutations">Permutations</a>
