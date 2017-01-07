@@ -74,6 +74,20 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         }
       },
       {
+        selector: '#datasources_group',
+        css: {
+          'text-valign'       : 'top',
+          'text-halign'       : 'center'
+        }
+      },
+      {
+        selector: '#pathway_id_group',
+        css: {
+          'text-valign'       : 'bottom',
+          'text-halign'       : 'center'
+        }
+      },
+      {
         selector: 'edge',
         css: {
           'target-arrow-shape': 'triangle',
@@ -97,17 +111,19 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         { data: {
             id: 'cancer_db',
             name: 'Cancer genome database',
-            parent: 'datasources_group'
+            parent: 'datasources_group',
+            href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
-          classes: 'dimished',
+          classes: 'dimished data_source db_source',
           position: { x: 0, y: 0 }
         },
         { data: {
             id: 'custom_system',
             name: 'My experimental system',
-            parent: 'datasources_group'
+            parent: 'datasources_group',
+            href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
-          classes: 'dimished',
+          classes: 'dimished data_source custom_source',
           position: { x: 250, y: 0 }
         },
 
@@ -130,13 +146,13 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         { data: { id: 'pathway_id_group', name: 'Pathway Identification' } },
         { data: {
             id: 'pathways_enrichment',
-            name: 'Rank-based enrichment',
+            name: 'Enrich for pathways by gene rank',
             parent: 'pathway_id_group'
           },
           position: { x: 125, y: 325 }
         },
         { data: { id: 'pathways_visualize',
-            name: 'Visualize',
+            name: 'Visualize pathways',
             parent: 'pathway_id_group'
           },
           position: { x: 125, y: 425 }
@@ -179,6 +195,14 @@ This guide is intended to cultivate the practice of *biological pathway analysis
     layout: {
       name: 'preset',
       padding: 5
+    }
+  });
+
+  cy.on( 'tap', '.data_source.db_source', function( event ){
+    try { // your browser may block popups
+      window.open( this.data('href') );
+    } catch(e){ // fall back on url change
+      window.location.href = this.data('href');
     }
   });
 </script>
