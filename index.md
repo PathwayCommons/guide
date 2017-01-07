@@ -60,7 +60,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
           'padding-left'      : '10px',
           'padding-right'     : '10px',
           'background-color'  : '#7f8c8d',
-          'color'             : '#ecf0f1'          
+          'color'             : '#ecf0f1'
         }
       },
       {
@@ -117,7 +117,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
 
     elements: {
       nodes: [
-        { data: { id: 'datasources_group', name: 'Data Source' } },
+        { data: { id: 'datasources_group', name: 'Data Source -- Click one to see workflow' } },
         { data: {
             id: 'cancer_db',
             name: 'Cancer genome database',
