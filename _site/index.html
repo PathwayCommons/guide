@@ -21,10 +21,6 @@
 
   <!-- CSS -->
   
-    
-    <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/mermaid/dist/mermaid.dark.css" />
-    
-  
   <!-- Third-party CSS -->
   <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
@@ -34,18 +30,20 @@
   <link rel="stylesheet" href="/guide/public/css/main.css">
 
   <!-- Javascript -->
-  
-    
-      <script src='/guide/public/bower_components/mermaid/dist/mermaid.min.js' type="text/javascript"></script>
-    
-  
   <!-- Third-party javascript -->
+  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
   </script>
   <!-- Custom javascript -->
   <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+    
+      <script src='/guide/public/bower_components/cytoscape/dist/cytoscape.min.js' type="text/javascript"></script>
+    
+  
 </head>
 
 
@@ -143,21 +141,13 @@
 
       <div class="container content">
         <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
-        <script>
-  mermaid.initialize({
-    startOnLoad:true,
-    useMaxWidth:false,
-    htmlLabels:true
-  });
-</script>
-
-<p class="lead">This guide is intended to cultivate the practice of <em>biological pathway analysis</em>. We are making available a growing collection of learning materials including  <a href="/guide/presentations/archive/">presentations</a>, <a href="/guide/primers/archive/">primers</a> along with <a href="/guide/workflows/archive/">workflows</a> that provide guided instruction for data analysis.</p>
+        <p class="lead">This guide is intended to cultivate the practice of <em>biological pathway analysis</em>. We are making available a growing collection of learning materials including  <a href="/guide/presentations/archive/">presentations</a>, <a href="/guide/primers/archive/">primers</a> along with <a href="/guide/workflows/archive/">workflows</a> that provide guided instruction for data analysis.</p>
 
 <hr />
 
 <h2 id="find-your-path">Find your path</h2>
 
-<div class="panel panel-primary">
+<div class="panel panel-primary guide-index">
   <div class="panel-heading">
     <p class="panel-title text-center">
       Start: Transcriptomic data <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
@@ -165,27 +155,165 @@
     </p>
   </div>
   <div class="panel-body">
-    <div class="mermaid">
-      %% flow chart
-      graph TB
-        %% styling
-        classDef default stroke:#2c3e50;
-
-        cancer_genome_db[Workflow I. Cancer genomic database] --&gt; rna_seq_data[Get mRNA sequencing data]
-        my_experimental_system[Workflow II. Your experimental system] --&gt; rna_seq_data
-        rna_seq_data --&gt; differential_expression[Assess differential expression]
-        differential_expression --&gt; interpret_gene_list{Interpret gene list}
-        subgraph Identify Pathways
-        pathway_enrichment[Ranked-based enrichment]  --&gt; pathway_visualization[Visualize]
-        end
-        interpret_gene_list --&gt; pathway_enrichment
-
-        %% events
-        click cancer_genome_db "/guide/workflows/pathway_enrichment_gdc/index/" "Follow this path to use RNA-seq data provided by The Cancer Genome Atlas database"
-        click my_experimental_system "#" "Follow this path to upload your own RNA-seq data"
-    </div>
+    <div id="index-concepts-chart-emseq"></div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var cy = cytoscape({
+    container: $('#index-concepts-chart-emseq'),
+
+    // initial viewport state:
+    userZoomingEnabled: false,
+    userPanningEnabled: false,
+    boxSelectionEnabled: false,
+    autounselectify: true,
+
+    style: [
+      {
+        selector: 'node',
+        css: {
+          'width'             : 'label',
+          'shape'             : 'roundrectangle',
+          'content'           : 'data(name)',
+          'text-valign'       : 'center',
+          'text-halign'       : 'center',
+          'padding-left'      : '5px',
+          'padding-right'     : '5px',
+          'background-color'  : '#2980b9',
+          'color'             : '#ecf0f1',
+          'font-size'         : '0.8em'
+        }
+      },
+      {
+        selector: '$node > node',
+        css: {
+          'padding-top'       : '10px',
+          'padding-left'      : '10px',
+          'padding-bottom'    : '10px',
+          'padding-right'     : '10px',
+          'text-valign'       : 'top',
+          'text-halign'       : 'right',
+          'background-color'  : '#ecf0f1',
+          'color'             : '#2c3e50',
+          'font-size'         : '0.9em'
+        }
+      },
+      {
+        selector: '.dimished',
+        css: {
+          'background-color'  : '#7f8c8d'
+        }
+      },
+      {
+        selector: 'edge',
+        css: {
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier'
+        }
+      },
+      {
+        selector: ':selected',
+        css: {
+          'background-color': 'black',
+          'line-color': 'black',
+          'target-arrow-color': 'black',
+          'source-arrow-color': 'black'
+        }
+      }
+    ],
+
+    elements: {
+      nodes: [
+        { data: { id: 'datasources_group', name: 'Data Source' } },
+        { data: {
+            id: 'cancer_db',
+            name: 'Cancer genome database',
+            parent: 'datasources_group'
+          },
+          classes: 'dimished',
+          position: { x: 0, y: 0 }
+        },
+        { data: {
+            id: 'custom_system',
+            name: 'My experimental system',
+            parent: 'datasources_group'
+          },
+          classes: 'dimished',
+          position: { x: 250, y: 0 }
+        },
+
+        { data: { id: 'processing_group', name: 'Data Processing' } },
+        { data: {
+            id: 'rnaseq_data',
+            name: 'Measure gene expression (RNA-Seq)',
+            parent: 'processing_group'
+           },
+          position: { x: 125, y: 100 }
+        },
+        { data: {
+            id: 'assess_de',
+            name: 'Assess differential expression',
+            parent: 'processing_group'
+          },
+          position: { x: 125, y: 200 }
+        },
+
+        { data: { id: 'pathway_id_group', name: 'Pathway Identification' } },
+        { data: {
+            id: 'pathways_enrichment',
+            name: 'Rank-based enrichment',
+            parent: 'pathway_id_group'
+          },
+          position: { x: 125, y: 325 }
+        },
+        { data: { id: 'pathways_visualize',
+            name: 'Visualize',
+            parent: 'pathway_id_group'
+          },
+          position: { x: 125, y: 425 }
+        }
+      ],
+      edges: [
+        { data: {
+            id: 'db-rnaseq',
+            source: 'cancer_db',
+            target: 'rnaseq_data'
+          }
+        },
+        { data: {
+            id: 'custom-rnaseq',
+            source: 'custom_system',
+            target: 'rnaseq_data'
+          }
+        },
+        { data: {
+            id: 'rnaseq-de',
+            source: 'rnaseq_data',
+            target: 'assess_de'
+          }
+        },
+        { data: {
+            id: 'de-enrich',
+            source: 'assess_de',
+            target: 'pathways_enrichment'
+          }
+        },
+        { data: {
+            id: 'enrich_viz',
+            source: 'pathways_enrichment',
+            target: 'pathways_visualize'
+          }
+        }
+      ]
+    },
+
+    layout: {
+      name: 'preset',
+      padding: 5
+    }
+  });
+</script>
 
 <p><br /></p>
 <hr />

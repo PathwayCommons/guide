@@ -4,19 +4,9 @@ title: Home
 footer: true
 figures:
   figure_1: index/figure_index_workflow_gdc.png
-custom_css:
-  - bower_components/mermaid/dist/mermaid.dark.css
 custom_js:
-  - bower_components/mermaid/dist/mermaid.min.js
+  - bower_components/cytoscape/dist/cytoscape.min.js
 ---
-
-<script>
-  mermaid.initialize({
-    startOnLoad:true,
-    useMaxWidth:false,
-    htmlLabels:true
-  });
-</script>
 
 This guide is intended to cultivate the practice of *biological pathway analysis*. We are making available a growing collection of learning materials including  [presentations]({{ site.baseurl }}/presentations/archive/), [primers]({{ site.baseurl }}/primers/archive/) along with [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for data analysis.
 {: .lead }
@@ -25,7 +15,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
 
 ## Find your path
 
-<div class="panel panel-primary">
+<div class="panel panel-primary guide-index">
   <div class="panel-heading">
     <p class="panel-title text-center">
       Start: Transcriptomic data <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
@@ -33,28 +23,165 @@ This guide is intended to cultivate the practice of *biological pathway analysis
     </p>
   </div>
   <div class="panel-body">
-    <div class="mermaid">
-      %% flow chart
-      graph TB
-        %% styling
-        classDef default stroke:#2c3e50;
-
-        cancer_genome_db[Workflow I. Cancer genomic database] --> rna_seq_data[Get mRNA sequencing data]
-        my_experimental_system[Workflow II. Your experimental system] --> rna_seq_data
-        rna_seq_data --> differential_expression[Assess differential expression]
-        differential_expression --> interpret_gene_list{Interpret gene list}
-        subgraph Identify Pathways
-        pathway_enrichment[Ranked-based enrichment]  --> pathway_visualization[Visualize]
-        end
-        interpret_gene_list --> pathway_enrichment
-
-        %% events
-        click cancer_genome_db "{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/" "Follow this path to use RNA-seq data provided by The Cancer Genome Atlas database"
-        click my_experimental_system "#" "Follow this path to upload your own RNA-seq data"
-    </div>
+    <div id="index-concepts-chart-emseq"></div>
   </div>
 </div>
 
+<script type="text/javascript">
+  var cy = cytoscape({
+    container: $('#index-concepts-chart-emseq'),
+
+    // initial viewport state:
+    userZoomingEnabled: false,
+    userPanningEnabled: false,
+    boxSelectionEnabled: false,
+    autounselectify: true,
+
+    style: [
+      {
+        selector: 'node',
+        css: {
+          'width'             : 'label',
+          'shape'             : 'roundrectangle',
+          'content'           : 'data(name)',
+          'text-valign'       : 'center',
+          'text-halign'       : 'center',
+          'padding-left'      : '5px',
+          'padding-right'     : '5px',
+          'background-color'  : '#2980b9',
+          'color'             : '#ecf0f1',
+          'font-size'         : '0.8em'
+        }
+      },
+      {
+        selector: '$node > node',
+        css: {
+          'padding-top'       : '10px',
+          'padding-left'      : '10px',
+          'padding-bottom'    : '10px',
+          'padding-right'     : '10px',
+          'text-valign'       : 'top',
+          'text-halign'       : 'right',
+          'background-color'  : '#ecf0f1',
+          'color'             : '#2c3e50',
+          'font-size'         : '0.9em'
+        }
+      },
+      {
+        selector: '.dimished',
+        css: {
+          'background-color'  : '#7f8c8d'
+        }
+      },
+      {
+        selector: 'edge',
+        css: {
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier'
+        }
+      },
+      {
+        selector: ':selected',
+        css: {
+          'background-color': 'black',
+          'line-color': 'black',
+          'target-arrow-color': 'black',
+          'source-arrow-color': 'black'
+        }
+      }
+    ],
+
+    elements: {
+      nodes: [
+        { data: { id: 'datasources_group', name: 'Data Source' } },
+        { data: {
+            id: 'cancer_db',
+            name: 'Cancer genome database',
+            parent: 'datasources_group'
+          },
+          classes: 'dimished',
+          position: { x: 0, y: 0 }
+        },
+        { data: {
+            id: 'custom_system',
+            name: 'My experimental system',
+            parent: 'datasources_group'
+          },
+          classes: 'dimished',
+          position: { x: 250, y: 0 }
+        },
+
+        { data: { id: 'processing_group', name: 'Data Processing' } },
+        { data: {
+            id: 'rnaseq_data',
+            name: 'Measure gene expression (RNA-Seq)',
+            parent: 'processing_group'
+           },
+          position: { x: 125, y: 100 }
+        },
+        { data: {
+            id: 'assess_de',
+            name: 'Assess differential expression',
+            parent: 'processing_group'
+          },
+          position: { x: 125, y: 200 }
+        },
+
+        { data: { id: 'pathway_id_group', name: 'Pathway Identification' } },
+        { data: {
+            id: 'pathways_enrichment',
+            name: 'Rank-based enrichment',
+            parent: 'pathway_id_group'
+          },
+          position: { x: 125, y: 325 }
+        },
+        { data: { id: 'pathways_visualize',
+            name: 'Visualize',
+            parent: 'pathway_id_group'
+          },
+          position: { x: 125, y: 425 }
+        }
+      ],
+      edges: [
+        { data: {
+            id: 'db-rnaseq',
+            source: 'cancer_db',
+            target: 'rnaseq_data'
+          }
+        },
+        { data: {
+            id: 'custom-rnaseq',
+            source: 'custom_system',
+            target: 'rnaseq_data'
+          }
+        },
+        { data: {
+            id: 'rnaseq-de',
+            source: 'rnaseq_data',
+            target: 'assess_de'
+          }
+        },
+        { data: {
+            id: 'de-enrich',
+            source: 'assess_de',
+            target: 'pathways_enrichment'
+          }
+        },
+        { data: {
+            id: 'enrich_viz',
+            source: 'pathways_enrichment',
+            target: 'pathways_visualize'
+          }
+        }
+      ]
+    },
+
+    layout: {
+      name: 'preset',
+      padding: 5
+    }
+  });
+</script>
 
 <br/>
 <hr/>

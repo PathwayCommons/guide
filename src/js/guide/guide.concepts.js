@@ -1,6 +1,6 @@
 "use strict";
 
-var mermaidAPI = require('mermaid').mermaidAPI;
+var cy = require('cytoscape');
 var concepts = (function(){
 
   // ---------- BEGIN MODULE SCOPE VARIABLES -----------------------------------
@@ -28,22 +28,7 @@ var concepts = (function(){
   };
 
   insert = function(){
-    var graphDefinition =
-      'graph TB\n' +
-        'a-->b';
-
-    var cb = function(svgCode, bindFunctions){
-      jqueryMap.$container.append(svgCode);
-      console.log( svgCode );
-    };
-    mermaidAPI.initialize({
-            startOnLoad:false
-        });
-    mermaidAPI.render(
-      'index-concepts-chart',
-      graphDefinition,
-      cb
-    );
+    
   };
   // End DOM method /setJQueryMap/
   // ---------- END DOM METHODS ------------------------------------------------
