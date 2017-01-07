@@ -54,6 +54,16 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         }
       },
       {
+        selector: '.hub',
+        css: {
+          'shape'             : 'ellipse',
+          'padding-left'      : '10px',
+          'padding-right'     : '10px',
+          'background-color'  : '#7f8c8d',
+          'color'             : '#ecf0f1'          
+        }
+      },
+      {
         selector: '$node > node',
         css: {
           'padding-top'       : '10px',
@@ -133,15 +143,24 @@ This guide is intended to cultivate the practice of *biological pathway analysis
             name: 'Measure gene expression (RNA-Seq)',
             parent: 'processing_group'
            },
-          position: { x: 125, y: 100 }
+          position: { x: 125, y: 125 }
         },
         { data: {
             id: 'assess_de',
             name: 'Assess differential expression',
             parent: 'processing_group'
           },
-          position: { x: 125, y: 200 }
+          position: { x: 125, y: 225 }
         },
+
+        { data: {
+            id: 'interpret_gene_list',
+            name: 'Interpret gene list'
+          },
+          classes: 'hub',
+          position: { x: 125, y: 350 }
+        },
+
 
         { data: { id: 'pathway_id_group', name: 'Pathway Identification' } },
         { data: {
@@ -149,13 +168,13 @@ This guide is intended to cultivate the practice of *biological pathway analysis
             name: 'Enrich for pathways by gene rank',
             parent: 'pathway_id_group'
           },
-          position: { x: 125, y: 325 }
+          position: { x: 125, y: 450 }
         },
         { data: { id: 'pathways_visualize',
             name: 'Visualize pathways',
             parent: 'pathway_id_group'
           },
-          position: { x: 125, y: 425 }
+          position: { x: 125, y: 550 }
         }
       ],
       edges: [
@@ -178,8 +197,14 @@ This guide is intended to cultivate the practice of *biological pathway analysis
           }
         },
         { data: {
-            id: 'de-enrich',
+            id: 'de-interpret',
             source: 'assess_de',
+            target: 'interpret_gene_list'
+          }
+        },
+        { data: {
+            id: 'interpret-enrich',
+            source: 'interpret_gene_list',
             target: 'pathways_enrichment'
           }
         },
