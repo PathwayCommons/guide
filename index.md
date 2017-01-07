@@ -120,7 +120,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         { data: { id: 'datasources_group', name: 'Data Source -- Click one to see workflow' } },
         { data: {
             id: 'cancer_db',
-            name: 'Cancer genome database',
+            name: 'Start: Cancer genome database',
             parent: 'datasources_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
@@ -129,7 +129,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         },
         { data: {
             id: 'custom_system',
-            name: 'My experimental system',
+            name: 'Start: My experimental system',
             parent: 'datasources_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
@@ -226,6 +226,13 @@ This guide is intended to cultivate the practice of *biological pathway analysis
   cy.on( 'tap', '.data_source.db_source', function( event ){
     try { // your browser may block popups
       window.open( this.data('href') );
+    } catch(e){ // fall back on url change
+      window.location.href = this.data('href');
+    }
+  });
+  cy.on( 'tap', 'node', function( event ){
+    try { // your browser may block popups
+      window.open( '{{ site.baseurl }}/workflows/archive/' );
     } catch(e){ // fall back on url change
       window.location.href = this.data('href');
     }
