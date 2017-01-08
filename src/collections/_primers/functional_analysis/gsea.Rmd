@@ -14,7 +14,7 @@ figures:
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
 comments: true
-cover: cover.png
+cover: cover.jpg
 ---
 
 - {:.list-unstyled} Table of Contents

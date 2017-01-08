@@ -22,7 +22,7 @@ figures:
   table_2: figure_count_table_example.jpg
   table_3: figure_count_enumerated_example.jpg
 comments: true
-cover: cover.png
+cover: cover.jpg
 ---
 
 - {:.list-unstyled} Table of Contents

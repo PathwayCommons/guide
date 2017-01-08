@@ -14,7 +14,7 @@ figures:
   figure_2: figure_2.jpg
   figure_3: figure_3.jpg
 comments: true
-cover: cover.png
+cover: cover.jpg
 ---
 
 - {:.list-unstyled} Table of Contents
