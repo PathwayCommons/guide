@@ -46,11 +46,14 @@ This guide is intended to cultivate the practice of *biological pathway analysis
           'content'           : 'data(name)',
           'text-valign'       : 'center',
           'text-halign'       : 'center',
+          'text-wrap'         : 'wrap',
           'padding-left'      : '5px',
           'padding-right'     : '5px',
+          'padding-top'       : '10px',
+          'padding-bottom'    : '10px',
           'background-color'  : '#2980b9',
           'color'             : '#ecf0f1',
-          'font-size'         : '0.8em'
+          'font-size'         : '0.9em'
         }
       },
       {
@@ -80,21 +83,10 @@ This guide is intended to cultivate the practice of *biological pathway analysis
       {
         selector: '.dimished',
         css: {
-          'background-color'  : '#7f8c8d'
-        }
-      },
-      {
-        selector: '#datasources_group',
-        css: {
-          'text-valign'       : 'top',
-          'text-halign'       : 'center'
-        }
-      },
-      {
-        selector: '#pathway_id_group',
-        css: {
-          'text-valign'       : 'bottom',
-          'text-halign'       : 'center'
+          'background-color'  : '#34495e',
+          'padding-top'       : '10px',
+          'padding-bottom'    : '10px'
+          // 'color'             : '#2c3e50'
         }
       },
       {
@@ -117,10 +109,10 @@ This guide is intended to cultivate the practice of *biological pathway analysis
 
     elements: {
       nodes: [
-        { data: { id: 'datasources_group', name: 'Data Source -- Click one to see workflow' } },
+        { data: { id: 'datasources_group', name: 'Data Source' } },
         { data: {
             id: 'cancer_db',
-            name: 'Start: Cancer genome database',
+            name: 'Workflow I\n\nCancer genome database',
             parent: 'datasources_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
@@ -129,7 +121,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         },
         { data: {
             id: 'custom_system',
-            name: 'Start: My experimental system',
+            name: 'Workflow II\n\nYour experimental system',
             parent: 'datasources_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
@@ -140,7 +132,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         { data: { id: 'processing_group', name: 'Data Processing' } },
         { data: {
             id: 'rnaseq_data',
-            name: 'Measure gene expression (RNA-Seq)',
+            name: 'Measure gene expression\n\n(RNA-Seq)',
             parent: 'processing_group'
            },
           position: { x: 125, y: 125 }
