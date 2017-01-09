@@ -99,9 +99,12 @@ Gene expression will be measured in class `category_test` relative to class `cat
 The DGEList contains a component `counts` which is a table identical to our input. The component `samples` is a table created with a column `lib.size` that states the total counts for the case.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|               &nbsp;               |     group      |  lib.size  |  norm.factors  |
+|:----------------------------------:|:--------------:|:----------:|:--------------:|
+|  **TCGA-24-2024-01A-02R-1568-13**  | Differentiated |  88674430  |       1        |
+|  **TCGA-23-1026-01B-01R-1569-13**  | Differentiated |  48116062  |       1        |
+|  **TCGA-30-1891-01A-01R-1568-13**  |  Mesenchymal   |  52662838  |       1        |
+|  **TCGA-25-1635-01A-01R-1566-13**  |  Mesenchymal   |  67866487  |       1        |
 {:.table .table-hover .table-condensed .table-responsive}
 
 **Step 1: Filter**
@@ -121,9 +124,12 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|               &nbsp;               |    group    |  lib.size  |  norm.factors  |
+|:----------------------------------:|:-----------:|:----------:|:--------------:|
+|  **TCGA-30-1891-01A-01R-1568-13**  | Mesenchymal |  51319833  |     0.8322     |
+|  **TCGA-25-1635-01A-01R-1566-13**  | Mesenchymal |  65344939  |     1.066      |
+|  **TCGA-24-1563-01A-01R-1566-13**  | Mesenchymal |  53778588  |     0.9815     |
+|  **TCGA-25-2042-01A-01R-1568-13**  | Mesenchymal |  58726168  |     0.8635     |
 {:.table .table-hover .table-condensed .table-responsive}
 
 The column `norm.factors` is simply our global correction factor for each library $$k$$ relative to the reference $$r$$.
@@ -184,23 +190,13 @@ Let us take a look at the data we've generated. Below we plot the common dispers
 plotBCV(tcgaov_fitted_tagwise)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotBCV"
-{% endhighlight %}
-
-
+<img src="/guide/media/workflows/pathway_enrichment_gdc/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
 
 {% highlight r %}
 plotMeanVar(tcgaov_fitted_tagwise, show.tagwise.vars=TRUE, NBline = TRUE)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"
-{% endhighlight %}
+<img src="/guide/media/workflows/pathway_enrichment_gdc/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" />
 
 A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values $$P$$ for each gene. As described in our discussion of [differential expression testing]({{site.baseurl}}/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression){:target="_blank"}, $$P$$ represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.
 
@@ -217,9 +213,12 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 The result of the function `exactTest` is a data structure with a `table` attribute that stores the p-values for each gene.
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|        &nbsp;         |  logFC   |  logCPM  |  PValue  |
+|:---------------------:|:--------:|:--------:|:--------:|
+|  **ENSG00000000003**  | -0.02072 |  6.285   |  0.8293  |
+|  **ENSG00000000419**  | -0.08461 |  5.877   |  0.3485  |
+|  **ENSG00000000457**  | -0.07762 |   3.88   |  0.2453  |
+|  **ENSG00000000460**  | -0.2578  |  3.483   | 0.004774 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 
@@ -234,9 +233,12 @@ The function `topTags` takes the output from `exactTest` and uses the [Bejamini-
 
 
 
-{% highlight text %}
-## Error in eval(expr, envir, enclos): could not find function "pandoc.table"
-{% endhighlight %}
+|        &nbsp;         |  logFC  |  logCPM  |  PValue   |    FDR    |
+|:---------------------:|:-------:|:--------:|:---------:|:---------:|
+|  **ENSG00000182492**  |  1.865  |   9.44   | 1.739e-52 | 1.841e-48 |
+|  **ENSG00000106624**  |  2.148  |  9.224   | 1.308e-47 | 6.927e-44 |
+|  **ENSG00000038427**  |  2.04   |  7.567   | 1.887e-43 | 6.66e-40  |
+|  **ENSG00000084636**  |  1.779  |  5.911   | 3.297e-43 | 8.729e-40 |
 {:.table .table-hover .table-condensed .table-responsive}
 
 We can now plot our differentially expressed genes (red) over our full data.

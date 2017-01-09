@@ -356,9 +356,9 @@
   });
   cy.on( 'tap', 'node', function( event ){
     try { // your browser may block popups
-      window.open( '/guide/workflows/archive/' );
-    } catch(e){ // fall back on url change
       window.location.href = this.data('href');
+    } catch(e){ // fall back on url change
+      window.open( '/guide/workflows/archive/' );    
     }
   });
 </script>

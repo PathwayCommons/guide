@@ -192,9 +192,44 @@
 
 <p>The DGEList contains a component <code class="highlighter-rouge">counts</code> which is a table identical to our input. The component <code class="highlighter-rouge">samples</code> is a table created with a column <code class="highlighter-rouge">lib.size</code> that states the total counts for the case.</p>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "pandoc.table"</code></pre></figure>
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">group</th>
+      <th style="text-align: center">lib.size</th>
+      <th style="text-align: center">norm.factors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-24-2024-01A-02R-1568-13</strong></td>
+      <td style="text-align: center">Differentiated</td>
+      <td style="text-align: center">88674430</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-23-1026-01B-01R-1569-13</strong></td>
+      <td style="text-align: center">Differentiated</td>
+      <td style="text-align: center">48116062</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-30-1891-01A-01R-1568-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">52662838</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-25-1635-01A-01R-1566-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">67866487</td>
+      <td style="text-align: center">1</td>
+    </tr>
+  </tbody>
+</table>
 
-<p class="table table-hover table-condensed table-responsive"><strong>Step 1: Filter</strong></p>
+<p><strong>Step 1: Filter</strong></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
 <span class="c1">### ============ 1. Filter ===============
@@ -217,9 +252,44 @@
 
 <p>The function <code class="highlighter-rouge">calcNormFactors</code> is a <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#normalization" target="_blank">normalization procedure</a> using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter <code class="highlighter-rouge">refColumn</code> otherwise the library whose upper quartile is closest to the mean upper quartile is used.</p>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "pandoc.table"</code></pre></figure>
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">group</th>
+      <th style="text-align: center">lib.size</th>
+      <th style="text-align: center">norm.factors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-30-1891-01A-01R-1568-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">51319833</td>
+      <td style="text-align: center">0.8322</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-25-1635-01A-01R-1566-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">65344939</td>
+      <td style="text-align: center">1.066</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-24-1563-01A-01R-1566-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">53778588</td>
+      <td style="text-align: center">0.9815</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>TCGA-25-2042-01A-01R-1568-13</strong></td>
+      <td style="text-align: center">Mesenchymal</td>
+      <td style="text-align: center">58726168</td>
+      <td style="text-align: center">0.8635</td>
+    </tr>
+  </tbody>
+</table>
 
-<p class="table table-hover table-condensed table-responsive">The column <code class="highlighter-rouge">norm.factors</code> is simply our global correction factor for each library <script type="math/tex">k</script> relative to the reference <script type="math/tex">r</script>.</p>
+<p>The column <code class="highlighter-rouge">norm.factors</code> is simply our global correction factor for each library <script type="math/tex">k</script> relative to the reference <script type="math/tex">r</script>.</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{equation}
@@ -260,11 +330,11 @@
 ###  Plotting BCV
 </span><span class="n">plotBCV</span><span class="p">(</span><span class="n">tcgaov_fitted_tagwise</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "plotBCV"</code></pre></figure>
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/process_data/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plotMeanVar</span><span class="p">(</span><span class="n">tcgaov_fitted_tagwise</span><span class="p">,</span> <span class="n">show.tagwise.vars</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">NBline</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "plotMeanVar"</code></pre></figure>
+<p><img src="/guide/media/workflows/pathway_enrichment_gdc/process_data/unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="400" style="display: block; margin: auto;" /></p>
 
 <p>A negative binomial model can be fit from our data and dispersion estimated. From this, we calculate p-values <script type="math/tex">P</script> for each gene. As described in our discussion of <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression" target="_blank">differential expression testing</a>, <script type="math/tex">P</script> represents the sum of all probabilities less than or equal to the probability under the null hypothesis for the observed count.</p>
 
@@ -284,9 +354,44 @@
 
 <p>The result of the function <code class="highlighter-rouge">exactTest</code> is a data structure with a <code class="highlighter-rouge">table</code> attribute that stores the p-values for each gene.</p>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "pandoc.table"</code></pre></figure>
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">logFC</th>
+      <th style="text-align: center">logCPM</th>
+      <th style="text-align: center">PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000000003</strong></td>
+      <td style="text-align: center">-0.02072</td>
+      <td style="text-align: center">6.285</td>
+      <td style="text-align: center">0.8293</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000000419</strong></td>
+      <td style="text-align: center">-0.08461</td>
+      <td style="text-align: center">5.877</td>
+      <td style="text-align: center">0.3485</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000000457</strong></td>
+      <td style="text-align: center">-0.07762</td>
+      <td style="text-align: center">3.88</td>
+      <td style="text-align: center">0.2453</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000000460</strong></td>
+      <td style="text-align: center">-0.2578</td>
+      <td style="text-align: center">3.483</td>
+      <td style="text-align: center">0.004774</td>
+    </tr>
+  </tbody>
+</table>
 
-<p class="table table-hover table-condensed table-responsive"><strong>Step 5: Adjust</strong></p>
+<p><strong>Step 5: Adjust</strong></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  
 <span class="c1">### ============ 5. Adjust ===============
@@ -297,9 +402,49 @@
 
 <p>The function <code class="highlighter-rouge">topTags</code> takes the output from <code class="highlighter-rouge">exactTest</code> and uses the <a href="/guide/primers/statistics/multiple_testing/#controllingFDR" target="_blank">Bejamini-Hochberg (BH) procedure</a> to adjust the p-values yielding the a ‘BH-adjusted p-value’ also known as ‘q-value’ (Yekutieli and Benjamini, J. Stat. Plan. Inf. v82, pp.171-196, 1999). In terms of the BH procedure, the BH-adjusted p-value is the smallest value of <script type="math/tex">q^∗</script> for which the hypothesis corresponding to the p-value is still rejected. In practical terms, it means that values smaller than or equal to the given p-value have a false discovery rate equal to the BH-adjusted p-value. <code class="highlighter-rouge">topTags</code> returns the top differentially expressed genes. The output is similar to that of <code class="highlighter-rouge">exactTest</code> but with a column of adjusted p-values and sorted by increasing p-value.</p>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): could not find function "pandoc.table"</code></pre></figure>
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">logFC</th>
+      <th style="text-align: center">logCPM</th>
+      <th style="text-align: center">PValue</th>
+      <th style="text-align: center">FDR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000182492</strong></td>
+      <td style="text-align: center">1.865</td>
+      <td style="text-align: center">9.44</td>
+      <td style="text-align: center">1.739e-52</td>
+      <td style="text-align: center">1.841e-48</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000106624</strong></td>
+      <td style="text-align: center">2.148</td>
+      <td style="text-align: center">9.224</td>
+      <td style="text-align: center">1.308e-47</td>
+      <td style="text-align: center">6.927e-44</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000038427</strong></td>
+      <td style="text-align: center">2.04</td>
+      <td style="text-align: center">7.567</td>
+      <td style="text-align: center">1.887e-43</td>
+      <td style="text-align: center">6.66e-40</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>ENSG00000084636</strong></td>
+      <td style="text-align: center">1.779</td>
+      <td style="text-align: center">5.911</td>
+      <td style="text-align: center">3.297e-43</td>
+      <td style="text-align: center">8.729e-40</td>
+    </tr>
+  </tbody>
+</table>
 
-<p class="table table-hover table-condensed table-responsive">We can now plot our differentially expressed genes (red) over our full data.</p>
+<p>We can now plot our differentially expressed genes (red) over our full data.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### ============ Plotting ===============
 </span><span class="n">rn</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">tcgaov_tt</span><span class="o">$</span><span class="n">table</span><span class="p">)</span>

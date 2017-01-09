@@ -224,9 +224,9 @@ This guide is intended to cultivate the practice of *biological pathway analysis
   });
   cy.on( 'tap', 'node', function( event ){
     try { // your browser may block popups
-      window.open( '{{ site.baseurl }}/workflows/archive/' );
-    } catch(e){ // fall back on url change
       window.location.href = this.data('href');
+    } catch(e){ // fall back on url change
+      window.open( '{{ site.baseurl }}/workflows/archive/' );    
     }
   });
 </script>

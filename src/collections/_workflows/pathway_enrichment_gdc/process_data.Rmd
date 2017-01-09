@@ -86,7 +86,7 @@ home
 
 ### Data processing
 
-```{r cache=TRUE}
+```{r cache=FALSE}
 rm(list=ls(all=TRUE))
 
 ### ============ Install packages from Bioconductor ========
