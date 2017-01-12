@@ -8,7 +8,7 @@ group: pathway_enrichment_gdc
 order: 1
 data:
   subtype: Verhaak_JCI_2013_tableS1.txt
-  tcgaov_data: tcgaov_dge.RData
+  tcgaov_data: tcgaov_dge.rds
 figures:
   figure_1: figure_getdata_overview.jpg
   figure_2: gdc_data_model.jpg
@@ -227,13 +227,13 @@ Figure 6 summarizes the main steps that we performed in R to download the TCGA-O
 
 The TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an edgeR DGEList variable `tcgaov_dge` and saved to an RData file named `tcgaov_dge.RData`.
 
-<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.RData</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> {{ page.data.tcgaov_data }}</a>
 
 ### Try it yourself
 
 We have made our R source code available in an R script `get_data.R` if you are interested in downloading and processing the TCGA-OV RNA-seq data yourself. To ease the burden of loading the correct software and dependencies, we have generated a [Docker](https://www.docker.com/){:target="_blank"} image of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary supporting files.
 
-The code and supporting material are available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/get_data.R"
+The code and supporting material are available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/6e3539b4b7f306bb49533d909990333fedf02c96/pathway_enrichment_gdc/scripts/get_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>

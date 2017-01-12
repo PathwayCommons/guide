@@ -116,16 +116,16 @@ This guide is intended to cultivate the practice of *biological pathway analysis
             parent: 'datasources_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
           },
-          classes: 'dimished data_source db_source',
+          classes: 'dimished data_source',
           position: { x: 0, y: 0 }
         },
         { data: {
             id: 'custom_system',
             name: 'Workflow II\n\nYour experimental system',
             parent: 'datasources_group',
-            href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
+            href: '{{ site.baseurl }}/workflows/pathway_enrichment_custom/index/'
           },
-          classes: 'dimished data_source custom_source',
+          classes: 'dimished data_source',
           position: { x: 250, y: 0 }
         },
 
@@ -215,18 +215,11 @@ This guide is intended to cultivate the practice of *biological pathway analysis
     }
   });
 
-  cy.on( 'tap', '.data_source.db_source', function( event ){
+  cy.on( 'tap', '.data_source', function( event ){
     try { // your browser may block popups
       window.open( this.data('href') );
     } catch(e){ // fall back on url change
       window.location.href = this.data('href');
-    }
-  });
-  cy.on( 'tap', 'node', function( event ){
-    try { // your browser may block popups
-      window.location.href = this.data('href');
-    } catch(e){ // fall back on url change
-      window.open( '{{ site.baseurl }}/workflows/archive/' );    
     }
   });
 </script>

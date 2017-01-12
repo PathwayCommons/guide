@@ -129,14 +129,14 @@
 
 <h3 id="software-requirements">Software requirements</h3>
 
-<p><strong>Run inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the correct software and dependencies, we have generated a <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
+<p><strong>Run inside Docker</strong> (<em>Recommended</em>). To ease the burden of loading the correct software and dependencies, we have generated a <a href="https://github.com/jvwong/pc_guide_workflows/tree/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
 
 <p><strong>Run code on your computer</strong>. You can run the R code on your own computer and will need the following files and software</p>
 
 <ul>
   <li>RNA-seq assay and phenotype information (from ‘Get Data’)
     <ul>
-      <li><a href="/guide/workflows/pathway_enrichment/get_data/#data" target="_blank">tcgaov_dge.RData</a></li>
+      <li><a href="/guide/workflows/pathway_enrichment_gdc/get_data/" target="_blank">tcgaov_dge.RData</a></li>
     </ul>
   </li>
   <li><a href="https://www.r-project.org/" target="_blank">R</a>: &gt;version 3.3.1
@@ -160,6 +160,7 @@
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
+|   |    |--- visualize.R
 |   |
 |   |--- output
 |   |    |
@@ -174,8 +175,7 @@
 
 <p>Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable <code class="highlighter-rouge">tcgaov_dge</code> from the previous section.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ Install packages from Bioconductor ========
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ Attach packages  ========
 </span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
@@ -186,7 +186,7 @@
 </span><span class="n">category_baseline</span> <span class="o">&lt;-</span> <span class="s2">"Immunoreactive"</span>
 <span class="n">category_test</span><span class="o">&lt;-</span> <span class="s2">"Mesenchymal"</span>
 
-<span class="n">load</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.RData"</span><span class="p">))</span></code></pre></figure>
+<span class="n">tcgaov_dge</span> <span class="o">&lt;-</span> <span class="n">readRDS</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.rds"</span><span class="p">))</span></code></pre></figure>
 
 <p>Gene expression will be measured in class <code class="highlighter-rouge">category_test</code> relative to class <code class="highlighter-rouge">category_baseline</code>.</p>
 
@@ -231,8 +231,7 @@
 
 <p><strong>Step 1: Filter</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ 1. Filter ===============
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 1. Filter ===============
 </span><span class="n">index_baseline</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_baseline</span>
 <span class="n">index_test</span> <span class="o">&lt;-</span> <span class="n">tcgaov_dge</span><span class="o">$</span><span class="n">samples</span><span class="o">$</span><span class="n">group</span> <span class="o">==</span> <span class="n">category_test</span>
 <span class="n">index_baseline_test</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">index_baseline</span> <span class="o">|</span> <span class="n">index_test</span><span class="p">)</span>
@@ -246,8 +245,7 @@
 
 <p><strong>Step 2: Normalize</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ 2. Normalize ===============
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 2. Normalize ===============
 </span><span class="n">tcgaov_normalized_tmm</span> <span class="o">&lt;-</span> <span class="n">calcNormFactors</span><span class="p">(</span><span class="n">tcgaov_filtered</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
 
 <p>The function <code class="highlighter-rouge">calcNormFactors</code> is a <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#normalization" target="_blank">normalization procedure</a> using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter <code class="highlighter-rouge">refColumn</code> otherwise the library whose upper quartile is closest to the mean upper quartile is used.</p>
@@ -302,8 +300,7 @@
 
 <p><strong>Step 3: Fit</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ 3. Fit ===============
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 3. Fit ===============
 </span><span class="n">tcgaov_fitted_commondisp</span> <span class="o">&lt;-</span> <span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">tcgaov_normalized_tmm</span><span class="p">)</span>
 <span class="n">tcgaov_fitted_tagwise</span> <span class="o">&lt;-</span> <span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">tcgaov_fitted_commondisp</span><span class="p">)</span></code></pre></figure>
 
@@ -393,8 +390,7 @@
 
 <p><strong>Step 5: Adjust</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ 5. Adjust ===============
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 5. Adjust ===============
 </span><span class="n">tcgaov_tt</span> <span class="o">&lt;-</span> <span class="n">topTags</span><span class="p">(</span><span class="n">tcgaov_de</span><span class="p">,</span>
                      <span class="n">n</span> <span class="o">=</span> <span class="n">nrow</span><span class="p">(</span><span class="n">tcgaov_filtered</span><span class="p">),</span>
                      <span class="n">adjust.method</span> <span class="o">=</span> <span class="s2">"BH"</span><span class="p">,</span>
@@ -455,8 +451,7 @@
 
 <p><strong>Step 6: Rank</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">### ============ 6. Rank ===============
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ 6. Rank ===============
 </span><span class="n">tcgaov_ranks</span> <span class="o">&lt;-</span> <span class="n">sign</span><span class="p">(</span><span class="n">tcgaov_tt</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">logFC</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="n">log10</span><span class="p">(</span><span class="n">tcgaov_tt</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">PValue</span><span class="p">)</span>
 <span class="n">genenames</span> <span class="o">&lt;-</span> <span class="n">tcgaov_tt</span><span class="o">$</span><span class="n">table</span><span class="o">$</span><span class="n">external_gene_name</span>
 <span class="n">tcgaov_ranks</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">tcgaov_ranks</span><span class="p">)</span>
@@ -467,8 +462,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 
 <p>The resulting data frame is saved as a tab-delimited file <code class="highlighter-rouge">MesenchymalvsImmunoreactive_edger_ranks.rnk</code> for use in downstream differential expression analysis.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  
-<span class="c1">## Save to file as tab-delimited text
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">## Save to file as tab-delimited text
 </span><span class="n">write.table</span><span class="p">(</span><span class="n">tcgaov_ordered_ranks</span><span class="p">,</span>
             <span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span>
               <span class="s2">"MesenchymalvsImmunoreactive_edger_ranks.rnk"</span><span class="p">),</span>
@@ -500,14 +494,11 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 <hr />
 
 <p>The preceding R code is presented in its entirety and available at Github
-<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R" target="_blank">
+<a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R" target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="n">ls</span><span class="p">(</span><span class="n">all</span><span class="o">=</span><span class="n">TRUE</span><span class="p">))</span>
-
-
-<span class="c1">### ============ Install packages from Bioconductor ========
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ Attach packages  ========
 </span><span class="n">library</span><span class="p">(</span><span class="s2">"edgeR"</span><span class="p">)</span>
 
 <span class="c1">### ============ Declare directories =========
@@ -518,7 +509,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 </span><span class="n">category_baseline</span> <span class="o">&lt;-</span> <span class="s2">"Immunoreactive"</span>
 <span class="n">category_test</span><span class="o">&lt;-</span> <span class="s2">"Mesenchymal"</span>
 
-<span class="n">load</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.RData"</span><span class="p">))</span>
+<span class="n">tcgaov_dge</span> <span class="o">&lt;-</span> <span class="n">readRDS</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">tcgaov_output_dir</span><span class="p">,</span> <span class="s2">"tcgaov_dge.rds"</span><span class="p">))</span>
 
 
 <span class="c1">### ============ 1. Filter ===============
@@ -634,7 +625,7 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
   </tbody>
 </table>
 
-<p>The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R" target="_blank">
+<p>The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R" target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a></p>
 
@@ -642,9 +633,6 @@ Set the gene name from the Ensembl gene ID to the <code class="highlighter-rouge
 
 <h2 id="a-hrefreferences-namereferencesv-referencesa"><a href="#references" name="references">V. References</a></h2>
 <div class="panel_group" data-inline="23975260,21720365,23359318"></div>
-<!-- - Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
-- Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013) -->
 
         </div>        
         

@@ -6,6 +6,8 @@ date: 2010-11-15
 layout: embedded
 group: pathway_enrichment_gdc
 order: 4
+data:
+  tcgaov_data: workflows/pathway_enrichment_gdc/get_data/tcgaov_dge.rds
 figures:
   figure_1: figure_visualize_em_overview.jpg
   figure_2: figure_visualize_cytoscape_em_preview.jpg
@@ -68,7 +70,7 @@ Subsequently, expression data was used to derive a measure of differential expre
 |   11972 | TAP1    | -26.92687699671 |
 
 
-Rather than analyze a list of over 10 000 genes one at a time, we argued that more robust, less arbitrary methods were required. To this end we used [Gene Set Enrichment Analysis](http://software.broadinstitute.org/) to identify gene sets  enriched within our list. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'. Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
+Rather than analyze a list of over 10 000 genes one at a time, we argued that more robust, less arbitrary methods were required. To this end we used [Gene Set Enrichment Analysis](http://software.broadinstitute.org/){:target="_blank"} to identify gene sets  enriched within our list. In particular, we used GSEA to identify candidate gene sets enriched in the genes up-regulated in 'mesenchymal' samples and like-wise those categorized as 'immunoreactive'. Using this approach we identified over 2 500 gene sets enriched in the 'mesenchymal' subtype (Table 2) and over 1 900 in 'immunoreactive' samples.
 
 **Table 2. GSEA report for 'Mesenchymal' class**
 
@@ -88,7 +90,7 @@ Ideally, we want a simple way to reduce the size or 'dimensionality' of the outp
 
 #### Hierachical
 
-Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/) (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. An alternative approach is to modify the way in which statistical tests applied. For example,  *Ontologizer* (Bauer 2008) uses a 'parent-child' modification of [Fisher's Exact]({{site.baseurl}}/primers/functional_analysis/fishers_exact_test/) test in which enrichment is determined using the parent gene set as the sample space rather than the entire list of genes.
+Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. An alternative approach is to modify the way in which statistical tests applied. For example,  *Ontologizer* (Bauer 2008) uses a 'parent-child' modification of [Fisher's Exact]({{site.baseurl}}/primers/statistics/fishers_exact_test/){:target="_blank"} test in which enrichment is determined using the parent gene set as the sample space rather than the entire list of genes.
 
 For the most part, Ontologizer and other similar tools rely on variations of Fisher's Exact test to test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
 
@@ -100,7 +102,7 @@ Gene sets are represented as nodes where the number of genes correlates with siz
 
 The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.
 
-Figure 2 provides a tour of [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap) in the graph anaysis software [Cytoscape](http://www.cytoscape.org/).
+Figure 2 provides a tour of [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"} in the graph anaysis software [Cytoscape](http://www.cytoscape.org/){:target="_blank"}.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -247,9 +249,9 @@ The first line consists of column headings for a gene *NAME* and *DESCRIPTION* f
 
 #### Generate expression file
 
-[Previously]({{site.baseurl}}/workflows/pathway_enrichment/get_data/), the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable `tcgaov_dge` and saved to an RData file named 'tcgaov_dge.RData'.
+[Previously]({{site.baseurl}}/workflows/pathway_enrichment_gdc/get_data/){:target="_blank"}, the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable `tcgaov_dge` and saved to an RDS file named 'tcgaov_dge.rds'.
 
-<a href="{{ site.baseurl }}/{{ site.media_root }}/workflows/pathway_enrichment/get_data/tcgaov_dge.RData" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.RData</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}/{{ page.data.tcgaov_data }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.rds</a>
 
 From `tcgaov_dge`, we will retrieve the expression data from the `counts` variable and the HGNC gene identifiers from the `genes` variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The `counts` variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.
 
@@ -260,19 +262,19 @@ Install and load the required R/Bioconductor packages. Declare the paths for fil
 > Note: The code below is contained in a script named `visualize.R`.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 1 15 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R 0 12 %}
 {% endhighlight %}
 
 We repeat a section of the previous code that filters genes with low expression (noisy) and calculates normalization factors for each sample that adjust for differences in total mapped sequence reads.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 16 30 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R 13 27 %}
 {% endhighlight %}
 
 Our DGEList `tcgaov_normalized_tmm` has a variable `genes` where we can retrieve the HGNC IDs (column `external_gene_name`) assign to the 'NAME' field; We will assign the Ensembl IDs (column `ensembl_gene_id`) to 'DESCRIPTION' (Table 1).
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 31 50 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R 31 50 %}
 {% endhighlight %}
 
 Here we merge the `tcgaov_normalized_tmm` data frame variable `genes` with the normalized data frame of expression values in `tcgaov_counts_cpm`. The `genes` variable has extra columns so we punt these in the final data frame `tcgaov_em_expression`. The 'NAME' and 'DESCRIPTION' column headers are subtituted in the final container.
@@ -280,12 +282,12 @@ Here we merge the `tcgaov_normalized_tmm` data frame variable `genes` with the n
 Finally we write to file.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 51 60 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R 48 57 %}
 {% endhighlight %}
 
 <hr/>
 
-The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/visualize.R"
+The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
@@ -317,7 +319,7 @@ We will use a [ text format (.cls) ](http://software.broadinstitute.org/cancer/s
 We will continue where we left off last time.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/visualize.R 61 87 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R 58 84 %}
 {% endhighlight %}
 
 <hr/>

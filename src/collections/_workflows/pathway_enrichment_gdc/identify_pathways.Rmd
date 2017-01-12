@@ -16,7 +16,7 @@ figures:
   figure_8: figure_gsea_report_snapshot_neg.png
   gsea_download: GSEA_download.gif
 data:
-  data_1: workflows/pathway_enrichment/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
+  data_1: workflows/pathway_enrichment_gdc/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
   data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
 comments: true
 ---
@@ -81,7 +81,7 @@ home
 
 ### 1. Ranked gene list
 
- You can visit the [Process Data]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#data){:target="_blank"} section to obtain `MesenchymalvsImmunoreactive_edger_ranks.rnk` which is the ranked gene list for the TCGA-OV project assessing differential expression in the 'mesenchymal' subtype relative to the 'immunoreactive' subtype.
+ You can visit the [Process Data]({{site.baseurl}}/workflows/pathway_enrichment_gdc/process_data/#data){:target="_blank"} section to obtain `MesenchymalvsImmunoreactive_edger_ranks.rnk` which is the ranked gene list for the TCGA-OV project assessing differential expression in the 'mesenchymal' subtype relative to the 'immunoreactive' subtype.
 
 <a href="{{site.baseurl}}/{{site.media_root}}/{{ page.data.data_1 }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranked list (.rnk)</a>
 
@@ -284,7 +284,7 @@ You can read the complete guide to [Interpreting GSEA Results](http://software.b
 
 There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates up-regulation in the second phenotype.
 
-Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pathway_enrichment/process_data/#practical){:target="_blank"}  we assessed gene expression in the 'Mesenchymal' subtype relative to the 'Immunoreactive' subtype. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'mesenchymal' subtype and 'na_neg' refers to the 'immunoreactive' subtype.
+Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pathway_enrichment_gdc/process_data/#practical){:target="_blank"}  we assessed gene expression in the 'Mesenchymal' subtype relative to the 'Immunoreactive' subtype. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'mesenchymal' subtype and 'na_neg' refers to the 'immunoreactive' subtype.
 
 **Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores (GSEA results folder for `pos_snapshot.html` and `neg_snapshot.html`).
 
@@ -320,7 +320,7 @@ At this point you have traded a list of genes for a slightly shorter list of pat
 
 On one hand, you may already know precisely the types of pathways that interest you, in which case, you can sort through the detailed enrichment results table by hand.
 
-On the other hand, you may desire an appreciation of the grander themes emerging within your collection of enriched pathways. In this case, we recommend you [visually organize your pathways]({{site.baseurl}}/workflows/pathway_enrichment/visualize){:target="_blank"}.
+On the other hand, you may desire an appreciation of the grander themes emerging within your collection of enriched pathways. In this case, we recommend you [visually organize your pathways]({{site.baseurl}}/workflows/pathway_enrichment_gdc/visualize/){:target="_blank"}.
 
 <div class="alert alert-warning text-justify" role="alert">
   Make note of the analysis history file with extension '.rpt'. This contains information regarding the name and location of your GSEA results files. It can be used as a point of access for downstream analysis software.

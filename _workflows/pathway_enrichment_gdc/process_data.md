@@ -1,5 +1,6 @@
 ---
 title: "Process Data"
+subtitle: Derive a list of differentially expressed genes from TCGA-OV RNA sequencing data
 comments: yes
 date: '2014-02-27'
 output: pdf_document
@@ -10,8 +11,6 @@ layout: embedded
 order: 2
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
-subtitle: Derive a list of differentially expressed genes from TCGA-OV RNA sequencing
-  data
 group: pathway_enrichment_gdc
 ---
 
@@ -54,12 +53,12 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/docker_enrichment_workflow_gdc/tree/bd8ad28111e00fadbad6a41c9f5fed516b026d6e){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/pc_guide_workflows/tree/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
 **Run code on your computer**. You can run the R code on your own computer and will need the following files and software
 
 - RNA-seq assay and phenotype information (from 'Get Data')
-  - [tcgaov_dge.RData]({{ site.baseurl }}/workflows/pathway_enrichment/get_data/#data){:target="_blank"}
+  - [tcgaov_dge.RData]({{ site.baseurl }}/workflows/pathway_enrichment_gdc/get_data/){:target="_blank"}
 - [R](https://www.r-project.org/){:target="_blank"}: >version 3.3.1
   - [Bioconductor](https://bioconductor.org){:target="_blank"}: >version 3.3
     - edgeR
@@ -75,6 +74,7 @@ home
 |   |    |
 |   |    |--- get_data.R
 |   |    |--- process_data.R
+|   |    |--- visualize.R
 |   |
 |   |--- output
 |   |    |
@@ -91,7 +91,7 @@ home
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `tcgaov_dge` from the previous section.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 2 15 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 0 13 %}
 {% endhighlight %}
 
 Gene expression will be measured in class `category_test` relative to class `category_baseline`.
@@ -110,7 +110,7 @@ The DGEList contains a component `counts` which is a table identical to our inpu
 **Step 1: Filter**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 16 26 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 14 24 %}
 {% endhighlight %}
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
@@ -118,7 +118,7 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 **Step 2: Normalize**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 27 30 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 25 28 %}
 {% endhighlight %}
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
@@ -147,7 +147,7 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 **Step 3: Fit**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 31 35 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 29 32 %}
 {% endhighlight %}
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
@@ -203,7 +203,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 **Step 4: Test**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 40 43 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 37 40 %}
 {% endhighlight %}
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
@@ -225,7 +225,7 @@ The result of the function `exactTest` is a data structure with a `table` attrib
 **Step 5: Adjust**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 44 50 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 42 47 %}
 {% endhighlight %}
 
 
@@ -256,7 +256,7 @@ plotSmear(tcgaov_filtered, pair=c(category_baseline, category_test), de.tags=deg
 **Step 6: Rank**
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 56 62 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 54 59 %}
 {% endhighlight %}
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
@@ -265,7 +265,7 @@ Set the gene name from the Ensembl gene ID to the `external_gene_name` which is 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/bd8ad28111e00fadbad6a41c9f5fed516b026d6e/src/scripts/process_data.R 63 71 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 61 70 %}
 {% endhighlight %}
 
 Your directory should now contain the rank file.
@@ -291,13 +291,13 @@ home
 <hr/>
 
 The preceding R code is presented in its entirety and available at Github
-<a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R"
+<a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
 
 {% highlight r %}
-  {% github_sample jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R %}
+  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R %}
 {% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
@@ -318,7 +318,7 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 | 10591   |  TAP1 | -26.92687699671 |
 
 
-The R code is available at Github <a href="https://github.com/jvwong/docker_enrichment_workflow_gdc/blob/master/src/scripts/process_data.R"
+The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
@@ -327,6 +327,3 @@ The R code is available at Github <a href="https://github.com/jvwong/docker_enri
 
 ## <a href="#references" name="references">V. References</a>
 <div class="panel_group" data-inline="23975260,21720365,23359318"></div>
-<!-- - Anders S et al. Count-based differential expression analysis of RNA sequencing data using R and Bioconductor. Nat Protoc vol. 8 (2013)
-- Cancer Genome Atlas Research Network. Integrated genomic analyses of ovarian carcinoma. Nature vol. 474 (2011)
-- Hout M et al. Multidimensional scaling. Wiley Interdiscip Rev Cogn Sci vol. 4 (2013) -->
