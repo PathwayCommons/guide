@@ -24,6 +24,8 @@ figures:
   figure_13: figure_visualize_cytoscape_em_autoannotate.png
   figure_14: figure_visualize_cytoscape_em_collapsed_scaled.png
 comments: true
+github:
+  visualize: jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R
 ---
 
 - {:.list-unstyled} Table of Contents
