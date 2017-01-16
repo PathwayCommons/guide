@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Process Data &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <div id="embedded">
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="container content embedded">
+          <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+
+            <h1 class="page-title">Process Data</h1>
+            <div class="subtitle">Derive a list of differentially expressed genes from RNA sequencing data</div>
+            <hr/>
+            <div class="linkout clearfix">
+              <ul class="list-inline pull-right">
+              <li>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=/workflows/pathway_enrichment_ii/process_data/&title=Process Data"
+  data-toggle="tooltip"
+  title="Share this page on Facebook"
+  target="_blank" >
+    <i class="fa fa-facebook-official fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/intent/tweet?text=Derive a list of differentially expressed genes from RNA sequencing data+/workflows/pathway_enrichment_ii/process_data/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=/workflows/pathway_enrichment_ii/process_data/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+              </ul>
+            </div>
+            <hr/>
+            <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#background">II. Background</a></li>
+      <li class="list-unstyled"><a href="#practical">III. Practical</a></li>
+      <li class="list-unstyled"><a href="#data">IV. Data</a></li>
+      <li class="list-unstyled"><a href="#references">V. References</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<div class="alert alert-warning text-justify" role="alert">
+  This workflow focuses on using data from your study, however we do provide sample data files that you can use in <a href="#data">IV. Data</a>.
+</div>
+
+<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>In this section we will analyze RNA sequencing (RNA-Seq) data from an experiment in which two distinct biological states are compared. We describe the process of using a browser-based application that we have developed which will accept RNA-Seq data and metadata describing samples in two classes, determine differential gene expression between those two classes and convert these results into the complete set of files neccessary for the remainder of this enrichment workflow.</p>
+
+<p>By then end of this discussion you should:</p>
+
+<ol>
+  <li>Upload RNA sequencing data and metadata describing an experiment to an app</li>
+  <li>Obtain a rank file where genes are ordered by differential expression (p-value)</li>
+  <li>Obtain an expression file that contains mRNA counts for each gene and sample</li>
+  <li>Obtain a phenotype file that declares that assigns each RNA-Seq sample to a class</li>
+</ol>
+
+<p>For illustrative purposes, we provide sample RNA-Seq data for an experiment in which we compare gene expression between a mouse knockout (WT) and a corresponding wild-type (WT) strain (Figure 1).</p>
+
+<p><br />
+<img src="/guide/media/workflows/pathway_enrichment_ii/process_data/figure_processdata_overview.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Goals.</strong> For illustrative purposes, we provide RNA-Seq data for a mouse knockout strain (KO) and a wild-type strain (WT). We will upload RNA-Seq expression data files along with a metadata file that describes the data into a browser-based application. This app will step through the process of analyzing differential expression. The app will then output files used as input for the remainder of the enrichment analysis. GSEA - Gene Set Enrichment Analysis.
+</div>
+
+<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+
+<p>We refer the reader to our primer on <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/" target="_blank">RNA sequencing analysis</a> for a detailed description of the theory underlying the processing steps described here.</p>
+
+<h2 id="a-hrefpractical-namepracticaliii-practicala"><a href="#practical" name="practical">III. Practical</a></h2>
+
+<h3 id="software-requirements">Software requirements</h3>
+
+<p>This section describes the use of a browser-based application that accepts your input data and settings, then processes the data to generate the required files for the later stages of this workflow. You have a choice of two methods for running the web app on your computer.</p>
+
+<p><strong>Run inside <a href="https://www.r-project.org/" target="_blank">R</a></strong> (<em>Recommended</em>).</p>
+
+<p><a href="https://www.opencpu.org/">OpenCPU</a> is an open-source system for scientific computing and acts as a server that accepts instructions for running <a href="https://www.r-project.org/">R</a> expressions from another source (i.e. some web app). In this case, we are running an OpenCPU server inside a local R instance alongside an app inside a package <a href="https://github.com/jvwong/emRNASeq/tree/11af9cc14f11f29966e157aa79d81a6fb74fc636">emRNASeq</a>.</p>
+
+<ol>
+  <li>
+    <p>Install <a href="https://www.r-project.org/">R</a> (&gt;= 3.2.5)</p>
+  </li>
+  <li>
+    <p>Install the required packages.</p>
+  </li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="o">&gt;</span> <span class="n">install.packages</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">"opencpu"</span><span class="p">,</span> <span class="s2">"devtools"</span><span class="p">))</span>
+  <span class="o">&gt;</span> <span class="n">devtools</span><span class="o">::</span><span class="n">install</span><span class="p">(</span><span class="s2">"emRNASeq"</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+  </code></pre></figure>
+
+<ol>
+  <li>Start the</li>
+</ol>
+
+<p><strong>Run inside Docker</strong>. To ease the burden of loading the correct software and dependencies, we have generated a <a href="" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
+
+<h3 id="data-processing">Data processing</h3>
+
+<h2 id="a-hrefdata-namedataiv-dataa"><a href="#data" name="data">IV. Data</a></h2>
+
+<p>The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/tree/3025bf2bab63306396824f55ff72252c59ae580d/pathway_enrichment_custom" target="_blank">
+  <i class="fa fa-github fa-2x"></i>
+</a></p>
+
+<hr />
+
+<h2 id="a-hrefreferences-namereferencesv-referencesa"><a href="#references" name="references">V. References</a></h2>
+<div class="panel_group" data-inline=""></div>
+
+        </div>        
+        
+
+      </div>
+    </div>
+
+  <script id="dsq-count-scr" src="//pathway-commons.disqus.com/count.js" async></script>
+  </body>
+</html>

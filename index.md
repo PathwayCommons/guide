@@ -114,7 +114,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
             id: 'cancer_db',
             name: 'Workflow I\n\nCancer genome database',
             parent: 'datasources_group',
-            href: '{{ site.baseurl }}/workflows/pathway_enrichment_gdc/index/'
+            href: '{{ site.baseurl }}/workflows/pathway_enrichment_i/index/'
           },
           classes: 'dimished data_source',
           position: { x: 0, y: 0 }
@@ -123,7 +123,7 @@ This guide is intended to cultivate the practice of *biological pathway analysis
             id: 'custom_system',
             name: 'Workflow II\n\nYour experimental system',
             parent: 'datasources_group',
-            href: '{{ site.baseurl }}/workflows/pathway_enrichment_custom/index/'
+            href: '{{ site.baseurl }}/workflows/pathway_enrichment_ii/index/'
           },
           classes: 'dimished data_source',
           position: { x: 250, y: 0 }
