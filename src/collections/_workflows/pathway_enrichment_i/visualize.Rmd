@@ -7,7 +7,7 @@ layout: embedded
 group: pathway_enrichment_gdc
 order: 4
 data:
-  tcgaov_data: workflows/pathway_enrichment_gdc/get_data/tcgaov_dge.rds
+  tcgaov_data: workflows/pathway_enrichment_i/get_data/tcgaov_dge.rds
 figures:
   figure_1: figure_visualize_em_overview.jpg
   figure_2: figure_visualize_cytoscape_em_preview.jpg
@@ -25,7 +25,8 @@ figures:
   figure_14: figure_visualize_cytoscape_em_collapsed_scaled.png
 comments: true
 github:
-  visualize: jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/visualize.R
+  workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
+  section: https://github.com/jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/visualize.R
 ---
 
 - {:.list-unstyled} Table of Contents

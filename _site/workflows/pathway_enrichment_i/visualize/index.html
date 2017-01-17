@@ -414,7 +414,7 @@
 
 <p><a href="/guide/workflows/pathway_enrichment_gdc/get_data/" target="_blank">Previously</a>, the TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted into an (R) edgeR DGEList variable <code class="highlighter-rouge">tcgaov_dge</code> and saved to an RDS file named ‘tcgaov_dge.rds’.</p>
 
-<p><a href="/guide/media/workflows/pathway_enrichment_gdc/get_data/tcgaov_dge.rds" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.rds</a></p>
+<p><a href="/guide/media/workflows/pathway_enrichment_i/get_data/tcgaov_dge.rds" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> tcgaov_dge.rds</a></p>
 
 <p>From <code class="highlighter-rouge">tcgaov_dge</code>, we will retrieve the expression data from the <code class="highlighter-rouge">counts</code> variable and the HGNC gene identifiers from the <code class="highlighter-rouge">genes</code> variable. We must filter with count-per-million (CPM) rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples. The <code class="highlighter-rouge">counts</code> variable uses Ensembl IDs so the remaining code is a merge operation to get the data into the format suggested in Table 1.</p>
 

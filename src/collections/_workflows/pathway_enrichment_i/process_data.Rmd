@@ -12,6 +12,9 @@ order: 2
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
 group: pathway_enrichment_gdc
+github:
+  workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
+  section: https://github.com/jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R
 ---
 
 <!-- Global options -->
@@ -140,7 +143,7 @@ tcgaov_tt <- topTags(tcgaov_de,
 Install and load the required packages from R/Bioconductor. Load the TCGA HGS-OvCa RNA-seq data and subtype assignments in the DGEList variable `tcgaov_dge` from the previous section.
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 0 13 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 0 13 %}
 {% endhighlight %}
 
 Gene expression will be measured in class `category_test` relative to class `category_baseline`.
@@ -157,7 +160,7 @@ The DGEList contains a component `counts` which is a table identical to our inpu
 **Step 1: Filter**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 14 24 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 14 24 %}
 {% endhighlight %}
 
 The variable `row_with_mincount` stores genes with more than a minimum number of counts (10) per million mapped reads in n cases, where n is the smallest of the two subtypes. This step is intended to genes with low expression.
@@ -165,7 +168,7 @@ The variable `row_with_mincount` stores genes with more than a minimum number of
 **Step 2: Normalize**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 25 28 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 25 28 %}
 {% endhighlight %}
 
 The function `calcNormFactors` is a [normalization procedure]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/#normalization){:target="_blank"} using the trimmed mean of M-values (TMM) approach. The reference sample can be specified as the parameter `refColumn` otherwise the library whose upper quartile is closest to the mean upper quartile is used.
@@ -192,7 +195,7 @@ Recall from our discussion on normalization that $$S_k$$ represents our total RN
 **Step 3: Fit**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 29 32 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 29 32 %}
 {% endhighlight %}
 
 Here we're attempting to derive a squared biological coefficient of variation ($$\phi$$) from the data in order to parametrize our negative binomial model which we'll use in DE testing. The function `estimateCommonDisp` estimates the dispersion across all genes and adds the value as `common.dispersion` in DGEList.
@@ -221,7 +224,7 @@ A negative binomial model can be fit from our data and dispersion estimated. Fro
 **Step 4: Test**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 37 40 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 37 40 %}
 {% endhighlight %}
 
 - {: .aside } #### Note on `edgeR::exactTest(object, pair=...)`
@@ -241,7 +244,7 @@ pandoc.table(head(tcgaov_de$table, n=4),
 **Step 5: Adjust**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 42 47 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 42 47 %}
 {% endhighlight %}
 
 
@@ -267,7 +270,7 @@ plotSmear(tcgaov_filtered, pair=c(category_baseline, category_test), de.tags=deg
 **Step 6: Rank**
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 54 59 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 54 59 %}
 {% endhighlight %}
 
 The rank of each gene is inversely proportional to the log of the $$P$$ as smaller values are less likely under the null hypothesis.
@@ -276,7 +279,7 @@ Set the gene name from the Ensembl gene ID to the `external_gene_name` which is 
 The resulting data frame is saved as a tab-delimited file `MesenchymalvsImmunoreactive_edger_ranks.rnk` for use in downstream differential expression analysis.
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R 61 70 %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R 61 70 %}
 {% endhighlight %}
 
 Your directory should now contain the rank file.
@@ -302,13 +305,13 @@ home
 <hr/>
 
 The preceding R code is presented in its entirety and available at Github
-<a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R"
+<a href="{{ page.github.section }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
 
 {% highlight r %}
-  {% github_sample jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R %}
+  {% github_sample jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R %}
 {% endhighlight %}
 
 ## <a href="#data" name="data">IV. Data</a>
@@ -329,7 +332,7 @@ Gene list ranked by differential gene expression between 'Mesenchymal' vs 'Immun
 | 10591   |  TAP1 | -26.92687699671 |
 
 
-The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc/scripts/process_data.R"
+The R code is available at Github <a href="{{ page.github.section }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>

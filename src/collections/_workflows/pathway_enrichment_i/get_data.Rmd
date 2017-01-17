@@ -18,6 +18,9 @@ figures:
   figure_6: figure_getdata_tcgabiolinks_overview.jpg
   figure_7: figure_getdata_summarizedExperiment.jpg
 comments: true
+github:
+  workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
+  section: https://github.com/jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/get_data.R
 ---
 
 <!-- Global options -->
@@ -233,7 +236,7 @@ The TCGA-OV RNA-seq expression data (counts) and subtypes (group) were inserted 
 
 We have made our R source code available in an R script `get_data.R` if you are interested in downloading and processing the TCGA-OV RNA-seq data yourself. To ease the burden of loading the correct software and dependencies, we have generated a [Docker](https://www.docker.com/){:target="_blank"} image of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary supporting files.
 
-The code and supporting material are available at Github <a href="https://github.com/jvwong/pc_guide_workflows/blob/6e3539b4b7f306bb49533d909990333fedf02c96/pathway_enrichment_gdc/scripts/get_data.R"
+The code and supporting material are available at Github <a href="{{ page.github.section }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
