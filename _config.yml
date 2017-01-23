@@ -48,7 +48,7 @@ collections:
     output: true
     permalink: /case_studies/:path/
     index: /case_studies/archive/
-    description: Deep-dive into pathway analysis
+    description: Case Studies
 
   presentations:
     output: true
