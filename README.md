@@ -49,7 +49,7 @@ The same goes for any JavaScript. By not hard-coding these URLs in we can easily
 
 #### Media
 
-All media and files are placed in the `media_root` attribute, which in this case is a directory named `media`. The contents of this directory mirror the nesting structure of the collection of interest. For example, if we had a collection item at `_primers/statistics/distributions.md`, we should place any related files inside `media/primers/statistics/distributions`.
+All media and files are placed in the `media_root` attribute, which in this case is a directory named `media`. The contents of this directory mirror the nesting structure of the collection of interest. For example, if we had a collection item at `_primers/statistics/distributions.md`, we should place any related files inside `media/primers/statistics/distributions/`.
 
 
 ``` shell
@@ -70,8 +70,10 @@ guide
 |        |
 |        |--- statistics
 |             |
-|             |--- overview.png
-|             ...
+|             |--- distributions
+|                 |
+|                 |--- overview.png
+|                 ...
 |
 ...
 ```
@@ -92,14 +94,13 @@ Similarly for images:
 
 ### Plugins
 
-GitHub pages supports a limited number of [plugins](https://jekyllrb.com/docs/plugins/). Since we are deploying this built Jekyll page directly to a gh-pages branch, we can use what we wish. Simply install (e.g. `gem install <gem>`) and declare the plugin inside the `_config.yml` attribute `gems`.
-
+GitHub pages supports a limited number of [plugins](https://jekyllrb.com/docs/plugins/). Since we are deploying this Jekyll page directly to the gh-pages branch, we can use what we wish inside our development environment as the product is just Markdown. Simply install the gem (e.g. `gem install <gem>`) and declare the plugin inside the `_config.yml` attribute `gems`.
 
 ## Adding Content
 
-### Adding a collection
+### Collections
 
-Every collection is presented as a listing in the sidebar. Collections are directories inside the `src/collections` prefixed with an underscore `_`  and contain content writte in (R) Markdown and/or HTML. Several things that need updating.
+Every collection is presented as a listing in the sidebar. Collections are directories inside the parent directory, but we have chosen to place the source files inside `src/collections` prefixed with an underscore `_`. In this way, we can write content in (R) Markdown and/or HTML and use a build system to push the processed files out to the parent directory so that Jekyll can build it as usual. Several things that need updating.
 
 1. Add an element to the `collections` attribute in `_config.yml`
   * See Jekyll [docs](https://jekyllrb.com/docs/collections/)
@@ -117,10 +118,10 @@ Every collection is presented as a listing in the sidebar. Collections are direc
 
   ```
 
-2. Create your index page
-  * The sidebar directs users to `/_<collection>/<path-to-collection-homepage>/`
+2. Create your content
 
-3. Create your content
-  You can author your content in markdown. See the other collections for examples on how to structure your document. Remember to link to internal content (collections, files) using the template variables described in the section 'URLs, Media and Static File locations'.
+  You should add your path to `src/collections/`. For the example above, we should have a directory `src/collections/case_studies/` where all our content will go and an index page `archive.Rmd` which is the collection home page that our sidebar will point to. See the other collections for examples on how to structure your documents.
+
+  Remember to link to internal content (collections, files) using the template variables described in the section 'URLs, Media and Static File locations'.
 
   As mentioned, this site supports adding content in R Markdown which allows you to add R code directly to your pages. To process R Markdown and have it render pure Markdown, we recommend you should use the [Gulp](http://gulpjs.com/) tools provided in the development [remote](https://github.com/jvwong/guide_development) which is configured to automate all steps of (R) Markdown file procerssing and copying into the  parent directory.
