@@ -1,0 +1,94 @@
+---
+title: GITR
+subtitle: GITR Study
+pmid:
+figure: figure_clouthier_trimm_1.png
+badge: pathway enrichment
+cover:
+pdf:
+date: 2016-12-12
+layout: publication
+category: Enrichment_Analysis
+draft: true
+---
+
+## Quick Summary
+* GITR
+
+## Author Profile
+YuHan Chang and Tania Watts are in the Department of Immunology at the University of Toronto.
+
+## Context
+
+
+
+LCMV infection of its natural host, *Mus Musculus*, has served as the prototypic system to explore host-virus interactions and identify key determinants of viral clearance or persistence (Ng et al. 2013). In particular, the Clone 13 (Cl-13) variant replicates to high-titers, inducing mulitiple host-suppressive pathways and elicits a persistent infection last up to 90 days. Importantly, the immune events triggered by Cl-13 are similar to those observed for other human viruses, namely HIV.
+
+**Notes from Ng et al**
+
+1. Plasmacytoid dendritic cells (pDC)
+  - encounter viral nucleic acids via toll-like receptors (TLR) 7/9 and release type I interferons (IFN-I) that control virus infections
+  - IFN-I important for activation/expansion of CD4/8 T-cells
+  - Cl-13 target pDC
+2. Myeloid CD8$$\alpha^{(+/-)}$$ DC
+  - Cl-13 infection reduces MHC I, MHC II, and T costimulatory CD80/86/40
+  - Interferes with ability to present antigen and stimulate naive T cells
+3. T-cells
+  - Cl-13 induces T cells to enter an attenuated state (exhausted): Loss of proliferative ability, production of antiviral and immune stimulatory cytokines, and cytolytic activity.
+  - CD8+ (CTL) express inflammatory and antiviral cytokines and lyse-infected cells
+    - CTL exhaustion has implicated immune-suppression pathways involving IL-10 and Programmed Death 1 (PD-1)
+  - CD4+ (helper) express inflammatory cytokines, DC licensing, maintenance of CTL and B cell antibody responses. CD4 sustain CD8 function throughout infection and avert deletion of high-affinity antiviral CTL.
+    - CD4 - CD8 dependence are well-established however the procesed mechanisms are unclear
+4. Future
+  - Currently, ongoing treatment of persistent viral infections is limited to drug targeting. Restoration of CD4 in particular is attractive as this can result in enhanced viral-specific CD8 T cells.
+  - Need to known precise mechanisms of CD4 regulation and differention and their effects on CD8 and B cell compartments
+
+
+**Notes from Clouthier et al. (Trends Immun. 2015; PLoS Path. 2015)**
+
+Control of persistent infection requires a balance between antiviral immunity and immune suppression that controls infection while limiting host damage. Late control (day 60 to 90) of LCMV cl 13 is achieved by a functionally exhausted but nevertheless effective CD8 T cell respose as well as neutralizing antibodies (nAb). While pro- and anti-inflammatory are well-implicated, persistent infections also modulate expression of costimulatory members of the TNFR superfamily: 4-1 BB (TNF superfamily member 9/TNFRSF9), OX40 (TNFRSF4) and glucocorticoid-induced TNF receptor family-related protein (TNFRSF18). This raises the question of what role they might play and how this knowledge might be used towards a thereapeutic effect.
+
+1. GITR expression is transient
+  - GITR on antigen-specific CD4/8 peaks at day 8 p.i. and is sustained to day 21 p.i.
+  - GITRL is transient: peaks at day 2 p.i. and baseline by day 8 p.i.
+2. GITR can trigger classic inflammatory pathways
+  - TNF receptor-associated factor (TRAF) adaptors to activate NF-kappaB, MAPK and in some cases PI3K/AKT
+3. GITR is important in persistent infection
+  - KO reduces CD8 accumulation, increased exhaustion and impaired LCMV control
+  - CD4 and IL-2 dependency promoter CD8
+    - GITR is dispensible for CD4 proliferation and differentiation but required for the post-priming accumulation of antigen specific T cells including $$\text{IFN}\gamma^+\text{IL-2}^+$$ type 1 helper T (Th1) cells that facilitates CD8 T cell expansion.
+  - Increased ratio of T follicular helper (Tfh) to T follicular regulatory (Tfr) cells that enhance LCMV-specific B cell production of IgG.
+
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figure }}){: .img-responsive.slim }
+
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 1. GITR Regulates CD4 T Cell Accumulation to Control Persistent LCMV Infection. </strong> This schematic shows that GITRL on an APC interacts directly with GITR on a CD4+ T cell early during infection, which in turn allows both CD4 Th1 and Tfh to accumulate. The inset shows that CD4 T cell-intrinsic GITR signals through TRAF2/5 to activate the canonical NF-kB pathway as well as AKT and mTORC1 leading to increased T cell accumulation. These signals were detected at higher levels in GITR+/+ compared to GITR /  CD4 LCMV-specific (SMARTA) T cells at day 3 post-LCMV cl 13 infection. The CD4 T cells in turn provide IL-2-dependent help to the CD8 T cells to allow increased accumulation between day 5 and 8 postinfection (p.i.) [28]. Pascutti et al. also found that CD4 T cells from GITRL-tg mice had higher expression of CD40L, which may improve help for CD8 T cells through effects on APCs [29]. GITR also impacts on the ratio of Tfh to Tfr, allowing enhanced antibody responses. The net effect is increased LCMV-specific CD8 T cells and antibodies, which allows increased viral control. GITRL is found on F4/ 80+CD11bhi myeloid cells, peaking at day 2 p.i. and is reduced to below baseline by day 8 p.i. [27]. It is not known if GITRL is presented to CD4 T cells via the priming APC or if there are serial engagements on other (or the same) APCs. However, GITR affects Th1 and Tfh cells to a similar extent, suggesting a general effect on CD4 T cell accumulation rather than on differentiation. The nature of the APC that brings the CD8 T cell and the CD4 T cell close together, or if an APC is even required for this process, is not known. Figure credit:
+  </div>
+
+## Question
+
+## Goals
+
+## Approach
+GITR knockout. RNA-seq.
+
+
+<br/>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Pathway analysis of genes.</strong>
+</div>
+
+<br/>
+<br/>
+
+## Summary
+
+Some summary here
+
+<hr/>
+
+## References
+
+<div class="panel_group" data-inline="23768490, 26481667, 25590581"></div>

@@ -26,26 +26,23 @@ dockerhub:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  This workflow focuses on using data from your study, however we do provide sample data files that you can use in <a href="#data">IV. Data</a>.
+  This workflow focuses on using RNA sequencing data in a form that is commonly provided by sequencing facilities. We do provide sample data and metadata files in <a href="#data">IV. Data</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-In this section we will analyze RNA sequencing (RNA-Seq) data from an experiment in which two distinct biological states are compared. We describe the process of using a browser-based application that we have developed which will accept RNA-Seq data and metadata describing samples in two classes, determine differential gene expression between those two classes and convert these results into the complete set of files neccessary for the remainder of this enrichment workflow.
+The overarching goal of this workflow is to obtain an Enrichment Map - a visual description of the pathways altered between two states. We will infer these alterations via global gene expression measurements. To make these concepts concrete, we use data from a study by Best *et al.* (Best 2015) comparing expression profiles of blood platelets from healthy donors to those diagnosed with breast cancer.
 
-By then end of this discussion you should:
+By then end of this discussion you should (Figure 1):
 
-1. Upload RNA sequencing data and metadata describing an experiment to an app
-2. Obtain a rank file where genes are ordered by differential expression (p-value)
-3. Obtain an expression file that contains mRNA counts for each gene and sample
-4. Obtain a phenotype file that declares that assigns each RNA-Seq sample to a class
-
-For illustrative purposes, we provide sample RNA-Seq data for an experiment in which we compare gene expression between a mouse knockout (WT) and a corresponding wild-type (WT) strain (Figure 1).
+1. Be familiar with a study examining gene expression signatures in 'blood-based liquid biopsies'
+2. Be familiar with the RNA sequencing pipeline and differential expression analysis used in this study
+3. Obtain a set of processed data files required for the remainder of the enrichment workflow
 
 <br/>
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Goals.</strong> For illustrative purposes, we provide RNA-Seq data for a mouse knockout strain (KO) and a wild-type strain (WT). We will upload RNA-Seq expression data files along with a metadata file that describes the data into a browser-based application. This app will step through the process of analyzing differential expression. The app will then output files used as input for the remainder of the enrichment analysis. GSEA - Gene Set Enrichment Analysis.
+  <strong>Figure 1. Goals.</strong> For illustrative purposes, we describe a study be Best et al. (Best 2015) who compare RNA-seq data from healthy donors (HD) to those with a variety of malignancies including breast cancer (BrCa). We will provide a brief overview of the study then describe the methods used to generate RNA-seq profiles from platelets and perform a differential expression analysis for each gene. Any gene-level expression differences are mapped to pathway-level changes Gene Set Enrichment Analysis (GSEA) and displayed visually with an Enrichment Map. Accordingly, we provide the files required for the remainder of the workflow at the conclusion of this section.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -54,7 +51,20 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ## <a href="#practical" name="practical">III. Practical</a>
 
-### Software requirements
+
+
+**Run inside Docker**. To ease the burden of loading the correct software and dependencies, we have generated a [Github repository]({{ page.github.workflow }}){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
+
+
+### Data processing
+
+## <a href="#data" name="data">IV. Data</a>
+
+### Original Data from GEO
+
+The original data has been deposited in the NCBI [Gene Expression Omnibus](https://www.ncbi.nlm.nih.gov/geo/){:target="_blank"} under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}.
+
+### DIY Data Processing
 
 This section describes the use of a browser-based application that accepts your input data and settings, then processes the data to generate the required files for the later stages of this workflow. You have a choice of two methods for running the web app on your computer.
 
@@ -74,12 +84,6 @@ This section describes the use of a browser-based application that accepts your 
 
   3. Start the
 
-**Run inside Docker**. To ease the burden of loading the correct software and dependencies, we have generated a [Github repository]({{ page.github.workflow }}){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
-
-
-### Data processing
-
-## <a href="#data" name="data">IV. Data</a>
 
 The R code is available at Github <a href="{{ page.github.workflow_repo }}"
   target="_blank">
@@ -89,4 +93,4 @@ The R code is available at Github <a href="{{ page.github.workflow_repo }}"
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline=""></div>
+<!-- <div class="panel_group" data-inline="26525104"></div> -->

@@ -99,28 +99,25 @@
 <hr />
 
 <div class="alert alert-warning text-justify" role="alert">
-  This workflow focuses on using data from your study, however we do provide sample data files that you can use in <a href="#data">IV. Data</a>.
+  This workflow focuses on using RNA sequencing data in a form that is commonly provided by sequencing facilities. We do provide sample data and metadata files in <a href="#data">IV. Data</a>.
 </div>
 
 <h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
 
-<p>In this section we will analyze RNA sequencing (RNA-Seq) data from an experiment in which two distinct biological states are compared. We describe the process of using a browser-based application that we have developed which will accept RNA-Seq data and metadata describing samples in two classes, determine differential gene expression between those two classes and convert these results into the complete set of files neccessary for the remainder of this enrichment workflow.</p>
+<p>The overarching goal of this workflow is to obtain an Enrichment Map - a visual description of the pathways altered between two states. We will infer these alterations via global gene expression measurements. To make these concepts concrete, we use data from a study by Best <em>et al.</em> (Best 2015) comparing expression profiles of blood platelets from healthy donors to those diagnosed with breast cancer.</p>
 
-<p>By then end of this discussion you should:</p>
+<p>By then end of this discussion you should (Figure 1):</p>
 
 <ol>
-  <li>Upload RNA sequencing data and metadata describing an experiment to an app</li>
-  <li>Obtain a rank file where genes are ordered by differential expression (p-value)</li>
-  <li>Obtain an expression file that contains mRNA counts for each gene and sample</li>
-  <li>Obtain a phenotype file that declares that assigns each RNA-Seq sample to a class</li>
+  <li>Be familiar with a study examining gene expression signatures in ‘blood-based liquid biopsies’</li>
+  <li>Be familiar with the RNA sequencing pipeline and differential expression analysis used in this study</li>
+  <li>Obtain a set of processed data files required for the remainder of the enrichment workflow</li>
 </ol>
-
-<p>For illustrative purposes, we provide sample RNA-Seq data for an experiment in which we compare gene expression between a mouse knockout (WT) and a corresponding wild-type (WT) strain (Figure 1).</p>
 
 <p><br />
 <img src="/guide/media/workflows/pathway_enrichment_ii/process_data/figure_processdata_overview.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Goals.</strong> For illustrative purposes, we provide RNA-Seq data for a mouse knockout strain (KO) and a wild-type strain (WT). We will upload RNA-Seq expression data files along with a metadata file that describes the data into a browser-based application. This app will step through the process of analyzing differential expression. The app will then output files used as input for the remainder of the enrichment analysis. GSEA - Gene Set Enrichment Analysis.
+  <strong>Figure 1. Goals.</strong> For illustrative purposes, we describe a study be Best et al. (Best 2015) who compare RNA-seq data from healthy donors (HD) to those with a variety of malignancies including breast cancer (BrCa). We will provide a brief overview of the study then describe the methods used to generate RNA-seq profiles from platelets and perform a differential expression analysis for each gene. Any gene-level expression differences are mapped to pathway-level changes Gene Set Enrichment Analysis (GSEA) and displayed visually with an Enrichment Map. Accordingly, we provide the files required for the remainder of the workflow at the conclusion of this section.
 </div>
 
 <h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
@@ -129,7 +126,17 @@
 
 <h2 id="a-hrefpractical-namepracticaliii-practicala"><a href="#practical" name="practical">III. Practical</a></h2>
 
-<h3 id="software-requirements">Software requirements</h3>
+<p><strong>Run inside Docker</strong>. To ease the burden of loading the correct software and dependencies, we have generated a <a href="" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
+
+<h3 id="data-processing">Data processing</h3>
+
+<h2 id="a-hrefdata-namedataiv-dataa"><a href="#data" name="data">IV. Data</a></h2>
+
+<h3 id="original-data-from-geo">Original Data from GEO</h3>
+
+<p>The original data has been deposited in the NCBI <a href="https://www.ncbi.nlm.nih.gov/geo/" target="_blank">Gene Expression Omnibus</a> under the accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086" target="_blank">GSE68086</a>.</p>
+
+<h3 id="diy-data-processing">DIY Data Processing</h3>
 
 <p>This section describes the use of a browser-based application that accepts your input data and settings, then processes the data to generate the required files for the later stages of this workflow. You have a choice of two methods for running the web app on your computer.</p>
 
@@ -154,12 +161,6 @@
   <li>Start the</li>
 </ol>
 
-<p><strong>Run inside Docker</strong>. To ease the burden of loading the correct software and dependencies, we have generated a <a href="" target="_blank">Github repository</a> containing the neccessary code to run a <a href="https://www.docker.com/" target="_blank">Docker</a> version of <a href="https://www.rstudio.com/" target="_blank">RStudio</a> linked to the necessary workflow files.</p>
-
-<h3 id="data-processing">Data processing</h3>
-
-<h2 id="a-hrefdata-namedataiv-dataa"><a href="#data" name="data">IV. Data</a></h2>
-
 <p>The R code is available at Github <a href="https://github.com/jvwong/pc_guide_workflows/tree/3025bf2bab63306396824f55ff72252c59ae580d/pathway_enrichment_custom" target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a></p>
@@ -167,7 +168,7 @@
 <hr />
 
 <h2 id="a-hrefreferences-namereferencesv-referencesa"><a href="#references" name="references">V. References</a></h2>
-<div class="panel_group" data-inline=""></div>
+<!-- <div class="panel_group" data-inline="26525104"></div> -->
 
         </div>        
         

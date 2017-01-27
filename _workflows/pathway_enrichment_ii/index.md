@@ -8,7 +8,7 @@ category: Enrichment Analysis
 badge: RNA-Seq
 ---
 
-> Perform a pair-wise comparison of gene expression data then visualize the list of altered pathways. You will use RNA sequencing data that arises from two biological conditions (sample data is provided). This raw data will be converted into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified and displayed as an visual map which organizes pathways by overarching themes.
+> Perform a pair-wise comparison of gene expression data then visualize the list of altered pathways. You will use RNA sequencing data that arises from two conditions (sample data is provided). This raw data will be converted into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified and displayed as an visual map which organizes pathways by overarching themes.
 
 {% assign docs = (site.workflows | where: 'group','pathway_enrichment_custom' | sort: 'order' ) %}
 
