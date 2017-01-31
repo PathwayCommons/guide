@@ -7,6 +7,9 @@ output: pdf_document
 figures:
   figure_1: figure_processdata_overview.jpg
   figure_2: figure_processdata_joose_cancell_2015_figure_1.png
+  figure_3: figure_processdata_best_table_1.png
+  figure_4: figure_processdata_best_figure_1.png
+  figure_5: figure_processdata_best_figure_s2c.png
 layout: embedded
 data:
   rank: brca_hd_tep_ranks.rnk
@@ -30,48 +33,90 @@ dockerhub:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  This workflow transforms RNA sequencing data into an Enrichment Map. If you simply wish to obtain the file requirements for the next workflow steps, proceed directly to <a href="#dependencies">IV. Dependencies</a>.
+  If you wish to obtain the file dependencies for subsequent workflow steps, skip ahead to <a href="#dependencies">IV. Dependencies</a>.
 </div>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-The overarching goal of this workflow is to generate an Enrichment Map - a visual description of the pathways altered between two states. We will infer these alterations via global gene expression measurements. To make these concepts concrete, we use data from a study by Best *et al.* (Best 2015) comparing expression profiles of blood platelets from healthy donors to those diagnosed with breast cancer.
+The overarching goal of this workflow is to generate visualalization of pathways that are altered between two biological states from the underlying differences in gene expression. To make these concepts concrete, we use expression data from Best *et al.* (Best 2015) who compare blood platelets from healthy human donors to those diagnosed with a malignancy.
 
 By then end of this discussion you should (Figure 1):
 
-1. Be familiar with a study examining gene expression signatures in 'blood-based liquid biopsies'
-2. Be familiar with the RNA sequencing pipeline and differential expression analysis used in this study
-3. Obtain a set of processed data files required for the remainder of the enrichment workflow
+1. Be familiar with the efforts by Best *et al.* to find expression signatures of cancers in platelets
+2. Have an appreciation for the pipelines used to derive RNA sequence counts
+3. Be aware of procedures used to determine differential expression
+4. Obtain a set of files that are dependencies in subsequent workflow steps
 
 <br/>
+
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.short }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Goals.</strong> For illustrative purposes, we describe a study be Best et al. (Best 2015) who compare RNA-seq profiles of platelets from healthy donors (HD) and those with a variety of malignancies including breast cancer (BrCa) with goal of defining blood-based signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-seq profiles from platelets. In this workflow step, we use the RNA-seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are various files required for the remainder of the workflow: Gene-level expression differences are mapped to pathway-level changes Gene Set Enrichment Analysis (GSEA) and displayed visually with an Enrichment Map.
+  <strong>Figure 1. Goals.</strong> To illustrate construction of an Enrichment Map, we follow the work done by Best et al. (Best 2015) comparing RNA-seq profiles of platelets from healthy donors (HD) to those with breast cancer (BrCa) with the goal of defining blood-based signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-seq profiles from platelet samples. In this workflow step, we use the RNA-seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are files which are the dependencies for subsequent workflow steps: Gene-level expression differences are mapped to pathway-level changes Gene Set Enrichment Analysis (GSEA) and displayed visually with an Enrichment Map.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
 
 ### Blood-based cancer biopsies
 
-Cancer surveillance in the clinic would be greatly aided by practical and low-cost alternatives that would provide valuable support for early-detection, diagnosis, stratification and treatment. To accomplish this, such tests would ideally be non-invasive yet retain the sensitivity and accuracy neccessary to aid in the discrimination of different cancers types or the state of their progression.
+Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, stratification and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy neccessary to reliably differentiate cancer types or the state of their progression.
 
-Blood-based biomarkers have been agressively as a means to provide valuable information about a patient's malignancy. In particular, the components of blood that may be informative include the cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) that have had intimate contact with primary and metastatic cancer cells (Figure 2).
+Blood-based biomarkers have been agressively pursued as a means to provide valuable information concerning malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 2).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Blood-based cancer biopsies.</strong> Blood can be separated into different fractions in order to enrich for tumor-associated biomarkers. From the mononuclear cell fraction, circulating tumor cells (CTCs) may provide genomic, transcriptomic, and proteomic information on the tumor. From plasma or serum, cell-free nucleotides and exosomes can be further used to interrogate cancer-secreted bioparticles. Tumor educated platelets (TEPs) carry additional information on the location of the tumor in their mRNA. <em>Adapted from Joose et al (Joose 2015)</em>.
+  <strong>Figure 2. Blood-based cancer biopsies.</strong> Blood can be separated into different fractions in order to enrich for tumor-associated biomarkers. From the mononuclear cell fraction, circulating tumor cells (CTCs) may provide genomic, transcriptomic, and proteomic information on the tumor. From plasma or serum, cell-free nucleotides and exosomes can be further used to interrogate cancer-secreted bioparticles. <em>Adapted from Joose et al (Joose 2015)</em>.
 </div>
 
-### Platelets & Malignancy
+### A platelet primer
 
-The primary physiolocal role of platelets are to sense and accumulate at the sites of damaged endotheial tissue and initiate a blod clot to mitigate and vessel leak (Semple 2011). Within the marrow, platelets originate as cytoplasmic fragments of megakaryocytes which 'bud-off' into the circulation via shear forces generated by circulating blood. Approximately 1 trillion platelets circulate an adult human at any one time and live for an average of ten days before being sequestered by the spleen.
+Within the marrow, platelets originate as cytoplasmic fragments of arrested, polyploid megakaryocytes which 'bud-off' into the circulation via shear forces generated by circulating blood. Approximately 1 trillion platelets circulate an adult human at any one time and live for an average of ten days before being sequestered by the spleen.
 
-Disruption of the integrity of the endothelium exposes extracellular molecules that signal adhesion of platelets to formt the initial hemostatic plug. Upon activation, platelets secrete a host of molecules and proteins that recuit additional platelets and further activation.
+The primary physiolocal role of platelets is to sense and accumulate at the sites of damaged endotheial tissue and initiate a blod clot to mitigate and vessel leakage (Semple 2011). Disruption of the integrity of the endothelium exposes extracellular molecules that signal adhesion of platelets to form the initial hemostatic plug. Upon activation, platelets secrete a host of molecules and proteins that recuit additional platelets and in turn, promote their activation.
 
-Although anuclear, platelets are for all intents and purposes active cells in that they play
+The role of platelets in hemostasis has been well-studied, however, they are far from simple vestibules that store biomolecules. An increasing body of research supports an active role for paletelets in modulating innate and adaptive immune responses (Semple 2011). Consequently, there is a growing appreciation that platelets actively participate in pathologies such as sepsis, atherosclerosis and rheumatoid arthrtitis. In particular, the immune regulatory role of platelets arises from receptor-mediated interactions with pathogens, neutrophils and antigen-presenting cells.
 
-Can sense  (Nilsson 2011).
-Can promote  (Kuznetsov 2011).
+Although anuclear, it has been shown that platelets are not inert and homogeneous entities. At the transcript-level, circulating platelets have been shown to possess functional splicing apparatus that is triggered in response to external activation (Denis 2005). At the protein-level, platelets possess a fully functional translation apparatus and its proteome has been described as a 'fluid' of components that rapidly alters depending on the conditions (Lindemann 2007). Thus, platelets are subject to many common aspects of gene regulation in order to sense and respond to their environement.
+
+### Platelet 'education' in cancers
+
+The pathogenesis of cancer requires the coopration of a host of stromal and immune cells termed the tumour microenvironment. Indeed, a variety of immune cells that normally suppress cancer are coopted by tumours to enable evasion of immune surveillance in a process termed 'education' (Quail and Joyce 2013). One mechanism of heterotypic signalling involves shedding of exomes by cancer cells containing pro-tumourigenic and pro-metastatic factors. This suggests that immune cells may have the potential to be 're-educated' for a therapeutic effect.
+
+Platelets have been implicated in aiding and abetting the metastatic potential of cancer cells through a variety of routes (Gay 2011). First, they aggregate in order to shield cancer cells that have entered the vasculature from immune cell recognition. Second, they facilitate their extravasation by enabling cancer cell to arrest and adhesion at points in the vasculature. Third, platelets secrete variety of molecules that support cancer cell survival and promote endothelial permeability, further promoting their extravasation.
+
+The close contact between cancer cells and platelets results in their 'education'. For example, tumour-associated RNA (e.g. EGFRvIII in brain and  PCA3 in prostate) could be detected in platelets (Nilsson 2011) and is  consistant with observations that tumor exomes could be taken up by platelets.
+
+### RNA-seq of tumour-educated platelets (TEM)
+
+The evidence indicating that platelets have intimate contact with cancer cells, can take up exome-derived RNA, demonstrate differential splicing in response to their environment and their great abundance supports the notion that they may  possess a large degree of heterogeneity. Such diversity could be clinically relelvant if they enable discrimination between different types and stages of cancer. A study by Best *et al.* set out to determine just how much clincally relevant 'information' is contained in platelet transcriptomes.
+
+#### Sample collection
+
+Best et al. prospectively collected blood platelets from 55 healthy donors (HD) and from 189 treated and untreated patients with cancers at varying stages. In particular, 39 of these were from breast cancers (BrCa) which will be the focus of our workflow.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
+<em>Adapted from Best et al. (Best 2015), Table 1</em>
+
+#### RNA sequencing and analysis
+
+Figure 4 displays the overall sample collection and processing scheme. For each sample, approximately 100-500 picograms of total platelet RNA (equivalent content in a drop of blood) was extracted for analysis by RNA sequencing.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated plate- lets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
+</div>
+
+As Best *et al.* were interested in the discriminatory capacity of transcriptomes, they initially filtered RNA species for those that were intron-spanning and had sufficiently high expression counts (>5) to reduce the amount of noise.
+
+A reduced set of 5 003 protein and non-coding RNAs (excluding Y chromosome and mitochondrial) were used in a pair-wise comparison of expression between HD and pan-cancer samples. Across all cancers the authors identified 1 453 and 793 RNAs with increased and descreased representation, respectively (Figure 4D). These differentially expressed genes were sufficient to discriminate HD and cancer-derived platelets (Figure 4E).
+
+#### Breast cancer diagnostics
+
+Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm aimed a assigning the correct category for each sample. In this case, the authors reported a 100% accuracy in detecting if the platelet derived from a normal donor or patient with a diagnosed malignancy originating in the breast (Figure 5).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Sample classification accuracy and sensitivity.</strong> Cross table of SVM/LOOCV diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined by ANOVA analysis and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Columns show the real sample class and rows indicate the predicted class. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. All experiments yielded a substantially higher accuracy compared to random classifiers. <em>Adapted from Best et al. (Best 2015) Figure S2C</em>.
+</div>
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
@@ -101,4 +146,4 @@ The original data has been deposited in the NCBI [Gene Expression Omnibus](https
 <hr/>
 
 ## <a href="#references" name="references">V. References</a>
-<!-- <div class="panel_group" data-inline="26525104,21436837"></div> -->
+<!-- <div class="panel_group" data-inline="26525104,16096058,21258396,21832279,21436837,24202395"></div> -->
