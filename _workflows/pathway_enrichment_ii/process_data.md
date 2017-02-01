@@ -250,7 +250,38 @@ RNA for a sample can be sequenced to varying 'depths'. This means that the total
 
 Over the years, several approaches have been proposed to account for varying depth in RNA-seq outputs (Oshlack 2010). Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson & Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
 
+In this case we can develop a table of normalized RNA species counts where row names are gene symbols and column names are sample IDs.
+
+**Table X. Normalized expression (counts per million mapped reads)**
+
+| NAME | DESCRIPTION | MGH-BrCa-H92-TR472_htsqct |...|Breast-60_htsqct|
+|:------:|:------:|:------:|:------:|:------:|
+| PPP1R2 | PPP1R2 | 20.0960199625179 | ...| 21.2351177118648|
+| STARD7 | STARD7 | 9.80293656708189 |...|0|
+| TDP2 | TDP2 | 35.2905716414948 |...| 89.9369691326038|
+|...|
+| ANAPC13 | ANAPC13 | 1.47044048506228 |...| 1.24912457128616|
+
 #### 4. Differential expression testing
+
+In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a 'hypothesis-testing' technique that entails the following:
+
+1. Declare the null hypothesis of no difference in RNA counts for all genes betweeen classes
+2. Define a null distribution that describes how RNA counts vary under circumstances where there is *no association between RNA counts and class*
+3. Calculate the probability (p-value) of observing a difference in RNA species counts between classes at least as extreme as the one observed *assuming the null hypothesis/distribution*
+
+In this case, we can provide a list (i.e. table) of RNA species ranked by a function of their p-value where row names are gene symbols and a single column indicates rank. High ranked genes... and conversely low ranked genes
+
+**Table X. Sample Ranks**
+
+| gene | rank |
+|-----|:-----:|
+| ARHGAP45 | 58.1795999084575 |
+| NCK2 | 50.6627080327017 |
+| TRIM58 | 50.6246427495811 |
+| ... | ... |
+| MDM4 |  -27.685318540466 |
+
 
 
 ### <a href="#output" name="output">Output</a>

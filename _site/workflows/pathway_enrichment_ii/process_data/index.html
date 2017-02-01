@@ -359,7 +359,103 @@
 
 <p>Over the years, several approaches have been proposed to account for varying depth in RNA-seq outputs (Oshlack 2010). Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson &amp; Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
 
+<p>In this case we can develop a table of normalized RNA species counts where row names are gene symbols and column names are sample IDs.</p>
+
+<p><strong>Table X. Normalized expression (counts per million mapped reads)</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">NAME</th>
+      <th style="text-align: center">DESCRIPTION</th>
+      <th style="text-align: center">MGH-BrCa-H92-TR472_htsqct</th>
+      <th style="text-align: center">…</th>
+      <th style="text-align: center">Breast-60_htsqct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">PPP1R2</td>
+      <td style="text-align: center">PPP1R2</td>
+      <td style="text-align: center">20.0960199625179</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">21.2351177118648</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">STARD7</td>
+      <td style="text-align: center">STARD7</td>
+      <td style="text-align: center">9.80293656708189</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">TDP2</td>
+      <td style="text-align: center">TDP2</td>
+      <td style="text-align: center">35.2905716414948</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">89.9369691326038</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ANAPC13</td>
+      <td style="text-align: center">ANAPC13</td>
+      <td style="text-align: center">1.47044048506228</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">1.24912457128616</td>
+    </tr>
+  </tbody>
+</table>
+
 <h4 id="differential-expression-testing">4. Differential expression testing</h4>
+
+<p>In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a ‘hypothesis-testing’ technique that entails the following:</p>
+
+<ol>
+  <li>Declare the null hypothesis of no difference in RNA counts for all genes betweeen classes</li>
+  <li>Define a null distribution that describes how RNA counts vary under circumstances where there is <em>no association between RNA counts and class</em></li>
+  <li>Calculate the probability (p-value) of observing a difference in RNA species counts between classes at least as extreme as the one observed <em>assuming the null hypothesis/distribution</em></li>
+</ol>
+
+<p>In this case, we can provide a list (i.e. table) of RNA species ranked by a function of their p-value where row names are gene symbols and a single column indicates rank. High ranked genes… and conversely low ranked genes</p>
+
+<p><strong>Table X. Sample Ranks</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>gene</th>
+      <th style="text-align: center">rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ARHGAP45</td>
+      <td style="text-align: center">58.1795999084575</td>
+    </tr>
+    <tr>
+      <td>NCK2</td>
+      <td style="text-align: center">50.6627080327017</td>
+    </tr>
+    <tr>
+      <td>TRIM58</td>
+      <td style="text-align: center">50.6246427495811</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+    <tr>
+      <td>MDM4</td>
+      <td style="text-align: center">-27.685318540466</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="a-hrefoutput-nameoutputoutputa"><a href="#output" name="output">Output</a></h3>
 
