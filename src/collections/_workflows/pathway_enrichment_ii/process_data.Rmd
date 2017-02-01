@@ -15,6 +15,8 @@ tables:
   table_1: figure_processdata_best_table_1.png
 layout: embedded
 data:
+  input_htseq: htseq_hd_brca_best_cancell_2015.zip
+  input_meta: tep_phenotypes.zip
   rank: brca_hd_tep_ranks.rnk
   expression: brca_hd_tep_expression.txt
   phenotype: brca_hd_tep_phenotype.cls
@@ -35,13 +37,12 @@ dockerhub:
   - {:.list-unstyled} [II. Goals](#goals)
   - {:.list-unstyled} [III. Background](#background)
   - {:.list-unstyled} [IV. Workflow Step](#workflow_step)
-  - {:.list-unstyled} [V. Dependencies](#dependencies)
   - {:.list-unstyled} [VI. References](#references)
 
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  If you wish to obtain the file dependencies for subsequent workflow steps, skip ahead to <a href="#dependencies">V. Dependencies</a>.
+  If you wish to obtain the file dependencies for subsequent workflow steps, skip ahead to the  <a href="#output">Output</a> for this step.
 </div>
 
 ## <a href="#overview" name="overview">I. Overview</a>
@@ -124,11 +125,11 @@ Best et al. prospectively collected blood platelets from 55 healthy donors (HD) 
 
 #### RNA sequencing and analysis
 
-Figure 5 displays the overall sample collection and processing scheme. For each sample, approximately 100-500 picograms of total platelet RNA (content in less than a drop of blood) was extracted for RNA sequencing.
+Figure 5 displays the overall sample collection and processing scheme. For each sample, approximately 100-500 picograms of total platelet RNA  - the equivalent content in less than a drop of blood - was extracted for RNA sequencing.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated plate- lets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
+  <strong>Figure 5. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated platelets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
 </div>
 
 As Best *et al.* were interested in the discriminatory capacity of transcriptomes, they initially filtered RNA species for those that were intron-spanning and had sufficiently high expression counts (>5) to reduce the amount of noise.
@@ -137,51 +138,137 @@ A reduced set of 5 003 protein and non-coding RNAs (excluding Y chromosome and m
 
 #### Breast cancer diagnostics
 
-Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm aimed a assigning the correct category for each sample. In this case, the authors reported a 100% accuracy in detecting if the platelet derived from a normal donor or patient with a diagnosed malignancy originating in the breast (Figure 6).
+Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm trained to assign the correct category for each sample. In this case, the authors reported a 100% test accuracy in discriminating platelets derived from normal versus breatst cancer patients (Figure 6).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Sample classification accuracy and sensitivity.</strong> Cross table of SVM/LOOCV diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined by ANOVA analysis and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Columns show the real sample class and rows indicate the predicted class. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. All experiments yielded a substantially higher accuracy compared to random classifiers. <em>Adapted from Best et al. (Best 2015) Figure S2C</em>.
+  <strong>Figure 6. Sample classification accuracy and sensitivity.</strong> Cross table of Support Vector Machine algorithm diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. <em>Adapted from Best et al. (Best 2015), Figure S2C</em>.
 </div>
 
 ### Zooming out: Pathway analysis
 
-That such a plentiful and accessible cell type such as blood platelets could provide the basis of an astonishingly accurate classification scheme is an exciting achievment and lends support for blood-based cancer diagnostics.
+That such a plentiful and accessible material could provide the basis of an astonishingly accurate classification scheme is an exciting achievment and lends support for blood-based cancer diagnostics. We can repurpose the same RNA measurements to probe deeper into the biology of the platelets themselves.
 
-Nevertheless, we can repurpose the same RNA measurements to probe deeper into the biology of the platelets themselves. Let us revisit two points raised earlier:
+Let us revisit two points raised earlier:
 
   1. Platelets play an active and important role in the physiology of cancer
-  2. Platelets are functional cells that alter their gene expression and behaviour in repsonse to environemental stimuli
+  2. Platelets are functional cells that modify gene expression and behaviour in repsonse to environemental stimuli
 
-While a list of genes with exquisite discriminatory power is useful for breast cancer diagnosis, we can ask a more fundamental question: What biological processes distinguish platelets from and healthy and diseased patients? In other words, we wish to better understand how those differences in RNA species might affect the various *pathways* inside a cell.
+While a list of genes with exquisite discriminatory power is useful for breast cancer diagnosis, we can ask a more fundamental question: What biological processes distinguish platelets from and healthy and diseased patients? In other words, we wish to better understand how those differences in RNA species might affect the various *pathways* inside a cell. What does the transcriptomic data really *mean*?
 
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
+In this workflow step (Box 1), we will transform the RNA sequencing data counts generated by Best *et al.* for platelets from 16 HD and 16 BrCa patients into three output files that are dependencies for later steps:
+
+  1. Rank
+    - The  [RNK](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29){:target="_blank"} file consists of tab-delimited rows with gene names and their rank calculated from differential expression testing (p-values).
+  2. Expression
+    - This [TXT](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29){:target="_blank"} format for expression is a spreadsheet-like layout where rows are gene names, columns are sample names and cells are (normalized) RNA counts.
+  3. Phenotype
+    - The [CLS](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29){:target="_blank"} format contains information about the sample classes (aka 'condition', 'phenotype') and assigns each sample to one class.
+
+<ul class="aside terms">
+  <div class="aside-title">Box 1. Workflow Terminology</div>
+
+  <li class="aside terms">
+    <strong>Workflow.</strong> A set of <em>steps</em> that transforms data into a useful form.
+  </li>
+
+  <li class="aside terms">
+    <strong>Input.</strong> Each step takes in data, files and configuration settings that represent dependencies.
+  </li>
+
+  <li class="aside terms">
+    <strong>Analysis.</strong> Step dependencies are transformed into their useful form.
+  </li>
+
+  <li class="aside terms">
+    <strong>Output.</strong> The results of dependency analysis.
+  </li>
+</ul>
+
+
 ### Input
 
-#### Original Data 
+#### Raw Data
 
-The original data has been deposited in the NCBI [Gene Expression Omnibus](https://www.ncbi.nlm.nih.gov/geo/){:target="_blank"} under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}.
+The data for Best *et al.* (Best 2015) has been deposited in the NCBI [Gene Expression Omnibus](https://www.ncbi.nlm.nih.gov/geo/){:target="_blank"} under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}. The Supplementary File [GSE68086_TEP_data_matrix.txt.gz (3.8 MB)](https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE68086&format=file&file=GSE68086%5FTEP%5Fdata%5Fmatrix%2Etxt%2Egz) contains RNA sequencing data for all 285 patients and donors in a single file.
+
+#### RNA-seq files and metadata
+
+In this workflow, we will be examining only a subset of the raw data provided above: 16 BrCa and 16 HD samples. In addition, the raw RNA-seq data has been integrated into a single file. Since we wish to mimic data that you would see originate from a sequening facility, we have divided each of the 32 sample reads into its own tab-delimited text file. Table 2 shows an excerpt of one RNA-seq file with a column for the gene identifier (Ensembl) and the mapped sequence read count.
+
+> NB: There is no header for RNA-seq files.
+
+**Table 2. Contents of RNA-seq data file**
+
+|-----|-----|
+| ENSG00000000003|0|
+| ENSG00000000005|0|
+| ENSG00000000419|100|
+| ... | ... |
+|ENSG00000273493|0|
+
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.input_htseq }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Raw RNA-Seq (.zip)</a>
+
+We also provide a metadata file (tep_phenotypes.txt; tab-delimited) that contains the name (id) of each RNA-seq file and its corresponding class (Table 3).
+
+> This metadata file is something that would not be provided by a sequencing facility but would be simple to create in a text editor or Excel.
+
+**Table 3. Contents of metadata file**
+
+|id|class|
+|-----|-----|
+| MGH-BrCa-H92-TR472_htsqct.txt | BrCa |
+| MGH-BrCa-H89-TR471_htsqct.txt	 | BrCa |
+| MGH-BrCa-H84-TR551_htsqct.txt | BrCa |
+| ... | ... |
+| HD-18-2_htsqct.txt | HD |
+
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.input_meta }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Metadata (.zip)</a>
 
 ### Analysis
 
-We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/){:target="_blank"} for a detailed description of the theory underlying the processing steps described here.
+The real work involved in this analysis is assigning a rank to each gene based on some measure of differential RNA expression. Rather than provide a detailed discussion of the concerns surrounding differential expression testing which can be quite technical, we provide a thumbnail sketch of the pipeline steps.
 
-### Output
+> We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/){:target="_blank"} for a detailed description of the theory underlying the processing steps described here.
 
-## <a href="#dependencies" name="dependencies">IV. Dependencies</a>
+#### 1. Data wrangling
 
-### Download
+Merge files. Map gene symbols to the namespace used by the gene sets in an enrichment analysis.
 
-  - GSEA depedencies
-    1. Genes ranked as a function of p-value from differential expression testing. <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+#### 2. Filtering
 
-  - Enrichment Map depedencies
-    1. Normalized expression counts for each gene in each sample. <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.expression }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
-    2. Definition of sample classes (i.e. BrCa or HD). <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.phenotype }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
+Biological processes are inherently noisy (Raser 2005) and the same goes for gene expression. Some of this gene expression noise arises from the probabilistic or 'stochastic' nature of biochemical reactions which are rather pronounced when dealing with small numbers of molecules.
+
+In practical terms, RNA species with very low mapped read counts in a small number of samples can be highly variable 'just by chance'. Consequently, we choose to ignore these in the search for differential expression. Best *et al.* use the rule of thumb that 'genes with less than five (non-normalized) read counts in all samples were excluded from analyses' ('Differential expression of transcripts', [Supplemental Experimental Procedures](http://www.cell.com/cms/attachment/2040885974/2054783948/mmc1.pdf){:target="_blank"}, pp.8).
+
+#### 3. Normalization
+
+RNA for a sample can be sequenced to varying 'depths'. This means that the total number of sequence reads mapped to a gene for an individual sequencing run is not neccessarily constant. The reason for this lies in the nature of [next-generation sequencing technologies](http://www.ebi.ac.uk/training/online/course/ebi-next-generation-sequencing-practical-course). Nevertheless, what most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth.
+
+Over the years, several approaches have been proposed to account for varying depth in RNA-seq outputs (Oshlack 2010). Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson & Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
+
+#### 4. Differential expression testing
+
+
+### <a href="#output" name="output">Output</a>
+
+#### GSEA dependencies
+  1. Ranks
+  - Genes ranked as a function of p-value from differential expression.
+  <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.rank }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+
+#### Enrichment Map dependencies
+
+  1. Expression
+  -  Normalized counts for RNA species in for each sample.
+  <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.expression }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
+  2. Phenotype
+  - Declaration of classes and sample assignment. <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.phenotype }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
 
 <hr/>
 
 <!-- ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="26525104,16096058,21258396,26555171,21832279,21436837,24202395"></div> -->
+<div class="panel_group" data-inline="26525104,16096058,21258396,26555171,21832279,21176179,21436837,24202395,16179466,20196867"></div> -->
