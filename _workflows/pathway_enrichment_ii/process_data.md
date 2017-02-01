@@ -160,6 +160,10 @@ While a list of genes with exquisite discriminatory power is useful for breast c
 
 ### Input
 
+#### Original Data 
+
+The original data has been deposited in the NCBI [Gene Expression Omnibus](https://www.ncbi.nlm.nih.gov/geo/){:target="_blank"} under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}.
+
 ### Analysis
 
 We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }}/primers/functional_analysis/rna_sequencing_analysis/){:target="_blank"} for a detailed description of the theory underlying the processing steps described here.
@@ -176,10 +180,6 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
   - Enrichment Map depedencies
     1. Normalized expression counts for each gene in each sample. <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.expression }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
     2. Definition of sample classes (i.e. BrCa or HD). <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.phenotype }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
-
-### Original Data from GEO
-
-The original data has been deposited in the NCBI [Gene Expression Omnibus](https://www.ncbi.nlm.nih.gov/geo/){:target="_blank"} under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}.
 
 <hr/>
 
