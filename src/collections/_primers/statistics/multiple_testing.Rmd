@@ -333,7 +333,7 @@ $$H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}$$
 
 3. Then reject the significant hypotheses $$H_{(1)}, H_{(2)}, \ldots, H_{(k)}$$
 
-- {: .aside.terms } #### A sketch(y) proof
+- {: .aside } #### A sketch(y) proof
 
   Here, we provide an intuitive explanation for the choice of the BH procedure bound.
 
@@ -526,7 +526,7 @@ We proceed using proof by induction. First we provide a proof for the base case 
 
     There are a few not so obvious details that we will need along the way. We present these as a set of numbered 'asides' that we will refer back to.
 
-  - {: .aside } #### 1. Distribution of true null hypothesis p-values
+    #### 1. Distribution of true null hypothesis p-values
 
     The true null hypotheses are associated with p-values $$X_1, \dots, X_{m_0}$$ that are distributed according to a standard uniform distribution, that is, $$X\sim U(0,1)$$. The proof of this follows.
 
@@ -565,7 +565,7 @@ We proceed using proof by induction. First we provide a proof for the base case 
 
     This means that $$P(F_0(T) \lt F_0(t)) = F_0(t)$$ which happens when $$F_0(t) \sim U(0,1)$$.
 
-  - {: .aside } #### 2. Distribution of the largest order statistic
+    #### 2. Distribution of the largest order statistic
 
     Suppose that $$Y_1,\ldots, Y_n$$ are $$n$$ independent variates, each with cdf $$F(y)$$. Let $$F_{(i)}(y)$$ for $$i=1,\ldots,n$$ denote the cdf of the $$i^{th}$$ order statistic $$Y_{(i)}$$. Then the cdf of the largest order statistic $$Y_{(n)}$$ is given by
 

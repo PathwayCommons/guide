@@ -42,14 +42,16 @@ dockerhub:
 <hr/>
 
 <div class="alert alert-warning text-justify" role="alert">
-  If you wish to obtain the file dependencies for subsequent workflow steps, skip ahead to the  <a href="#output">Output</a> for this step.
+  If you simply wish to forge ahead and obtain the dependencies for the remaining workflow steps, skip ahead to <a href="#output">Output</a>.
 </div>
 
 ## <a href="#overview" name="overview">I. Overview</a>
 
-Transcriptome measurements are now routine parts of a research project. While providing an astonshing amount detail concerning the levels of RNA species at any given moment, it is often not clear how reason over the entirety of this information in order to shed light upon the biological question of interest. What does it all mean?
+Measurement of the RNA complement of a cell is now easily within the reach of research laboratories. While providing an astonshing amount detail, it is often not clear how the entirety of this information sheds light upon the biological question of interest. What does it all mean?
 
-The overarching purpose of this workflow is to identify and visualize pathways that are enriched in one of two biological conditions (Figure 1). To acomplish this we will follow three workflow steps:
+<strong>The overarching purpose of this workflow is to identify and visualize pathways that are enriched in one of two biological conditions</strong>.
+
+To acomplish this we will follow three workflow steps (Figure 1):
 
   1. [Process Data]({{ site.baseurl }}/{{ page.workflow.process_data }}): Use the differences in RNA levels between two conditions as a proxy for their 'state'
   2. [Identify Pathways]({{ site.baseurl }}/{{ page.workflow.identify_pathways }}): Use [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to translate differences in RNA levels into altered pathways
@@ -168,25 +170,33 @@ In this workflow step (Box 1), we will transform the RNA sequencing data counts 
   3. Phenotype
     - The [CLS](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29){:target="_blank"} format contains information about the sample classes (aka 'condition', 'phenotype') and assigns each sample to one class.
 
-<ul class="aside terms">
-  <div class="aside-title">Box 1. Workflow Terminology</div>
+<div class="box">
+  <div class="box-title">Box 1. Workflow Terminology</div>
 
-  <li class="aside terms">
-    <strong>Workflow.</strong> A set of <em>steps</em> that transforms data into a useful form.
-  </li>
+  <dl class="dl-horizontal box-terms">
 
-  <li class="aside terms">
-    <strong>Input.</strong> Each step takes in data, files and configuration settings that represent dependencies.
-  </li>
+    <dt>Workflow</dt>
+    <dd>
+      A set of <em>steps</em> that transform data into a useful form.
+    </dd>
 
-  <li class="aside terms">
-    <strong>Analysis.</strong> Step dependencies are transformed into their useful form.
-  </li>
+    <dt>Input</dt>
+    <dd>
+      Each step takes in data, files and configuration settings that represent dependencies.
+    </dd>
 
-  <li class="aside terms">
-    <strong>Output.</strong> The results of dependency analysis.
-  </li>
-</ul>
+    <dt>Analysis</dt>
+    <dd>
+      Step dependencies are transformed into their useful form.
+    </dd>
+
+    <dt>Output</dt>
+    <dd>
+      The results of the analysis of dependencies.
+    </dd>
+  </dl>
+
+</div>
 
 
 ### Input
