@@ -104,34 +104,54 @@
 
 <h2 id="a-hrefoverview-nameoverviewi-overviewa"><a href="#overview" name="overview">I. Overview</a></h2>
 
-<p>Measurement of the RNA complement of a cell is now easily within the reach of research laboratories. While providing an astonshing amount detail, it is often not clear how the entirety of this information sheds light upon the biological question of interest. What does it all mean?</p>
+<p>The ability to quantify the entire RNA complement of a cell is now easily within the reach of standard research laboratories. While providing an astonshing amount detail, it is often not clear how this information taken as a whole might advance understandingof the biological question at hand. What does it all mean?</p>
 
 <p><strong>The overarching purpose of this workflow is to identify and visualize pathways that are enriched in one of two biological conditions</strong>.</p>
 
-<p>To acomplish this we will follow three workflow steps (Figure 1):</p>
+<div class="box">
+  <div class="box-title">Workflow Steps</div>
+  <dl class="box-terms">
 
-<ol>
-  <li><a href="/guide/workflows/pathway_enrichment_ii/process_data/">Process Data</a>: Use the differences in RNA levels between two conditions as a proxy for their ‘state’</li>
-  <li><a href="/guide/workflows/pathway_enrichment_ii/identify_pathways/">Identify Pathways</a>: Use <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to translate differences in RNA levels into altered pathways</li>
-  <li><a href="/guide/workflows/pathway_enrichment_ii/visualize/">Visualize</a>: Use <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984" target="_blank">Enrichment Map</a> to group  similar pathways (i.e. overlapping genes) and visualize the entire ‘landscape’ of pathways</li>
-</ol>
+    <dt>
+        1. Process Data
+    </dt>
+    <dd>
+      Use the differences in RNA levels between two conditions as a proxy for their 'state'
+    </dd>
+
+    <dt>
+      2. <a href="/guide/workflows/pathway_enrichment_ii/identify_pathways/">Identify Pathways</a>
+    </dt>
+    <dd>
+      Use <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to translate differences in RNA levels into altered pathways
+    </dd>
+
+    <dt>
+      3. <a href="/guide/workflows/pathway_enrichment_ii/visualize/">Visualize</a>
+    </dt>
+    <dd>
+      Use <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984" target="_blank">Enrichment Map</a> to group redundant pathways and view the entire pathway 'landscape'
+    </dd>
+
+  </dl>
+</div>
 
 <p><br /></p>
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/process_data/figure_processdata_em_overview.jpg" alt="image" class="img-responsive short" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Overview of pathway enrichment workflow (II).</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps of the involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the genes that have a difference in expression and (3) Visualizing the enriched pathways and their 'overlap' as determined by shared genes.
+  <strong>Figure 1. Overview of pathway enrichment workflow (II).</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps of the involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the genes that have a difference in expression and (3) Visualizing a simplified version of enriched pathways by grouping/eliminating redundant pathways.
 </div>
 
 <h2 id="a-hrefgoals-namegoalsii-goalsa"><a href="#goals" name="goals">II. Goals</a></h2>
 
-<p>To make the concepts in our workflow concrete, we use expression data from Best <em>et al.</em> (Best 2015) who compare blood platelets from healthy human donors to those diagnosed with a malignancy in order to support the concept of a ‘blood-based biopsy’ for cancer diagnosis.</p>
+<p>To make the concepts in our workflow concrete, we use expression data from Best <em>et al.</em> (Best 2015) who compared blood platelets from healthy donors to those diagnosed with a malignancy towards a proof-of-principle for blood-based ‘biopsies’ that support cancer diagnosis.</p>
 
 <p>By then end of this discussion you should (Figure 2):</p>
 
 <ol>
   <li>Be familiar with the efforts by Best <em>et al.</em> to find RNA signatures of cancers within platelets</li>
-  <li>Be aware of procedures used to determine gene differential expression from RNA sequencing output</li>
+  <li>Be aware of procedures used to determine differential expression from RNA sequencing output</li>
   <li>Obtain a set of files that are dependencies for subsequent workflow steps</li>
 </ol>
 
@@ -228,7 +248,7 @@
   <li>Rank
     - The  <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29" target="_blank">RNK</a> file consists of tab-delimited rows with gene names and their rank calculated from differential expression testing (p-values).</li>
   <li>Expression
-    - This <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29" target="_blank">TXT</a> format for expression is a spreadsheet-like layout where rows are gene names, columns are sample names and cells are (normalized) RNA counts.</li>
+    - This <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29" target="_blank">TXT</a> format for expression is a table where rows are gene symbols, columns are sample names and entries are normalized RNA counts.</li>
   <li>Phenotype
     - The <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29" target="_blank">CLS</a> format contains information about the sample classes (aka ‘condition’, ‘phenotype’) and assigns each sample to one class.</li>
 </ol>
@@ -265,11 +285,11 @@
 
 <h4 id="raw-data">Raw Data</h4>
 
-<p>The data for Best <em>et al.</em> (Best 2015) has been deposited in the NCBI <a href="https://www.ncbi.nlm.nih.gov/geo/" target="_blank">Gene Expression Omnibus</a> under the accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086" target="_blank">GSE68086</a>. The Supplementary File <a href="https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE68086&amp;format=file&amp;file=GSE68086%5FTEP%5Fdata%5Fmatrix%2Etxt%2Egz">GSE68086_TEP_data_matrix.txt.gz (3.8 MB)</a> contains RNA sequencing data for all 285 patients and donors in a single file.</p>
+<p>The data for Best <em>et al.</em> (Best 2015) has been deposited in the NCBI Gene Expression Omnibus under the accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086" target="_blank">GSE68086</a>. The Supplementary File <a href="https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE68086&amp;format=file&amp;file=GSE68086%5FTEP%5Fdata%5Fmatrix%2Etxt%2Egz">GSE68086_TEP_data_matrix.txt.gz (3.8 MB)</a> contains RNA sequencing data for all 285 patients and donors in a single file.</p>
 
 <h4 id="rna-seq-files-and-metadata">RNA-seq files and metadata</h4>
 
-<p>In this workflow, we will be examining only a subset of the raw data provided above: 16 BrCa and 16 HD samples. In addition, the raw RNA-seq data has been integrated into a single file. Since we wish to mimic data that you would see originate from a sequening facility, we have divided each of the 32 sample reads into its own tab-delimited text file. Table 2 shows an excerpt of one RNA-seq file with a column for the gene identifier (Ensembl) and the mapped sequence read count.</p>
+<p>In this workflow, we will be examining only a subset of the raw data provided above: 16 BrCa and 16 HD samples. Also, <em>Best et al.</em> submitted the RNA-seq data as a single table. Since we wish to mimic typical outputs that would originate from a sequening facility, we have divided each of the 32 sample reads into its own tab-delimited file. Table 2 shows an excerpt of one RNA-seq run with a column for the gene symbol (Ensembl) and the mapped sequence read count.</p>
 
 <blockquote>
   <p>NB: There is no header for RNA-seq files.</p>
@@ -304,7 +324,7 @@
 
 <p><a href="/guide/media/workflows/pathway_enrichment_ii/process_data/htseq_hd_brca_best_cancell_2015.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Raw RNA-Seq (.zip)</a></p>
 
-<p>We also provide a metadata file (tep_phenotypes.txt; tab-delimited) that contains the name (id) of each RNA-seq file and its corresponding class (Table 3).</p>
+<p>We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains the name (id) of each RNA-seq file and its corresponding class (Table 3).</p>
 
 <blockquote>
   <p>This metadata file is something that would not be provided by a sequencing facility but would be simple to create in a text editor or Excel.</p>
@@ -347,7 +367,7 @@
 
 <h3 id="analysis">Analysis</h3>
 
-<p>The real work involved in this analysis is assigning a rank to each gene based on some measure of differential RNA expression. Rather than provide a detailed discussion of the concerns surrounding differential expression testing which can be quite technical, we provide a thumbnail sketch of the pipeline steps.</p>
+<p>The true work involved at this stage is assigning a rank to each RNA species based on some measure of differential RNA expression. Rather than provide a detailed discussion of the concerns surrounding differential expression testing, we provide a thumbnail sketch of the tasks involved in achieving this goal.</p>
 
 <blockquote>
   <p>We refer the reader to our primer on <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/" target="_blank">RNA sequencing analysis</a> for a detailed description of the theory underlying the processing steps described here.</p>
@@ -355,7 +375,44 @@
 
 <h4 id="data-wrangling">1. Data wrangling</h4>
 
-<p>Merge files. Map gene symbols to the namespace used by the gene sets in an enrichment analysis.</p>
+<p>Getting the data into the format that is useful for downstream analysis is a central but often underappreciated aspect of computational biology research. In this case, there are three tasks that we must accomplish with our data and metadata.</p>
+
+<p>First, we must integrate or ‘merge’ the 32 RNA-seq files together into a single table. The reason for this is that data in table format is a form that is more easily loaded into RNA-seq analysis software packages.</p>
+
+<p>Second, we must perform gene ‘ID mapping’. This entails translating the names of genes/RNA species provided within the raw RNA-seq files into a desired namespace. This is neccessary in order for us to compare our RNA counts for a given gene with the genes that constitute candidate pathways in our enrichment step.</p>
+
+<p>Third, using our metadata we can generate our <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29" target="_blank">phenotype</a> information (Table 4), which declares the number of samples and classes (row 1), names the classes (row 2) and then declares the class to which each sample belongs (row 3). Since our metadata contains the name (id) of the sample and the class, this is a simple task.</p>
+
+<p><strong>Table 4. Phenotype information layout (.cls file)</strong></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>30</td>
+      <td>2</td>
+      <td>1</td>
+      <td> </td>
+      <td>…</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>#</td>
+      <td>HD</td>
+      <td>BrCa</td>
+      <td> </td>
+      <td>…</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HD</td>
+      <td>HD</td>
+      <td>HD</td>
+      <td>…</td>
+      <td>BrCa</td>
+      <td>BrCa</td>
+    </tr>
+  </tbody>
+</table>
 
 <h4 id="filtering">2. Filtering</h4>
 
@@ -369,9 +426,9 @@
 
 <p>Over the years, several approaches have been proposed to account for varying depth in RNA-seq outputs (Oshlack 2010). Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson &amp; Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
 
-<p>In this case we can develop a table of normalized RNA species counts where row names are gene symbols and column names are sample IDs.</p>
+<p>At this stage, we can generate a table of normalized RNA species <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29" target="_blank">expression</a> where row names are gene symbols and column names are sample IDs.</p>
 
-<p><strong>Table X. Normalized expression (counts per million mapped reads)</strong></p>
+<p><strong>Table 5. Normalized expression (counts per million mapped reads)</strong></p>
 
 <table>
   <thead>
@@ -432,9 +489,9 @@
   <li>Calculate the probability (p-value) of observing a difference in RNA species counts between classes at least as extreme as the one observed <em>assuming the null hypothesis/distribution</em></li>
 </ol>
 
-<p>In this case, we can provide a list (i.e. table) of RNA species ranked by a function of their p-value where row names are gene symbols and a single column indicates rank. High ranked genes… and conversely low ranked genes</p>
+<p>At this stage, we can generate a list (i.e. table) of RNA species <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29" target="_blank">ranked</a> by a function of their p-value where row names are gene symbols and a single column indicates rank. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.</p>
 
-<p><strong>Table X. Sample Ranks</strong></p>
+<p><strong>Table 6. A ranked gene list</strong></p>
 
 <table>
   <thead>
@@ -469,6 +526,8 @@
 
 <h3 id="a-hrefoutput-nameoutputoutputa"><a href="#output" name="output">Output</a></h3>
 
+<p>Listed below are the outputs of this step that will be required as input dependencies for the next steps of the workflow.</p>
+
 <h4 id="gsea-dependencies">GSEA dependencies</h4>
 <ol>
   <li>Ranks
@@ -497,11 +556,32 @@
 
 <hr />
 
-<!-- ## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="26525104,16096058,21258396,26555171,21832279,21176179,21436837,24202395,16179466,20196867"></div> -->
+<h2 id="a-hrefreferences-namereferencesv-referencesa"><a href="#references" name="references">V. References</a></h2>
+<div class="panel_group" data-inline="26525104,16096058,21258396,26555171,21832279,21176179,21436837,24202395,16179466,20196867"></div>
 
         </div>        
         
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/pathway_enrichment_ii/process_data";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/pathway_enrichment_ii/process_data"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
       </div>
     </div>
