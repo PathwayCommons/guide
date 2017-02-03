@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Identify Pathways &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <div id="embedded">
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="container content embedded">
+          <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+
+            <h1 class="page-title">Identify Pathways</h1>
+            <div class="subtitle">A subtitle</div>
+            <hr/>
+            <div class="linkout clearfix">
+              <ul class="list-inline pull-right">
+              <li>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=/workflows/pathway_enrichment_ii/identify_pathways/&title=Identify Pathways"
+  data-toggle="tooltip"
+  title="Share this page on Facebook"
+  target="_blank" >
+    <i class="fa fa-facebook-official fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/intent/tweet?text=A subtitle+/workflows/pathway_enrichment_ii/identify_pathways/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=/workflows/pathway_enrichment_ii/identify_pathways/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+              </ul>
+            </div>
+            <hr/>
+            <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#background">II. Background</a></li>
+      <li class="list-unstyled"><a href="#workflow_step">III. Workflow Step</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<div class="alert alert-warning text-justify" role="alert">
+  If you simply wish to forge ahead and obtain the dependencies for the remaining workflow steps, skip ahead to <a href="#output">Output</a>.
+</div>
+
+<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>Previously, we were introduced to a study by Best <em>et al.</em> (Best 2015) who examined the feasability of using RNA counts from platelets to differentiate breast cancer patients (BrCa) and healthy donors (HD). The workflow step took in RNA sequencing counts and metadata describing the samples (i.e. HD or  BrCa), analyzed the data for differential expression (DE). One of the outputs from that step is a list of RNA species names and their respective rank, calculated from the p-value established from DE testing. In brief, the magnitude of the rank is proportional to the ‘rareness’ of a difference in RNA counts at least as large as that observed, <em>assuming no association between sample class and RNA count</em>.</p>
+
+<p>In this section we discuss the use of <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to identify pathways enriched in ranked lists of genes arising from a differential gene expression analysis (Figure 1). By then end of this discussion you should:</p>
+
+<ol>
+  <li>Be able to set up the required GSEA software</li>
+  <li>Be able to use the GSEA software to test a list of DE genes for enriched pathways</li>
+  <li>Obtain a set of enrichment files that are dependencies for subsequent workflow steps</li>
+</ol>
+
+<p><br /></p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_overview.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Overview.</strong> Gene Set Enrichment Analysis attempts to answer the question: Can alterations in pathways be inferred from the underlying changes in gene expression? GSEA requires a list where each gene is assinged a rank from differential expression testing along with a collection of candidate gene sets or pathways. GSEA uses a statistical criteria to filter the gene sets that are significantly enriched in the input gene list.
+</div>
+
+<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+
+<p>Please refer to our <a href="/guide/primers/functional_analysis/gsea/" target="_blank">GSEA primer</a> for a more detailed description of underlying theory and rationale.</p>
+
+<h2 id="a-hrefworkflowstep-nameworkflowstepiii-workflow-stepa"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
+
+<p>In this workflow step, we will output two enrichment reports that are dependencies for later steps. An  <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Detailed_Enrichment_Results" target="_blank">enrichment report</a> is an [Excel (.xls)] file that lists all gene sets enriched in a class (‘phenotype’) ordered by the a scoring metric called the normalized enrichment score (NES) (Table 1).</p>
+
+<p><strong>Table 1. Sample enrichment report</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NAME</th>
+      <th>…</th>
+      <th>SIZE</th>
+      <th>ES</th>
+      <th>NES</th>
+      <th>NOM p-val</th>
+      <th>FDR q-val</th>
+      <th>FWER p-val</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EUKARYOTIC TRANSLATION ELONGATION</td>
+      <td>…</td>
+      <td>82</td>
+      <td>-0.9144994</td>
+      <td>-3.0786333</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>L13A-MEDIATED TRANSLATIONAL SILENCING OF CERULOPLASMIN</td>
+      <td>…</td>
+      <td>101</td>
+      <td>-0.8764053</td>
+      <td>-3.0660815</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>BIOCARTA_TNFR2_PATHWAY</td>
+      <td>…</td>
+      <td>15</td>
+      <td>-0.18457972</td>
+      <td>-0.4327011</td>
+      <td>1</td>
+      <td>0.99926895</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Recall that in the <a href="workflows/pathway_enrichment_ii/process_data/">previous step</a> we compared RNA expression in BrCa relative to HD. You will obtain one report for each class:</p>
+
+<ol>
+  <li>Positive (pos)
+    <ul>
+      <li>Pathways that are relatively enriched in BrCa</li>
+    </ul>
+  </li>
+  <li>Negative (neg)
+    <ul>
+      <li>Pathways that are relatively enriched in HD</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="input">Input</h3>
+
+<h3 id="analysis">Analysis</h3>
+
+<h3 id="a-hrefoutput-nameoutputoutputa"><a href="#output" name="output">Output</a></h3>
+
+<p>Listed below are the outputs of this step that will be required as input dependencies for the next steps of the workflow.</p>
+
+<h4 id="enrichment-map-dependencies">Enrichment Map dependencies</h4>
+
+<ol>
+  <li>
+    <p>Report for BrCa enrichment
+  <a href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/gsea_report_for_brca.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
+  </li>
+  <li>
+    <p>Report for HD enrichment
+  <a href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/gsea_report_for_hd.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
+  </li>
+</ol>
+
+        </div>
+        
+  <hr/>
+  <h2>References</h2>
+  
+  <div class="reference_group" data-reflist="[10802651 26525104 26527732 26656494 20067622 23193289 18832364]"></div>
+
+
+        
+
+      </div>
+    </div>
+
+  <script id="dsq-count-scr" src="//pathway-commons.disqus.com/count.js" async></script>
+  </body>
+</html>

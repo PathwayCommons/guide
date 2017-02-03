@@ -44,8 +44,6 @@ In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http
 2. Be aware of the advantages over previous methods
 3. Be aware of the statistical basis of the approach
 
-<br/>
-
 ## <a href="#background" name="background">II. Background</a>
 
 High-throughput approaches for gene expression measurement can generate a tremendous volume of data but can be unwieldy and easily outstrip intuition. The noisy nature of biological processes compounds the difficulty in interpreting outputs of large-scale experiments. Clearly, there is a need for robust approaches that place data in a wider context that is more biologically meaningful to the scientific question at hand.

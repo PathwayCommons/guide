@@ -6,7 +6,7 @@ layout: embedded
 group: pathway_enrichment_gdc
 order: 3
 figures:
-  figure_1: figure_overview.png
+  figure_1: figure_idpathways_overview.jpg
   figure_2: figure_gsea_overview.png
   figure_3: figure_gsea_start.png
   figure_4: figure_gsea_load.jpg
@@ -24,7 +24,7 @@ reflist:
   - 26656494
   - 20067622
   - 23193289
-  - 18832364  
+  - 18832364
 comments: true
 ---
 
