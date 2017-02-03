@@ -17,6 +17,19 @@ figures:
   figure_5: tcga_barcode.png
   figure_6: figure_getdata_tcgabiolinks_overview.jpg
   figure_7: figure_getdata_summarizedExperiment.jpg
+reflist:
+  - 25633503
+  - 21720365
+  - 20229506
+  - 26493647
+  - 23104886
+  - 20022975
+  - 18698038
+  - 21941283
+  - 23257362
+  - 20802226
+  - 21436879
+  - 12529460
 comments: true
 github:
   workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
@@ -33,7 +46,6 @@ knitr::opts_chunk$set(fig.retina=NULL,echo=FALSE,message=FALSE, warning=FALSE)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Data](#data)
-  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -249,6 +261,3 @@ The code and supporting material are available at Github <a href="{{ page.github
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="25633503,21720365,20229506,26493647,23104886,20022975,18698038,21941283,23257362,20802226,21436879,12529460"></div>

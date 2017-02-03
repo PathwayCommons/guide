@@ -8,7 +8,7 @@ output:
     mathjax:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 category: statistics
-layout: markdown
+layout: document
 figures:
   table_1: table_1.jpg
   table_2: table_2.jpg
@@ -25,7 +25,6 @@ cover: cover.jpg
   - {:.list-unstyled}  [IV. Controlling the Family-Wise Error Rate (FWER)](#controllingFWER)
   - {:.list-unstyled}  [V. Controlling the False Discovery Rate (FDR)](#controllingFDR)
   - {:.list-unstyled}  [Appendix A. Proof of Lemma 1](#appendixA)
-  - {:.list-unstyled}  [VI. References](#references)
 
 <hr/>
 
@@ -760,7 +759,7 @@ Thus, Lemma 1 holds for the base case $$m=1$$ and by the induction hypothesis al
 
 <hr/>
 
-## <a href="#references" name="references">VI. References</a>
+## References
   - Benjamini Y and Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Roy. Stat. Soc., v57(1) pp289-300, 1995.
   - Glickman ME *et al.* False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.
   - Goeman JJ and Solari A. Multiple hypothesis testing in genomics. Stat. Med., 33(11) pp1946-1978, 2014.

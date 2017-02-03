@@ -240,16 +240,14 @@ module.exports = (function(){
     $container.each(function(element, index){
 
       var $target = $(this),
-          pagedata = $target.data('page'),
-          inline = $target.data('inline'),
+          inline = $target.data('reflist'),
           input = [];
 
-      if (pagedata) {
-        input = pagedata;
-      } else if (inline) {
+      if ( inline ) {
         input = [{ category: '', uids: [inline] }];
+      } else {
+        return false;
       }
-
 
       ReactDOM.render(
         <PanelGroup input={input} />,

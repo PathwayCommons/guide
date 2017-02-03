@@ -29,6 +29,17 @@ workflow:
   identify_pathways: workflows/pathway_enrichment_ii/identify_pathways/
   visualize: workflows/pathway_enrichment_ii/visualize/
 dockerhub:
+reflist:
+  - 26525104
+  - 16096058
+  - 21258396
+  - 26555171
+  - 21832279
+  - 21176179
+  - 21436837
+  - 24202395
+  - 16179466
+  - 20196867
 comments: yes
 ---
 
@@ -36,8 +47,7 @@ comments: yes
   - {:.list-unstyled} [I. Overview](#overview)
   - {:.list-unstyled} [II. Goals](#goals)
   - {:.list-unstyled} [III. Background](#background)
-  - {:.list-unstyled} [IV. Workflow Step](#workflow_step)
-  - {:.list-unstyled} [V. References](#references)
+  - {:.list-unstyled} [IV. Workflow Step](#workflow_step)  
 
 <hr/>
 
@@ -346,8 +356,3 @@ Listed below are the outputs of this step that will be required as input depende
   <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.expression }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
   2. Phenotype
   - Declaration of classes and sample assignment. <a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.phenotype }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
-
-<hr/>
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="26525104,16096058,21258396,26555171,21832279,21176179,21436837,24202395,16179466,20196867"></div>

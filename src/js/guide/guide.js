@@ -10,7 +10,7 @@ module.exports = (function(){
   initModule;
   initModule = function(){
     boot.initModule();
-    efetch_panel.initModule( $('.panel_group') );
+    efetch_panel.initModule( $('.reference_group') );
     progress_tracker.initModule( $( '.progress-tracker-wrapper' ) );
   };
 

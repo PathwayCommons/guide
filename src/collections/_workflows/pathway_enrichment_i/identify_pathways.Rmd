@@ -18,6 +18,13 @@ figures:
 data:
   data_1: workflows/pathway_enrichment_gdc/process_data/MesenchymalvsImmunoreactive_edger_ranks.rnk
   data_2: Human_GOBP_AllPathways_no_GO_iea_October_01_2016_symbol.gmt
+reflist:
+  - 10802651
+  - 26527732
+  - 26656494
+  - 20067622
+  - 23193289
+  - 18832364  
 comments: true
 ---
 
@@ -26,7 +33,6 @@ comments: true
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Post-GSEA](#postGSEA)
-  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -325,6 +331,3 @@ On the other hand, you may desire an appreciation of the grander themes emerging
 <div class="alert alert-warning text-justify" role="alert">
   Make note of the analysis history file with extension '.rpt'. This contains information regarding the name and location of your GSEA results files. It can be used as a point of access for downstream analysis software.
 </div>
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline=" 10802651,26527732,26656494,20067622,18832364,23193289"></div>

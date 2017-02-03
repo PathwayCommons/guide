@@ -6,7 +6,7 @@ output:
   html_document:
     mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 category: statistics
-layout: markdown
+layout: document
 figures:
   table_1: table_1.jpg
   table_2: table_2.jpg
@@ -22,7 +22,6 @@ cover: cover.jpg
   - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)
   - {:.list-unstyled} [III. Fisher's Exact Test](#fishersExactTest)
   - {:.list-unstyled} [IV. Caveats](#caveats)
-  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -154,7 +153,7 @@ There has been much discussion with regards to the assumptions, limitations, and
 
 <hr/>
 
-## <a href="#references" name="references">V. References</a>
+## References
   - Ashburner M. et al. Gene ontology: tool for the unification of biology. The Gene Ontology Consortium. Nature Genetics v25 pp. 22-29, 2000.
   - Fisher, R. A. The logic of inductive inference. J. Roy. Statist. Soc. 98, pp. 39-82, 1935.
   - Greenland S. et al. Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations. European Journal of Epidemiology, v31(4) pp. 337-350, 2016.

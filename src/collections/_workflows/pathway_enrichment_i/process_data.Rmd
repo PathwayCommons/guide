@@ -12,6 +12,10 @@ order: 2
 data:
   rank_list: MesenchymalvsImmunoreactive_edger_ranks.rnk
 group: pathway_enrichment_gdc
+reflist:
+  - 23975260
+  - 21720365
+  - 23359318
 github:
   workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
   section: https://github.com/jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/process_data.R
@@ -27,7 +31,6 @@ knitr::opts_chunk$set(fig.retina=NULL,echo=FALSE,message=FALSE, warning=FALSE)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Data](#data)
-  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -336,8 +339,3 @@ The R code is available at Github <a href="{{ page.github.section }}"
   target="_blank">
   <i class="fa fa-github fa-2x"></i>
 </a>
-
-<hr/>
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="23975260,21720365,23359318"></div>

@@ -7,7 +7,7 @@ output:
     mathjax:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 category: statistics
-layout: markdown
+layout: document
 comments: true
 cover: cover.jpg
 ---

@@ -24,6 +24,11 @@ figures:
   figure_13: figure_visualize_cytoscape_em_autoannotate.png
   figure_14: figure_visualize_cytoscape_em_collapsed_scaled.png
 comments: true
+reflist:
+  - 10802651
+  - 18511468
+  - 21085593
+  - 22383865
 github:
   workflow_repo: https://github.com/jvwong/pc_guide_workflows/tree/b0356a230b85adc34f682f284f6d12c8f4067723
   section: https://github.com/jvwong/pc_guide_workflows/blob/b0356a230b85adc34f682f284f6d12c8f4067723/pathway_enrichment_i/scripts/visualize.R
@@ -34,7 +39,6 @@ github:
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Common tasks](#tasks)
-  - {:.list-unstyled} [V. References](#references)
 
 <hr/>
 
@@ -588,6 +592,3 @@ The resulting network can look a bit sparse. Let's fine tune this by bringing th
 <hr/>
 
 Cytoscape affords the user a great deal of control over [styles](http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles){: target="_blank"} and [layout](http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://wiki.cytoscape.org/Cytoscape_User_Manual){: target="_blank"} for full description of capabilities.
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline="10802651,18511468,21085593,22383865"></div>

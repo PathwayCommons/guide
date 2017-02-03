@@ -22,6 +22,18 @@ figures:
   table_2: figure_count_table_example.jpg
   table_3: figure_count_enumerated_example.jpg
 comments: true
+reflist:
+  - 20167110
+  - 26813401
+  - 17556586
+  - 25150837
+  - 18550803
+  - 18516045
+  - 21176179
+  - 17881408
+  - 17728317
+  - 20196867
+  - 19015660
 cover: cover.jpg
 ---
 
@@ -33,14 +45,13 @@ cover: cover.jpg
   - {:.list-unstyled} [V. Differential expression testing](#differentialExpression)
   - {:.list-unstyled} [VI. Modelling counts ](#modellingCounts)
   - {:.list-unstyled} [VII. Dispersion estimation ](#dispersionEstimation)
-  - {:.list-unstyled} [VIII. References](#references)
 
 <hr/>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
 <div class="alert alert-warning text-justify" role="alert">
-  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> software package.
+  We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html" target="_blank">edgeR</a> software package.
 </div>
 
 In this section we begin with a broad introduction to the use of RNA deep sequencing towards the goal differential expression testing. This provides the necessary context for the rationale and statistical theory underlying normalization and differential expression testing of RNA sequencing (RNA-seq) data. By then end of this discussion you should:
@@ -843,7 +854,3 @@ where $$\alpha$$ is a weight given to the common likelihood - the conditional li
 <hr/>
 
 In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
-
-
-## <a href="#references" name="references">VIII. References</a>
-<div class="panel_group" data-inline="20167110,26813401,17556586,25150837,18550803,18516045,21176179,17881408,17728317,20196867,19015660"></div>

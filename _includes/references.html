@@ -1,0 +1,6 @@
+{% if page.reflist %}
+  <hr/>
+  <h2>References</h2>
+  {% assign reflist = page.reflist | split: ',' %}
+  <div class="reference_group" data-reflist="{{ reflist }}"></div>
+{% endif %}

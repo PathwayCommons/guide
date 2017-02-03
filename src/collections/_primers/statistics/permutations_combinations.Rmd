@@ -1,6 +1,6 @@
 ---
 title: Permutations & Combinations
-layout: markdown
+layout: document
 category: statistics
 comments: true
 cover: cover.jpg

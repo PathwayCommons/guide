@@ -1,10 +1,9 @@
 ---
 title: Gene Set Enrichment Analysis
-subtitle:
+subtitle: Map expression differences to pathways
 date: 2016-04-20
-pmid: 16199517
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
-layout: publication
+layout: document
 category: functional_analysis
 figures:
   figure_1: figure_gsea_local.png
@@ -14,6 +13,18 @@ figures:
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
 comments: true
+reflist:
+  - 19192285
+  - 15647293
+  - 15226741
+  - 20048385
+  - 15994189
+  - 22383865
+  - 12808457
+  - 20010596
+  - 16199517
+  - 23070592
+  - 26125594
 cover: cover.jpg
 ---
 
@@ -22,9 +33,8 @@ cover: cover.jpg
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Practical](#practical)
   - {:.list-unstyled} [IV. Post-GSEA](#postGSEA)
-  - {:.list-unstyled} [V. References](#references)
 
-  <hr/>
+<hr/>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
@@ -428,6 +438,3 @@ where $$F_0^{permutation}$$ is derived empirically through $$\zeta_{k,\boldsymbo
 <hr/>
 
 Given the observed and null normalized enrichment scores, the FDR can be calculated using an approach similar to that described in the previous section (equation \eqref{eq:13}).
-
-## <a href="#references" name="references">V. References</a>
-<div class="panel_group" data-inline=" 19192285,15647293,15226741,20048385,15994189,22383865,12808457,20010596,16199517,23070592,26125594"></div>
