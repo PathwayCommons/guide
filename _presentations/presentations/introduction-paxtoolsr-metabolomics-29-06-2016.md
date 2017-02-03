@@ -3,7 +3,8 @@ title: Introduction to PaxtoolsR
 subtitle: Metabolomics 2016, the 12th Annual Conference of the Metabolomics Society at University College Dublin.
 date: June 27, 2016
 location: Dublin, Ireland
-label: PaxtoolsR
+badges:
+  - PaxtoolsR
 layout: document
 category: presentations
 cover: cover.jpg

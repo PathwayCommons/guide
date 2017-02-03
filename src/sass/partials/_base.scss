@@ -184,11 +184,7 @@ img.left {
       }
     }
     .list-group-item-meta {
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      right: 0;
-      padding: 1em;
+      display: none;
     }
   }
 }
@@ -214,6 +210,7 @@ img.left {
       }
 
       .list-group-item-meta {
+        display: inline;  
         position: absolute;
         z-index: 1;
         top: auto;
@@ -222,7 +219,6 @@ img.left {
         left: 0;
         padding: 1em;
       }
-
     }
   }
 }

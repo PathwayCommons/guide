@@ -9,7 +9,9 @@
         <p>{{ doc.subtitle }}</p>
       </div>
       <div class="list-group-item-meta">
-        <span class="label label-default">{{ doc.badge }}</span>
+        {% for badge in doc.badges %}
+          <span class="label label-default">{{ badge }}</span>
+        {% endfor %}
       </div>
       <div class="list-group-item-media">
         {% if doc.cover  %}

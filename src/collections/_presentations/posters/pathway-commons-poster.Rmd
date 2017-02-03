@@ -7,6 +7,7 @@ cover: cover.jpg
 layout: document
 figure: pathway-commons-poster.jpg
 pdf: pathway-commons-poster.pdf
+badges:
 ---
 
 
