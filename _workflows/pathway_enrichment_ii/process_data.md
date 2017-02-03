@@ -47,7 +47,7 @@ comments: yes
   - {:.list-unstyled} [I. Overview](#overview)
   - {:.list-unstyled} [II. Goals](#goals)
   - {:.list-unstyled} [III. Background](#background)
-  - {:.list-unstyled} [IV. Workflow Step](#workflow_step)  
+  - {:.list-unstyled} [IV. Workflow Step](#workflow_step)
 
 <hr/>
 
@@ -57,12 +57,14 @@ comments: yes
 
 ## <a href="#overview" name="overview">I. Overview</a>
 
-The ability to quantify the entire RNA complement of a cell is now easily within the reach of standard research laboratories. While providing an astonshing amount detail, it is often not clear how this information taken as a whole might advance understandingof the biological question at hand. What does it all mean?
+The ability to quantify the entire RNA complement of a cell is now a routine aspect of biological research. While providing an astonshing amount detail, it is often not clear how to interpret this information as a whole or how it might be used to shed light upon the question at hand. What does it all mean?
 
 <strong>The overarching purpose of this workflow is to identify and visualize pathways that are enriched in one of two biological conditions</strong>.
 
+In doing so, we aim to infer differences at the *pathway-level* rather than at the level of gene expression. Abstracting in this manner integrates lower-level information and shifts the focus to higher-level concepts that have a closer association with the various functions of a cell.
+
 <div class="box">
-  <div class="box-title">Workflow Steps</div>
+  <div class="box-title">Box 1. Workflow Steps</div>
   <dl class="box-terms">
 
     <dt>
@@ -93,12 +95,12 @@ The ability to quantify the entire RNA complement of a cell is now easily within
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.short }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Overview of pathway enrichment workflow (II).</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps of the involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the genes that have a difference in expression and (3) Visualizing a simplified version of enriched pathways by grouping/eliminating redundant pathways.
+  <strong>Figure 1. Overview of pathway enrichment workflow (II).</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
 </div>
 
 ## <a href="#goals" name="goals">II. Goals</a>
 
-To make the concepts in our workflow concrete, we use expression data from Best *et al.* (Best 2015) who compared blood platelets from healthy donors to those diagnosed with a malignancy towards a proof-of-principle for blood-based 'biopsies' that support cancer diagnosis.
+To make the concepts in our workflow concrete, we use expression data from Best *et al.* (Best 2015) who compared blood platelets from healthy donors to those diagnosed with a malignancy towards a proof-of-principle for blood-based cancer diagnosis.
 
 By then end of this discussion you should (Figure 2):
 
@@ -117,7 +119,7 @@ By then end of this discussion you should (Figure 2):
 
 ### Blood-based cancer biopsies
 
-Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, stratification and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy neccessary to reliably differentiate between cancerous and normal states. To this end, blood-based biomarkers have been agressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 4).
+Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy needed to reliably differentiate between normal and pathological states. Blood-based biomarkers have been agressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 4).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -126,11 +128,11 @@ Cancer surveillance would be greatly aided by practical, low-cost alternatives t
 
 ### A platelet primer
 
-Within the marrow, platelets originate as cytoplasmic fragments of arrested, polyploid megakaryocytes which 'bud-off' into the circulation via shear forces generated by circulating blood. Approximately 1 trillion platelets circulate an adult human at any one time and live for an average of ten days before being sequestered by the spleen. The primary physiolocal role of platelets is to sense and accumulate at the sites of damaged endotheial tissue and initiate a blod clot to mitigate and vessel leakage (Semple 2011). Disruption of the integrity of the endothelium exposes extracellular molecules that signal adhesion of platelets to form the initial hemostatic plug. Upon activation, platelets secrete a host of molecules and proteins that recuit additional platelets and in turn, promote their activation.
+Within the marrow, platelets originate as cytoplasmic fragments of megakaryocytes which 'bud-off' into the circulation via shear forces generated by circulating blood. Approximately 1 trillion platelets circulate an adult human at any one time making it the second most abundant cell type in blood. The primary physiolocal role of platelets is to sense and accumulate at the sites of damaged endotheial tissue and initiate a blod clot to mitigate and vessel leakage (Semple 2011). Disruption of the integrity of the endothelium exposes extracellular molecules that signal adhesion of platelets which, in turn, secrete a host of molecules and cytokines that recuit additional platelets to form the initial hemostatic plug.
 
-The role of platelets in hemostasis has been well-studied, however, they are far from simple vestibules of biomolecules. An increasing body of research supports an active role for paletelets in modulating innate and adaptive immune responses (Semple 2011). Consequently, there is a growing appreciation that platelets actively participate in pathologies such as sepsis, atherosclerosis and rheumatoid arthrtitis. In particular, the immune regulatory role of platelets arises from receptor-mediated interactions with pathogens, neutrophils and antigen-presenting cells.
+Platelets are far from simple vestibules of biomolecules. An increasing body of research supports an active role for pletelets in modulating innate and adaptive immune responses and a direct involvement in pathologies such as sepsis, atherosclerosis and rheumatoid arthrtitis (Semple 2011). In particular, the immune regulatory role of platelets arises from receptor-mediated interactions with pathogens, neutrophils and antigen-presenting cells.
 
-Although anuclear, it has been shown that platelets are not inert and homogeneous entities. At the transcript-level, circulating platelets have been shown to possess functional splicing apparatus that is triggered in response to external activation (Denis 2005). At the protein-level, platelets possess a fully functional translation apparatus and its proteome has been described as a 'fluid' of components that rapidly alters depending on the conditions (Lindemann 2007). Thus, platelets are subject to many common aspects of gene regulation in order to sense and respond to their environment.
+Although anuclear, it has been shown that platelets are neither inert nor homogeneous. At the transcript-level, circulating platelets have been shown to possess functional splicing apparatus that is triggered in response to external activation (Denis 2005). At the protein-level, platelets possess a fully functional translation apparatus and its proteome has been described as a 'fluid' of components that rapidly alters depending on the conditions (Lindemann 2007). Thus, platelets are subject to many common aspects of gene regulation in order to sense and respond to their environment.
 
 ### Platelet 'education' in cancers
 
@@ -159,14 +161,14 @@ Best et al. prospectively collected blood platelets from 55 healthy donors (HD) 
 
 #### RNA sequencing and analysis
 
-Figure 5 displays the overall sample collection and processing scheme. For each sample, approximately 100-500 picograms of total platelet RNA  - the equivalent content in less than a drop of blood - was extracted for RNA sequencing.
+Figure 5 depicts the sample collection and processing scheme. For each patient, approximately 100-500 picograms of total platelet RNA  - the equivalent content in less than a drop of blood - was extracted for sequencing.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated platelets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
 </div>
 
-As Best *et al.* were interested in the discriminatory capacity of transcriptomes, they initially filtered RNA species for those that were intron-spanning and had sufficiently high expression counts (>5) to reduce the amount of noise.
+Since Best *et al.* were interested in the discriminatory capacity of transcriptomes, they initially filtered RNA species for those that were intron-spanning and had sufficiently high expression counts (>5) to reduce the amount of noise.
 
 A reduced set of 5 003 protein and non-coding RNAs (excluding Y chromosome and mitochondrial) were used in a pair-wise comparison of expression between HD and pan-cancer samples. Across all cancers the authors identified 1 453 and 793 RNAs with increased and descreased representation, respectively (Figure 5D). These differentially expressed genes were sufficient to discriminate HD and cancer-derived platelets (Figure 5E).
 
@@ -203,7 +205,7 @@ In this workflow step (Box 1), we will transform the RNA sequencing data counts 
     - The [CLS](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29){:target="_blank"} format contains information about the sample classes (aka 'condition', 'phenotype') and assigns each sample to one class.
 
 <div class="box">
-  <div class="box-title">Box 1. Workflow Terminology</div>
+  <div class="box-title">Box 2. Workflow Terminology</div>
 
   <dl class="dl-horizontal box-terms">
 
@@ -235,17 +237,16 @@ In this workflow step (Box 1), we will transform the RNA sequencing data counts 
 
 #### Raw Data
 
-The data for Best *et al.* (Best 2015) has been deposited in the NCBI Gene Expression Omnibus under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}. The Supplementary File [GSE68086_TEP_data_matrix.txt.gz (3.8 MB)](https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE68086&format=file&file=GSE68086%5FTEP%5Fdata%5Fmatrix%2Etxt%2Egz) contains RNA sequencing data for all 285 patients and donors in a single file.
+The data for Best *et al.* (Best 2015) has been deposited in the NCBI Gene Expression Omnibus under the accession number [GSE68086](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68086){:target="_blank"}. The Supplementary File [GSE68086_TEP_data_matrix.txt.gz (3.8 MB)](https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE68086&format=file&file=GSE68086%5FTEP%5Fdata%5Fmatrix%2Etxt%2Egz) contains RNA sequencing data for all 285 patients and donors in a single tab-delimited table.
 
 #### RNA-seq files and metadata
 
-In this workflow, we will be examining only a subset of the raw data provided above: 16 BrCa and 16 HD samples. Also, *Best et al.* submitted the RNA-seq data as a single table. Since we wish to mimic typical outputs that would originate from a sequening facility, we have divided each of the 32 sample reads into its own tab-delimited file. Table 2 shows an excerpt of one RNA-seq run with a column for the gene symbol (Ensembl) and the mapped sequence read count.
+In this workflow, we will be examining only a subset of the raw data provided above: 16 BrCa and 16 HD samples. As mentioned, *Best et al.* submitted the RNA-seq data as a single tab-delimited table. Since we wish to mimic typical outputs of sequening facilities, we have divided each of the 32 sample reads into its own tab-delimited file. Table 2 shows an excerpt of one RNA-seq run with a column for the gene symbol (Ensembl) and the mapped sequence read count.
 
 > NB: There is no header for RNA-seq files.
 
-**Table 2. Contents of RNA-seq data file**
+**Table 2. Sample high-throughput RNA sequencing counts**
 
-|-----|-----|
 | ENSG00000000003|0|
 | ENSG00000000005|0|
 | ENSG00000000419|100|
@@ -278,15 +279,15 @@ The true work involved at this stage is assigning a rank to each RNA species bas
 
 #### 1. Data wrangling
 
-Getting the data into the format that is useful for downstream analysis is a central but often underappreciated aspect of computational biology research. In this case, there are three tasks that we must accomplish with our data and metadata.
+Getting the data into the format that is useful for downstream analysis is an important but often underappreciated aspect of computational biology research. In this case, there are three tasks that we must accomplish with our data and metadata.
 
 First, we must integrate or 'merge' the 32 RNA-seq files together into a single table. The reason for this is that data in table format is a form that is more easily loaded into RNA-seq analysis software packages.
 
-Second, we must perform gene 'ID mapping'. This entails translating the names of genes/RNA species provided within the raw RNA-seq files into a desired namespace. This is neccessary in order for us to compare our RNA counts for a given gene with the genes that constitute candidate pathways in our enrichment step.
+Second, we must perform gene 'ID mapping'. This entails translating the names of genes/RNA species provided within the raw RNA-seq files into a desired namespace. This is neccessary in order for the enrichment software to compare our RNA counts for a given gene with genes that constitute candidate pathways.
 
-Third, using our metadata we can generate our [phenotype](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29){:target="_blank"} information (Table 4), which declares the number of samples and classes (row 1), names the classes (row 2) and then declares the class to which each sample belongs (row 3). Since our metadata contains the name (id) of the sample and the class, this is a simple task.
+Third, our metadata file is sufficient to generate our [phenotype](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29){:target="_blank"} output (Table 4), which declares the number of samples and classes (row 1), names the classes (row 2) and then declares the class to which each sample belongs (row 3). Since our metadata contains the name (id) of the sample and the class, this is a simple task.
 
-**Table 4. Phenotype information layout (.cls file)**
+**Table 4. Phenotype output (.cls file)**
 
 |:------:|:------:|:------:|:------:|:------:|
 | 30 | 2 | 1 | |...| |
@@ -306,9 +307,9 @@ RNA for a sample can be sequenced to varying 'depths'. This means that the total
 
 Over the years, several approaches have been proposed to account for varying depth in RNA-seq outputs (Oshlack 2010). Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson & Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
 
-At this stage, we can generate a table of normalized RNA species [expression](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29){:target="_blank"} where row names are gene symbols and column names are sample IDs.
+At this stage, we can generate an output table of normalized RNA species [expression](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29){:target="_blank"} where row names are gene symbols and column names are sample IDs.
 
-**Table 5. Normalized expression (counts per million mapped reads)**
+**Table 5. Expression output (counts per million mapped reads)**
 
 | NAME | DESCRIPTION | MGH-BrCa-H92-TR472_htsqct |...|Breast-60_htsqct|
 |:------:|:------:|:------:|:------:|:------:|
@@ -322,13 +323,13 @@ At this stage, we can generate a table of normalized RNA species [expression](ht
 
 In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a 'hypothesis-testing' technique that entails the following:
 
-1. Declare the null hypothesis of no difference in RNA counts for all genes betweeen classes
+1. Declare the null hypothesis of no difference in RNA counts for each gene
 2. Define a null distribution that describes how RNA counts vary under circumstances where there is *no association between RNA counts and class*
-3. Calculate the probability (p-value) of observing a difference in RNA species counts between classes at least as extreme as the one observed *assuming the null hypothesis/distribution*
+3. Calculate the probability (p-value) of observing a difference in RNA species counts at least as extreme as the one observed *assuming the null hypothesis/distribution*
 
 At this stage, we can generate a list (i.e. table) of RNA species [ranked](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29){:target="_blank"} by a function of their p-value where row names are gene symbols and a single column indicates rank. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.
 
-**Table 6. A ranked gene list**
+**Table 6. Rank output**
 
 | gene | rank |
 |-----|:-----:|

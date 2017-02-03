@@ -109,11 +109,10 @@ This guide is intended to cultivate the practice of *biological pathway analysis
 
     elements: {
       nodes: [
-        { data: { id: 'datasources_group', name: 'Data Source' } },
         { data: {
             id: 'cancer_db',
-            name: 'Workflow I\n\nCancer genome database',
-            parent: 'datasources_group',
+            name: 'Workflow - I\n\nProgramming in R',
+            parent: 'level_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_i/index/'
           },
           classes: 'dimished data_source',
@@ -121,8 +120,8 @@ This guide is intended to cultivate the practice of *biological pathway analysis
         },
         { data: {
             id: 'custom_system',
-            name: 'Workflow II\n\nYour experimental system',
-            parent: 'datasources_group',
+            name: 'Workflow - II\n\nNo programming',
+            parent: 'level_group',
             href: '{{ site.baseurl }}/workflows/pathway_enrichment_ii/index/'
           },
           classes: 'dimished data_source',
