@@ -264,6 +264,11 @@ img.left {
      margin-right: 0.5rem;
      margin-top: 1rem;
    }
+
+   blockquote {
+     font-style: italic;
+     border-left-color: rgba(90, 49, 13, 0.20);
+   }
  }
 
  @media (min-width: 768px) {

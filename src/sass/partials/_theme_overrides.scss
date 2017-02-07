@@ -189,6 +189,7 @@ img {
 /* Quotes */
 blockquote {
   font-size: $font-size-base;
+  font-style: italic;
 }
 @media (min-width: 30em) {
   font-size: $font-size-base;
