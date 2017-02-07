@@ -13,8 +13,6 @@ figures:
   figure_7: figure_idpathways_settings.png
   figure_8: figure_idpathways_index.png
   figure_9: figure_idpathways_nesplot_il5netpath.png
-  figure_10:
-tables:
 layout: embedded
 data:
   gene_set_database: Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip
@@ -29,7 +27,7 @@ workflow:
 dockerhub:
 reflist:
   - 26525104
-# comments: yes
+comments: yes
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -330,9 +328,6 @@ There are two sections by this name which refers to those gene sets with positiv
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 | IL5%NETPATH%IL5	IL5| 49| 0.7718686| 2.0658088| 0.0| 0.0 | 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
-
-
-
 
 
 ### <a href="#output" name="output">Output</a>

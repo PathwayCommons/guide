@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Visualize &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <div id="embedded">
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="container content embedded">
+          <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+
+            <h1 class="page-title">Visualize</h1>
+            <div class="subtitle">Create an Enrichment Map displaying the landscape of pathways</div>
+            <hr/>
+            <div class="linkout clearfix">
+              <ul class="list-inline pull-right">
+              <li>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=/workflows/pathway_enrichment_ii/visualize/&title=Visualize"
+  data-toggle="tooltip"
+  title="Share this page on Facebook"
+  target="_blank" >
+    <i class="fa fa-facebook-official fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/intent/tweet?text=Create an Enrichment Map displaying the landscape of pathways+/workflows/pathway_enrichment_ii/visualize/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=/workflows/pathway_enrichment_ii/visualize/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+              </ul>
+            </div>
+            <hr/>
+            <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#background">II. Background</a></li>
+      <li class="list-unstyled"><a href="#workflow_step">III. Workflow Step</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>In this workflow step, we describe <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Enrichment Map (EM)</a> (Merico 2010), a visual tool that subsumes redundant gene sets into fewer, broader themes. By then end of this discussion you should:</p>
+
+<ol>
+  <li>Understand how an Enrichment Map can be helpful</li>
+  <li>Learn how to create and tune an Enrichment Map</li>
+  <li>Be able to generate a map describing overarching themes culled from enrichment analyses</li>
+</ol>
+
+<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+
+<p>EM was originally described by Merico <em>et al.</em> (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets of BrCa and HD individuals.</p>
+
+<h3 id="a-long-list-of-pathways">A long list of pathways</h3>
+
+<p><a href="/guide/workflows/pathway_enrichment_ii/identify_pathways/">Previously</a>, we used enrichment analysis to distill pathways or gene sets from the underlying differences in RNA abundance between platelets from healthy donors (HD) and individuals diagnosed with breast cancer (BrCa). Our rationale for applying enrichment analyis was that we would much rather reason over alterations in pathways -  which have a more intimate connection with cellular function - than interpret a long list of individuals genes and statistics. Figure 1 shows a section of the GSEA report and Table 1 shows an excerpt of the actual enrichment report for the BrCa class.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_gsea_report.png" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong> An excerpt of the report taken from the results of <a href="/guide/workflows/pathway_enrichment_ii/identify_pathways/">Identify Pathways</a>.
+</div>
+
+<p><strong>Table 1. Enrichment report for BrCa (na_pos phenotype)</strong></p>
+
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th style="text-align: left">NAME</th>
+      <th style="text-align: center">SIZE</th>
+      <th style="text-align: center">ES</th>
+      <th style="text-align: center">NES</th>
+      <th style="text-align: center">NOM p-val</th>
+      <th style="text-align: center">FDR q-val</th>
+      <th style="text-align: center">FWER p-val</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">PID_FAK_PATHWAY</td>
+      <td style="text-align: center">48</td>
+      <td style="text-align: center">0.8144367</td>
+      <td style="text-align: center">2.2033582</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">THROMBOXANE A2 RECEPTOR SIGNALING</td>
+      <td style="text-align: center">39</td>
+      <td style="text-align: center">0.84532094</td>
+      <td style="text-align: center">2.175933</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SIGNALING EVENTS MEDIATED BY FOCAL ADHESION KINASE</td>
+      <td style="text-align: center">48</td>
+      <td style="text-align: center">0.8144367</td>
+      <td style="text-align: center">2.16101</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">IL5%NETPATH%IL5	IL5</td>
+      <td style="text-align: center">49</td>
+      <td style="text-align: center">0.7718686</td>
+      <td style="text-align: center">2.0658088</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+      <td style="text-align: center">0.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 features or genes were included in our ranked list. It appears that we have simply kicked the can and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
+
+<h3 id="data-reduction">Data reduction</h3>
+
+<p>Ideally, we want a simple way to reduce the size of the data from an enrichment analysis while retaining, to the best of our ability, the amount of meaningful <em>information</em>. To this end, many approaches have set their sights on reducing the amount of <em>redundancy</em> amongst gene sets.</p>
+
+<h4 id="hierachical">Hierachical</h4>
+
+<p>Many enrichment anlyses use the <a href="http://geneontology.org/" target="_blank">Gene Ontology</a> (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of that same statistical test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).</p>
+
+<h3 id="enrichment-map">Enrichment Map</h3>
+
+<p>EM is a visualization analysis tool that organizes gene sets into an information rich similarity network. The true power of EM is that it can represents a basis upon which to reduce dimensionality by grouping similar gene sets; These clusters can then be annotated with an overarching ‘theme’ that is representative of the group (Figure 2).</p>
+
+<p>Gene sets are represented as nodes where the number of genes correlates with node diameter. Edges between nodes represent shared genes, where the amount of overlap is represented by thickness. Finally, EM can use node color to represent other dimensions of the data, for example, gene sets enriched in different classes.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_rationale.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Rationale of the Enrichment Map.</strong>. Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching theme label.
+</div>
+
+<p>The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.</p>
+
+<h3 id="preview-of-em-software">Preview of EM software</h3>
+
+<p>Figure 3 provides a tour of <a href="http://apps.cytoscape.org/apps/enrichmentmap" target="_blank">Enrichment Map app</a> in the graph anaysis software <a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_cytoscape_em_preview.jpg" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Tour of the Enrichment Map app.</strong> (A) The Enrichment Map app is accessed in Cytoscape. (B) 'User Input' panel where user data files describing the enrichment analysis results and raw gene expression data are loaded. (C) 'Parameters' panel where the users can define the initial stringency for displaying nodes (false discovery rate for gene set enrichment) and edges (minimum amount of overlap). (D) 'Table Panel' tabulating gene set details and underlying expression data for any particular gene set. (E) The main panel displays the interactive similarity network. (F) 'Results Panel' where initial parameter settings can be fine-tuned.
+</div>
+
+<p>It should be immediately apparent from Figure 3 that the Enrichment Map app provides several helpful features including</p>
+
+<ol>
+  <li>Integration of raw data with gene sets in a single, interactive interface</li>
+  <li>Clustered layout representing groups of similar gene sets</li>
+  <li>Color indicates which class each gene sets is enriched in</li>
+</ol>
+
+<h2 id="a-hrefworkflowstep-nameworkflowstepiii-workflow-stepa"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
+
+<p>In this workflow step, we will</p>
+
+<h4 id="software-requirements">Software requirements</h4>
+
+<ol>
+  <li>Install <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank">Java version 8</a></li>
+  <li><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>: version 3.4.0</li>
+  <li><a href="http://apps.cytoscape.org/apps/enrichmentmap" target="_blank">Enrichment Map</a>: version 2.1.0</li>
+</ol>
+
+<blockquote>
+  <p><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a> is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of <a href="http://apps.cytoscape.org/" target="_blank">‘apps’</a>. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.</p>
+</blockquote>
+
+<h5 id="enrichment-map-app">Enrichment Map app</h5>
+
+<p>We will load in the Enrichment Map app into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select ‘Apps’ –&gt; ‘App Manager’ to bring up a search panel (Figure 4).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_cytoscape_apps_em.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Cytoscape App Manager screen.</strong>. Search for the app of choice using the 'Install Apps' tab.
+</div>
+
+<div class="alert alert-warning text-justify" role="alert">
+  Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
+</div>
+
+<p>Search for ‘EnrichmentMap’ then highlight the correct search result and click ‘Install’. If the installation was successful, you should be able to select ‘EnrichmentMap’ in the ‘Apps’ menu bar drop-down. Also, if you bring up the ‘App Manager’ you should see it as a listing under the ‘Currently Installed’ tab.</p>
+
+<p>Launch the Enrichment Map app by selecting from the menu bar ‘Apps’ –&gt; ‘EnrichmentMap’ –&gt; ‘Create Enrichment Map’ (Figure 5).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_splash.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
+</div>
+
+<h3 id="input">Input</h3>
+
+<h4 id="rank-gene-list">Rank gene list</h4>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_ii/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></p>
+
+<h4 id="gene-set-database">Gene set database</h4>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a></p>
+
+<h4 id="enrichment-reports-2">Enrichment reports (2)</h4>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/gsea_report_for_brca.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/gsea_report_for_hd.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
+
+<h4 id="classes">Classes</h4>
+
+<p><a href="/guide/media/workflows/pathway_enrichment_ii/process_data/brca_hd_tep_phenotype.cls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a></p>
+
+<h3 id="analysis">Analysis</h3>
+
+<h4 id="load-files">1. Load files</h4>
+
+<p>Time to tell Enrichment Map where all of our data is via the ‘User Input’ panel (Figure 6).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_cytoscape_em_load.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 6. Enrichment Map file load.</strong> Shown is the 'Control Panel' tab for the 'Enrichment Map Input'.
+</div>
+
+<h4 id="configure">2. Configure</h4>
+
+<p>In the same Control panel depicted in Figure 6, locate the ‘Parameters’ section below and make the following adjustments.</p>
+
+<p><strong>Dataset 1:</strong> ‘Enrichments 1’ should be the GSEA report for BrCa; ‘Enrichments 2’ should be the report for HD.</p>
+
+<p><strong>Advanced:</strong> Replace the ‘Phenotypes’ field with ‘BrCa VS. HD’ to reflect the comparisons we made.</p>
+
+<p><strong>Parameters:</strong> Set the ‘FDR Q-value Cutoff’ to 0.0001; Click the radio for ‘Jaccard+Overlap Combined’ and set the ‘Cutoff’ to 0.375.</p>
+
+<h4 id="build">3. Build</h4>
+
+<p>Click ‘Build’ to generate the EM.</p>
+
+<h3 id="a-hrefoutput-nameoutputoutputa"><a href="#output" name="output">Output</a></h3>
+
+<p>Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing our gene sets.</p>
+
+<p>Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing  our gene sets.</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_cytoscape_em_build.png" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 7. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
+</div>
+
+<h4 id="results-panel">Results Panel</h4>
+
+<p>Look at the ‘Legend’ tab. Increase or decrease the stringency for displaying nodes (‘Q-value Cutoff’) and edges (‘Similarity Cutoff’) using the sliders. For instance, one can restrict the displayed gene sets to those with very low chance of being a false positive.</p>
+
+<h4 id="table-panel">Table Panel</h4>
+
+<p>We will higlight a few aspects of the ‘Table Panel’ (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The ‘Control Panel’ tab ‘Select’ enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below (<a href="#tasks">IV. Common tasks</a>).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/" alt="image" class="img-responsive" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.
+</div>
+
+        </div>
+        
+  <hr/>
+  <h2>References</h2>
+  
+  <div class="reference_group" data-reflist="[10802651 18511468 21085593 22383865]"></div>
+
+
+        
+
+      </div>
+    </div>
+
+  <script id="dsq-count-scr" src="//pathway-commons.disqus.com/count.js" async></script>
+  </body>
+</html>

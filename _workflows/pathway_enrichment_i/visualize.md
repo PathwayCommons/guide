@@ -52,7 +52,7 @@ We describe Enrichment Map, a tool that organizes partially redundant gene sets 
 
 ## <a href="#background" name="background">II. Background</a>
 
-The Enrichment Map was originally described by Merico *et al.* (Merico 2010) as an aid in the  interpretation of gene sets emerging *en masse* from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To see the value of Enrichment Map, let us consider a concrete example of analyzing changes in gene expression in TCGA-OV subtypes.
+The Enrichment Map was originally described by Merico *et al.* (Merico 2010) as an aid in the interpretation of gene sets emerging *en masse* from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To see the value of Enrichment Map, let us consider a concrete example of analyzing changes in gene expression in TCGA-OV subtypes.
 
 ### A long list of pathways
 
@@ -116,7 +116,7 @@ Figure 2 provides a tour of [Enrichment Map](http://apps.cytoscape.org/apps/enri
   <strong>Figure 2. Tour of the Enrichment Map app.</strong> (A) The Enrichment Map app is accessed in Cytoscape. (B) 'User Input' panel where user data files describing the enrichment analysis results and raw gene expression data are loaded. (C) 'Parameters' panel where the users can define the initial stringency for displaying nodes (false discovery rate for gene set enrichment) and edges (minimum amount of overlap). (D) 'Table Panel' tabulating gene set details and underlying expression data for any particular gene set. (E) The main panel displays the interactive similarity network. (F) 'Results Panel' where initial parameter settings can be fine-tuned.
 </div>
 
-It should be immediately apparent from Figure 2 the the Enrichment Map app provides several helpful features including
+It should be immediately apparent from Figure 2 that the Enrichment Map app provides several helpful features including
 
   1. Integration of raw data with gene sets in a single, interactive interface
   2. Clustered layout representing groups of similar gene sets
@@ -195,7 +195,7 @@ Users
 
 #### Cytoscape
 
-[Cytoscape](http://www.cytoscape.org/){:target="_blank"} is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of ['apps'](http://apps.cytoscape.org/){:target="_blank"}. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluter and annotate similar groups of gene sets.
+[Cytoscape](http://www.cytoscape.org/){:target="_blank"} is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of ['apps'](http://apps.cytoscape.org/){:target="_blank"}. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.
 
 Follow the instructions on the Cytoscape site to [download and install](http://www.cytoscape.org/download.php){:target="_blank"} the desktop software for your specific platform. The most recent versions of Cytoscape require Java version 8.
 
