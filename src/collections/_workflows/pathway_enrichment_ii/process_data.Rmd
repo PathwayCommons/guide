@@ -243,6 +243,7 @@ In this workflow, we will be examining only a subset of the raw data provided ab
 
 **Table 2. Sample high-throughput RNA sequencing counts**
 
+{:.table .table-hover .table-condensed .table-responsive}
 | ENSG00000000003|0|
 | ENSG00000000005|0|
 | ENSG00000000419|100|
@@ -257,6 +258,7 @@ We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains
 
 **Table 3. Contents of metadata file**
 
+{:.table .table-hover .table-condensed .table-responsive}
 |id|class|
 |-----|-----|
 | MGH-BrCa-H92-TR472_htsqct.txt | BrCa |
@@ -285,6 +287,7 @@ Third, our metadata file is sufficient to generate our [phenotype](http://softwa
 
 **Table 4. Phenotype output (.cls file)**
 
+{:.table .table-hover .table-condensed .table-responsive}
 |:------:|:------:|:------:|:------:|:------:|
 | 30 | 2 | 1 | |...| |
 | #| HD| BrCa| |...| |
@@ -307,6 +310,7 @@ At this stage, we can generate an output table of normalized RNA species [expres
 
 **Table 5. Expression output (counts per million mapped reads)**
 
+{:.table .table-hover .table-condensed .table-responsive}
 | NAME | DESCRIPTION | MGH-BrCa-H92-TR472_htsqct |...|Breast-60_htsqct|
 |:------:|:------:|:------:|:------:|:------:|
 | PPP1R2 | PPP1R2 | 20.0960199625179 | ...| 21.2351177118648|
@@ -327,6 +331,7 @@ At this stage, we can generate a list (i.e. table) of RNA species [ranked](http:
 
 **Table 6. Rank output**
 
+{:.table .table-hover .table-condensed .table-responsive}
 | gene | rank |
 |-----|:-----:|
 | ARHGAP45 | 58.1795999084575 |

@@ -9,7 +9,7 @@ figures:
   figure_1: figure_gsea_local.png
   figure_2: figure_gsea_global.png
   figure_3: figure_gsea_ks.png
-  figure_4: figure_gsea_null.png
+  figure_4: figure_gsea_null.jpg
   figure_5: figure_gsea_bimodalnull.png
   figure_6: figure_gsea_fdr.png
 comments: true
@@ -309,7 +309,7 @@ From our discussion of the global statistic, using a weighted enrichment score l
 
 GSEA employs 'resampling' or 'bootstrap' methods to derive an empirical sample of the null distribution for the enrichment scores of each gene set. The GSEA software provides a choice of two flavours of permutation methods that underlie the null distribution calculations (Figure 4).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive.slim }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. GSEA uses permutation methods to generate null distributions for each gene set.</strong> For the sake of brevity, we depict a schematic of permutation methods for a single gene set. In GSEA, this process is repeated separately for each gene set. <strong>A. </strong>Phenotype permutation. <strong>B.</strong> Gene set permutation. <strong>C.</strong> Calculation of p-values.
 </div>
