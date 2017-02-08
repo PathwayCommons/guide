@@ -74,6 +74,7 @@
     "commit": "e0f2ca6f0e5a1f0a828af4d7cf04cc262e3512aa"
   },
   "_source": "https://github.com/cytoscape/cytoscape.js.git",
-  "_target": "^2.7.13",
-  "_originalSource": "cytoscape"
+  "_target": "^2.7.14",
+  "_originalSource": "cytoscape",
+  "_direct": true
 }

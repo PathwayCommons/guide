@@ -16,8 +16,4 @@ badges:
 
 {% assign docs = (site.workflows | where: 'group','pathway_enrichment_ii' | sort: 'order' ) %}
 
-
-<div class="progress-tracker-wrapper">
-  {% include progress_tracker.html %}
-  <div id="progress-tracker-content"></div>
-</div>
+{% include progress_tracker.html %}
