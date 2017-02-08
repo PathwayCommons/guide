@@ -213,13 +213,11 @@ module.exports = (function(){
     jQueryMap.$container = $container;
   };
 
-  initModule = function( $container ){
-    // console.log($container);
-
-    if( !$container ){ return false; }
-    // configMap.baseurl = $container.data( 'baseurl' );
-    // setJqueryMap( $container );
-    // render( jQueryMap.$container );
+  initModule = function( $container ){    
+    if( !$container.length ){ return false; }
+    configMap.baseurl = $container.data( 'baseurl' );
+    setJqueryMap( $container );
+    render( jQueryMap.$container );
   };
 
   return {
