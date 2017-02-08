@@ -42,6 +42,7 @@ reflist:
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
   - {:.list-unstyled} [III. Workflow Step](#workflow_step)
+  - {:.list-unstyled} [IV. Interpretation](#interpretation)
 
 <hr/>
 
@@ -108,7 +109,7 @@ Figure 3 provides a tour of [Enrichment Map app](http://apps.cytoscape.org/apps/
 ![img]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
-  <div class="text-right">
+  <div class="text-left">
     <a type="button" class="btn btn-default" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
   </div>
 </div>
@@ -145,7 +146,7 @@ We will load apps into Cytoscape using the App Manager. Open Cytoscape and from 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Cytoscape App Manager screen.</strong> Search for the app of choice using the 'Install Apps' tab. Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
-  <div class="text-right">
+  <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
   </div>
 </div>
@@ -159,7 +160,7 @@ Launch the Enrichment Map app by selecting from the menu bar 'Apps' --> 'Enrichm
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
-  <div class="text-right">
+  <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
   </div>
 </div>
@@ -219,7 +220,7 @@ Figure 7 displays the resulting EM that you should see following the build. Take
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 7. Enrichment Map for gene sets enriched in BrCa versus HD.</strong>  Nodes coloured red are enriched in BrCa whereas blue nodes are enriched in HD. The term 'IL5' was used as the search term (upper right) and detected a single node (yellow) in the main window corresponding to the IL-5 signal transduction pathway from NetPath (i.e. 'IL5%NETPATH%IL5'). The 'Control Panel' was hidden in this case.
-  <div class="text-right">
+  <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}" target="_blank">Open in new window</a>
   </div>
 </div>
@@ -228,16 +229,19 @@ Figure 7 displays the resulting EM that you should see following the build. Take
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets. Highlighted is the IL-5 signal transduction pathway from NetPath.
-  <div class="text-right">
+  <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
-#### 4.  Label clusters of similar gene sets
+
+### Output
+
+#### Label clusters of similar gene sets
 
 Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"} app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"} to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
 
-- {:.list-unstyled}  **i. Separating gene sets in each classes**
+**i. Separating gene sets in each classes**
 
   In the main window graph, let us spatially separate the gene sets enriched in each class so that when we go to add labels, they are readily distinguishable.
 
@@ -255,70 +259,88 @@ Clusters within the Enrichment Map represent similar biological processes and th
   ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
   <div class="figure-legend well well-lg text-justify">
     <strong>Figure 9. Separating gene sets enriched in each class.</strong> The enriched gene sets in the BrCa class was selected by creating a column filter in the 'Control Panel' tab 'Select' for NES above 0.
-    <div class="text-right">
+    <div class="text-left">
       <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}" target="_blank">Open in new window</a>
     </div>
   </div>
 
-- {:.list-unstyled}  **ii. AutoAnnotate groups**
+**ii. AutoAnnotate groups**
 
-  AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).
+AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).
 
-  - 'Apps' -> 'AutoAnnotate' -> 'New Annotation Set...'
+- 'Apps' -> 'AutoAnnotate' -> 'New Annotation Set...'
 
 
-  > *Note: For clarity, you should remove the individual gene set labels by selecting 'View' -> 'Hide Graphic Details'*
+> *Note: For clarity, you should remove the individual gene set labels by selecting 'View' -> 'Hide Graphic Details'*
 
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 10. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 10. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
+</div>
+
+Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 11. Results of AutoAnnotate.</strong>
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
   </div>
+</div>
 
-  Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
+**iii. Collapse groups**
 
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 11. Results of AutoAnnotate.</strong>
-    <div class="text-right">
-      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
-    </div>
+Figure 11 shows a pretty busy picture; It is natural to gravitate towards large clusters that appear in the enrichment results, however, in this case, size does not indicate importance or strength but rather the amount of database annotation there exist for a particular pathway or process. Single nodes represent processes that are less well known but no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 12).
+
+- 'Control Panel' select the 'AutoAnnotate' tab
+  -  Click the menu drop-down (button with 3 lines)
+    - Select 'Collapse All'
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong>
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
   </div>
+</div>
 
-- {:.list-unstyled } **iii. Collapse groups**
+**iv. Expand a group**
 
-  Figure 11 shows a pretty busy picture; It is natural to gravitate towards large clusters that appear in the enrichment results, however, in this case, size does not indicate importance or strength but rather the amount of database annotation there exist for a particular pathway or process. Single nodes represent processes that are less well known but no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 12).
+Let's reverse the process selectively. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
 
-  - 'Control Panel' select the 'AutoAnnotate' tab
-    -  Click the menu drop-down (button with 3 lines)
-      - Select 'Collapse All'
+- 'Control Panel' select the 'AutoAnnotate' tab
+  -  Right click 'pid angiopoietin receptor pathway'
+    - Select 'Expand'
 
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 12. Results of collapsing AutoAnnotate.</strong>
-    <div class="text-right">
-      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
-    </div>
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 13. Selectively expanding the network for a single cluster.</strong>
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
   </div>
-
-- {:.list-unstyled } **iv. Expand a group**
-
-  Let's reverse the process selectively. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
-
-  - 'Control Panel' select the 'AutoAnnotate' tab
-    -  Right click 'pid angiopoietin receptor pathway'
-      - Select 'Expand'
-
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 13. Selectively expanding the network for a single cluster.</strong>
-    <div class="text-right">
-      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
-    </div>
-  </div>
+</div>
 
 <hr/>
 
 Cytoscape affords the user a great deal of control over [styles](http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles){: target="_blank"} and [layout](http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://wiki.cytoscape.org/Cytoscape_User_Manual){: target="_blank"} for full description of capabilities.
 
 
-### <a href="#output" name="output">Output</a>
+## <a href="#interpretation" name="interpretation">IV. Interpretation</a>
+
+The following tips are aimed at users who are looking for ways to use an enrichment analysis result to support the formulation of a biological question.
+
+### 1. Build trust
+
+No algorithm tuning or statistical test can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the 'unsurprising' results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?
+
+### 2. Find interesting groups, gene sets
+
+Google it: 'platelet IL-5 pid angiopoietin receptor pathway'
+
+### 3. Examine gene expression
+
+Do the genes in the pathway show the difference in gene expression across the samples or just a few? Is this representative?
+
+### 4. Examine the pathway
+
+Coming soon.
