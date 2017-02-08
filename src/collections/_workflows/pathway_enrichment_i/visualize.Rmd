@@ -571,7 +571,7 @@ Click 'Create Annotations' to start the annotation process. You should see clust
 
 #### 4. Collapse groups
 
-Figure 12 shows a pretty busy annotated network. Often users gravitate towards large clusters that appear in the enrichment results but in this case size not indicate importance or strength rather the amount of database annotations there exist for a particular pathway or process. Single nodes represent processes that are less well know and studied but are no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 14).
+Figure 12 shows a pretty busy network. It is natural to gravitate towards large clusters that appear in the enrichment results, but in this case, size does not indicate importance or strength but rather the amount of database annotation for a particular pathway or process. Single nodes represent processes that are less well know and studied but are no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 14).
 
 - 'Control Panel' select the 'AutoAnnotate' tab
   -  Click the menu drop-down (button with 3 lines)

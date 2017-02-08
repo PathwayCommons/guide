@@ -9,9 +9,14 @@ figures:
   figure_3: figure_visualize_em_preview.jpg
   figure_4: figure_visualize_cytoscape_apps_em.png
   figure_5: figure_visualize_em_splash.png
-  figure_6: figure_visualize_cytoscape_em_load.png
-  figure_7: figure_visualize_cytoscape_em_build.png
-  figure_8:
+  figure_6: figure_visualize_em_load.png
+  figure_7: figure_visualize_em_output.png
+  figure_8: figure_visualize_em_table_panel.png
+  figure_9: figure_visualize_em_cluster_filter.png
+  figure_10: figure_visualize_em_cluster_autoannotate.png
+  figure_11: figure_visualize_em_cluster_autoannotate_result.png
+  figure_12: figure_visualize_em_cluster_collapsed.png
+  figure_13: figure_visualize_em_cluster_uncollapsed.png
 tables:
 layout: embedded
 data:
@@ -104,27 +109,7 @@ Figure 3 provides a tour of [Enrichment Map app](http://apps.cytoscape.org/apps/
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
   <div class="text-right">
-    <a type="button" class="btn" data-toggle="modal" data-target="#modal_figure_3">
-      <em>Click for larger image</em>
-    </a>
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="modal_figure_3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img
-            class="img-responsive"
-            src="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}"
-            />
-        </div>
-        <div class="modal-footer">
-          <div class="figure-legend well well-lg text-justify">
-            <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
-          </div>
-        </div>
-      </div>
-    </div>
+    <a type="button" class="btn btn-default" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
@@ -144,32 +129,39 @@ In this workflow step, we will
 
 1. Install [Java version 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html){: target="_blank"}
 2. [Cytoscape](http://www.cytoscape.org/){:target="_blank"}: version 3.4.0
-3. [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"}: version 2.1.0
+3. Cytoscape apps
+  - [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"}: version 2.2.0
+  - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2){:target="_blank"}: version 0.9.5
+  - [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"}: version 3.1.0
+  - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"}: version 1.1.0
+
 
 > [Cytoscape](http://www.cytoscape.org/){:target="_blank"} is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of ['apps'](http://apps.cytoscape.org/){:target="_blank"}. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.
 
-##### Enrichment Map app
+##### Loading apps
 
-We will load in the Enrichment Map app into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select 'Apps' --> 'App Manager' to bring up a search panel (Figure 4).
+We will load apps into Cytoscape using the App Manager. Open Cytoscape and from the menu bar, select 'Apps' --> 'App Manager' to bring up a search panel (Figure 4).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
-
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Cytoscape App Manager screen.</strong>. Search for the app of choice using the 'Install Apps' tab.
+  <strong>Figure 4. Cytoscape App Manager screen.</strong> Search for the app of choice using the 'Install Apps' tab. Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
+  <div class="text-right">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+  </div>
 </div>
 
-<div class="alert alert-warning text-justify" role="alert">
-  Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
-</div>
+Search for the app, highlight the correct search result and click 'Install'. If the installation was successful, you should be able to select it by name in the 'Apps' menu bar drop-down. Also, if you bring up the 'App Manager' you should see it as a listing under the 'Currently Installed' tab.
 
-Search for 'EnrichmentMap' then highlight the correct search result and click 'Install'. If the installation was successful, you should be able to select 'EnrichmentMap' in the 'Apps' menu bar drop-down. Also, if you bring up the 'App Manager' you should see it as a listing under the 'Currently Installed' tab.
+---
 
 Launch the Enrichment Map app by selecting from the menu bar 'Apps' --> 'EnrichmentMap' --> 'Create Enrichment Map' (Figure 5).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
-
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. Enrichment Map screen.</strong> The 'Control Panel' on the left is where we will load our data files and adjust the Enrichment Map settings.
+  <div class="text-right">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+  </div>
 </div>
 
 ### Input
@@ -216,31 +208,117 @@ In the same Control panel depicted in Figure 6, locate the 'Parameters' section 
 
 #### 3. Build
 
-Click 'Build' to generate the EM.
+Click 'Build' to generate the EM in the main window.
+
+Figure 7 displays the resulting EM that you should see following the build. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing our gene sets.
+
+**Results Panel:** Look at the 'Legend' tab. Increase or decrease the stringency for displaying nodes ('Q-value Cutoff') and edges ('Similarity Cutoff') using the sliders. For instance, one can restrict the displayed gene sets to those with very low chance of being a false positive.
+
+**Table Panel:** If you activate the 'Heat Map' tab as in Figure 7, you will see a depiction of the normalized gene expression values and the samples coloured by class. If you click on the 'Node Table' (Figure 8) it should display the information summarized in the graph but displayed in tabular form. Note that if a node in the graph is selected or if there is a search match,only those results will be shown. Click anywhere on the map outside of a node to see the full results.
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 7. Enrichment Map for gene sets enriched in BrCa versus HD.</strong>  Nodes coloured red are enriched in BrCa whereas blue nodes are enriched in HD. The term 'IL5' was used as the search term (upper right) and detected a single node (yellow) in the main window corresponding to the IL-5 signal transduction pathway from NetPath (i.e. 'IL5%NETPATH%IL5'). The 'Control Panel' was hidden in this case.
+  <div class="text-right">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets. Highlighted is the IL-5 signal transduction pathway from NetPath.
+  <div class="text-right">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+#### 4.  Label clusters of similar gene sets
+
+Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"} app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"} to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
+
+- {:.list-unstyled}  **i. Separating gene sets in each classes**
+
+  In the main window graph, let us spatially separate the gene sets enriched in each class so that when we go to add labels, they are readily distinguishable.
+
+  We will select the BrCa group in red and drag the entire group over to separate it from the HD group in blue. To do this, Highlight the class by creating a column filter for nodes with a positive NES:
+
+  - 'Control Panel' tab for 'Select'
+    - Click '+' to add a filter
+      - Select 'Column Filter' from the drop-down
+    - 'Choose column....' drop-down
+      - Select 'Node:EM1_NES_dataset1'
+      - Enter range to include only negative values
+
+  Figure 9 shows the selected nodes in yellow representing the gene sets enriched in BrCa. Drag the entire group away the unselected gene sets.
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 9. Separating gene sets enriched in each class.</strong> The enriched gene sets in the BrCa class was selected by creating a column filter in the 'Control Panel' tab 'Select' for NES above 0.
+    <div class="text-right">
+      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}" target="_blank">Open in new window</a>
+    </div>
+  </div>
+
+- {:.list-unstyled}  **ii. AutoAnnotate groups**
+
+  AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).
+
+  - 'Apps' -> 'AutoAnnotate' -> 'New Annotation Set...'
+
+
+  > *Note: For clarity, you should remove the individual gene set labels by selecting 'View' -> 'Hide Graphic Details'*
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 10. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
+  </div>
+
+  Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 11. Results of AutoAnnotate.</strong>
+    <div class="text-right">
+      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
+    </div>
+  </div>
+
+- {:.list-unstyled } **iii. Collapse groups**
+
+  Figure 11 shows a pretty busy picture; It is natural to gravitate towards large clusters that appear in the enrichment results, however, in this case, size does not indicate importance or strength but rather the amount of database annotation there exist for a particular pathway or process. Single nodes represent processes that are less well known but no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 12).
+
+  - 'Control Panel' select the 'AutoAnnotate' tab
+    -  Click the menu drop-down (button with 3 lines)
+      - Select 'Collapse All'
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 12. Results of collapsing AutoAnnotate.</strong>
+    <div class="text-right">
+      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
+    </div>
+  </div>
+
+- {:.list-unstyled } **iv. Expand a group**
+
+  Let's reverse the process selectively. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
+
+  - 'Control Panel' select the 'AutoAnnotate' tab
+    -  Right click 'pid angiopoietin receptor pathway'
+      - Select 'Expand'
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
+  <div class="figure-legend well well-lg text-justify">
+    <strong>Figure 13. Selectively expanding the network for a single cluster.</strong>
+    <div class="text-right">
+      <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
+    </div>
+  </div>
+
+<hr/>
+
+Cytoscape affords the user a great deal of control over [styles](http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles){: target="_blank"} and [layout](http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://wiki.cytoscape.org/Cytoscape_User_Manual){: target="_blank"} for full description of capabilities.
 
 
 ### <a href="#output" name="output">Output</a>
-
-Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing our gene sets.
-
-Take some time to examine the map in the main window displaying the network. In particular, in the lower right region of the main window there is a bird's eye view showing the region currently in view. The 'Results Panel' shows our currently selected parameters while 'Table Panel' has the 'Node Table' tab selected by default, listing  our gene sets.
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. Enrichment Map for differential mRNA expression in TCGA-OV.</strong> Note the search text field in the upper-right corner.
-</div>
-
-#### Results Panel
-
-Look at the 'Legend' tab. Increase or decrease the stringency for displaying nodes ('Q-value Cutoff') and edges ('Similarity Cutoff') using the sliders. For instance, one can restrict the displayed gene sets to those with very low chance of being a false positive.
-
-#### Table Panel
-
-We will higlight a few aspects of the 'Table Panel' (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The 'Control Panel' tab 'Select' enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below ([IV. Common tasks](#tasks)).
-
-<!-- ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive } -->
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.
-</div>

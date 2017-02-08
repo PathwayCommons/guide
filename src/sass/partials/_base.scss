@@ -55,9 +55,6 @@ img.left {
 
   .modal-lg {
     width: 100%;
-    img{
-      // height: 800px;
-    }
   }
 }
 
@@ -250,6 +247,12 @@ img.left {
 
  .figure-legend.well{
    font-size: $figure-legend;
+   a.btn {
+     background-color: $midnight-blue;
+     color: $clouds;
+     text-decoration: none;
+     margin-top: 0.5rem;
+   }
  }
 
 /*
