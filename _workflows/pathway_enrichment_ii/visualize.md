@@ -6,7 +6,7 @@ date: '2014-02-27'
 figures:
   figure_1: figure_visualize_gsea_report.png
   figure_2: figure_visualize_em_rationale.jpg
-  figure_3: figure_visualize_cytoscape_em_preview.jpg
+  figure_3: figure_visualize_em_preview.jpg
   figure_4: figure_visualize_cytoscape_apps_em.png
   figure_5: figure_visualize_em_splash.png
   figure_6: figure_visualize_cytoscape_em_load.png
@@ -85,7 +85,7 @@ Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:targe
 
 ### Enrichment Map
 
-EM is a visualization analysis tool that organizes gene sets into an information rich similarity network. The true power of EM is that it can represents a basis upon which to reduce dimensionality by grouping similar gene sets; These clusters can then be annotated with an overarching 'theme' that is representative of the group (Figure 2).
+EM is a visualization analysis tool that organizes gene sets into an information rich similarity network. The true power of Enrichment Map is that it reduces complexity by grouping similar gene sets; These clusters can then be annotated with an overarching 'theme' that is representative of the group (Figure 2).
 
 Gene sets are represented as nodes where the number of genes correlates with node diameter. Edges between nodes represent shared genes, where the amount of overlap is represented by thickness. Finally, EM can use node color to represent other dimensions of the data, for example, gene sets enriched in different classes.
 
@@ -100,16 +100,41 @@ The approach is modular in that it is compatible with any statistical test or ge
 
 Figure 3 provides a tour of [Enrichment Map app](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"} in the graph anaysis software [Cytoscape](http://www.cytoscape.org/){:target="_blank"}.
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
+![img]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Tour of the Enrichment Map app.</strong> (A) The Enrichment Map app is accessed in Cytoscape. (B) 'User Input' panel where user data files describing the enrichment analysis results and raw gene expression data are loaded. (C) 'Parameters' panel where the users can define the initial stringency for displaying nodes (false discovery rate for gene set enrichment) and edges (minimum amount of overlap). (D) 'Table Panel' tabulating gene set details and underlying expression data for any particular gene set. (E) The main panel displays the interactive similarity network. (F) 'Results Panel' where initial parameter settings can be fine-tuned.
+  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
+  <div class="text-right">
+    <a type="button" class="btn" data-toggle="modal" data-target="#modal_figure_3">
+      <em>Click for larger image</em>
+    </a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modal_figure_3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img
+            class="img-responsive"
+            src="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}"
+            />
+        </div>
+        <div class="modal-footer">
+          <div class="figure-legend well well-lg text-justify">
+            <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
 
 It should be immediately apparent from Figure 3 that the Enrichment Map app provides several helpful features including
 
   1. Integration of raw data with gene sets in a single, interactive interface
   2. Clustered layout representing groups of similar gene sets
-  3. Color indicates which class each gene sets is enriched in
+  3. Color differentiates enrichment in each of the sample classes
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
@@ -171,7 +196,7 @@ Launch the Enrichment Map app by selecting from the menu bar 'Apps' --> 'Enrichm
 
 #### 1. Load files
 
-Time to tell Enrichment Map where all of our data is via the ‘User Input’ panel (Figure 6).
+Time to tell Enrichment Map where all of our data is via the 'Control Panel' (Figure 6).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive}
 

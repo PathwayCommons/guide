@@ -52,7 +52,15 @@ img.left {
   img.super-slim {
     max-width: 50%;
   }
+
+  .modal-lg {
+    width: 100%;
+    img{
+      // height: 800px;
+    }
+  }
 }
+
 
 /* Spinner */
 #ajax-spinner {
