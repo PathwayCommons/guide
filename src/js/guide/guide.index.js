@@ -214,9 +214,12 @@ module.exports = (function(){
   };
 
   initModule = function( $container ){
-    configMap.baseurl = $container.data( 'baseurl' );
-    setJqueryMap( $container );
-    render( jQueryMap.$container );
+    // console.log($container);
+
+    if( !$container ){ return false; }
+    // configMap.baseurl = $container.data( 'baseurl' );
+    // setJqueryMap( $container );
+    // render( jQueryMap.$container );
   };
 
   return {

@@ -11,7 +11,7 @@ figures:
   figure_5: figure_visualize_em_splash.png
   figure_6: figure_visualize_cytoscape_em_load.png
   figure_7: figure_visualize_cytoscape_em_build.png
-  figure_8: 
+  figure_8:
 tables:
 layout: embedded
 data:
@@ -28,7 +28,6 @@ workflow:
 dockerhub:
 reflist:
   - 10802651
-  - 18511468
   - 21085593
   - 22383865
 # comments: yes
@@ -43,15 +42,15 @@ reflist:
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-In this workflow step, we describe [Enrichment Map (EM)](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984) (Merico 2010), a visual tool that subsumes redundant gene sets into fewer, broader themes. By then end of this discussion you should:
+In this workflow step, we describe Enrichment Map (EM), a visual tool that simplifies the display of a long list of gene sets. By then end of this discussion you should:
 
 1. Understand how an Enrichment Map can be helpful
 2. Learn how to create and tune an Enrichment Map
-3. Be able to generate a map describing overarching themes culled from enrichment analyses
+3. Be able to generate a publication-quality description of the overarching themes culled from enrichment analyses
 
 ## <a href="#background" name="background">II. Background</a>
 
-EM was originally described by Merico *et al.* (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets of BrCa and HD individuals.
+EM was originally described by Merico *et al.* (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets.
 
 ### A long list of pathways
 
@@ -74,7 +73,7 @@ EM was originally described by Merico *et al.* (Merico 2010) as an aid in the in
 | IL5%NETPATH%IL5	IL5| 49| 0.7718686| 2.0658088| 0.0| 0.0 | 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
-Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 features or genes were included in our ranked list. It appears that we have simply kicked the can and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?
+Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes ('features') were included in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?
 
 ### Data reduction
 
@@ -82,7 +81,7 @@ Ideally, we want a simple way to reduce the size of the data from an enrichment 
 
 #### Hierachical
 
-Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of that same statistical test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
+Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of the same statistical test for enrichment. Importantly, these approaches do not apply to gene sets without a clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
 
 ### Enrichment Map
 
@@ -215,7 +214,7 @@ Look at the 'Legend' tab. Increase or decrease the stringency for displaying nod
 
 We will higlight a few aspects of the 'Table Panel' (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The 'Control Panel' tab 'Select' enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below ([IV. Common tasks](#tasks)).
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
+<!-- ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive } -->
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.

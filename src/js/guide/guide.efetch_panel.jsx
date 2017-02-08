@@ -35,7 +35,12 @@ module.exports = (function(){
       // Process the deferred objects array serially
       function qNext() {
         var o = deferreds.shift(); //remove first element
-        if(o){
+
+        if( o ){
+          o.deferred
+            .fail(function( xml, textStatus, jqXHR ){
+              qNext();
+            });
           o.deferred
             .done(function( xml, textStatus, jqXHR ){
               recombined.push({

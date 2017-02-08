@@ -4,8 +4,6 @@ title: Home
 footer: true
 figures:
   figure_1: index/figure_index_workflow_gdc.png
-custom_js:
-  - bower_components/cytoscape/dist/cytoscape.min.js
 ---
 
 This guide is intended to cultivate the practice of *biological pathway analysis*. We are making available a growing collection of learning materials including  [presentations]({{ site.baseurl }}/presentations/archive/), [primers]({{ site.baseurl }}/primers/archive/) along with [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction for data analysis.

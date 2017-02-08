@@ -33,6 +33,8 @@
   <!-- Third-party javascript -->
   <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/cytoscape/dist/cytoscape.min.js"></script>
+
   <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
@@ -98,17 +100,17 @@
 
 <h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
 
-<p>In this workflow step, we describe <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Enrichment Map (EM)</a> (Merico 2010), a visual tool that subsumes redundant gene sets into fewer, broader themes. By then end of this discussion you should:</p>
+<p>In this workflow step, we describe Enrichment Map (EM), a visual tool that simplifies the display of a long list of gene sets. By then end of this discussion you should:</p>
 
 <ol>
   <li>Understand how an Enrichment Map can be helpful</li>
   <li>Learn how to create and tune an Enrichment Map</li>
-  <li>Be able to generate a map describing overarching themes culled from enrichment analyses</li>
+  <li>Be able to generate a publication-quality description of the overarching themes culled from enrichment analyses</li>
 </ol>
 
 <h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
 
-<p>EM was originally described by Merico <em>et al.</em> (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets of BrCa and HD individuals.</p>
+<p>EM was originally described by Merico <em>et al.</em> (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to larger collections of gene sets emerging from enrichment analyses. Even with more stringent criteria, it is not uncommon for analyses to generate hundreds of pathways. All of this presents an obstacle from the standpoint of interpretability. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets.</p>
 
 <h3 id="a-long-list-of-pathways">A long list of pathways</h3>
 
@@ -191,7 +193,7 @@
   </tbody>
 </table>
 
-<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 features or genes were included in our ranked list. It appears that we have simply kicked the can and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
+<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes (‘features’) were included in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
 
 <h3 id="data-reduction">Data reduction</h3>
 
@@ -199,7 +201,7 @@
 
 <h4 id="hierachical">Hierachical</h4>
 
-<p>Many enrichment anlyses use the <a href="http://geneontology.org/" target="_blank">Gene Ontology</a> (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of that same statistical test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).</p>
+<p>Many enrichment anlyses use the <a href="http://geneontology.org/" target="_blank">Gene Ontology</a> (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of the same statistical test for enrichment. Importantly, these approaches do not apply to gene sets without a clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).</p>
 
 <h3 id="enrichment-map">Enrichment Map</h3>
 
@@ -337,7 +339,7 @@
 
 <p>We will higlight a few aspects of the ‘Table Panel’ (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The ‘Control Panel’ tab ‘Select’ enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below (<a href="#tasks">IV. Common tasks</a>).</p>
 
-<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/" alt="image" class="img-responsive" /></p>
+<!-- ![image](/guide/media/workflows/pathway_enrichment_ii/visualize/){: .img-responsive } -->
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets ('Node Table') and gene expression data ('Heat Map (nodes)'). Shown here are columns for 'EM1_GS_DESCR' which are the labels assigned to gene sets ('Graphic Details') and 'EM1_NES_dataset1' which are the GSEA normalized enrichment scores.
@@ -348,7 +350,7 @@
   <hr/>
   <h2>References</h2>
   
-  <div class="reference_group" data-reflist="[10802651 18511468 21085593 22383865]"></div>
+  <div class="reference_group" data-reflist="[10802651 21085593 22383865]"></div>
 
 
         
