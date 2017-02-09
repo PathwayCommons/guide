@@ -17,6 +17,8 @@ figures:
   figure_11: figure_visualize_em_cluster_autoannotate_result.png
   figure_12: figure_visualize_em_cluster_collapsed.png
   figure_13: figure_visualize_em_cluster_uncollapsed.png
+  figure_14: figure_visualize_em_cluster_uncollapsed_ilgroup.png
+  figure_15: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
 layout: embedded
 data:
@@ -35,7 +37,7 @@ reflist:
   - 10802651
   - 21085593
   - 22383865
-# comments: yes
+comments: yes
 ---
 
 - {:.list-unstyled} Table of Contents
@@ -79,7 +81,7 @@ EM was originally described by Merico *et al.* (Merico 2010) as an aid in the in
 | IL5%NETPATH%IL5	IL5| 49| 0.7718686| 2.0658088| 0.0| 0.0 | 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
-Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes ('features') were included in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?
+Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?
 
 ### Data reduction
 
@@ -97,7 +99,7 @@ Gene sets are represented as nodes where the number of genes correlates with nod
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Rationale of the Enrichment Map.</strong>. Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching theme label.
+  <strong>Figure 2. Rationale of the Enrichment Map.</strong> Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching label.
 </div>
 
 The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.
@@ -124,7 +126,9 @@ It should be immediately apparent from Figure 3 that the Enrichment Map app prov
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
-In this workflow step, we will
+[Cytoscape](http://www.cytoscape.org/){:target="_blank"} is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of ['apps'](http://apps.cytoscape.org/){:target="_blank"}. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.
+
+> Checkout the [Cytoscape User Manual](http://manual.cytoscape.org/en/stable/index.html){: target="_blank"} for full description of function and capabilities.
 
 #### Software requirements
 
@@ -135,9 +139,6 @@ In this workflow step, we will
   - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2){:target="_blank"}: version 0.9.5
   - [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"}: version 3.1.0
   - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"}: version 1.1.0
-
-
-> [Cytoscape](http://www.cytoscape.org/){:target="_blank"} is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of ['apps'](http://apps.cytoscape.org/){:target="_blank"}. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.
 
 ##### Loading apps
 
@@ -205,11 +206,11 @@ In the same Control panel depicted in Figure 6, locate the 'Parameters' section 
 
 **Advanced:** Replace the 'Phenotypes' field with 'BrCa VS. HD' to reflect the comparisons we made.
 
-**Parameters:** Set the 'FDR Q-value Cutoff' to 0.0001; Click the radio for 'Jaccard+Overlap Combined' and set the 'Cutoff' to 0.375.
+**Parameters:** Set the 'FDR Q-value Cutoff' to 1E-04 in 'Scientific Notation'; This number is inversely proportional to the stringency for displaying a gene set. Click the radio for 'Jaccard+Overlap Combined' and keep the 'Cutoff' to 0.375; This sets a lower-bound for showing edges,  which represent overlap between gene sets.
 
 #### 3. Build
 
-Click 'Build' to generate the EM in the main window.
+Click 'Build' to generate the EM.
 
 Figure 7 displays the resulting EM that you should see following the build. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing our gene sets.
 
@@ -239,7 +240,7 @@ Figure 7 displays the resulting EM that you should see following the build. Take
 
 #### Label clusters of similar gene sets
 
-Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"} app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"} to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
+Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"} app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"} to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
 
 **i. Separating gene sets in each classes**
 
@@ -298,7 +299,7 @@ Figure 11 shows a pretty busy picture; It is natural to gravitate towards large 
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong>
+  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
   </div>
@@ -306,7 +307,7 @@ Figure 11 shows a pretty busy picture; It is natural to gravitate towards large 
 
 **iv. Expand a group**
 
-Let's reverse the process selectively. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
+Let's reverse the process selectively and drill down into a particular group. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
 
 - 'Control Panel' select the 'AutoAnnotate' tab
   -  Right click 'pid angiopoietin receptor pathway'
@@ -320,27 +321,62 @@ Let's reverse the process selectively. Recall our running interest in the IL-5 s
   </div>
 </div>
 
+Our cluster 'pid angiopoietin receptor pathway' has now been expanded to show the constituent pathways that include our IL-5 gene set. The edges indicate shared genes, but to get a better idea of the overlap, let's look at the overlap in all pairs of gene sets in table format (Figure 14).
+
+- Select the cluster
+  - Hold Shift + drag mouse over nodes
+- Table Panel
+  - Select 'Edge Table' tab
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Showing gene overlap in gene set cluster .</strong> The 'Table Panel' tab for 'Edge Table' shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes). Highlighted in the 'Table Panel' is the overlap between IL-3 and IL-5.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+Take for instance the IL-3 and IL-5 signalling pathways: IL-3 consists of 75 genes and IL-5 contains 49 ('Node Table'); The gene sets share 33 genes between them ('Edge Table').
+
 <hr/>
 
-Cytoscape affords the user a great deal of control over [styles](http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles){: target="_blank"} and [layout](http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://wiki.cytoscape.org/Cytoscape_User_Manual){: target="_blank"} for full description of capabilities.
+Cytoscape affords the user a great deal of control over [styles](http://manual.cytoscape.org/en/stable/Styles.html){: target="_blank"} and [layout](http://manual.cytoscape.org/en/stable/Navigation_and_Layout.html?highlight=layout){: target="_blank"}. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the [user manual](http://manual.cytoscape.org/en/stable/index.html){: target="_blank"} for full description of capabilities.
 
 
 ## <a href="#interpretation" name="interpretation">IV. Interpretation</a>
 
-The following tips are aimed at users who are looking for ways to use an enrichment analysis result to support the formulation of a biological question.
+The following are helpful tips and rules of thumb to aid users in extracting value from an enrichment analysis and map. This is a work in progress.
 
 ### 1. Build trust
 
-No algorithm tuning or statistical test can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the 'unsurprising' results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?
+No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the 'unsurprising' results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?
 
-### 2. Find interesting groups, gene sets
+### 2. Identify novel/interesting groups
 
-Google it: 'platelet IL-5 pid angiopoietin receptor pathway'
+This is where the rubber meets the road: The enrichment analysis and EM are the supporting materials to help you to bridge bodies of knowledge and make new connections. The discoveries that will nourish a steady-stream of publications and earn you the envy of your peers is largely up to you.
 
-### 3. Examine gene expression
+One simple way to get the creative juices flowing is to try and understand whether there are established connections between certain gene sets/groups and your specific biological context of interest. For example, one can ask whether there is an established connections between cytokine signaling pathways ('IL-3', 'IL-5', 'IL-6', 'EPO'), platelets and malignancies.
 
-Do the genes in the pathway show the difference in gene expression across the samples or just a few? Is this representative?
+### 3. Drill down to gene expression
 
-### 4. Examine the pathway
+Perhaps we've noticed an interesting gene set that has not been previously reported in our context. One way to build confidence in the gene set is to examine whether there is a distinct contrast in expression between classes or whether there is a large amount of within-class variation.
 
-Coming soon.
+One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the 'Table Panel', 'Heat Map' tab by selecting 'GSEA ranking' from the 'Sorting' drop-down (Figure 15).
+
+ ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}){: .img-responsive }
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 15. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak on a running-sum plot) are highlighted in yellow.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+
+> Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.
+
+### 4. Drill down to the pathway
+
+Coming soon to an app near you:
+
+  1. Clicking a gene set and examine the pathway topology
+  2. 'Paint' gene expression data onto the pathway

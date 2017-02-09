@@ -194,7 +194,7 @@
   </tbody>
 </table>
 
-<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes (‘features’) were included in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
+<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
 
 <h3 id="data-reduction">Data reduction</h3>
 
@@ -212,7 +212,7 @@
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_rationale.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Rationale of the Enrichment Map.</strong>. Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching theme label.
+  <strong>Figure 2. Rationale of the Enrichment Map.</strong> Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching label.
 </div>
 
 <p>The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.</p>
@@ -239,7 +239,11 @@
 
 <h2 id="a-hrefworkflowstep-nameworkflowstepiii-workflow-stepa"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
 
-<p>In this workflow step, we will</p>
+<p><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a> is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of <a href="http://apps.cytoscape.org/" target="_blank">‘apps’</a>. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.</p>
+
+<blockquote>
+  <p>Checkout the <a href="http://manual.cytoscape.org/en/stable/index.html" target="_blank">Cytoscape User Manual</a> for full description of function and capabilities.</p>
+</blockquote>
 
 <h4 id="software-requirements">Software requirements</h4>
 
@@ -255,10 +259,6 @@
     </ul>
   </li>
 </ol>
-
-<blockquote>
-  <p><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a> is an indispensable tool for network  visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of <a href="http://apps.cytoscape.org/" target="_blank">‘apps’</a>. In this section, we will learn to organize our enriched gene sets using the Enrichment Map along with several other helper apps to cluster and annotate similar groups of gene sets.</p>
-</blockquote>
 
 <h5 id="loading-apps">Loading apps</h5>
 
@@ -326,11 +326,11 @@
 
 <p><strong>Advanced:</strong> Replace the ‘Phenotypes’ field with ‘BrCa VS. HD’ to reflect the comparisons we made.</p>
 
-<p><strong>Parameters:</strong> Set the ‘FDR Q-value Cutoff’ to 0.0001; Click the radio for ‘Jaccard+Overlap Combined’ and set the ‘Cutoff’ to 0.375.</p>
+<p><strong>Parameters:</strong> Set the ‘FDR Q-value Cutoff’ to 1E-04 in ‘Scientific Notation’; This number is inversely proportional to the stringency for displaying a gene set. Click the radio for ‘Jaccard+Overlap Combined’ and keep the ‘Cutoff’ to 0.375; This sets a lower-bound for showing edges,  which represent overlap between gene sets.</p>
 
 <h4 id="build">3. Build</h4>
 
-<p>Click ‘Build’ to generate the EM in the main window.</p>
+<p>Click ‘Build’ to generate the EM.</p>
 
 <p>Figure 7 displays the resulting EM that you should see following the build. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region currently in view. The ‘Results Panel’ shows our currently selected parameters while ‘Table Panel’ has the ‘Node Table’ tab selected by default, listing our gene sets.</p>
 
@@ -358,7 +358,7 @@
 
 <h4 id="label-clusters-of-similar-gene-sets">Label clusters of similar gene sets</h4>
 
-<p>Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main general theme associated with it. To do this we use the <a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a> app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses <a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a> to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.</p>
+<p>Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main theme associated with it. To do this we use the <a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a> app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses <a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a> to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.</p>
 
 <p><strong>i. Separating gene sets in each classes</strong></p>
 
@@ -436,7 +436,7 @@
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_cluster_collapsed.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong>
+  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_cluster_collapsed.png" target="_blank">Open in new window</a>
   </div>
@@ -444,7 +444,7 @@
 
 <p><strong>iv. Expand a group</strong></p>
 
-<p>Let’s reverse the process selectively. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled ‘pid angiopoietin receptor pathway’. We can recover the view for this gene set.</p>
+<p>Let’s reverse the process selectively and drill down into a particular group. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled ‘pid angiopoietin receptor pathway’. We can recover the view for this gene set.</p>
 
 <ul>
   <li>‘Control Panel’ select the ‘AutoAnnotate’ tab
@@ -463,29 +463,75 @@
   </div>
 </div>
 
+<p>Our cluster ‘pid angiopoietin receptor pathway’ has now been expanded to show the constituent pathways that include our IL-5 gene set. The edges indicate shared genes, but to get a better idea of the overlap, let’s look at the overlap in all pairs of gene sets in table format (Figure 14).</p>
+
+<ul>
+  <li>Select the cluster
+    <ul>
+      <li>Hold Shift + drag mouse over nodes</li>
+    </ul>
+  </li>
+  <li>Table Panel
+    <ul>
+      <li>Select ‘Edge Table’ tab</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_cluster_uncollapsed_ilgroup.png" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Showing gene overlap in gene set cluster .</strong> The 'Table Panel' tab for 'Edge Table' shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes). Highlighted in the 'Table Panel' is the overlap between IL-3 and IL-5.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_cluster_uncollapsed_ilgroup.png" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+<p>Take for instance the IL-3 and IL-5 signalling pathways: IL-3 consists of 75 genes and IL-5 contains 49 (‘Node Table’); The gene sets share 33 genes between them (‘Edge Table’).</p>
+
 <hr />
 
-<p>Cytoscape affords the user a great deal of control over <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual/Visual_Styles" target="_blank">styles</a> and <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual/Navigation_Layout" target="_blank">layout</a>. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the <a href="http://wiki.cytoscape.org/Cytoscape_User_Manual" target="_blank">user manual</a> for full description of capabilities.</p>
+<p>Cytoscape affords the user a great deal of control over <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styles</a> and <a href="http://manual.cytoscape.org/en/stable/Navigation_and_Layout.html?highlight=layout" target="_blank">layout</a>. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the <a href="http://manual.cytoscape.org/en/stable/index.html" target="_blank">user manual</a> for full description of capabilities.</p>
 
 <h2 id="a-hrefinterpretation-nameinterpretationiv-interpretationa"><a href="#interpretation" name="interpretation">IV. Interpretation</a></h2>
 
-<p>The following tips are aimed at users who are looking for ways to use an enrichment analysis result to support the formulation of a biological question.</p>
+<p>The following are helpful tips and rules of thumb to aid users in extracting value from an enrichment analysis and map. This is a work in progress.</p>
 
 <h3 id="build-trust">1. Build trust</h3>
 
-<p>No algorithm tuning or statistical test can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the ‘unsurprising’ results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?</p>
+<p>No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the ‘unsurprising’ results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?</p>
 
-<h3 id="find-interesting-groups-gene-sets">2. Find interesting groups, gene sets</h3>
+<h3 id="identify-novelinteresting-groups">2. Identify novel/interesting groups</h3>
 
-<p>Google it: ‘platelet IL-5 pid angiopoietin receptor pathway’</p>
+<p>This is where the rubber meets the road: The enrichment analysis and EM are the supporting materials to help you to bridge bodies of knowledge and make new connections. The discoveries that will nourish a steady-stream of publications and earn you the envy of your peers is largely up to you.</p>
 
-<h3 id="examine-gene-expression">3. Examine gene expression</h3>
+<p>One simple way to get the creative juices flowing is to try and understand whether there are established connections between certain gene sets/groups and your specific biological context of interest. For example, one can ask whether there is an established connections between cytokine signaling pathways (‘IL-3’, ‘IL-5’, ‘IL-6’, ‘EPO’), platelets and malignancies.</p>
 
-<p>Do the genes in the pathway show the difference in gene expression across the samples or just a few? Is this representative?</p>
+<h3 id="drill-down-to-gene-expression">3. Drill down to gene expression</h3>
 
-<h3 id="examine-the-pathway">4. Examine the pathway</h3>
+<p>Perhaps we’ve noticed an interesting gene set that has not been previously reported in our context. One way to build confidence in the gene set is to examine whether there is a distinct contrast in expression between classes or whether there is a large amount of within-class variation.</p>
 
-<p>Coming soon.</p>
+<p>One approach to examine expression of a gene set is to focus on the ‘leading edge’ - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the ‘Table Panel’, ‘Heat Map’ tab by selecting ‘GSEA ranking’ from the ‘Sorting’ drop-down (Figure 15).</p>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_interpret_leadingedge_il5.png" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 15. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak on a running-sum plot) are highlighted in yellow.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_interpret_leadingedge_il5.png" target="_blank">Open in new window</a>
+  </div>
+</div>
+
+<blockquote>
+  <p>Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.</p>
+</blockquote>
+
+<h3 id="drill-down-to-the-pathway">4. Drill down to the pathway</h3>
+
+<p>Coming soon to an app near you:</p>
+
+<ol>
+  <li>Clicking a gene set and examine the pathway topology</li>
+  <li>‘Paint’ gene expression data onto the pathway</li>
+</ol>
 
         </div>
         
@@ -496,6 +542,27 @@
 
 
         
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/pathway_enrichment_ii/visualize";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/pathway_enrichment_ii/visualize"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
       </div>
     </div>
