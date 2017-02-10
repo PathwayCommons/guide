@@ -28,7 +28,7 @@ module.exports = (function(){
           selector: 'node',
           css: {
             'width'             : 'label',
-            'shape'             : 'roundrectangle',
+            'shape'             : 'rectangle',
             'content'           : 'data(name)',
             'text-valign'       : 'center',
             'text-halign'       : 'center',
@@ -37,7 +37,7 @@ module.exports = (function(){
             'padding-right'     : '5px',
             'padding-top'       : '10px',
             'padding-bottom'    : '10px',
-            'background-color'  : '#2980b9',
+            'background-color'  : '#7f8c8d',
             'color'             : '#ecf0f1',
             'font-size'         : '0.9em'
           }
@@ -67,12 +67,11 @@ module.exports = (function(){
           }
         },
         {
-          selector: '.dimished',
+          selector: '.linkout',
           css: {
-            'background-color'  : '#34495e',
+            'background-color'  : '#2980B9',
             'padding-top'       : '10px',
             'padding-bottom'    : '10px'
-            // 'color'             : '#2c3e50'
           }
         },
         {
@@ -96,35 +95,35 @@ module.exports = (function(){
       elements: {
         nodes: [
           { data: {
-              id: 'cancer_db',
-              name: 'Workflow - I\n\nProgramming in R',
+              id: 'enrichment_i',
+              name: 'Start: Workflow - I\n\nProgramming in R',
               parent: 'level_group',
               href: configMap.baseurl + '/workflows/pathway_enrichment_i/index/'
             },
-            classes: 'dimished data_source',
+            classes: 'linkout',
             position: { x: 0, y: 0 }
           },
           { data: {
-              id: 'custom_system',
-              name: 'Workflow - II\n\nNo programming',
+              id: 'enrichment_ii',
+              name: 'Start: Workflow - II\n\nNo programming',
               parent: 'level_group',
               href: configMap.baseurl + '/workflows/pathway_enrichment_ii/index/'
             },
-            classes: 'dimished data_source',
+            classes: 'linkout',
             position: { x: 250, y: 0 }
           },
 
-          { data: { id: 'processing_group', name: 'Data Processing' } },
+          { data: { id: 'processing_group', name: 'Gene Level' } },
           { data: {
               id: 'rnaseq_data',
-              name: 'Measure gene expression\n\n(RNA-Seq)',
+              name: 'Get gene expression (RNA-Seq)',
               parent: 'processing_group'
              },
             position: { x: 125, y: 125 }
           },
           { data: {
               id: 'assess_de',
-              name: 'Assess differential expression',
+              name: 'Get differential expression',
               parent: 'processing_group'
             },
             position: { x: 125, y: 225 }
@@ -139,10 +138,10 @@ module.exports = (function(){
           },
 
 
-          { data: { id: 'pathway_id_group', name: 'Pathway Identification' } },
+          { data: { id: 'pathway_id_group', name: 'Pathway Level' } },
           { data: {
               id: 'pathways_enrichment',
-              name: 'Enrich for pathways by gene rank',
+              name: 'Enrich for pathways',
               parent: 'pathway_id_group'
             },
             position: { x: 125, y: 450 }
@@ -157,13 +156,13 @@ module.exports = (function(){
         edges: [
           { data: {
               id: 'db-rnaseq',
-              source: 'cancer_db',
+              source: 'enrichment_i',
               target: 'rnaseq_data'
             }
           },
           { data: {
               id: 'custom-rnaseq',
-              source: 'custom_system',
+              source: 'enrichment_ii',
               target: 'rnaseq_data'
             }
           },
@@ -200,7 +199,7 @@ module.exports = (function(){
       }
     });
 
-    cy.on( 'tap', '.data_source', function( ){
+    cy.on( 'tap', '.linkout', function( ){
       try { // your browser may block popups
         window.open( this.data('href') );
       } catch(e){ // fall back on url change
@@ -213,7 +212,7 @@ module.exports = (function(){
     jQueryMap.$container = $container;
   };
 
-  initModule = function( $container ){    
+  initModule = function( $container ){
     if( !$container.length ){ return false; }
     configMap.baseurl = $container.data( 'baseurl' );
     setJqueryMap( $container );

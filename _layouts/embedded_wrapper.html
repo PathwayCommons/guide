@@ -12,22 +12,7 @@
     <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
          content to avoid any CSS collisions with our real content. -->
     <div class="wrap">
-      <div class="masthead">
-        <div class="container">
-          <h3 class="masthead-title">
-            <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
-            <small>
-              {{ site.tagline }}
-              {% if jekyll.environment == "development" %}
-                <span class="text-danger">-- Development Mode</span>
-              {% elsif jekyll.environment == "testing" %}
-                <span class="bg-warning">-- Testing Mode</span>
-              {% endif %}
-            </small>
-          </h3>
-
-        </div>
-      </div>
+      {% include masthead.html %}
 
       <div class="container content embedded_wrapper">
         <div id='ajax-spinner'><img src="{{ site.baseurl }}/{{ site.media_root }}/spinner.gif"/></div>

@@ -1,7 +1,9 @@
 #**************** Set site global variables ****************
 # Setup
 title:               Guide
-tagline:             'Training Resources'
+tagline:
+  text: Pathway Commons
+  link: http://www.pathwaycommons.org/
 description:         'Guide'
 baseurl:             /guide
 domain:              'http://pathwaycommons.github.io/'
@@ -13,7 +15,7 @@ author:
   email:             https://groups.google.com/forum/#!forum/pathway-commons-help
 
 # Custom vars
-version:             1.0.0
+version:             0.1.0
 branch: gh-pages
 
 # Declare the path relative to <source> for media and static items
