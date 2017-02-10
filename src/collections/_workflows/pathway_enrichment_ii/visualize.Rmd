@@ -14,11 +14,10 @@ figures:
   figure_8: figure_visualize_em_table_panel.png
   figure_9: figure_visualize_em_cluster_filter.png
   figure_10: figure_visualize_em_cluster_autoannotate.png
-  figure_11: figure_visualize_em_cluster_autoannotate_result.png
-  figure_12: figure_visualize_em_cluster_collapsed.png
-  figure_13: figure_visualize_em_cluster_uncollapsed.png
-  figure_14: figure_visualize_em_cluster_uncollapsed_ilgroup.png
-  figure_15: figure_visualize_em_interpret_leadingedge_il5.png
+  figure_11: figure_visualize_em_cluster_collapsed.png
+  figure_12: figure_visualize_em_cluster_uncollapsed.png
+  figure_13: figure_visualize_em_cluster_uncollapsed_ilgroup.png
+  figure_14: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
 layout: embedded
 data:
@@ -106,11 +105,11 @@ The approach is modular in that it is compatible with any statistical test or ge
 
 ### Preview of EM software
 
-Figure 3 provides a tour of [Enrichment Map app](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"} in the graph anaysis software [Cytoscape](http://www.cytoscape.org/){:target="_blank"}.
+Figure 3 provides a tour of the [EM app](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"} in the [Cytoscape](http://www.cytoscape.org/){:target="_blank"} software.
 
 ![img]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where data files describing the enrichment analysis are loaded. (C) The 'Table Panel' tabulates gene set details and underlying expression data for any particular gene set. (D) The 'Results Panel' is where initial parameter settings can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
+  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene set relationships. (B) A 'Control Panel' is where settings for Cytoscape and each app are modified. (C) The 'Table Panel' displays data for each node and edge along with expression heatmaps. (D) The 'Results Panel' is where settings delcared in the 'Control Panel' can be fine-tuned.  Note here that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the Table panel.
   <div class="text-left">
     <a type="button" class="btn btn-default" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
   </div>
@@ -242,20 +241,20 @@ Figure 7 displays the resulting EM that you should see following the build. Take
 
 Clusters within the Enrichment Map represent similar biological processes and themes. In order to better summarize the Enrichment map we want to be able to annotate each of these clusters with the main theme associated with it. To do this we use the [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"} app to help us summarize the network and its themes. AutoAnnotate first clusters the network and then uses [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"} to calculate the most frequent words present in each cluster node labels in efforts to highlight commonalities between the nodes in the cluster.
 
-**i. Separating gene sets in each classes**
+**i. Separating gene sets in each class**
 
   In the main window graph, let us spatially separate the gene sets enriched in each class so that when we go to add labels, they are readily distinguishable.
 
-  We will select the BrCa group in red and drag the entire group over to separate it from the HD group in blue. To do this, Highlight the class by creating a column filter for nodes with a positive NES:
+  We will select the BrCa group in red and drag the entire group over to the right separate it from the HD group in blue. To do this, Highlight the class by creating a column filter for nodes with a positive NES:
 
   - 'Control Panel' tab for 'Select'
     - Click '+' to add a filter
       - Select 'Column Filter' from the drop-down
     - 'Choose column....' drop-down
       - Select 'Node:EM1_NES_dataset1'
-      - Enter range to include only negative values
+      - Enter range to include only positive values
 
-  Figure 9 shows the selected nodes in yellow representing the gene sets enriched in BrCa. Drag the entire group away the unselected gene sets.
+  Figure 9 shows the selected nodes in yellow representing the gene sets enriched in BrCa. Drag the entire group to the right of the unselected gene sets.
 
   ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
   <div class="figure-legend well well-lg text-justify">
@@ -267,72 +266,61 @@ Clusters within the Enrichment Map represent similar biological processes and th
 
 **ii. AutoAnnotate groups**
 
-AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster node labels (Figure 12).
+AutoAnnotate first clusters the network and then uses WordCloud to calculate the most frequent words present in each cluster's node labels (Figure 10).
 
 - 'Apps' -> 'AutoAnnotate' -> 'New Annotation Set...'
 
-
-> *Note: For clarity, you should remove the individual gene set labels by selecting 'View' -> 'Hide Graphic Details'*
+Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_10 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 10. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
 </div>
 
-Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
-
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. Results of AutoAnnotate.</strong>
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
-  </div>
-</div>
-
 **iii. Collapse groups**
 
-Figure 11 shows a pretty busy picture; It is natural to gravitate towards large clusters that appear in the enrichment results, however, in this case, size does not indicate importance or strength but rather the amount of database annotation there exist for a particular pathway or process. Single nodes represent processes that are less well known but no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 12).
+Figure 10 shows a pretty busy picture; It is natural to gravitate towards large clusters that appear in the enrichment results, however, in this case, size does not indicate importance or strength but rather the amount of database annotation there exist for a particular pathway or process. Single nodes represent processes that are less well known but no less important than the large clusters. In order to remove the bias introduced by redundant pathway annotations it is good to collapse the network, i.e. create a single group node for every cluster whose name is summary annotation calculated for it, in order to more easily see the overall themes present in the enrichment results (Figure 11).
 
 - 'Control Panel' select the 'AutoAnnotate' tab
   -  Click the menu drop-down (button with 3 lines)
     - Select 'Collapse All'
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels.
+  <strong>Figure 11. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
 **iv. Expand a group**
 
-Let's reverse the process selectively and drill down into a particular group. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set.
+Let's reverse the process selectively and drill down into a particular group. Recall our running interest in the IL-5 signal transduction pathway originally curated by NetPath? Well it is hidden inside the cluster labelled 'pid angiopoietin receptor pathway'. We can recover the view for this gene set (Figure 12).
 
 - 'Control Panel' select the 'AutoAnnotate' tab
   -  Right click 'pid angiopoietin receptor pathway'
     - Select 'Expand'
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 13. Selectively expanding the network for a single cluster.</strong>
+  <strong>Figure 12. Selectively expanding the network for a single cluster.</strong>
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
-Our cluster 'pid angiopoietin receptor pathway' has now been expanded to show the constituent pathways that include our IL-5 gene set. The edges indicate shared genes, but to get a better idea of the overlap, let's look at the overlap in all pairs of gene sets in table format (Figure 14).
+Our cluster 'pid angiopoietin receptor pathway' has now been expanded to show the constituent pathways that include our IL-5 gene set. The edges indicate shared genes, but to get a better idea of the overlap, let's look at the overlap in all pairs of gene sets in table format (Figure 13).
 
 - Select the cluster
   - Hold Shift + drag mouse over nodes
 - Table Panel
   - Select 'Edge Table' tab
 
-![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 14. Showing gene overlap in gene set cluster .</strong> The 'Table Panel' tab for 'Edge Table' shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes). Highlighted in the 'Table Panel' is the overlap between IL-3 and IL-5.
+  <strong>Figure 13. Showing gene overlap in gene set cluster .</strong> The 'Table Panel' tab for 'Edge Table' shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes). Highlighted in the 'Table Panel' is the overlap between IL-3 and IL-5.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
@@ -345,38 +333,39 @@ Cytoscape affords the user a great deal of control over [styles](http://manual.c
 
 ## <a href="#interpretation" name="interpretation">IV. Interpretation</a>
 
-The following are helpful tips and rules of thumb to aid users in extracting value from an enrichment analysis and map. This is a work in progress.
+So what now? Below, we list some helpful tips to aid you in extracting value from an enrichment analysis.
 
 ### 1. Build trust
 
-No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed Enrichment Map is to examine it for pathways and themes which you would expect to be present. These are the 'unsurprising' results that have either been previously reported or those you could have easily guessed before the analysis was even performed. In other words, does this map pass the sanity test?
+No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected * a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?
 
 ### 2. Identify novel/interesting groups
 
-This is where the rubber meets the road: The enrichment analysis and EM are the supporting materials to help you to bridge bodies of knowledge and make new connections. The discoveries that will nourish a steady-stream of publications and earn you the envy of your peers is largely up to you.
+This is where the rubber meets the road: The enrichment analysis and EM are evidence that helps you to bridge bodies of knowledge and make new, interesting connections. The discoveries that will nourish a steady-stream of publications and earn the envy of peers is largely up to you.
 
-One simple way to get the creative juices flowing is to try and understand whether there are established connections between certain gene sets/groups and your specific biological context of interest. For example, one can ask whether there is an established connections between cytokine signaling pathways ('IL-3', 'IL-5', 'IL-6', 'EPO'), platelets and malignancies.
+One simple way to get the creative juices flowing is to try and understand whether there are established connections between certain gene sets/groups and your specific biological context of interest. For example, one can ask whether there is an established connections between cytokine signaling pathways ('IL-3', 'IL-5', 'IL-6'), platelets and malignancies.
 
 ### 3. Drill down to gene expression
 
-Perhaps we've noticed an interesting gene set that has not been previously reported in our context. One way to build confidence in the gene set is to examine whether there is a distinct contrast in expression between classes or whether there is a large amount of within-class variation.
+Perhaps we've noticed an interesting pathway not previously reported in our context. One way to build confidence in the result is to simply examine visually whether there is a contrast in expression between classes.
 
-One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the 'Table Panel', 'Heat Map' tab by selecting 'GSEA ranking' from the 'Sorting' drop-down (Figure 15).
+> Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.
 
- ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}){: .img-responsive }
+One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the 'Table Panel', 'Heat Map' tab by selecting 'GSEA ranking' from the 'Sorting' drop-down (Figure 14).
+
+ ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 15. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak on a running-sum plot) are highlighted in yellow.
+  <strong>Figure 14. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak of an enrichment plot) are highlighted in yellow.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
 
-> Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.
-
 ### 4. Drill down to the pathway
 
-Coming soon to an app near you:
+Coming soon to a web app near you:
 
-  1. Clicking a gene set and examine the pathway topology
-  2. 'Paint' gene expression data onto the pathway
+  1. Search: Click a gene set and examine the pathway (topology)
+  2. Paint: View gene expression data in a pathway
+  3. Nexus: Find neighbouring genes outiside the given pathway

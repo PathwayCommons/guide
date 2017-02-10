@@ -55,9 +55,9 @@ comments: yes
 
 The ability to quantify the entire RNA complement of a cell is now a routine aspect of biological research. While providing an astonshing amount detail, it is often not clear how to interpret this information as a whole or how it might be used to shed light upon the question at hand. What does it all mean?
 
-<strong>The overarching purpose of this workflow is to identify and visualize pathways that are enriched in one of two biological conditions</strong>.
+<strong>The overarching purpose of this workflow is to identify and visualize alterations in pathways</strong>.
 
-In doing so, we aim to infer differences at the *pathway-level* rather than at the level of gene expression. Abstracting in this manner integrates lower-level information and shifts the focus to higher-level concepts that have a closer association with the various functions of a cell.
+In doing so, we aim to infer differences at the *pathway-level* rather than at the level of gene expression. Abstracting in this manner integrates lower-level information and shifts the focus to concepts that have a closer link to cellular functions.
 
 <div class="box">
   <div class="box-title">Box 1. Workflow Steps</div>
@@ -91,7 +91,7 @@ In doing so, we aim to infer differences at the *pathway-level* rather than at t
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.short }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Overview of pathway enrichment workflow (II).</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
+  <strong>Figure 1. Overview.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
 </div>
 
 ## <a href="#goals" name="goals">II. Goals</a>
@@ -115,7 +115,7 @@ By then end of this discussion you should (Figure 2):
 
 ### Blood-based cancer biopsies
 
-Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy needed to reliably differentiate between normal and pathological states. Blood-based biomarkers have been agressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 4).
+Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy needed to reliably differentiate between normal and pathological states. Blood-based biomarkers have been agressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 3).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -170,7 +170,7 @@ A reduced set of 5 003 protein and non-coding RNAs (excluding Y chromosome and m
 
 #### Breast cancer diagnostics
 
-Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm trained to assign the correct category for each sample. In this case, the authors reported a 100% test accuracy in discriminating platelets derived from normal versus breatst cancer patients (Figure 6).
+Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm trained to assign the correct category for each sample. In this case, the authors reported a 100% test accuracy in discriminating platelets derived from normal versus breast cancer patients (Figure 6).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">

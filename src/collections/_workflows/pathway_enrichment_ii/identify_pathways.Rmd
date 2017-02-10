@@ -99,6 +99,9 @@ This database file defines a tab-delimited table, one gene set per row: The firs
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Gene set database excerpt</strong>. Gene sets are defined in rows where the first column is the name, the second is a description and gene names within the set occupy the remaining row entries. Highlighted in blue is the NetPath IL-5 signal transduction pathway that includes 59 gene names.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+  </div>
 </div>
 
 ### Finding enriched gene sets
@@ -159,7 +162,7 @@ In this workflow step, we will output two enrichment reports that are dependenci
 |EUKARYOTIC TRANSLATION ELONGATION | ... | 82 | -0.9144994 | -3.0786333 | 0 | 0 | 0 |
 |... | ... | ... | ... | ... | ... | ... | ... |
 
-[Previouslyt]({{ site.baseurl }}/{{ page.workflow.process_data }}), we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each 'phenotype':
+[Previously]({{ site.baseurl }}/{{ page.workflow.process_data }}), we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each 'phenotype':
 
 1. Report for BrCa enrichment - Pathways that are enriched in BrCa relative to HD
 2. Report for HD enrichment - Pathways that are enriched in HD relative to BrCa
@@ -181,6 +184,9 @@ Launch the GSEA application. You will see the GSEA logo splash then the applicat
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. 'Steps in GSEA analysis') provides quick access to the most common actions. The main window displays the 'Home' tab by default. Each control panel action typically opens a new tab in the main window.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+  </div>
 </div>
 
 ### Input
@@ -313,6 +319,9 @@ There are two sections by this name which refers to those gene sets with positiv
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 9. Enrichment plot for NetPath IL-5 signalling pathway.</strong> Shown is a the running sum plot for the IL-5 signal transduction pathway described earlier.
+  <div class="text-left">
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}" target="_blank">Open in new window</a>
+  </div>
 </div>
 
 **Detailed enrichment results** provide a summary report of gene sets enriched in this phenotype. You can find these files inside your GSEA results folder named `gsea_report_for_na_pos_XXXXXXXXXXXXX.xls` and `gsea_report_for_na_neg_XXXXXXXXXXXXX.xls`. The rows of the report include information for each enriched gene set (Table 2).
