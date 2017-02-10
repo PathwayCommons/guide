@@ -366,6 +366,6 @@ One approach to examine expression of a gene set is to focus on the 'leading edg
 
 Coming soon to a web app near you:
 
-  1. Search: Click a gene set and examine the pathway (topology)
-  2. Paint: View gene expression data in a pathway
-  3. Nexus: Find neighbouring genes outiside the given pathway
+  1. View: View the pathway (topology)
+  2. Paint: View gene expression data on a pathway
+  3. Nexus: Find neighbouring genes outside the pathway
