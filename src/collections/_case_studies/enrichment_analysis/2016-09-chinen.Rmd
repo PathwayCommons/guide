@@ -85,4 +85,4 @@ The enrichment analysis and resulting Enrichment Map enabled authors to quickly 
 ## Summary
 
 //TODO Pathway analysis provided a valuable context for the patterns of gene alterations observed in. This approach linked the and provided actionable knowledge specific enough to inform rational development of chemotherapy.
-Therapeutic consequences.
+Using genetic tools, authros provide a detailed mechanistic dissection of IL-2 signaling in Tregs coupled with system-wide consequences on immune activation. Therapeutic consequences - optimal design of Treg-cell based thereapied for a variety of autoimmune and inflammatory disorders. Conversely, this represents a rational avenue to counteract the potential side-effects of immunotherpies that hyperactivate the immune system.
