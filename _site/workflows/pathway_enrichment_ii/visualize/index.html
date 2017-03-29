@@ -486,7 +486,21 @@
 
 <h3 id="build-trust">1. Build trust</h3>
 
-<p>No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected * a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?</p>
+<p>No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected <em>a priori</em>. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?</p>
+
+<p>As an example, direct your attention to the cluster annonated with the label <em>‘blood coagulation platelet activation’</em>. This cluster consists of a hierarchy of three gene sets referencing increasingly specific GO terms (Figure 14):</p>
+
+<ol>
+  <li>Hemostasis <a href="http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007599" target="_blank">GO:0007599</a></li>
+  <li>Blood coagulation <a href="http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007596" target="_blank">GO:0007596</a></li>
+  <li>Platelet Activation <a href="http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0030168" target="_blank">GO:0030168</a></li>
+</ol>
+
+<p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_coag.png" alt="image" class="img-responsive slim" /></p>
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Gene ontology relationship for gene set cluster 'blood coagulation platelet activation'.</strong> <em>Adapted from <a href="http://www.ebi.ac.uk/QuickGO/" target="_blank">QuickGO.</a></em>
+</div>
 
 <h3 id="identify-novelinteresting-groups">2. Identify novel/interesting groups</h3>
 
@@ -502,11 +516,11 @@
   <p>Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.</p>
 </blockquote>
 
-<p>One approach to examine expression of a gene set is to focus on the ‘leading edge’ - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the ‘Table Panel’, ‘Heat Map’ tab by selecting ‘GSEA ranking’ from the ‘Sorting’ drop-down (Figure 14).</p>
+<p>One approach to examine expression of a gene set is to focus on the ‘leading edge’ - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the ‘Table Panel’, ‘Heat Map’ tab by selecting ‘GSEA ranking’ from the ‘Sorting’ drop-down (Figure 15).</p>
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_interpret_leadingedge_il5.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 14. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak of an enrichment plot) are highlighted in yellow.
+  <strong>Figure 15. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak of an enrichment plot) are highlighted in yellow.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="/guide/media/workflows/pathway_enrichment_ii/visualize/figure_visualize_em_interpret_leadingedge_il5.png" target="_blank">Open in new window</a>
   </div>

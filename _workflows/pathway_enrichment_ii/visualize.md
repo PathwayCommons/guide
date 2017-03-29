@@ -17,7 +17,8 @@ figures:
   figure_11: figure_visualize_em_cluster_collapsed.png
   figure_12: figure_visualize_em_cluster_uncollapsed.png
   figure_13: figure_visualize_em_cluster_uncollapsed_ilgroup.png
-  figure_14: figure_visualize_em_interpret_leadingedge_il5.png
+  figure_14: figure_visualize_em_coag.png
+  figure_15: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
 layout: embedded
 data:
@@ -337,7 +338,19 @@ So what now? Below, we list some helpful tips to aid you in extracting value fro
 
 ### 1. Build trust
 
-No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected * a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?
+No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected *a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?
+
+As an example, direct your attention to the cluster annonated with the label *'blood coagulation platelet activation'*. This cluster consists of a hierarchy of three gene sets referencing increasingly specific GO terms (Figure 14):
+
+1. Hemostasis [GO:0007599](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007599){: target="_blank"}
+2. Blood coagulation [GO:0007596](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007596){: target="_blank"}
+2. Platelet Activation [GO:0030168](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0030168){: target="_blank"}
+
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive.slim }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 14. Gene ontology relationship for gene set cluster 'blood coagulation platelet activation'.</strong> <em>Adapted from <a href="http://www.ebi.ac.uk/QuickGO/" target="_blank">QuickGO.</a></em>
+</div>
 
 ### 2. Identify novel/interesting groups
 
@@ -351,13 +364,13 @@ Perhaps we've noticed an interesting pathway not previously reported in our cont
 
 > Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.
 
-One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the 'Table Panel', 'Heat Map' tab by selecting 'GSEA ranking' from the 'Sorting' drop-down (Figure 14).
+One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the 'Table Panel', 'Heat Map' tab by selecting 'GSEA ranking' from the 'Sorting' drop-down (Figure 15).
 
- ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}){: .img-responsive }
+ ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 14. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak of an enrichment plot) are highlighted in yellow.
+  <strong>Figure 15. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the 'GSEA Ranking' option from the 'Sorting' drop-down. Genes of the gene set that contribute most to the enrichment score (the peak of an enrichment plot) are highlighted in yellow.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_15 }}" target="_blank">Open in new window</a>
   </div>
 </div>
 
