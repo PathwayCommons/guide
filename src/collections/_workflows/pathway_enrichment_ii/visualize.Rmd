@@ -336,6 +336,8 @@ Cytoscape affords the user a great deal of control over [styles](http://manual.c
 
 So what now? Below, we list some helpful tips to aid you in extracting value from an enrichment analysis.
 
+> Check out a [case study]({{site.baseurl}}/case_studies/enrichment_analysis/2016-09-chinen/){: target="_blank"} to see how an Enrichment Map workflow was used to provide the basis for experimentally verifiable, mechanistic insights into cell function    
+
 ### 1. Build trust
 
 No algorithm or statistic can replace the experience, expertise and critical eye of the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected *a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?

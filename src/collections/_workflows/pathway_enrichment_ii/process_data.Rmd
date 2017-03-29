@@ -94,6 +94,8 @@ In doing so, we aim to infer differences at the *pathway-level* rather than at t
   <strong>Figure 1. Overview.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two conditions (aka 'classes' or 'states'). The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
 </div>
 
+> Check out a [case study]({{site.baseurl}}/case_studies/enrichment_analysis/2016-09-chinen/){: target="_blank"} to see how an Enrichment Map workflow was used to provide the basis for experimentally verifiable, mechanistic insights into cell function   
+
 ## <a href="#goals" name="goals">II. Goals</a>
 
 To make the concepts in our workflow concrete, we use expression data from Best *et al.* (Best 2015) who compared blood platelets from healthy donors to those diagnosed with a malignancy towards a proof-of-principle for blood-based cancer diagnosis.
