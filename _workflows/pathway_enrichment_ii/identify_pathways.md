@@ -202,7 +202,7 @@ This is the output from the [previous step]({{site.baseurl}}/{{page.workflow.pro
 
 This is the human gene set database culled from various sources, mentioned above (`Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt`).
 
-<a href="{{ site.baseurl }}/{{ site.media_root }}/{{ page.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
+<a href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
 
 ___
 
