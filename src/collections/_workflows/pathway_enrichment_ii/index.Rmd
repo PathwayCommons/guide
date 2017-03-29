@@ -1,6 +1,6 @@
 ---
 title: Pathway Enrichment - II
-subtitle: Use raw RNA sequencing data to identify altered pathways with Gene Set Enrichment Analysis and visualize them with an Enrichment Map.
+subtitle: Use raw RNA sequencing data to identify altered pathways in platelets with Gene Set Enrichment Analysis and visualize them with an Enrichment Map.
 cover: cover.jpg
 date: 2017-01-10
 layout: embedded_wrapper

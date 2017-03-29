@@ -94,23 +94,23 @@ module.exports = (function(){
 
       elements: {
         nodes: [
-          { data: {
-              id: 'enrichment_i',
-              name: 'Start: Workflow - I\n\nProgramming in R',
-              parent: 'level_group',
-              href: configMap.baseurl + '/workflows/pathway_enrichment_i/index/'
-            },
-            classes: 'linkout',
-            position: { x: 0, y: 0 }
-          },
+          // { data: {
+          //     id: 'enrichment_i',
+          //     name: 'Start: Workflow - I\n\nProgramming in R',
+          //     parent: 'level_group',
+          //     href: configMap.baseurl + '/workflows/pathway_enrichment_i/index/'
+          //   },
+          //   classes: 'linkout',
+          //   position: { x: 0, y: 0 }
+          // },
           { data: {
               id: 'enrichment_ii',
-              name: 'Start: Workflow - II\n\nNo programming',
+              name: 'Click here to begin \n\n Pathway Enrichment Workflow',
               parent: 'level_group',
               href: configMap.baseurl + '/workflows/pathway_enrichment_ii/index/'
             },
             classes: 'linkout',
-            position: { x: 250, y: 0 }
+            position: { x: 125, y: 0 }
           },
 
           { data: { id: 'processing_group', name: 'Gene Level' } },
