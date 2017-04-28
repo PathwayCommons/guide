@@ -271,7 +271,7 @@
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_gsea_start.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. 'Steps in GSEA analysis') provides quick access to the most common actions. The main window displays the 'Home' tab by default. Each control panel action typically opens a new tab in the main window.
+  <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. <code>Steps in GSEA analysis</code>) provides quick access to the most common actions. The main window displays the <code>Home</code> tab by default. Each control panel action typically opens a new tab in the main window.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_gsea_start.png" target="_blank">Open in new window</a>
   </div>
@@ -310,32 +310,31 @@
 
 <h4 id="load-data-files">1. Load data files</h4>
 
-<p>In this part we get our inputs into GSEA. In the ‘Steps in GSEA analysis’ panel (Figure 5, left) click the ‘Load data’ button which will bring up a panel in the main window (Figure 6).</p>
+<p>In this part we get our inputs into GSEA. In the <code class="highlighter-rouge">Steps in GSEA analysis</code> panel (Figure 5, left) click the <code class="highlighter-rouge">Load data</code> button which will bring up a panel in the main window (Figure 6).</p>
 
 <ol>
-  <li>‘Browse for files’ and ‘Choose’ the ranked gene list</li>
-  <li>‘Browse for files’ and ‘Choose’ the gene set database file</li>
+  <li><code class="highlighter-rouge">Browse for files...</code> then <code class="highlighter-rouge">Choose</code> the ranked gene list</li>
+  <li><code class="highlighter-rouge">Browse for files...</code> then <code class="highlighter-rouge">Choose</code> the gene set database file</li>
 </ol>
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_load.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the 'Load data' button in the control panel ‘Steps in GSEA analysis’.
+  <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the <code>Load data</code> button in the control panel <code>Steps in GSEA analysis</code>.
 </div>
 
 <blockquote>
-  <p>Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the ‘Object cache’ panel of the ‘Load data’ tab.</p>
+  <p>Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the <code>Object cache</code> panel of the <code>Load data</code> tab.</p>
 </blockquote>
 
 <h4 id="settings">2.  Settings</h4>
 
-<p>We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting ‘Tools &gt; GseaPreranked’ from the toolbar and fill in the details for the ‘Required’ and
-‘Basic’ fields (Figure 7).</p>
+<p>We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting <code class="highlighter-rouge">Tools -&gt; GseaPreranked</code> from the toolbar and fill in the details for the <code class="highlighter-rouge">Required</code> and <code class="highlighter-rouge">Basic</code> fields (Figure 7).</p>
 
 <ul>
-  <li>Required fields
+  <li><code class="highlighter-rouge">Required fields</code>
     <ul>
-      <li><code class="highlighter-rouge">Gene sets database</code>: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to ‘Gene matrix (local gmx/gmt)’ (click arrow along top). Select the gene set database that you obatined above (<code class="highlighter-rouge">.gmt</code> file)</li>
+      <li><code class="highlighter-rouge">Gene sets database</code>: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to <code class="highlighter-rouge">Gene matrix (local gmx/gmt)</code> (click arrow along top). Select the gene set database that you obatined above (<code class="highlighter-rouge">.gmt</code> file)</li>
       <li><code class="highlighter-rouge">Collapse dataset to gene symbols</code>: False
         <ul>
           <li>This option is a vestige of microarray technology where an additional step was neccessary to match array probes/spots to a single gene identifier.</li>
@@ -343,7 +342,7 @@
       </li>
     </ul>
   </li>
-  <li>Basic fields
+  <li><code class="highlighter-rouge">Basic fields</code>
     <ul>
       <li><code class="highlighter-rouge">Analysis name</code>: Choose a name for this particular run of GSEA</li>
       <li><code class="highlighter-rouge">Save results in this folder</code>: Choose one</li>
@@ -354,12 +353,12 @@
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_settings.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select 'Tools' in the menu dropdown, then 'GseaPreranked' to bring up the 'Run Gsea on a Pre-Ranked gene list' tab.
+  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run Gsea on a Pre-Ranked gene list</code> tab.
 </div>
 
 <h4 id="run-gsea">3. Run GSEA</h4>
 
-<p>Click the ‘Run’ button in the ‘Run Gsea on a Pre-Ranked gene list’ tab. The ‘GSEA reports’ panel (Figure 5, bottom left) will show the ‘Name’ of this run and the ‘Status’ as ‘Running’ while in progress.</p>
+<p>Click <code class="highlighter-rouge">Run</code> in the <code class="highlighter-rouge">Run Gsea on a Pre-Ranked gene list</code> tab. The <code class="highlighter-rouge">GSEA reports</code> panel (Figure 5, bottom left) will show the <code class="highlighter-rouge">Name</code> of this run and the <code class="highlighter-rouge">Status</code> as <code class="highlighter-rouge">Running</code> while in progress.</p>
 
 <ul>
   <li class="aside">
@@ -373,7 +372,7 @@
 
 <h4 id="post-gsea">4. Post-GSEA</h4>
 
-<p>Take a look at the directory you set for ‘Save results in this folder’. The default location is <code class="highlighter-rouge">gsea_home</code> in your user space. You should see something like the following:</p>
+<p>Take a look at the directory you set for <code class="highlighter-rouge">Save results in this folder</code>. The default location is <code class="highlighter-rouge">gsea_home</code> in your user space. You should see something like the following:</p>
 
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>...
 |--- input
@@ -402,12 +401,12 @@
 
 <h5 id="gsea-report">GSEA report</h5>
 
-<p>When the GSEA software has completed its analysis, the ‘Status’ inside the  ‘GSEA reports’ panel will update to ‘Success …’ (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the <code class="highlighter-rouge">index.html</code> file located in the GSEA results directory in a browser.</p>
+<p>When the GSEA software has completed its analysis, the <code class="highlighter-rouge">Status</code> inside the  <code class="highlighter-rouge">GSEA reports</code> panel will update to <code class="highlighter-rouge">Success ...</code> (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the <code class="highlighter-rouge">index.html</code> file located in the GSEA results directory in a browser.</p>
 
 <p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_index.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the 'na_pos' phenotype corresponds to the 'BrCa' class and 'na_neg' refers to the 'HD' class.
+  <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the <code>na_pos</code> phenotype corresponds to the BrCa class and <code>na_neg</code> refers to the HD class.
 </div>
 
 <blockquote>
@@ -416,13 +415,13 @@
 
 <p>Below we will briefly highlight a few aspects to take special note of.</p>
 
-<h5 id="enrichment-in-phenotype">‘Enrichment in phenotype’</h5>
+<h5 id="enrichment-in-phenotype">Enrichment in phenotype</h5>
 
-<p>There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step <a href="/guide/workflows/pathway_enrichment_ii/process_data/">Process Data</a> we assessed gene expression in the ‘BrCa’ class relative to the ‘HD’ class. Consequently, in our case, the ‘na_pos’ phenotype corresponds to the ‘BrCa’ class and ‘na_neg’ refers to the ‘HD’ class. We briefly discuss the meaning of two of the entries in this section below.</p>
+<p>There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step <a href="/guide/workflows/pathway_enrichment_ii/process_data/">Process Data</a> we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the <code class="highlighter-rouge">na_pos</code> phenotype corresponds to the BrCa class and <code class="highlighter-rouge">na_neg</code> refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.</p>
 
 <ul>
   <li>
-    <p><strong>Snapshot of the enrichment results.</strong> Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see <code class="highlighter-rouge">pos_snapshot.html</code> and <code class="highlighter-rouge">neg_snapshot.html</code>. For the ‘na_pos’ case, click on the link for <code class="highlighter-rouge">Snapshot of enrichment results</code> to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).</p>
+    <p><strong>Snapshot of the enrichment results.</strong> Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see <code class="highlighter-rouge">pos_snapshot.html</code> and <code class="highlighter-rouge">neg_snapshot.html</code>. For the <code class="highlighter-rouge">na_pos</code> case, click on the link for <code class="highlighter-rouge">Snapshot of enrichment results</code> to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).</p>
 
     <p><img src="/guide/media/workflows/pathway_enrichment_ii/identify_pathways/figure_idpathways_nesplot_il5netpath.png" alt="image" class="img-responsive ht-400" /></p>
 

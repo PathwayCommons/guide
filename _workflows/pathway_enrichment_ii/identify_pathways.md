@@ -172,7 +172,7 @@ Launch the GSEA application. You will see the GSEA logo splash then the applicat
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. 'Steps in GSEA analysis') provides quick access to the most common actions. The main window displays the 'Home' tab by default. Each control panel action typically opens a new tab in the main window.
+  <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. <code>Steps in GSEA analysis</code>) provides quick access to the most common actions. The main window displays the <code>Home</code> tab by default. Each control panel action typically opens a new tab in the main window.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
   </div>
@@ -212,42 +212,41 @@ Here we will step through four tasks that we will need to perform within the GSE
 
 #### 1. Load data files
 
-In this part we get our inputs into GSEA. In the 'Steps in GSEA analysis' panel (Figure 5, left) click the 'Load data' button which will bring up a panel in the main window (Figure 6).
+In this part we get our inputs into GSEA. In the `Steps in GSEA analysis` panel (Figure 5, left) click the `Load data` button which will bring up a panel in the main window (Figure 6).
 
-1. 'Browse for files' and 'Choose' the ranked gene list
-2. 'Browse for files' and 'Choose' the gene set database file
+1. `Browse for files...` then `Choose` the ranked gene list
+2. `Browse for files...` then `Choose` the gene set database file
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_6 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the 'Load data' button in the control panel ‘Steps in GSEA analysis’.
+  <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the <code>Load data</code> button in the control panel <code>Steps in GSEA analysis</code>.
 </div>
 
-> Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the ‘Object cache’ panel of the ‘Load data’ tab.
+> Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the <code>Object cache</code> panel of the <code>Load data</code> tab.
 
 #### 2.  Settings
 
-We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting 'Tools > GseaPreranked' from the toolbar and fill in the details for the 'Required' and
-'Basic' fields (Figure 7).
+We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting `Tools -> GseaPreranked` from the toolbar and fill in the details for the `Required` and `Basic` fields (Figure 7).
 
-- Required fields
-  - `Gene sets database`: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to 'Gene matrix (local gmx/gmt)' (click arrow along top). Select the gene set database that you obatined above (`.gmt` file)
+- `Required fields`
+  - `Gene sets database`: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to `Gene matrix (local gmx/gmt)` (click arrow along top). Select the gene set database that you obatined above (`.gmt` file)
   - `Collapse dataset to gene symbols`: False
     - This option is a vestige of microarray technology where an additional step was neccessary to match array probes/spots to a single gene identifier.
-- Basic fields
+- `Basic fields`
   - `Analysis name`: Choose a name for this particular run of GSEA
   - `Save results in this folder`: Choose one
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select 'Tools' in the menu dropdown, then 'GseaPreranked' to bring up the 'Run Gsea on a Pre-Ranked gene list' tab.
+  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run Gsea on a Pre-Ranked gene list</code> tab.
 </div>
 
 
 #### 3. Run GSEA
 
-Click the 'Run' button in the 'Run Gsea on a Pre-Ranked gene list' tab. The 'GSEA reports' panel (Figure 5, bottom left) will show the 'Name' of this run and the 'Status' as 'Running' while in progress.
+Click `Run` in the `Run Gsea on a Pre-Ranked gene list` tab. The `GSEA reports` panel (Figure 5, bottom left) will show the `Name` of this run and the `Status` as `Running` while in progress.
 
 - {: .aside } #### Typical run times
 
@@ -255,7 +254,7 @@ Click the 'Run' button in the 'Run Gsea on a Pre-Ranked gene list' tab. The 'GSE
 
 #### 4. Post-GSEA
 
-Take a look at the directory you set for 'Save results in this folder'. The default location is `gsea_home` in your user space. You should see something like the following:
+Take a look at the directory you set for `Save results in this folder`. The default location is `gsea_home` in your user space. You should see something like the following:
 
 ```shell
 ...
@@ -284,23 +283,23 @@ Take a look at the directory you set for 'Save results in this folder'. The defa
 
 ##### GSEA report
 
-When the GSEA software has completed its analysis, the 'Status' inside the  'GSEA reports' panel will update to 'Success ...' (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
+When the GSEA software has completed its analysis, the `Status` inside the  `GSEA reports` panel will update to `Success ...` (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_8 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the 'na_pos' phenotype corresponds to the 'BrCa' class and 'na_neg' refers to the 'HD' class.
+  <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the <code>na_pos</code> phenotype corresponds to the BrCa class and <code>na_neg</code> refers to the HD class.
 </div>
 
 > You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results){:target="_blank"} that includes a description of the GSEA report.
 
 Below we will briefly highlight a few aspects to take special note of.
 
-##### 'Enrichment in phenotype'
+##### Enrichment in phenotype
 
-There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step [Process Data]({{ site.baseurl }}/{{ page.workflow.process_data }}) we assessed gene expression in the 'BrCa' class relative to the 'HD' class. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'BrCa' class and 'na_neg' refers to the 'HD' class. We briefly discuss the meaning of two of the entries in this section below.
+There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step [Process Data]({{ site.baseurl }}/{{ page.workflow.process_data }}) we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the `na_pos` phenotype corresponds to the BrCa class and `na_neg` refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.
 
-- **Snapshot of the enrichment results.** Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see `pos_snapshot.html` and `neg_snapshot.html`. For the 'na_pos' case, click on the link for `Snapshot of enrichment results` to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).
+- **Snapshot of the enrichment results.** Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see `pos_snapshot.html` and `neg_snapshot.html`. For the `na_pos` case, click on the link for `Snapshot of enrichment results` to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).
 
   ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive.ht-400 }
 
