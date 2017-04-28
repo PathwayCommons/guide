@@ -6,10 +6,12 @@ figures:
   figure_1: index/figure_index_workflow_gdc.png
 ---
 
-This guide is intended to cultivate the practice of *pathway analysis*.
+This guide is aims to cultivate understanding and analysis of *pathways*.
 {: .lead }
 
-Take a look at our collection of [workflows]({{ site.baseurl }}/workflows/archive/) that provide guided instruction. Also available are a set [primers]({{ site.baseurl }}/primers/archive/), [presentations]({{ site.baseurl }}/presentations/archive/) and [case studies]({{ site.baseurl }}/case_studies/archive/) that are aimed to support your exploration of pathway analysis techniques.
+  - **[Workflows]({{ site.baseurl }}/workflows/archive/)** provide step-by-step instruction to pathway analysis.
+  - **[Primers]({{ site.baseurl }}/primers/archive/)** for deep-dives into concepts.
+  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** illustrate real-world use of methods and resources.
 
 <hr/>
 

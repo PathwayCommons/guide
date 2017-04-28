@@ -154,12 +154,7 @@ module.exports = (function(){
           }
         ],
         edges: [
-          { data: {
-              id: 'db-rnaseq',
-              source: 'enrichment_i',
-              target: 'rnaseq_data'
-            }
-          },
+
           { data: {
               id: 'custom-rnaseq',
               source: 'enrichment_ii',
@@ -217,6 +212,9 @@ module.exports = (function(){
     configMap.baseurl = $container.data( 'baseurl' );
     setJqueryMap( $container );
     render( jQueryMap.$container );
+    $(document).ready(function(){
+      $('.sidebar-tip').tooltip('show');
+    });
   };
 
   return {

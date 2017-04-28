@@ -147,9 +147,17 @@ img {
     color: $clouds;
   }
 }
+/* Style the `label` that we use to target the `.sidebar-checkbox` */
+
 @media (min-width: 30em) {
   .sidebar {
     font-size: 1.5rem;
+  }
+
+  .sidebar-tip {
+    position: absolute;
+    top:  1.9rem;
+    left: 3.5rem;
   }
 }
 
