@@ -51,4 +51,4 @@ The pathway enrichment workflow presented herein provides researchers with a did
   <strong>Figure 1. Preview of workflow.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two classes. The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
 </div>
 
-In order illustrate this analysis in a  concrete manner, we use data from a single published study that compares transcriptomes of platelets from healthy donors and cancer patients (Best 2015).
+In order illustrate this analysis in a concrete manner, we use data from a single published study that compares transcriptomes of platelets from healthy donors and cancer patients (Best 2015). Our focus is on describing the process of generating pathway-level alterations. To this end, we provide gene expression data in a format that can be used immediately rather than describing details surrounding RNA-sequencing data analysis. 
