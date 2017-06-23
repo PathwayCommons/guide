@@ -30,8 +30,7 @@ cover: cover.jpg
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
-  - {:.list-unstyled} [III. Practical](#practical)
-  - {:.list-unstyled} [IV. Post-GSEA](#postGSEA)
+  - {:.list-unstyled} [III. Significance Analysis of Function and Expression](#safe)
 
 <hr/>
 
@@ -73,6 +72,8 @@ Importantly, the prominence of OXPHOS genes provided the necessary clues for the
 > *Single-gene methods are powerful only when the individual gene effect is marked and the variance is small across individuals, which may not be the case in many disease states. Methods like GSEA are complementary to single-gene approaches and provide a framework with which to examine changes operating at a higher level of biological organization. This may be needed if common, complex disorders typically result from modest variation in the expression or activity of multiple members of a pathway. As gene sets are systematically assembled using functional and genomic approaches, methods such as GSEA will be valuable in detecting coordinated variation in gene function that contributes to common human diseases.*
 
 Criticisms concerning the original methodology (Damian 2004) were considered in an updated version of GSEA described in detail by Subramanian *et al.* (Subramanian 2005). Below, we provide a description of the approach with particular emphasis on the protocol we recommend for analyzing gene lists ranked according to differential expression.
+
+## <a href="#safe" name="safe">III. Significance Analysis of Function and Expression</a>
 
 ### SAFE Step 1. Local statistic
 
