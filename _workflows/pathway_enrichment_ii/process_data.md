@@ -141,7 +141,7 @@ That such a plentiful and accessible material could provide the basis of an asto
 Let us revisit two points raised earlier:
 
   1. Platelets play an active and important role in the physiology of cancer
-  2. Platelets are functional cells that modify gene expression and behaviour in repsonse to environemental stimuli
+  2. Platelets are functional cells that modify gene expression and behaviour in repsonse to environmental stimuli
 
 While a list of genes expression differences with exquisite discriminatory power for breast cancer diagnosis is useful *per se*, we can go a step further: What biological processes distinguish platelets from and healthy and diseased patients? In other words, we wish to better understand how those differences in RNA species might underlie various *pathways* inside a cell. What does the transcriptomic data really *mean*?
 
