@@ -232,7 +232,7 @@ $$
 \end{equation}
 $$
 
-The significance of this theorem is subtle: The sample points we use to construct our ecdf along with *all those points in between* converge to the specified cdf for large $$n$$. This is also termed 'uniform convergence'.
+The significance of this theorem is subtle: The sample points we use to construct our ecdf along with *all those points in between* are sure to be within a specified distance of the target cdf when $$n > N$$. This is also termed 'uniform convergence'.
 
 **Theorem 2** The **distribution-free property** states that the distribution of $$D_n$$ is the same for all continuous underlying distribution functions $$F$$.
 
