@@ -34,6 +34,15 @@
   <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/guide/public/bower_components/cytoscape/dist/cytoscape.min.js"></script>
+  <!-- Load Facebook SDK for JavaScript -->
+  <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 
   <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -45,7 +54,7 @@
 </head>
 
 
-  <body class="theme-base-01">
+  <body class="theme-base-01">    
     <a name="top"></a>
 
     <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
@@ -192,12 +201,17 @@
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
       <li>
-  <a href="http://www.facebook.com/sharer/sharer.php?u=/primers/statistics/definitions/&title=Definitions"
+  <!-- <a href="http://www.facebook.com/sharer/sharer.php?u=/primers/statistics/definitions/&title=Definitions"
   data-toggle="tooltip"
   title="Share this page on Facebook"
   target="_blank" >
     <i class="fa fa-facebook-official fa-2x"></i>
-  </a>
+  </a> -->
+  <div class="fb-share-button" data-href="/primers/statistics/definitions/" data-layout="button" data-size="small" data-mobile-iframe="true">
+    <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fguide%2Fworkflows%2Fpathway_enrichment_ii%2Fpreview%2F&amp;src=sdkpreparse">
+      <i class="fa fa-facebook-official fa-2x"></i>
+    </a>
+  </div>
 </li>
 <li>
   <a href="http://twitter.com/intent/tweet?text=+/primers/statistics/definitions/&via=pathwaycommons"
