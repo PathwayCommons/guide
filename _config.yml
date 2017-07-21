@@ -6,7 +6,7 @@ tagline:
   link: http://www.pathwaycommons.org/
 description:         'Guide'
 baseurl:             /guide
-domain:              'http://pathwaycommons.github.io/'
+domain:              'http://pathwaycommons.github.io'
 
 # About/contact
 author:
