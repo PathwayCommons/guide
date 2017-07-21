@@ -9,7 +9,7 @@ categories:
 ---
 
 {% for category in page.categories %}
-  {% assign docs = (site.documents | where: 'category' , category | sort: 'date' ) %}
+  {% assign docs = (site.documents | where: 'category' , category | sort: 'date' | reverse ) %}
   <h2>{{ category | capitalize }}</h2>
   <hr>
   <div class="case-list">

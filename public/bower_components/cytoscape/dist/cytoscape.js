@@ -2,7 +2,7 @@
 
 /*!
 
-Cytoscape.js 2.7.14 (MIT licensed)
+Cytoscape.js 2.7.21 (MIT licensed)
 
 Copyright (c) The Cytoscape Consortium
 
@@ -36,10 +36,6 @@ var is = _dereq_( './is' );
 var Promise = _dereq_( './promise' );
 
 var Animation = function( target, opts, opts2 ){
-  if( !(this instanceof Animation) ){
-    return new Animation( target, opts, opts2 );
-  }
-
   var _p = this._private = util.extend( {
     duration: 1000
   }, opts, opts2 );
@@ -212,6 +208,8 @@ util.extend( anifn, {
     var swap = function( a, b ){
       var _pa = _p[ a ];
 
+      if( _pa == null ){ return; }
+
       _p[ a ] = _p[ b ];
       _p[ b ] = _pa;
     };
@@ -221,13 +219,15 @@ util.extend( anifn, {
     swap( 'position', 'startPosition' );
 
     // swap styles
-    for( var i = 0; i < _p.style.length; i++ ){
-      var prop = _p.style[ i ];
-      var name = prop.name;
-      var startStyleProp = _p.startStyle[ name ];
+    if( _p.style ){
+      for( var i = 0; i < _p.style.length; i++ ){
+        var prop = _p.style[ i ];
+        var name = prop.name;
+        var startStyleProp = _p.startStyle[ name ];
 
-      _p.startStyle[ name ] = prop;
-      _p.style[ i ] = startStyleProp;
+        _p.startStyle[ name ] = prop;
+        _p.style[ i ] = startStyleProp;
+      }
     }
 
     if( wasPlaying ){
@@ -6162,9 +6162,9 @@ module.exports = corefn;
 },{"../collection":26,"../collection/element":22,"../is":83,"../util":100}],34:[function(_dereq_,module,exports){
 'use strict';
 
-var define = _dereq_( '../define' );
-var util = _dereq_( '../util' );
-var is = _dereq_( '../is' );
+var define = _dereq_('../define');
+var util = _dereq_('../util');
+var is = _dereq_('../is');
 
 var corefn = ({
 
@@ -6195,6 +6195,8 @@ var corefn = ({
     cy._private.animationsRunning = true;
 
     if( !cy.styleEnabled() ){ return; } // save cycles when no style used
+
+    var style = cy.style();
 
     // NB the animation loop will exec in headless environments if style enabled
     // and explicit cy.destroy() is necessary to stop the loop
@@ -6345,7 +6347,6 @@ var corefn = ({
       var isCore = is.core( self );
       var isEles = !isCore;
       var ele = self;
-      var style = cy._private.style;
       var ani_p = ani._private;
 
       if( isEles ){
@@ -6375,7 +6376,6 @@ var corefn = ({
     }
 
     function step( self, ani, now, isCore ){
-      var style = cy._private.style;
       var isEles = !isCore;
       var _p = self._private;
       var ani_p = ani._private;
@@ -6445,8 +6445,10 @@ var corefn = ({
 
         var startPos = ani_p.startPosition;
         var endPos = ani_p.position;
-        var pos = _p.position;
-        if( endPos && isEles ){
+
+        if( endPos && isEles && !self.locked() ){
+          var pos = _p.position;
+
           if( valid( startPos.x, endPos.x ) ){
             pos.x = ease( startPos.x, endPos.x, percent, easing );
           }
@@ -6527,18 +6529,159 @@ var corefn = ({
       return false;
     }
 
-    // assumes p0 = 0, p3 = 1
-    function evalCubicBezier( p1, p2, t ){
-      var one_t = 1 - t;
-      var tsq = t * t;
+    /*! Bezier curve function generator. Copyright Gaetan Renaudeau. MIT License: http://en.wikipedia.org/wiki/MIT_License */
+		function generateCubicBezier(mX1, mY1, mX2, mY2) {
+      var NEWTON_ITERATIONS = 4,
+        NEWTON_MIN_SLOPE = 0.001,
+        SUBDIVISION_PRECISION = 0.0000001,
+        SUBDIVISION_MAX_ITERATIONS = 10,
+        kSplineTableSize = 11,
+        kSampleStepSize = 1.0 / (kSplineTableSize - 1.0),
+        float32ArraySupported = typeof Float32Array !== 'undefined';
 
-      return ( 3 * one_t * one_t * t * p1 ) + ( 3 * one_t * tsq * p2 ) + tsq * t;
-    }
+      /* Must contain four arguments. */
+      if (arguments.length !== 4) {
+        return false;
+      }
 
-    function cubicBezier( p1, p2 ){
-      return function( start, end, percent ){
-        return start + (end - start) * evalCubicBezier( p1, p2, percent );
+      /* Arguments must be numbers. */
+      for (var i = 0; i < 4; ++i) {
+        if (typeof arguments[i] !== "number" || isNaN(arguments[i]) || !isFinite(arguments[i])) {
+          return false;
+        }
+      }
+
+      /* X values must be in the [0, 1] range. */
+      mX1 = Math.min(mX1, 1);
+      mX2 = Math.min(mX2, 1);
+      mX1 = Math.max(mX1, 0);
+      mX2 = Math.max(mX2, 0);
+
+      var mSampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
+
+      function A(aA1, aA2) {
+        return 1.0 - 3.0 * aA2 + 3.0 * aA1;
+      }
+
+      function B(aA1, aA2) {
+        return 3.0 * aA2 - 6.0 * aA1;
+      }
+
+      function C(aA1) {
+        return 3.0 * aA1;
+      }
+
+      function calcBezier(aT, aA1, aA2) {
+        return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT;
+      }
+
+      function getSlope(aT, aA1, aA2) {
+        return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1);
+      }
+
+      function newtonRaphsonIterate(aX, aGuessT) {
+        for (var i = 0; i < NEWTON_ITERATIONS; ++i) {
+          var currentSlope = getSlope(aGuessT, mX1, mX2);
+
+          if (currentSlope === 0.0) {
+            return aGuessT;
+          }
+
+          var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+          aGuessT -= currentX / currentSlope;
+        }
+
+        return aGuessT;
+      }
+
+      function calcSampleValues() {
+        for (var i = 0; i < kSplineTableSize; ++i) {
+          mSampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
+        }
+      }
+
+      function binarySubdivide(aX, aA, aB) {
+        var currentX, currentT, i = 0;
+
+        do {
+          currentT = aA + (aB - aA) / 2.0;
+          currentX = calcBezier(currentT, mX1, mX2) - aX;
+          if (currentX > 0.0) {
+            aB = currentT;
+          } else {
+            aA = currentT;
+          }
+        } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+
+        return currentT;
+      }
+
+      function getTForX(aX) {
+        var intervalStart = 0.0,
+          currentSample = 1,
+          lastSample = kSplineTableSize - 1;
+
+        for (; currentSample !== lastSample && mSampleValues[currentSample] <= aX; ++currentSample) {
+          intervalStart += kSampleStepSize;
+        }
+
+        --currentSample;
+
+        var dist = (aX - mSampleValues[currentSample]) / (mSampleValues[currentSample + 1] - mSampleValues[currentSample]),
+          guessForT = intervalStart + dist * kSampleStepSize,
+          initialSlope = getSlope(guessForT, mX1, mX2);
+
+        if (initialSlope >= NEWTON_MIN_SLOPE) {
+          return newtonRaphsonIterate(aX, guessForT);
+        } else if (initialSlope === 0.0) {
+          return guessForT;
+        } else {
+          return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize);
+        }
+      }
+
+      var _precomputed = false;
+
+      function precompute() {
+        _precomputed = true;
+        if (mX1 !== mY1 || mX2 !== mY2) {
+          calcSampleValues();
+        }
+      }
+
+      var f = function(aX) {
+        if (!_precomputed) {
+          precompute();
+        }
+        if (mX1 === mY1 && mX2 === mY2) {
+          return aX;
+        }
+        if (aX === 0) {
+          return 0;
+        }
+        if (aX === 1) {
+          return 1;
+        }
+
+        return calcBezier(getTForX(aX), mY1, mY2);
       };
+
+      f.getControlPoints = function() {
+        return [{
+          x: mX1,
+          y: mY1
+        }, {
+          x: mX2,
+          y: mY2
+        }];
+      };
+
+      var str = "generateBezier(" + [mX1, mY1, mX2, mY2] + ")";
+      f.toString = function() {
+        return str;
+      };
+
+      return f;
     }
 
     /*! Runge-Kutta spring physics function generator. Adapted from Framer.js, copyright Koen Bok. MIT License: http://en.wikipedia.org/wiki/MIT_License */
@@ -6628,6 +6771,14 @@ var corefn = ({
       };
     }());
 
+    var cubicBezier = function( t1, p1, t2, p2 ){
+      var bezier = generateCubicBezier( t1, p1, t2, p2 );
+
+      return function( start, end, percent ){
+        return start + ( end - start ) * bezier( percent );
+      };
+    };
+
     var easings = {
       'linear': function( start, end, percent ){
         return start + (end - start) * percent;
@@ -6689,12 +6840,39 @@ var corefn = ({
         };
       },
 
-      'cubic-bezier': function( x1, y1, x2, y2 ){
-        return cubicBezier( x1, y1, x2, y2 );
-      }
+      'cubic-bezier': cubicBezier
     };
 
+    function getEasedValue( type, start, end, percent, easingFn ){
+      if( percent === 1 ){
+        return end;
+      }
+
+      var val = easingFn( start, end, percent );
+
+      if( type == null ){
+        return val;
+      }
+
+      if( type.roundValue || type.color ){
+        val = Math.round( val );
+      }
+
+      if( type.min !== undefined ){
+        val = Math.max( val, type.min );
+      }
+
+      if( type.max !== undefined ){
+        val = Math.min( val, type.max );
+      }
+
+      return val;
+    }
+
     function ease( startProp, endProp, percent, easingFn ){
+      var propSpec = startProp.name != null ? style.properties[ startProp.name ] : null;
+      var type = propSpec != null ? propSpec.type : null;
+
       if( percent < 0 ){
         percent = 0;
       } else if( percent > 1 ){
@@ -6716,7 +6894,7 @@ var corefn = ({
       }
 
       if( is.number( start ) && is.number( end ) ){
-        return easingFn( start, end, percent );
+        return getEasedValue( type, start, end, percent, easingFn );
 
       } else if( is.array( start ) && is.array( end ) ){
         var easedArr = [];
@@ -6726,9 +6904,7 @@ var corefn = ({
           var ei = end[ i ];
 
           if( si != null && ei != null ){
-            var val = easingFn( si, ei, percent );
-
-            if( startProp.roundValue ){ val = Math.round( val ); }
+            var val = getEasedValue( type, si, ei, percent, easingFn );
 
             easedArr.push( val );
           } else {
@@ -8693,9 +8869,9 @@ var define = {
 
             if( hasParent ){ // then bubble up to parent
               parent = parent[0];
-              parent.trigger( evt );
+              parent.trigger( evt, extraParams );
             } else { // otherwise, bubble up to the core
-              cy.trigger( evt );
+              cy.trigger( evt, extraParams );
             }
           }
 
@@ -8799,6 +8975,12 @@ var define = {
 
       properties = util.extend( {}, properties, params );
 
+      var propertiesEmpty = Object.keys( properties ).length === 0;
+
+      if( propertiesEmpty ){
+        return new Animation( all[0], properties ); // nothing to animate
+      }
+
       if( properties.duration === undefined ){
         properties.duration = 400;
       }
@@ -8810,12 +8992,6 @@ var define = {
       case 'fast':
         properties.duration = 200;
         break;
-      }
-
-      var propertiesEmpty = Object.keys( properties ).length === 0;
-
-      if( propertiesEmpty ){
-        return new Animation( all[0], properties ); // nothing to animate
       }
 
       if( isEles ){
@@ -10400,64 +10576,68 @@ CoseLayout.prototype.run = function(){
       //
       // Compute intersection
       var res = {};
-      do {
-        // Case: Vertical direction (up)
-        if( 0 === dX && 0 < dY ){
-          res.x = X;
-          // s += "\nUp direction";
-          res.y = Y + H / 2;
-          break;
-        }
 
-        // Case: Vertical direction (down)
-        if( 0 === dX && 0 > dY ){
-          res.x = X;
-          res.y = Y + H / 2;
-          // s += "\nDown direction";
-          break;
-        }
+      // Case: Vertical direction (up)
+      if( 0 === dX && 0 < dY ){
+        res.x = X;
+        // s += "\nUp direction";
+        res.y = Y + H / 2;
 
-        // Case: Intersects the right border
-        if( 0 < dX &&
-        -1 * nodeSlope <= dirSlope &&
-        dirSlope <= nodeSlope ){
-          res.x = X + W / 2;
-          res.y = Y + (W * dY / 2 / dX);
-          // s += "\nRightborder";
-          break;
-        }
+        return res;
+      }
 
-        // Case: Intersects the left border
-        if( 0 > dX &&
-        -1 * nodeSlope <= dirSlope &&
-        dirSlope <= nodeSlope ){
-          res.x = X - W / 2;
-          res.y = Y - (W * dY / 2 / dX);
-          // s += "\nLeftborder";
-          break;
-        }
+      // Case: Vertical direction (down)
+      if( 0 === dX && 0 > dY ){
+        res.x = X;
+        res.y = Y + H / 2;
+        // s += "\nDown direction";
 
-        // Case: Intersects the top border
-        if( 0 < dY &&
-        ( dirSlope <= -1 * nodeSlope ||
-          dirSlope >= nodeSlope ) ){
-          res.x = X + (H * dX / 2 / dY);
-          res.y = Y + H / 2;
-          // s += "\nTop border";
-          break;
-        }
+        return res;
+      }
 
-        // Case: Intersects the bottom border
-        if( 0 > dY &&
-        ( dirSlope <= -1 * nodeSlope ||
-          dirSlope >= nodeSlope ) ){
-          res.x = X - (H * dX / 2 / dY);
-          res.y = Y - H / 2;
-          // s += "\nBottom border";
-          break;
-        }
+      // Case: Intersects the right border
+      if( 0 < dX &&
+      -1 * nodeSlope <= dirSlope &&
+      dirSlope <= nodeSlope ){
+        res.x = X + W / 2;
+        res.y = Y + (W * dY / 2 / dX);
+        // s += "\nRightborder";
 
-      } while( false);
+        return res;
+      }
+
+      // Case: Intersects the left border
+      if( 0 > dX &&
+      -1 * nodeSlope <= dirSlope &&
+      dirSlope <= nodeSlope ){
+        res.x = X - W / 2;
+        res.y = Y - (W * dY / 2 / dX);
+        // s += "\nLeftborder";
+
+        return res;
+      }
+
+      // Case: Intersects the top border
+      if( 0 < dY &&
+      ( dirSlope <= -1 * nodeSlope ||
+        dirSlope >= nodeSlope ) ){
+        res.x = X + (H * dX / 2 / dY);
+        res.y = Y + H / 2;
+        // s += "\nTop border";
+
+        return res;
+      }
+
+      // Case: Intersects the bottom border
+      if( 0 > dY &&
+      ( dirSlope <= -1 * nodeSlope ||
+        dirSlope >= nodeSlope ) ){
+        res.x = X - (H * dX / 2 / dY);
+        res.y = Y - H / 2;
+        // s += "\nBottom border";
+
+        return res;
+      }
 
       // s += "\nClipping point found at " + res.x + ", " + res.y;
       // logDebug(s);
@@ -13418,6 +13598,10 @@ BRp.findEdgeControlPoints = function( edges ){
       var ctrlptDist = ctrlptDists ? ctrlptDists.pfValue[0] : undefined;
       var ctrlptWeight = ctrlptWs.value[0];
       var edgeIsUnbundled = curveStyle === 'unbundled-bezier' || curveStyle === 'segments';
+      var edgeDistances = edge.pstyle('edge-distances').value;
+      var segmentWs = edge.pstyle( 'segment-weights' );
+      var segmentDs = edge.pstyle( 'segment-distances' );
+      var segmentsN = Math.min( segmentWs.pfValue.length, segmentDs.pfValue.length );
 
       var srcX1 = rs.lastSrcCtlPtX;
       var srcX2 = srcPos.x;
@@ -13437,10 +13621,26 @@ BRp.findEdgeControlPoints = function( edges ){
       var tgtH1 = rs.lastTgtCtlPtH;
       var tgtH2 = tgt.outerHeight();
 
-      var width1 = rs.lastW;
-      var width2 = edge.pstyle( 'control-point-step-size' ).pfValue;
+      var curveStyle1 = rs.lastCurveStyle;
+      var curveStyle2 = curveStyle;
 
-      var edgeDistances = edge.pstyle('edge-distances').value;
+      var ctrlptDists1 = rs.lastCtrlptDists;
+      var ctrlptDists2 = ctrlptDists ? ctrlptDists.strValue : null;
+
+      var ctrlptWs1 = rs.lastCtrlptWs;
+      var ctrlptWs2 = ctrlptWs.strValue;
+
+      var segmentWs1 = rs.lastSegmentWs;
+      var segmentWs2 = segmentWs.strValue;
+
+      var segmentDs1 = rs.lastSegmentDs;
+      var segmentDs2 = segmentDs.strValue;
+
+      var stepSize1 = rs.lastStepSize;
+      var stepSize2 = stepSize;
+
+      var edgeDistances1 = rs.lastEdgeDistances;
+      var edgeDistances2 = edgeDistances;
 
       if( badBezier ){
         rs.badBezier = true;
@@ -13450,9 +13650,14 @@ BRp.findEdgeControlPoints = function( edges ){
 
       if( srcX1 === srcX2 && srcY1 === srcY2 && srcW1 === srcW2 && srcH1 === srcH2
       &&  tgtX1 === tgtX2 && tgtY1 === tgtY2 && tgtW1 === tgtW2 && tgtH1 === tgtH2
-      &&  width1 === width2
+      &&  curveStyle1 === curveStyle2
+      &&  ctrlptDists1 === ctrlptDists2
+      &&  ctrlptWs1 === ctrlptWs2
+      &&  segmentWs1 === segmentWs2
+      &&  segmentDs1 === segmentDs2
+      &&  stepSize1 === stepSize2
+      &&  edgeDistances1 === edgeDistances2
       &&  ((edgeIndex1 === edgeIndex2 && numEdges1 === numEdges2) || edgeIsUnbundled) ){
-        // console.log('edge ctrl pt cache HIT')
         continue; // then the control points haven't changed and we can skip calculating them
       } else {
         rs.lastSrcCtlPtX = srcX2;
@@ -13465,8 +13670,13 @@ BRp.findEdgeControlPoints = function( edges ){
         rs.lastTgtCtlPtH = tgtH2;
         rs.lastEdgeIndex = edgeIndex2;
         rs.lastNumEdges = numEdges2;
-        rs.lastWidth = width2;
-        // console.log('edge ctrl pt cache MISS')
+        rs.lastCurveStyle = curveStyle2;
+        rs.lastCtrlptDists = ctrlptDists2;
+        rs.lastCtrlptWs = ctrlptWs2;
+        rs.lastSegmentDs = segmentDs2;
+        rs.lastSegmentWs = segmentWs2;
+        rs.lastStepSize = stepSize2;
+        rs.lastEdgeDistances = edgeDistances2;
       }
 
       if( src === tgt ){
@@ -13547,13 +13757,9 @@ BRp.findEdgeControlPoints = function( edges ){
         rs.edgeType = 'segments';
         rs.segpts = [];
 
-        var segmentWs = edge.pstyle( 'segment-weights' ).pfValue;
-        var segmentDs = edge.pstyle( 'segment-distances' ).pfValue;
-        var segmentsN = Math.min( segmentWs.length, segmentDs.length );
-
         for( var s = 0; s < segmentsN; s++ ){
-          var w = segmentWs[ s ];
-          var d = segmentDs[ s ];
+          var w = segmentWs.pfValue[ s ];
+          var d = segmentDs.pfValue[ s ];
 
           var w1 = 1 - w;
           var w2 = w;
@@ -14350,6 +14556,8 @@ module.exports = BR;
 },{"../../../is":83,"../../../util":100,"./arrow-shapes":57,"./coord-ele-math":58,"./images":59,"./load-listeners":61,"./node-shapes":62,"./redraw":63}],61:[function(_dereq_,module,exports){
 'use strict';
 
+var window = _dereq_('../../../window');
+var document = window ? window.document : null;
 var is = _dereq_( '../../../is' );
 var util = _dereq_( '../../../util' );
 var math = _dereq_( '../../../math' );
@@ -14367,8 +14575,37 @@ BRp.registerBinding = function( target, event, handler, useCapture ){
 BRp.binder = function( tgt ){
   var r = this;
 
-  var on = function(){
-    var args = arguments;
+  var tgtIsDom = tgt === window || tgt === document || tgt === document.body || is.domElement( tgt );
+
+  if( r.supportsPassiveEvents == null ){
+
+    // from https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md#feature-detection
+    var supportsPassive = false;
+    try {
+      var opts = Object.defineProperty( {}, 'passive', {
+        get: function(){
+          supportsPassive = true;
+        }
+      } );
+
+      window.addEventListener( 'test', null, opts );
+    } catch( err ){
+      // just consume the error
+    }
+
+    r.supportsPassiveEvents = supportsPassive;
+  }
+
+  var on = function( event, handler, useCapture ){
+    var args = Array.prototype.slice.call( arguments );
+
+    if( tgtIsDom && r.supportsPassiveEvents ){ // replace useCapture w/ opts obj
+      args[2] = {
+        capture: useCapture != null ? useCapture : false,
+        passive: false,
+        once: false
+      };
+    }
 
     r.bindings.push({
       target: tgt,
@@ -14911,7 +15148,7 @@ BRp.load = function(){
       var dy2 = dy * dy;
       var dist2 = dx2 + dy2;
 
-      isOverThresholdDrag = dist2 >= r.desktopTapThreshold2;
+      r.hoverData.isOverThresholdDrag = isOverThresholdDrag = dist2 >= r.desktopTapThreshold2;
     }
 
     var multSelKeyDown = isMultSelKeyDown( e );
@@ -15225,6 +15462,7 @@ BRp.load = function(){
         !r.dragData.didDrag // didn't move a node around
         && !r.hoverData.dragged // didn't pan
         && !r.hoverData.selecting // not box selection
+        && !r.hoverData.isOverThresholdDrag // didn't move too much
       ){
         triggerEvents( down, ['click', 'tap', 'vclick'], e, {
           cyPosition: { x: pos[0], y: pos[1] }
@@ -15320,6 +15558,7 @@ BRp.load = function(){
     r.hoverData.cxtStarted = false;
     r.hoverData.draggingEles = false;
     r.hoverData.selecting = false;
+    r.hoverData.isOverThresholdDrag = false;
     r.dragData.didDrag = false;
     r.hoverData.dragged = false;
     r.hoverData.dragDelta = [];
@@ -16346,7 +16585,7 @@ BRp.load = function(){
 
 module.exports = BRp;
 
-},{"../../../event":45,"../../../is":83,"../../../math":85,"../../../util":100}],62:[function(_dereq_,module,exports){
+},{"../../../event":45,"../../../is":83,"../../../math":85,"../../../util":100,"../../../window":107}],62:[function(_dereq_,module,exports){
 'use strict';
 
 var math = _dereq_( '../../../math' );
@@ -17712,7 +17951,7 @@ CRp.drawNode = function( context, node, shiftToOriginWithBb, drawLabel ){
 
   if( url !== undefined ){
 
-    var bgImgCrossOrigin = node.pstyle( 'background-image-crossorigin' );
+    var bgImgCrossOrigin = node.pstyle('background-image-crossorigin').value;
 
     // get image, and if not loaded then ask to redraw when later loaded
     image = this.getCachedImage( url, bgImgCrossOrigin, function(){
@@ -18157,31 +18396,23 @@ CRp.matchCanvasSize = function( container ){
   canvasContainer.style.height = height + 'px';
 
   for( var i = 0; i < r.CANVAS_LAYERS; i++ ){
-
     canvas = data.canvases[ i ];
 
-    if( canvas.width !== canvasWidth || canvas.height !== canvasHeight ){
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-    }
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
   }
 
   for( var i = 0; i < r.BUFFER_COUNT; i++ ){
-
     canvas = data.bufferCanvases[ i ];
 
-    if( canvas.width !== canvasWidth || canvas.height !== canvasHeight ){
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-    }
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
   }
 
   r.textureMult = 1;
@@ -18914,6 +19145,10 @@ ETCp.getElement = function( ele, bb, pxRatio, lvl, reason ){
     );
   };
 
+  // reset ele area in texture
+  txr.context.setTransform( 1, 0, 0, 1, 0, 0 );
+  txr.context.clearRect( txr.usedWidth, 0, eleScaledW, txrH );
+
   if( scalableFrom(oneUpCache) ){
     // then we can relatively cheaply rescale the existing image w/o rerendering
     downscale();
@@ -19104,6 +19339,7 @@ ETCp.recycleTexture = function( txrH, minW ){
 
       util.clearArray( txr.eleCaches );
 
+      txr.context.setTransform( 1, 0, 0, 1, 0, 0 );
       txr.context.clearRect( 0, 0, txr.width, txr.height );
 
       util.removeFromArray( rtxtrQ, txr );
@@ -19148,7 +19384,7 @@ ETCp.queueElement = function( ele, bb, lvl ){
   }
 };
 
-ETCp.dequeue = function( pxRatio, extent ){
+ETCp.dequeue = function( pxRatio /*, extent*/ ){
   var self = this;
   var q = self.getElementQueue();
   var id2q = self.getElementIdToQueue();
@@ -21053,7 +21289,7 @@ var cytoscape = function( options ){ // jshint ignore:line
 };
 
 // replaced by build system
-cytoscape.version = _dereq_('./version.json');
+cytoscape.version = _dereq_('./version');
 
 // try to register w/ jquery
 if( window && window.jQuery ){
@@ -21072,7 +21308,7 @@ cytoscape.fabric = cytoscape.Fabric = Fabric;
 
 module.exports = cytoscape;
 
-},{"./-preamble":1,"./core":37,"./extension":46,"./fabric":80,"./is":83,"./jquery-plugin":84,"./stylesheet":97,"./thread":98,"./version.json":106,"./window":107}],83:[function(_dereq_,module,exports){
+},{"./-preamble":1,"./core":37,"./extension":46,"./fabric":80,"./is":83,"./jquery-plugin":84,"./stylesheet":97,"./thread":98,"./version":106,"./window":107}],83:[function(_dereq_,module,exports){
 'use strict';
 
 /*global HTMLElement DocumentTouch */
@@ -22647,7 +22883,7 @@ var Selector = function( selector ){
       metaChar: '[\\!\\"\\#\\$\\%\\&\\\'\\(\\)\\*\\+\\,\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\]\\^\\`\\{\\|\\}\\~]', // chars we need to escape in var names, etc
       comparatorOp: '=|\\!=|>|>=|<|<=|\\$=|\\^=|\\*=', // binary comparison op (used in data selectors)
       boolOp: '\\?|\\!|\\^', // boolean (unary) operators (used in data selectors)
-      string: '"(?:\\\\"|[^"])+"' + '|' + "'(?:\\\\'|[^'])+'", // string literals (used in data selectors) -- doublequotes | singlequotes
+      string: '"(?:\\\\"|[^"])*"' + '|' + "'(?:\\\\'|[^'])*'", // string literals (used in data selectors) -- doublequotes | singlequotes
       number: util.regex.number, // number literal (used in data selectors) --- e.g. 0.1234, 1234, 12e123
       meta: 'degree|indegree|outdegree', // allowed metadata fields (i.e. allowed functions to use from Collection)
       separator: '\\s*,\\s*', // queries are separated by commas, e.g. edge[foo = 'bar'], node.someClass
@@ -23465,8 +23701,9 @@ module.exports = Selector;
 },{"./is":83,"./util":100}],88:[function(_dereq_,module,exports){
 'use strict';
 
-var util = _dereq_( '../util' );
-var is = _dereq_( '../is' );
+var util = _dereq_('../util');
+var is = _dereq_('../is');
+var Promise = _dereq_('../promise');
 
 var styfn = {};
 
@@ -23492,7 +23729,10 @@ styfn.apply = function( eles ){
     var cxtStyle = self.getContextStyle( cxtMeta );
     var app = self.applyContextStyle( cxtMeta, cxtStyle, ele );
 
-    self.updateTransitions( ele, app.diffProps );
+    if( !_p.newStyle ){
+      self.updateTransitions( ele, app.diffProps );
+    }
+
     self.updateStyleHints( ele );
 
   } // for elements
@@ -24014,7 +24254,7 @@ styfn.updateTransitions = function( ele, diffProps, isBypass ){
 
   if( props.length > 0 && duration > 0 ){
 
-    var css = {};
+    var style = {};
 
     // build up the style to animate towards
     var anyPrev = false;
@@ -24056,7 +24296,7 @@ styfn.updateTransitions = function( ele, diffProps, isBypass ){
 
       // the previous value is good for an animation only if it's different
       if( diff ){
-        css[ prop ] = toProp.strValue; // to val
+        style[ prop ] = toProp.strValue; // to val
         this.applyBypass( ele, prop, initVal ); // from val
         anyPrev = true;
       }
@@ -24068,31 +24308,31 @@ styfn.updateTransitions = function( ele, diffProps, isBypass ){
 
     _p.transitioning = true;
 
-    ele.stop();
-
-    if( delay > 0 ){
-      ele.delay( delay );
-    }
-
-    ele.animate( {
-      css: css
-    }, {
-      duration: duration,
-      easing: ele.pstyle( 'transition-timing-function' ).value,
-      queue: false,
-      complete: function(){
-        if( !isBypass ){
-          self.removeBypasses( ele, props );
-        }
-
-        _p.transitioning = false;
+    ( new Promise(function( resolve ){
+      if( delay > 0 ){
+        ele.delayAnimation( delay ).play().promise().then( resolve );
+      } else {
+        resolve();
       }
-    } );
+    }) ).then(function(){
+      return ele.animation( {
+        style: style,
+        duration: duration,
+        easing: ele.pstyle( 'transition-timing-function' ).value,
+        queue: false
+      } ).play().promise();
+    }).then(function(){
+      // if( !isBypass ){
+        self.removeBypasses( ele, props );
+        ele.rtrigger('style');
+      // }
+
+      _p.transitioning = false;
+    });
 
   } else if( _p.transitioning ){
-    ele.stop();
-
     this.removeBypasses( ele, props );
+    ele.rtrigger('style');
 
     _p.transitioning = false;
   }
@@ -24100,7 +24340,7 @@ styfn.updateTransitions = function( ele, diffProps, isBypass ){
 
 module.exports = styfn;
 
-},{"../is":83,"../util":100}],89:[function(_dereq_,module,exports){
+},{"../is":83,"../promise":86,"../util":100}],89:[function(_dereq_,module,exports){
 'use strict';
 
 var is = _dereq_( '../is' );
@@ -24403,7 +24643,9 @@ styfn.getPropsList = function( propsObj ){
       var prop = props[ name ] || props[ util.camel2dash( name ) ];
       var styleProp = this.parse( prop.name, val );
 
-      rstyle.push( styleProp );
+      if( styleProp ){
+        rstyle.push( styleProp );
+      }
     }
   }
 
@@ -25007,8 +25249,7 @@ var parseImpl = function( name, value, propIsBypass, propIsFlat ){
       name: name,
       value: tuple,
       strValue: '' + value,
-      bypass: propIsBypass,
-      roundValue: true
+      bypass: propIsBypass
     };
 
   } else if( type.regex || type.regexes ){
@@ -26630,6 +26871,10 @@ var util = {
     }
   },
 
+  clonePosition: function( pos ){
+    return { x: pos.x, y: pos.y };
+  },
+
   uuid: function(
       a,b                // placeholders
   ){
@@ -26662,7 +26907,7 @@ util.staticEmptyObject = function(){
   return util._staticEmptyObject;
 };
 
-util.extend = Object.assign != null ? Object.assign : function( tgt ){
+util.extend = Object.assign != null ? Object.assign.bind( Object ) : function( tgt ){
   var args = arguments;
 
   for( var i = 1; i < args.length; i++ ){
@@ -26965,29 +27210,33 @@ var performance = window ? window.performance : null;
 
 var util = {};
 
-var raf = !window ? function( fn ){
-  if( fn ){
-    setTimeout( function(){
-      fn( pnow() );
-    }, 1000 / 60 );
+var pnow = performance && performance.now ? function(){ return performance.now(); } : function(){ return Date.now(); };
+
+var raf = (function(){
+  if( window ) {
+    if( window.requestAnimationFrame ){
+      return function( fn ){ window.requestAnimationFrame( fn ); };
+    } else if( window.mozRequestAnimationFrame ){
+      return function( fn ){ window.mozRequestAnimationFrame( fn ); };
+    } else if( window.webkitRequestAnimationFrame ){
+      return function( fn ){ window.webkitRequestAnimationFrame( fn ); };
+    } else if( window.msRequestAnimationFrame ){
+      return function( fn ){ window.msRequestAnimationFrame( fn ); };
+    }
   }
-} : (function(){
-  if( window.requestAnimationFrame ){
-    return function( fn ){ window.requestAnimationFrame( fn ); };
-  } else if( window.mozRequestAnimationFrame ){
-    return function( fn ){ window.mozRequestAnimationFrame( fn ); };
-  } else if( window.webkitRequestAnimationFrame ){
-    return function( fn ){ window.webkitRequestAnimationFrame( fn ); };
-  } else if( window.msRequestAnimationFrame ){
-    return function( fn ){ window.msRequestAnimationFrame( fn ); };
-  }
+
+  return function( fn ){
+    if( fn ){
+      setTimeout( function(){
+        fn( pnow() );
+      }, 1000 / 60 );
+    }
+  };
 })();
 
 util.requestAnimationFrame = function( fn ){
   raf( fn );
 };
-
-var pnow = performance && performance.now ? function(){ return performance.now(); } : function(){ return Date.now(); };
 
 util.performanceNow = pnow;
 
@@ -27119,7 +27368,8 @@ util.debounce = function( func, wait, options ){ // ported lodash debounce funct
 module.exports = util;
 
 },{"../is":83,"../window":107}],106:[function(_dereq_,module,exports){
-module.exports="2.7.14"
+module.exports = "2.7.21";
+
 },{}],107:[function(_dereq_,module,exports){
 module.exports = ( typeof window === 'undefined' ? null : window ); // eslint-disable-line no-undef
 
