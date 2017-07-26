@@ -162,6 +162,7 @@ img {
 }
 
 #sidebar-checkbox:checked ~ .sidebar,
+#sidebar-checkbox:checked ~ .tooltip,
 #sidebar-checkbox:checked ~ .wrap,
 #sidebar-checkbox:checked ~ .sidebar-toggle {
   -webkit-transform: translateX($side-bar-width);
