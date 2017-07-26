@@ -213,7 +213,7 @@ module.exports = (function(){
     setJqueryMap( $container );
     render( jQueryMap.$container );
     $(document).ready(function(){
-      $('.sidebar-tip').tooltip('show');
+      $('.sidebar-toggle').tooltip('show');
     });
   };
 

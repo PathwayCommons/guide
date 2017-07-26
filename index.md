@@ -4,6 +4,7 @@ title: Home
 footer: true
 figures:
   figure_1: index/figure_index_workflow_gdc.png
+sidebar: true
 ---
 
 A guide to understanding and analysis of *pathways*.
