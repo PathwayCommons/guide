@@ -14,7 +14,7 @@ module.exports = (function(){
 	setJqueryMap;
 
   render = function( $target ){
-    var cy = cytoscape({
+    cytoscape({
       container: $target,
 
       // initial viewport state:
@@ -105,9 +105,8 @@ module.exports = (function(){
           // },
           { data: {
               id: 'enrichment_ii',
-              name: 'Click here to begin \n\n Pathway Enrichment Workflow',
-              parent: 'level_group',
-              href: configMap.baseurl + '/workflows/pathway_enrichment_ii/index/'
+              name: 'Pathway Enrichment Workflow',
+              parent: 'level_group'
             },
             classes: 'linkout',
             position: { x: 125, y: 0 }
@@ -194,13 +193,13 @@ module.exports = (function(){
       }
     });
 
-    cy.on( 'tap', '.linkout', function( ){
-      try { // your browser may block popups
-        window.open( this.data('href') );
-      } catch(e){ // fall back on url change
-        window.location.href = this.data('href');
-      }
-    });
+    // cy.on( 'tap', '.linkout', function( ){
+    //   try { // your browser may block popups
+    //     window.open( this.data('href') );
+    //   } catch(e){ // fall back on url change
+    //     window.location.href = this.data('href');
+    //   }
+    // });
   };
 
   setJqueryMap = function( $container ){

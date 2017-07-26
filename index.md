@@ -6,12 +6,12 @@ figures:
   figure_1: index/figure_index_workflow_gdc.png
 ---
 
-A guide to understanding and analysis of *pathways*.
-{: .lead }
+## A resource for *pathway* understanding and analysis
 
-  - **[Workflows]({{ site.baseurl }}/workflows/archive/)** for step-by-step instruction to pathway analysis of data.
-  - **[Primers]({{ site.baseurl }}/primers/archive/)** for deep-dives into concepts.
-  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** describe real-world use of methods and resources.
+  - **[Workflows]({{ site.baseurl }}/workflows/archive/)** for step-by-step instruction to pathway analysis of data
+  - **[Primers]({{ site.baseurl }}/primers/archive/)** for deep-dives into concepts
+  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** describe real-world use of methods and resources
+  {: .lead }
 
 <hr/>
 
@@ -23,6 +23,8 @@ A guide to understanding and analysis of *pathways*.
     </p>
   </div>
   <div class="panel-body">
-    <div id="index-concepts-chart-emseq" data-baseurl="{{ site.baseurl }}"></div>
+    <a href="{{ site.baseurl }}/workflows/pathway_enrichment_ii/index/" target="_blank">
+      <div id="index-concepts-chart-emseq" data-baseurl="{{ site.baseurl }}"></div>
+    </a>
   </div>
 </div>
