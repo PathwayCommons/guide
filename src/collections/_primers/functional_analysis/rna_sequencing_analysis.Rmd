@@ -68,7 +68,7 @@ Using high-throughput sequencing technology to analyze the abundance of RNA spec
 
 ### Normalization
 
-RNA-seq made its debut in the latter-half of the 2000s (Kim 2007) and the hope was, unlike microarrays, it might *'capture transriptional dynamics across different tissues or conditions without sophisticated normalization of data sets'* (Wang 2009). As is often the case, a flood of initial excitement and widespread adoption has given way to more nuanced discussions concerning sources of error, bias and reproducibility (Oshlack 2010, Li 2014). Even as late as 2010 a rigorous analysis of methodology had not yet been developed for RNA deep sequencing. Software packages emerging alongside publications have attempted to encapsulate and standardize approaches that control for various sources of 'error'. Here we expand upon the nature of such errors particularly as they relate to analysis of differential expression.
+RNA-seq made its debut in the latter-half of the 2000s (Kim 2007) and the hope was, unlike microarrays, it might *'capture transcriptional dynamics across different tissues or conditions without sophisticated normalization of data sets'* (Wang 2009). As is often the case, a flood of initial excitement and widespread adoption has given way to more nuanced discussions concerning sources of error, bias and reproducibility (Oshlack 2010, Li 2014). Even as late as 2010 a rigorous analysis of methodology had not yet been developed for RNA deep sequencing. Software packages emerging alongside publications have attempted to encapsulate and standardize approaches that control for various sources of 'error'. Here we expand upon the nature of such errors particularly as they relate to analysis of differential expression.
 
 ### Statistical models
 

@@ -39,7 +39,7 @@ comments: yes
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-[Previously]({{site.baseurl}}/{{ page.workflow.process_data }}), we introduced a study by Best *et al.* (Best 2015) that examined the feasability of using platelet transcriptomes to distinguish individuals diagnosed with breast cancer (BrCa) from healthy donors (HD). The workflow step took in RNA sequencing counts and metadata describing the samples (i.e. HD or  BrCa) and analyzed the data for gene-wise differential expression (DE). One of the outputs from that step is a list of each RNA species and a respective rank, calculated from the DE test. In brief, the magnitude of rank is proportional to the 'rareness' of a  difference in RNA counts at least as large as that observed, *assuming no association between sample class assignment and RNA count*.
+[Previously]({{site.baseurl}}/{{ page.workflow.process_data }}), we introduced a study by Best *et al.* (Best 2015) that examined the feasibility of using platelet transcriptomes to distinguish individuals diagnosed with breast cancer (BrCa) from healthy donors (HD). The workflow step took in RNA sequencing counts and metadata describing the samples (i.e. HD or  BrCa) and analyzed the data for gene-wise differential expression (DE). One of the outputs from that step is a list of each RNA species and a respective rank, calculated from the DE test. In brief, the magnitude of rank is proportional to the 'rareness' of a  difference in RNA counts at least as large as that observed, *assuming no association between sample class assignment and RNA count*.
 
 > Note: For the purposes of this discussion, we will use the terms 'pathway' and 'gene set' interchangeably. It is more appropriate to use the term 'pathway' to refer to gene set components that regulate a biological process (e.g. signal transduction, biosynthetic pathway).
 
@@ -55,12 +55,12 @@ By then end of this discussion you should:
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can alterations in sets of related genes (e.g. pathways) be inferred from the underlying changes in gene expression? The GSEA we will apply requires a list where each gene is assigned a unique rank from differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets upregulated in either of the input sample classes.
+  <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can alterations in sets of related genes (e.g. pathways) be inferred from the underlying changes in gene expression? The GSEA we will apply requires a list where each gene is assigned a unique rank from differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
 
-A detailed description of GSEA is beyond the scope of this section. For a more technical explanation please refer to our [GSEA primer]({{site.baseurl}}/primers/functional_analysis/gsea/){: target="_blank"}. Recall that, in addition to a rank file, GSEA requires a set of candidate gene sets in the form of a gene set database file (Figure 1). Below we decribe a typical gene set database and provide an extremely brief overview for how GSEA operates.
+A detailed description of GSEA is beyond the scope of this section. For a more technical explanation please refer to our [GSEA primer]({{site.baseurl}}/primers/functional_analysis/gsea/){: target="_blank"}. Recall that, in addition to a rank file, GSEA requires a set of candidate gene sets in the form of a gene set database file (Figure 1). Below we describe a typical gene set database and provide an extremely brief overview for how GSEA operates.
 
 ### What is a 'gene set'?
 
@@ -230,9 +230,9 @@ In this part we get our inputs into GSEA. In the `Steps in GSEA analysis` panel 
 We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting `Tools -> GseaPreranked` from the toolbar and fill in the details for the `Required` and `Basic` fields (Figure 7).
 
 - `Required fields`
-  - `Gene sets database`: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to `Gene matrix (local gmx/gmt)` (click arrow along top). Select the gene set database that you obatined above (`.gmt` file)
+  - `Gene sets database`: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to `Gene matrix (local gmx/gmt)` (click arrow along top). Select the gene set database that you obtained above (`.gmt` file)
   - `Collapse dataset to gene symbols`: False
-    - This option is a vestige of microarray technology where an additional step was neccessary to match array probes/spots to a single gene identifier.
+    - This option is a vestige of microarray technology where an additional step was necessary to match array probes/spots to a single gene identifier.
 - `Basic fields`
   - `Analysis name`: Choose a name for this particular run of GSEA
   - `Save results in this folder`: Choose one
@@ -240,7 +240,7 @@ We now tell GSEA what these files actually represent and tailor the GSEA run acc
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_7 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run Gsea on a Pre-Ranked gene list</code> tab.
+  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run GSEA on a Pre-Ranked gene list</code> tab.
 </div>
 
 

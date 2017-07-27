@@ -61,7 +61,7 @@ Previously, we described how to source mRNA expression data for high grade serou
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.short }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Path from sample comparison to Enrichment Map themes.</strong> Depicted is a pair-wise comparison between two classes. Sourcing and processing gene expression data for two classes has been described previously in this workflow. An enrichment analyis can generate gene sets altered in each class. The Enrichment Map summarizes this data in which nodes represent gene sets and edges overlap in genes. The size and color of nodes corresponds to the number of genes and the class in which that set demonstrated enrichment. Likewise, the number of shared genes is indicated by edge thickness. Enrichment Map is a basis upon which similar gene sets can be grouped (ovals) and annotated with overarching 'themes'.
+  <strong>Figure 1. Path from sample comparison to Enrichment Map themes.</strong> Depicted is a pair-wise comparison between two classes. Sourcing and processing gene expression data for two classes has been described previously in this workflow. An enrichment analysis can generate gene sets altered in each class. The Enrichment Map summarizes this data in which nodes represent gene sets and edges overlap in genes. The size and color of nodes corresponds to the number of genes and the class in which that set demonstrated enrichment. Likewise, the number of shared genes is indicated by edge thickness. Enrichment Map is a basis upon which similar gene sets can be grouped (ovals) and annotated with overarching 'themes'.
 </div>
 
 Subsequently, expression data was used to derive a measure of differential expression between subtypes (i.e. P-value). From this, a rank metric was calculated to order genes: Those highest ranked are up-regulated in 'mesenchymal' samples and those lowest ranked are up-regulated in 'immunoreactive' samples (Table 1).
@@ -99,7 +99,7 @@ Ideally, we want a simple way to reduce the size or 'dimensionality' of the outp
 
 Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. An alternative approach is to modify the way in which statistical tests applied. For example,  *Ontologizer* (Bauer 2008) uses a 'parent-child' modification of [Fisher's Exact]({{site.baseurl}}/primers/statistics/fishers_exact_test/){:target="_blank"} test in which enrichment is determined using the parent gene set as the sample space rather than the entire list of genes.
 
-For the most part, Ontologizer and other similar tools rely on variations of Fisher's Exact test to test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
+For the most part, Ontologizer and other similar tools rely on variations of Fisher's Exact test to test for enrichment. Importantly, these approach do not apply to gene sets without a  clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regardless of nature of the underlying enrichment test used (Khatri 2012).
 
 ### Enrichment Map
 
@@ -400,9 +400,9 @@ Here we will set up the initial configuration through the 'Parameters' panel (Fi
 1. Phenotypes
   - This defines the class labels previously declared in the phenotypes file (Table 2). In our case these will be 'Mesenchymal' VS. 'Immunoreactive'
 2. FDR Q-value Cutoff
-  - This defines the maximum false discovery rate q-value allowed. This effectively controls the stringincy for which nodes will appear (smaller is more stringent). Set a maximum of $$10^{-4}$$.
+  - This defines the maximum false discovery rate q-value allowed. This effectively controls the stringency for which nodes will appear (smaller is more stringent). Set a maximum of $$10^{-4}$$.
 3. Similarity Cutoff
-  - This section allows us to select the simiarity metric. This effectively controls the minimum overlap required to define an edge (larger is more stringent). Select 'Jaccard+ Overlap Combined' and set a minimum cutoff of 0.375.
+  - This section allows us to select the similarity metric. This effectively controls the minimum overlap required to define an edge (larger is more stringent). Select 'Jaccard+ Overlap Combined' and set a minimum cutoff of 0.375.
 
 - {: .aside } #### Similarity metrics
 
@@ -489,7 +489,7 @@ Look at the 'Legend' tab. Increase or decrease the stringency for displaying nod
 
 #### Table Panel
 
-We will higlight a few aspects of the 'Table Panel' (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The 'Control Panel' tab 'Select' enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below ([IV. Common tasks](#tasks)).
+We will highlight a few aspects of the 'Table Panel' (Figure 9). This panel houses the same information summarized in the graph but displayed in tabular form. The 'Control Panel' tab 'Select' enables us to create column and row filters based on values here. We will use this capability to select nodes by class/subtype below ([IV. Common tasks](#tasks)).
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_9 }}){: .img-responsive }
 
@@ -558,7 +558,7 @@ AutoAnnotate first clusters the network and then uses WordCloud to calculate the
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_12 }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
+  <strong>Figure 12. AutoAnnotate options.</strong>  <strong>Cluster Options</strong> There are two clustering options. Either you can have Auto Annotate perform clustering using the Clustermaker App or you can run your own clustering algorithms. <strong>Use clusterMaker App.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by Auto Annotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichment Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters
 </div>
 
 Click 'Create Annotations' to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 13).

@@ -66,7 +66,7 @@ EM was originally described by Merico *et al.* (Merico 2010) as an aid in the in
 
 ### A long list of pathways
 
-[Previously]({{site.baseurl}}/{{page.workflow.identify_pathways}}), we used GSEA to distill gene sets enriched in the underlying differences in RNA abundance between platelets from healthy donors (HD) and individuals diagnosed with breast cancer (BrCa). Our rationale for applying enrichment analyis was that we would much rather reason at the pathway-level than the gene-level. Figure 1 shows a section of the GSEA report and Table 1 shows an excerpt of the actual enrichment report for BrCa.
+[Previously]({{site.baseurl}}/{{page.workflow.identify_pathways}}), we used GSEA to distill gene sets enriched in the underlying differences in RNA abundance between platelets from healthy donors (HD) and individuals diagnosed with breast cancer (BrCa). Our rationale for applying enrichment analysis was that we would much rather reason at the pathway-level than the gene-level. Figure 1 shows a section of the GSEA report and Table 1 shows an excerpt of the actual enrichment report for BrCa.
 
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
@@ -93,7 +93,7 @@ Ideally, we want a simple way to reduce the size of the data from an enrichment 
 
 #### Hierachical
 
-Many enrichment anlyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of the same statistical test for enrichment. Importantly, these approaches do not apply to gene sets without a clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regarldless of nature of the underlying enrichment test used (Khatri 2012).
+Many enrichment analyses use the [Gene Ontology](http://geneontology.org/){:target="_blank"} (Ashburner 2000) which is hierarchically organized. In this case, redundancy can be reduced by merging gene sets that are children of a parent cluster with broader scope. These and other similar approaches rely on variations of the same statistical test for enrichment. Importantly, these approaches do not apply to gene sets without a clearly defined hierarchy, for example, transcriptional regulator target genes. What we desire is a versatile method able to manage non-hierarchical gene sets that emerge from analysis methods, regardless of nature of the underlying enrichment test used (Khatri 2012).
 
 ### Enrichment Map
 
@@ -114,7 +114,7 @@ Figure 3 provides a tour of the [EM app](http://apps.cytoscape.org/apps/enrichme
 
 ![img]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene sets (circles) and their similarity (edges). Gene set size is proportional to node radius and overlap is indicated by edge thickness. Gene sets associated with BrCa and HD classes are shaded red and blue, respectively. (B) A <code>Control Panel</code> is where settings for Cytoscape and each app appear. (C) The <code>Table Panel</code> displays data for each node and edge along with expression heatmaps. (D) The <code>Results Panel</code> is where settings delcared in the <code>Control Panel</code> can be fine-tuned. Note that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the <code>Table panel</code>.
+  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene sets (circles) and their similarity (edges). Gene set size is proportional to node radius and overlap is indicated by edge thickness. Gene sets associated with BrCa and HD classes are shaded red and blue, respectively. (B) A <code>Control Panel</code> is where settings for Cytoscape and each app appear. (C) The <code>Table Panel</code> displays data for each node and edge along with expression heatmaps. (D) The <code>Results Panel</code> is where settings declared in the <code>Control Panel</code> can be fine-tuned. Note that the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">NetPath IL-5 signalling pathway</a> has been highlighted in the main window (yellow node, top right) and the corresponding gene expression is displayed in the <code>Table panel</code>.
   <div class="text-left">
     <a type="button" class="btn btn-default" href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
   </div>
@@ -124,7 +124,7 @@ It should be immediately apparent from Figure 3 that the Enrichment Map app prov
 
   - {:.list-unstyled} **View underlying gene expression**
     - This data originates from the [expression file]({{site.baseurl}}/workflows/pathway_enrichment_ii/process_data/#output){:target="_blank"} provided in workflow step 1: Process Data
-    - The 'leading edge' genes are those that played a prominant role in the GSEA signal and can be viewed alongside the heatmap when the [rank file]({{site.baseurl}}/workflows/pathway_enrichment_ii/process_data/#output){:target="_blank"} is available. We will load this file but won't discuss it further.
+    - The 'leading edge' genes are those that played a prominent role in the GSEA signal and can be viewed alongside the heatmap when the [rank file]({{site.baseurl}}/workflows/pathway_enrichment_ii/process_data/#output){:target="_blank"} is available. We will load this file but won't discuss it further.
   - {:.list-unstyled} **Group similar gene sets**
     - This data originates from the [enrichment reports]({{site.baseurl}}/workflows/pathway_enrichment_ii/identify_pathways/#output){:target="_blank"} generated in workflow step 2: Identify Pathways
   - {:.list-unstyled} **Color classes/phenotypes**
@@ -136,7 +136,7 @@ It should be immediately apparent from Figure 3 that the Enrichment Map app prov
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
-Below, we decribe the process of loading our file dependencies from previous workflow steps (i.e. enrichment reports, expression, phenotypes, ranks) into the [Cytoscape](http://www.cytoscape.org/){:target="_blank"} desktop software towards genereating an Enrichment Map similar to Figure 3. We will then provide some tips on how to navigate, tune and interpret the EM in an effort to facilitate new scientific insight.
+Below, we describe the process of loading our file dependencies from previous workflow steps (i.e. enrichment reports, expression, phenotypes, ranks) into the [Cytoscape](http://www.cytoscape.org/){:target="_blank"} desktop software towards generating an Enrichment Map similar to Figure 3. We will then provide some tips on how to navigate, tune and interpret the EM in an effort to facilitate new scientific insight.
 
 #### Software requirements
 
@@ -234,13 +234,13 @@ In the `Control Panel` tab for Enrichment Map (Figure 6), make the following adj
 
 #### 3. Build
 
-Click `Build` to generate the EM displayd in Figure 7. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region displayed in the main view. Let us recap what we are seeing in the main view:
+Click `Build` to generate the EM displayed in Figure 7. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region displayed in the main view. Let us recap what we are seeing in the main view:
 
   - Node
     - Each circle represents a gene set
       - Select a node with your mouse and examine the related data in the `Table Panel` tab `Node Table`
     - Size: Number of genes in the gene set
-    - Colour: Phenotype (class) assigment and enrichment (p-value)
+    - Colour: Phenotype (class) assignment and enrichment (p-value)
   - Edge
     - Indicate related gene sets as measured by shared genes
       - Select an edge with your mouse and examine the related data in the `Table Panel` tab `Edge Table`
@@ -391,7 +391,7 @@ So what now? Below, we list some helpful tips to aid you in extracting value fro
 
 No algorithm or statistic can replace the experience, expertise and critical eye of you the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected *a priori*. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?
 
-As an example, direct your attention to the cluster annonated with the label *'blood coagulation platelet activation'* (Hint: Do a text search). This cluster consists of a hierarchy of three gene sets referencing increasingly specific GO terms (Figure 15):
+As an example, direct your attention to the cluster annotated with the label *'blood coagulation platelet activation'* (Hint: Do a text search). This cluster consists of a hierarchy of three gene sets referencing increasingly specific GO terms (Figure 15):
 
 1. Hemostasis [GO:0007599](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007599){: target="_blank"}
 2. Blood coagulation [GO:0007596](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007596){: target="_blank"}

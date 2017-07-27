@@ -61,7 +61,7 @@ We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }
 
 ### Software requirements
 
-**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/pc_guide_workflows/tree/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc){:target="_blank"} containing the neccessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
+**Run inside Docker** (*Recommended*). To ease the burden of loading the correct software and dependencies, we have generated a [Github repository](https://github.com/jvwong/pc_guide_workflows/tree/52e39c3b2d502d545c961e2051971470ca05a9b7/pathway_enrichment_gdc){:target="_blank"} containing the necessary code to run a [Docker](https://www.docker.com/){:target="_blank"} version of [RStudio](https://www.rstudio.com/){:target="_blank"} linked to the necessary workflow files.
 
 **Run code on your computer**. You can run the R code on your own computer and will need the following files and software
 

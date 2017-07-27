@@ -290,7 +290,7 @@ You can read the complete guide to [Interpreting GSEA Results](http://software.b
 
 There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively. For categorical phenotypes, a positive enrichment score indicates up-regulation in the first phenotype and a negative enrichment score indicates up-regulation in the second phenotype.
 
-Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pathway_enrichment_gdc/process_data/#practical){:target="_blank"}  we assessed gene expression in the 'Mesenchymal' subtype relative to the 'Immunoreactive' subtype. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'mesenchymal' subtype and 'na_neg' refers to the 'immunoreactive' subtype.
+Recall that in our section [Process Data (Step 4)]({{site.baseurl}}/workflows/pathway_enrichment_gdc/process_data/#practical){:target="_blank"}  we assessed gene expression in the 'Mesenchymal' subtype relative to the 'Immunoreactive' subtype. Consequently, in our case, the 'na_pos' phenotype corresponds to the 'mesenchymal' subtype and 'na_neg' refers to the 'Immunoreactive' subtype.
 
 **Snapshot** of the enrichment results will display enrichment plots for the gene sets with the highest absolute normalized enrichment scores (GSEA results folder for `pos_snapshot.html` and `neg_snapshot.html`).
 
