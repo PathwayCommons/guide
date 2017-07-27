@@ -4,7 +4,7 @@ subtitle: Presentations, Posters, and Media
 layout: panelista
 icon: icons/folder.png
 categories:
-  - presentations
+  - slides
   - posters
 ---
 

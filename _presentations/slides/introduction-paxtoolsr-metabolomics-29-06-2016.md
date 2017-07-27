@@ -4,9 +4,9 @@ subtitle: Metabolomics 2016, the 12th Annual Conference of the Metabolomics Soci
 date: June 27, 2016
 location: Dublin, Ireland
 badges:
-  - PaxtoolsR
+  - R Language
 layout: document
-category: presentations
+category: slides
 cover: cover.jpg
 pdf: introduction-paxtoolsr-metabolomics-29-06-2016.pdf
 figure: paxtoolsr.html
