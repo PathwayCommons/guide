@@ -11,7 +11,7 @@ cover: cover.jpg
 pdf:
 date: 2016-09-05
 layout: document
-category: Enrichment_Analysis
+category: Pathway_Enrichment_Analysis
 reflist:
   - 28170382
   - 27595233
@@ -54,7 +54,7 @@ Here we describe a study by Chinen *et al.* (Chinen 2016) who dissected the IL-2
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_2 }}){: .img-responsive.ht-500 }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Intracellular signalling in Tregs.</strong>. The activation of Tregs is mediated by combined signalling through the T cell receptor (TCR) and co-stimulatory molecules such as CD28, and through the interleukin-2 receptor (IL-2R). This receptor is a complex of an alpha (CD25), beta (CD122) and a common gamma-chain (CD132) of polypeptides encoded by the genes <em>il2ra</em>, <em>il2rb</em> and <em>il2rg</em>, respectively. It is hypothesized that Treg cells have evolved to depend more heavily on signal transducer and activator of transcription 5 (STAT5)-dependent IL-2R signalling (thick arrow) than on TCR and CD28 signalling compared with effector T cells. <em>Adapted from Klatzmann et al., Figure 2 (Klatzmann 2015)</em>.
+  <strong>Figure 2. Intracellular signalling in Tregs.</strong> The activation of Tregs is mediated by combined signalling through the T cell receptor (TCR) and co-stimulatory molecules such as CD28, and through the interleukin-2 receptor (IL-2R). This receptor is a complex of an alpha (CD25), beta (CD122) and a common gamma-chain (CD132) of polypeptides encoded by the genes <em>il2ra</em>, <em>il2rb</em> and <em>il2rg</em>, respectively. It is hypothesized that Treg cells have evolved to depend more heavily on signal transducer and activator of transcription 5 (STAT5)-dependent IL-2R signalling (thick arrow) than on TCR and CD28 signalling compared with effector T cells. <em>Adapted from Klatzmann et al., Figure 2 (Klatzmann 2015)</em>.
 </div>
 
 ## Approach
@@ -74,10 +74,10 @@ To gain more insight into the qualitative differences conferred by persistent ST
 ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figures.figure_3 }}){: .img-responsive.ht-500 }
 
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. RNA-seq analysis of Treg cells expressing an active form of STAT5.</strong>. Network analysis of gene-ontology term enrichment among genes significantly up-regulated in STAT5b-CA+ Treg cells relative to their expression in Foxp3Cre-ERT2 Treg cells; dashed outlines (added manually) indicate groups of similar gene- ontology terms (Supplementary Table 1); line thickness and color are proportional to the similarity coefficient between connected nodes; node color is proportional to the FDR-adjusted P value of the enrichment and node size is proportional to gene-set size. <em>Adapted from Chinen et al., Figure 5f (Chinen 2016)</em>.
+  <strong>Figure 3. RNA-seq analysis of Treg cells expressing an active form of STAT5.</strong> Network analysis of gene-ontology term enrichment among genes significantly up-regulated in STAT5b-CA+ Treg cells relative to their expression in Foxp3Cre-ERT2 Treg cells; dashed outlines (added manually) indicate groups of similar gene- ontology terms (Supplementary Table 1); line thickness and color are proportional to the similarity coefficient between connected nodes; node color is proportional to the FDR-adjusted P value of the enrichment and node size is proportional to gene-set size. <em>Adapted from Chinen et al., Figure 5f (Chinen 2016)</em>.
 </div>
 
-The enrichment analysis and resulting Enrichment Map enabled authors to quickly narrow in on gene set products involved in cell-cell and cell-extracellular matrix interactions, cell adhesion and cell locomotion (Figure 3). This finding led authors to speculate that STAT5 could potentiate interactions with target cells. Indeed, this notion is supported by previous imaging studies *in vivo* demonstrating Tregs in stable contact with dendritic cells (DC) and the fact that Treg-DC interactions have been shown to modulate their ability of DCs to potentiate effector T cell activation (Figure 1). To this end, Chinen et al.  demonstrated that constitutive expression of *stat5b* in *Fox3P*-expressing cells promoted the formation of conjugates between Tregs and DCs (Figure 4). Thus, the Enrichment Map helped to unify two bodies of knowledge: The ability of Tregs to modulate T cell activation via DCs and IL-2R signaling via STAT5.
+The pathway enrichment analysis and resulting Enrichment Map enabled authors to quickly narrow in on gene set products involved in cell-cell and cell-extracellular matrix interactions, cell adhesion and cell locomotion (Figure 3). This finding led authors to speculate that STAT5 could potentiate interactions with target cells. Indeed, this notion is supported by previous imaging studies *in vivo* demonstrating Tregs in stable contact with dendritic cells (DC) and the fact that Treg-DC interactions have been shown to modulate their ability of DCs to potentiate effector T cell activation (Figure 1). To this end, Chinen et al.  demonstrated that constitutive expression of *stat5b* in *Fox3P*-expressing cells promoted the formation of conjugates between Tregs and DCs (Figure 4). Thus, the Enrichment Map helped to unify two bodies of knowledge: The ability of Tregs to modulate T cell activation via DCs and IL-2R signaling via STAT5.
 
 > ... the Enrichment Map helped to unify two bodies of knowledge: The ability of Tregs to modulate T cell activation via DCs and IL-2R signaling via STAT5.
 
@@ -89,4 +89,4 @@ The enrichment analysis and resulting Enrichment Map enabled authors to quickly 
 
 ## Summary
 
-Here, an enrichment analysis coupled to an Enrichment Map presented groups of altered pathways drawn from the underlying patterns of gene expression. This approach provided a link between cytokine signalling in Tregs and their ability to interact with DCs that represents a plausible mechanistic basis for how Tregs negatively regulate system-wide repression of immune activation. This detailed understanding provides the basis of rational approaches towards optimal design of Treg-cell based therapies for a variety of autoimmune and inflammatory disorders. Conversely, this knowledge may contribute to efforts to counteract the potential side-effects of activating immunotherapies.
+Here, a pathway enrichment analysis coupled to an Enrichment Map presented groups of altered pathways drawn from the underlying patterns of gene expression. This approach provided a link between cytokine signalling in Tregs and their ability to interact with DCs that represents a plausible mechanistic basis for how Tregs negatively regulate system-wide repression of immune activation. This detailed understanding provides the basis of rational approaches towards optimal design of Treg-cell based therapies for a variety of autoimmune and inflammatory disorders. Conversely, this knowledge may contribute to efforts to counteract the potential side-effects of activating immunotherapies.

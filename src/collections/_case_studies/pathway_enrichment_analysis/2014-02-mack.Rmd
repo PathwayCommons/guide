@@ -7,7 +7,7 @@ cover: cover.jpg
 pdf: caseStudy_mack_nature_2014.pdf
 date: 2014-02-27
 layout: document
-category: Enrichment_Analysis
+category: Pathway_Enrichment_Analysis
 reflist:
   - 13172380
   - 23539594

@@ -3,7 +3,7 @@ title: Case Studies
 subtitle: Recent highlights from the literature using interaction and pathway analyses
 layout: panelista
 categories:
-  - Enrichment_Analysis
+  - Pathway_Enrichment_Analysis
   - Pathway_Commons
 ---
 
