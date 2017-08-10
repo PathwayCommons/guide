@@ -302,6 +302,17 @@ Pathway analysis cast a light on the mechanisms affected by MLL, and in doing so
   ga('create', 'UA-43341809-8', 'auto');
   ga('send', 'pageview');
 
+  $(document).ready(function() {
+    // Link
+    $('a').click(function() {
+      var id = $(this).attr("href");
+
+      var label = "link";
+      var action = id;
+      ga('send', 'event', label, action);
+      // console.log(label + " " + action);
+    });
+  });
 </script>
 
   </body>

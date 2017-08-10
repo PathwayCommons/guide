@@ -307,6 +307,17 @@ Li et al. (Li 2013) use large-scale integration of biological data resources to 
   ga('create', 'UA-43341809-8', 'auto');
   ga('send', 'pageview');
 
+  $(document).ready(function() {
+    // Link
+    $('a').click(function() {
+      var id = $(this).attr("href");
+
+      var label = "link";
+      var action = id;
+      ga('send', 'event', label, action);
+      // console.log(label + " " + action);
+    });
+  });
 </script>
 
   </body>

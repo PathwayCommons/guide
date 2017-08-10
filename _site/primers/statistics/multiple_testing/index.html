@@ -1001,6 +1001,17 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
   ga('create', 'UA-43341809-8', 'auto');
   ga('send', 'pageview');
 
+  $(document).ready(function() {
+    // Link
+    $('a').click(function() {
+      var id = $(this).attr("href");
+
+      var label = "link";
+      var action = id;
+      ga('send', 'event', label, action);
+      // console.log(label + " " + action);
+    });
+  });
 </script>
 
   </body>
