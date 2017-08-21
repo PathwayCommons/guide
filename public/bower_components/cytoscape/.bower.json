@@ -66,12 +66,12 @@
     "build",
     "node_modules"
   ],
-  "version": "2.7.22",
-  "_release": "2.7.22",
+  "version": "2.7.23",
+  "_release": "2.7.23",
   "_resolution": {
     "type": "version",
-    "tag": "v2.7.22",
-    "commit": "8ea90210261c5a0741a3ad7d56e225697b2e8407"
+    "tag": "v2.7.23",
+    "commit": "4b78fdd6a72ea78642a2bf4b578ffa8ef6acbe2d"
   },
   "_source": "https://github.com/cytoscape/cytoscape.js.git",
   "_target": "^2.7.14",
