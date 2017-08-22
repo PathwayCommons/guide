@@ -1,6 +1,6 @@
 ---
 title: Bad Blood
-subtitle: Researchers use an Enrichment Map to identify signaling pathways buried in gene expression data that enable regulatory T cells to prevent runaway activation of the immune system.
+subtitle: Researchers use an Enrichment Map to identify signaling pathways that enable regulatory T cells to prevent runaway activation of the immune system.
 figures:
   figure_1: figure_chinen_tregMechanisms.png
   figure_2: figure_chinen_signaling.jpg

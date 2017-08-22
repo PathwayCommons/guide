@@ -94,18 +94,9 @@ module.exports = (function(){
 
       elements: {
         nodes: [
-          // { data: {
-          //     id: 'enrichment_i',
-          //     name: 'Start: Workflow - I\n\nProgramming in R',
-          //     parent: 'level_group',
-          //     href: configMap.baseurl + '/workflows/pathway_enrichment_i/index/'
-          //   },
-          //   classes: 'linkout',
-          //   position: { x: 0, y: 0 }
-          // },
           { data: {
-              id: 'enrichment_ii',
-              name: 'Pathway Enrichment Workflow',
+              id: 'rna-seq-to-enrichment-map',
+              name: 'Workflow: RNA-Seq to Enrichment Map',
               parent: 'level_group'
             },
             classes: 'linkout',
@@ -155,8 +146,8 @@ module.exports = (function(){
         edges: [
 
           { data: {
-              id: 'custom-rnaseq',
-              source: 'enrichment_ii',
+              id: 'rna-seq-to-enrichment-map-start',
+              source: 'rna-seq-to-enrichment-map',
               target: 'rnaseq_data'
             }
           },
@@ -191,15 +182,7 @@ module.exports = (function(){
         name: 'preset',
         padding: 5
       }
-    });
-
-    // cy.on( 'tap', '.linkout', function( ){
-    //   try { // your browser may block popups
-    //     window.open( this.data('href') );
-    //   } catch(e){ // fall back on url change
-    //     window.location.href = this.data('href');
-    //   }
-    // });
+    });  
   };
 
   setJqueryMap = function( $container ){
