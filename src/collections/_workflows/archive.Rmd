@@ -3,7 +3,7 @@ title: Workflows
 subtitle: Learn how to perform end-to-end data analyses
 layout: panelista
 categories:
-  - Enrichment Analysis
+  - Pathway Enrichment Analysis
 ---
 
 {% for category in page.categories %}
