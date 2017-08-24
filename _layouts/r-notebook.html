@@ -1,0 +1,21 @@
+---
+layout: page
+---
+<div class="collection">
+  <div class="document">
+    <div class="subtitle"><em>{{ page.subtitle }}</em></div>
+    <div class="date"><em>{{ page.date | date: "%Y-%m-%d" }}</em></div>
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      {% include icons/social.html %}
+      <li></li>
+      {% if page.pdf %}
+        {% include icons/download.html %}
+      {% endif %}
+      </ul>
+    </div>
+    <hr/>
+    {{ content }}
+  </div>
+</div>

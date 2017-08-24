@@ -2,7 +2,7 @@
 title: RNA-Seq to Enrichment Map
 subtitle: Identify altered pathways within platelet RNA-Seq data using Gene Set Enrichment Analysis and visualize results in an Enrichment Map <p class="hidden-xs">Audience<em>&#58;	Beginner</em></p>
 cover: cover.jpg
-date: 2017-01-10
+date: 2017-08-22
 layout: embedded_wrapper
 category: Pathway Enrichment Analysis
 badges:

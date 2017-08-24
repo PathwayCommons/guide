@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      RNA-Seq to Enrichment Map - R Notebook &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
+  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/guide/public/bower_components/cytoscape/dist/cytoscape.min.js"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-item">
+      Guide: v0.1.0
+    </div>
+    <a class="sidebar-nav-item" href="/guide/">Home</a>
+
+    
+
+    
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/case_studies/archive/">Case studies
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/presentations/archive/">Presentations
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/primers/archive/">Primers
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item active"
+          href="/guide/workflows/archive/">Workflows
+          </a>
+
+        
+      
+    
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h3 class="masthead-title">
+      <a href="/guide/" title="Home">Guide</a>
+      <small>
+        <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
+        
+      </small>
+      <span class="pull-right">
+        <small class="contact">
+          <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">Contact Us</a>
+        </small>
+      </span>
+    </h3>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+  
+    
+
+    
+    
+    <ol class="breadcrumb">
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        <li><a href="/guide/">Guide</a></li>
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        <li><a href="/guide/workflows/archive/">Workflows</a></li>
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
+        
+          <li class="active">RNA-Seq to Enrichment Map - R Notebook</li>
+        
+      
+    
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">RNA-Seq to Enrichment Map - R Notebook</h1>
+  <div class="collection">
+  <div class="document">
+    <div class="subtitle"><em>Process platelet RNA-Seq data, identify altered pathways then visualize using Enrichment Map</em></div>
+    <div class="date"><em>2017-08-01</em></div>
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      <li>
+  <a href="http://twitter.com/intent/tweet?text=Process platelet RNA-Seq data, identify altered pathways then visualize ...+http://pathwaycommons.github.io/guide/workflows/rna-seq-to-enrichment-map-r-notebook/index/&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna-seq-to-enrichment-map-r-notebook/index/"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+      <li></li>
+      
+      </ul>
+    </div>
+    <hr/>
+    <div class="alert alert-warning">
+  This is an R Notebook version of the pathway enrichment analysis workflow entitled 'RNA-Seq to Enrichment Map'. Please refer to that version for a detailed description of the study and experimental data used herein.
+</div>
+
+<h2 id="a-overview">A. Overview</h2>
+
+<p>Compare gene expression between two conditions and use this information to identify and visualize pathway-level differences. You will use the provided RNA-Seq data and convert it into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified using <a href="http://software.broadinstitute.org/gsea/index.jsp">Gene Set Enrichment Analysis</a> and displayed as an visual <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Enrichment Map</a> which organizes pathways by overarching themes.</p>
+
+<h2 id="b-sample-study-data">B. Sample Study Data</h2>
+
+<p>Blood platelets have intimate contact and interactionswith cancer cells. Coupled with  their abundance in blood, this suggests that they may possess a large degree of heterogeneity. Such diversity in tumour-educated platelets (TEP) could be clinically relevant if they enable discrimination between different stages of a malignancy.</p>
+
+<p>In this workflow we will use expression data collected in a study by Myron G. Best and colleagues (Best 2015) whose aim was to differentiate blood platelets from healthy donors (HD) to those diagnosed with a breast cancer (BrCa) towards a proof-of-principle for blood-based cancer diagnosis.</p>
+
+<h3 id="rna-seq-data">RNA-Seq Data</h3>
+
+<p>Best <em>et al.</em> collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. For the sake of simplicity, we will be restricting our attention to a subset of 5 patient samples from each class. The RNA-Seq metadata summarized in Table I displays the filenames (‘id’) and phenotype (‘class’) for each patient sample.</p>
+
+<p><strong>Table I. Patient TEP RNA-Seq metadata</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HD-1_htsqct.txt</td>
+      <td>HD</td>
+    </tr>
+    <tr>
+      <td>HD-2-1_htsqct.txt</td>
+      <td>HD</td>
+    </tr>
+    <tr>
+      <td>HD-3-1_htsqct.txt</td>
+      <td>HD</td>
+    </tr>
+    <tr>
+      <td>HD-4_htsqct.txt</td>
+      <td>HD</td>
+    </tr>
+    <tr>
+      <td>HD-5_htsqct.txt</td>
+      <td>HD</td>
+    </tr>
+    <tr>
+      <td>MGH-BrCa-H-11_htsqct.txt</td>
+      <td>BrCa</td>
+    </tr>
+    <tr>
+      <td>MGH-BrCa-H-59_htsqct.txt</td>
+      <td>BrCa</td>
+    </tr>
+    <tr>
+      <td>MGH-BrCa-H-66_htsqct.txt</td>
+      <td>BrCa</td>
+    </tr>
+    <tr>
+      <td>MGH-BrCa-H-68_htsqct.txt</td>
+      <td>BrCa</td>
+    </tr>
+    <tr>
+      <td>MGH-BrCa-H-74_htsqct.txt</td>
+      <td>BrCa</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each tab-delimited text file contains 57 736 rows: The first column holds an <a href="http://www.ensembl.org/info/genome/genebuild/genome_annotation.html">Ensembl gene</a> ID and the second column a read count for transcripts mapped to that ID. An excerpt of raw data for sample <code class="highlighter-rouge">HD-1_htsqct.txt</code> is shown below in Table II.</p>
+
+<p><strong>Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ensembl ID</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ENSG00000000003</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ENSG00000000005</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ENSG00000000419</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>ENSG00000000457</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>ENSG00000000460</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>ENSG00000273492</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ENSG00000273493</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="c-data-processing">C. Data Processing</h2>
+
+<p>We will need to process the RNA-Seq data into a form that we can more easily use. This processing consists of:</p>
+
+<ol>
+  <li>
+    <p><strong>ID-map.</strong> We need to translate Ensembl identifiers to a corresponding <a href="http://www.genenames.org/">HGNC</a> approved symbol, when available. This is neccessary in order to have our gene names match up with the identifiers used in our pathway enrichment analysis. It may not always be possible to perform this mapping, in which case, we simply omit the gene from any of our RNA-Seq data moving forward.</p>
+  </li>
+  <li>
+    <p><strong>Merge.</strong> Integrate the RNA-Seq data and metadata into a single object, the <a href="https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html">SummarizedExperiment</a>.</p>
+
+    <blockquote>
+      <p>A SummarizedExperiment stores experimental assays as a rectangular array whose rows correspond to the (genomic) ranges and whose columns correspond to the different samples. The SummarizedExperiment class stores metadata on the rows and columns. Metadata on the samples usually include experimental or observational covariates as well as technical information such as processing dates or batches, file paths, etc. Row metadata comprise the start and end coordinates of each feature and the identifier of the containing polymer, for example, the chromo- some name… The row metadata aid integrative analysis, for example, when matching two experiments according to overlap of genomic regions of interest. Tight coupling of metadata with the data reduces opportunities for clerical errors during reordering or subsetting operations. (Huber 2015)</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p>Let us begin by loading the required R packages.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============ Install packages from Bioconductor ========
+</span>  <span class="n">library</span><span class="p">(</span><span class="s2">"SummarizedExperiment"</span><span class="p">)</span>
+  <span class="n">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span>
+  <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"jvwong/emRNASeq"</span><span class="p">)</span>
+
+  <span class="c1">### ============ Declare directories =========
+</span>  <span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
+  <span class="n">data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span></code></pre></figure>
+
+<p>Notice that we loaded an R package <code class="highlighter-rouge">emRNASeq</code> from <a href="https://github.com/jvwong/emRNASeq">GitHub</a>. This package contains a function <code class="highlighter-rouge">emRNASeq::merge_data</code> that performs the required ID-mapping and data merging and returns a single <code class="highlighter-rouge">SummarizedExperiment</code> instance. In addition to a list of paths to the RNA-Seq files, the species and gene IDs to be mapped, the function <code class="highlighter-rouge">emRNASeq::merge_data</code> requires a metadata file describing the RNA-Seq file names and class membership as displayed in Table I. In this case this metadata is contained in a tab-delimited file <code class="highlighter-rouge">tep_phenotypes.txt</code>.</p>
+
+<p>Let’s use our package to perform the ID-mapping and data merging.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### ============  Merge data files =========
+</span>  <span class="n">metadata_file</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"tep_phenotypes.txt"</span><span class="p">)</span>
+  <span class="n">filelist</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-74_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-68_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-66_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-59_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-11_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-5_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-4_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-3-1_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-2-1_htsqct.txt"</span><span class="p">),</span>
+                <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-1_htsqct.txt"</span><span class="p">))</span>
+  <span class="n">source_name</span> <span class="o">&lt;-</span> <span class="s2">"ensembl_gene_id"</span>
+  <span class="n">target_name</span> <span class="o">&lt;-</span> <span class="s2">"hgnc_symbol"</span>
+  <span class="n">species</span> <span class="o">&lt;-</span> <span class="s2">"human"</span>
+
+  <span class="n">brca_hd_tep_merged_se</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">merge_data</span><span class="p">(</span>
+    <span class="n">metadata_file</span><span class="p">,</span>
+    <span class="n">species</span><span class="p">,</span>
+    <span class="n">source_name</span><span class="p">,</span>
+    <span class="n">target_name</span><span class="p">,</span>
+    <span class="n">filelist</span><span class="p">)</span></code></pre></figure>
+
+<p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_merged_se</code>.</p>
+
+<blockquote>
+  <p>These preceding data ‘munging’ steps vary by use case. As such, we do not focus on details but rather leave it up to the user to examine the <a href="https://github.com/jvwong/emRNASeq">package source code</a> to adapt the approach to their needs.</p>
+</blockquote>
+
+<h2 id="d-differential-expression-testing">D. Differential Expression Testing</h2>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499">Best MG <em>et al.</em> RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676</a></li>
+  <li><a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Daniele Merico <em>et al.</em> Enrichment Map: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation. PLoS One. 2010; 5(11): e13984</a></li>
+  <li><a href="http://www.nature.com/doifinder/10.1038/nmeth.3252">Huber <em>et al.</em> Orchestrating high-throughput genomic analysis with Bioconductor. Nature Methods. 2015 Feb, 12(2)</a></li>
+</ul>
+
+  </div>
+</div>
+
+  
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Toggle sidebar"></label>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43341809-8', 'auto');
+  ga('send', 'pageview');
+
+  $(document).ready(function() {
+    // Link
+    $('a').click(function() {
+      var id = $(this).attr("href");
+
+      var label = "link";
+      var action = id;
+      ga('send', 'event', label, action);
+      // console.log(label + " " + action);
+    });
+  });
+</script>
+
+  </body>
+</html>

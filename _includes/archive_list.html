@@ -6,7 +6,13 @@
     <a href="{{ site.baseurl }}{{ doc.url }}">
       <div class="list-group-item-text">
         <p class="list-group-item-title">{{ doc.title }}</p>
-        <p>{{ doc.subtitle }}</p>
+        <p>
+          {% if doc.splash  %}
+            {{ doc.splash }}
+          {% else  %}
+            {{ doc.subtitle }}
+          {% endif  %}
+        </p>
       </div>
       <div class="list-group-item-meta">
         {% for badge in doc.badges %}
@@ -18,7 +24,7 @@
           <img class="img-responsive" src="{{ site.baseurl }}/{{ site.media_root }}{{ doc.id }}/{{ doc.cover }}" />
         {% else %}
 
-          <img class="img-responsive" src="http://placehold.it/900x175" />
+          <img class="img-responsive" src="http://placehold.it/900x450" />
         {% endif %}
       </div>
     </a>

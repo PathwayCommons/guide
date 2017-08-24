@@ -19,3 +19,4 @@ pkg/
 test/dest
 tmp/*
 cache/
+.Rproj.user
