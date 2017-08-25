@@ -4,7 +4,7 @@ layout: default
 <div class="page">
   {% include breadcrumbs.html %}
 
-  {% if jekyll.environment == "development" and page.draft %}
+  {% if page.draft %}
   <div class="alert alert-danger">Draft Content</div>
   {% endif %}
 

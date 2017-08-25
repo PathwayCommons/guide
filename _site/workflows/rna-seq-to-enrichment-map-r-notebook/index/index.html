@@ -128,6 +128,8 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
+          <span class="text-danger">-- Development Version</span>
+        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -183,6 +185,8 @@
 
 
   
+  <div class="alert alert-danger">Draft Content</div>
+  
 
   <h1 class="page-title">RNA-Seq to Enrichment Map - R Notebook</h1>
   <div class="collection">
@@ -214,7 +218,7 @@
       </ul>
     </div>
     <hr/>
-    <div class="alert alert-warning">
+    <div class="alert alert-info">
   This is an R Notebook version of the pathway enrichment analysis workflow entitled 'RNA-Seq to Enrichment Map'. Please refer to that version for a detailed description of the study and experimental data used herein.
 </div>
 
@@ -332,22 +336,21 @@
   </tbody>
 </table>
 
-<h2 id="c-data-processing">C. Data Processing</h2>
+<h2 id="c-data-pre-processing">C. Data Pre-Processing</h2>
 
-<p>We will need to process the RNA-Seq data into a form that we can more easily use. This processing consists of:</p>
+<p>At the end of this section we wish to have the RNA-Seq data into a format that we can more easily pipe into our differential gene expression testing procedure.</p>
 
-<ol>
-  <li>
-    <p><strong>ID-map.</strong> We need to translate Ensembl identifiers to a corresponding <a href="http://www.genenames.org/">HGNC</a> approved symbol, when available. This is neccessary in order to have our gene names match up with the identifiers used in our pathway enrichment analysis. It may not always be possible to perform this mapping, in which case, we simply omit the gene from any of our RNA-Seq data moving forward.</p>
-  </li>
-  <li>
-    <p><strong>Merge.</strong> Integrate the RNA-Seq data and metadata into a single object, the <a href="https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html">SummarizedExperiment</a>.</p>
+<h3 id="gene-identifier-mapping">Gene identifier mapping</h3>
 
-    <blockquote>
-      <p>A SummarizedExperiment stores experimental assays as a rectangular array whose rows correspond to the (genomic) ranges and whose columns correspond to the different samples. The SummarizedExperiment class stores metadata on the rows and columns. Metadata on the samples usually include experimental or observational covariates as well as technical information such as processing dates or batches, file paths, etc. Row metadata comprise the start and end coordinates of each feature and the identifier of the containing polymer, for example, the chromo- some name… The row metadata aid integrative analysis, for example, when matching two experiments according to overlap of genomic regions of interest. Tight coupling of metadata with the data reduces opportunities for clerical errors during reordering or subsetting operations. (Huber 2015)</p>
-    </blockquote>
-  </li>
-</ol>
+<p>We need to translate Ensembl identifiers (Table II) to a corresponding <a href="http://www.genenames.org/">HGNC</a> approved symbol, when available. This is neccessary in order to have our gene names match up with the pathway-associated gene identifiers used in our pathway enrichment analysis. It may not always be possible to perform this mapping, in which case, we simply omit the gene from any of our RNA-Seq data moving forward.</p>
+
+<h3 id="rna-seq-data-merging">RNA-Seq data merging</h3>
+
+<p>We will take the individual RNA-Seq data files and merge them and any associated metadata into a single object, the <a href="https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html">SummarizedExperiment</a>.</p>
+
+<blockquote>
+  <p>A SummarizedExperiment stores experimental assays as a rectangular array whose rows correspond to the (genomic) ranges and whose columns correspond to the different samples. The SummarizedExperiment class stores metadata on the rows and columns. Metadata on the samples usually include experimental or observational covariates … Row metadata comprise the start and end coordinates of each feature and the identifier of the containing polymer, for example, the chromosome name. (Huber 2015)</p>
+</blockquote>
 
 <p>Let us begin by loading the required R packages.</p>
 
@@ -380,20 +383,86 @@
   <span class="n">target_name</span> <span class="o">&lt;-</span> <span class="s2">"hgnc_symbol"</span>
   <span class="n">species</span> <span class="o">&lt;-</span> <span class="s2">"human"</span>
 
-  <span class="n">brca_hd_tep_merged_se</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">merge_data</span><span class="p">(</span>
+  <span class="n">brca_hd_tep_se</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">merge_data</span><span class="p">(</span>
     <span class="n">metadata_file</span><span class="p">,</span>
     <span class="n">species</span><span class="p">,</span>
     <span class="n">source_name</span><span class="p">,</span>
     <span class="n">target_name</span><span class="p">,</span>
     <span class="n">filelist</span><span class="p">)</span></code></pre></figure>
 
-<p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_merged_se</code>.</p>
-
-<blockquote>
-  <p>These preceding data ‘munging’ steps vary by use case. As such, we do not focus on details but rather leave it up to the user to examine the <a href="https://github.com/jvwong/emRNASeq">package source code</a> to adapt the approach to their needs.</p>
-</blockquote>
+<p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_se</code>.</p>
 
 <h2 id="d-differential-expression-testing">D. Differential Expression Testing</h2>
+
+<p>At then end of this section we wish to have a list of genes ranked, in this case, according to their p-value calculated from differential expression testing. To accomplish this, we will need to apply several transformations to the data.</p>
+
+<hr />
+
+<h3 id="filtering">Filtering</h3>
+
+<p>RNA species with very low mapped read counts in a small number of samples can be highly variable. Consequently, we choose to ignore these in the search for differential expression. Best <em>et al.</em> use the rule of thumb that ‘genes with less than five (non-normalized) read counts in all samples were excluded from analyses’.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_filtered_dge</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">filter_rseq</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">,</span> <span class="s2">"HD"</span><span class="p">,</span> <span class="s2">"BrCa"</span><span class="p">)</span></code></pre></figure>
+
+<p>Describe <code class="highlighter-rouge">brca_hd_tep_filtered_dge</code></p>
+
+<h3 id="normalization">Normalization</h3>
+
+<p>RNA for a sample can be sequenced to varying ‘depths’. This means that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson &amp; Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_tmm_normalized_dge</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">normalize_rseq</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)</span></code></pre></figure>
+
+<p>Describe <code class="highlighter-rouge">brca_hd_tep_tmm_normalized_dge</code></p>
+
+<p>At this stage, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs (Table III).</p>
+
+<p>Table III. Expression output (counts per million mapped reads)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>sample</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a</td>
+      <td>b</td>
+      <td>c</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>a</td>
+      <td>b</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="differential-expression-testing">Differential expression testing</h3>
+
+<p>In this step we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a ‘hypothesis-testing’ technique that entails:</p>
+
+<ul>
+  <li>Declare the null hypothesis of no difference in RNA counts for each gene</li>
+  <li>Define a null distribution that describes how RNA counts vary under circumstances where there is no association between RNA counts and class</li>
+  <li>Calculate the probability (p-value) of observing a difference in RNA species counts at least as extreme as the one observed assuming the null hypothesis/distribution</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_de_tested_tt</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">de_test_rseq</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span> <span class="s2">"HD"</span><span class="p">,</span> <span class="s2">"BrCa"</span><span class="p">)</span></code></pre></figure>
+
+<p>Describe <code class="highlighter-rouge">brca_hd_tep_de_tested_tt</code></p>
+
+<h3 id="ranked-list">Ranked list</h3>
+
+<p>At this stage, we can generate a rank file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count (Table 6).
+Describe rank file generation</p>
 
 <h2 id="references">References</h2>
 <ul>
