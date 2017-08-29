@@ -21,3 +21,4 @@ tmp/*
 cache/
 .Rproj.user
 .RData
+src/collections/**/**/*.html
