@@ -183,6 +183,8 @@
 
 
   
+  <div class="alert alert-danger">Draft Content</div>
+  
 
   <h1 class="page-title">RNA-Seq to Enrichment Map - R Notebook</h1>
   <div class="collection">
@@ -264,10 +266,10 @@
 <p>Best <em>et al.</em> collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. Herein, we will be restricting our attention to a subset of 5 patient samples from each class. The metadata for the RNA-Seq files is contained in a file named <code class="highlighter-rouge">tep_rnaseq_metadata.txt</code> which lists RNA-Seq data filenames (‘id’) and ‘class’ of each patient sample (Table I).
 Let us begin by loading the required R packages we’ll need in this R Notebook.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Declare general file directory paths 
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Declare general file directory paths
 </span>  <span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
   <span class="n">data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
-  
+
   <span class="c1">### Declare paths to RNA-Seq (meta)data files
 </span>  <span class="n">tep_rnaseq_metadata</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"tep_rnaseq_metadata.txt"</span><span class="p">)</span>
   <span class="n">tep_rnaseq_filelist</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-74_htsqct.txt"</span><span class="p">),</span>
@@ -283,7 +285,7 @@ Let us begin by loading the required R packages we’ll need in this R Notebook.
 
 <p><strong>Table I. Patient TEP RNA-Seq metadata (<code class="highlighter-rouge">tep_rnaseq_metadata.txt</code>)</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">tep_rnaseq_metadata_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_metadata</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> 
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">tep_rnaseq_metadata_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_metadata</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
   <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">tep_rnaseq_metadata_df</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">"Table I. Patient TEP RNA-Seq metadata (tep_rnaseq_metadata.txt)"</span><span class="p">)</span></code></pre></figure>
 
 <table>
@@ -342,9 +344,9 @@ Let us begin by loading the required R packages we’ll need in this R Notebook.
 <p><strong>Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt</strong></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">index_HD_1_htsqct</span> <span class="o">&lt;-</span> <span class="n">grepl</span><span class="p">(</span><span class="s2">"HD-1_htsqct.txt"</span><span class="p">,</span> <span class="n">tep_rnaseq_filelist</span><span class="p">)</span>
-  <span class="n">rnaseq_HD_1_htsqct</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_filelist</span><span class="p">[</span><span class="n">index_HD_1_htsqct</span><span class="p">],</span> 
-    <span class="n">check.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span> 
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">rnaseq_HD_1_htsqct</span><span class="p">),</span> 
+  <span class="n">rnaseq_HD_1_htsqct</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_filelist</span><span class="p">[</span><span class="n">index_HD_1_htsqct</span><span class="p">],</span>
+    <span class="n">check.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
+  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">rnaseq_HD_1_htsqct</span><span class="p">),</span>
     <span class="n">caption</span><span class="o">=</span><span class="s2">"Excerpt of RNA-Seq file HD-1_htsqct.txt"</span><span class="p">,</span> <span class="n">col.names</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="s2">""</span><span class="p">))</span></code></pre></figure>
 
 <table>
@@ -447,7 +449,7 @@ Let us begin by loading the required R packages we’ll need in this R Notebook.
 
 <p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_se</code>.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_se</span> </code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_se</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">## class: RangedSummarizedExperiment 
 ## dim: 34996 10 
@@ -673,27 +675,27 @@ Let us begin by loading the required R packages we’ll need in this R Notebook.
 
   <span class="c1">### Minimum number of mapped read counts per sample
 </span>  <span class="n">min_counts</span> <span class="o">&lt;-</span> <span class="m">5</span>
-  
-  <span class="c1">### Declare baseline (i.e. control) and test classes 
+
+  <span class="c1">### Declare baseline (i.e. control) and test classes
 </span>  <span class="n">baseline_class</span> <span class="o">&lt;-</span> <span class="s2">"HD"</span>
   <span class="n">test_class</span> <span class="o">&lt;-</span> <span class="s2">"BrCa"</span>
   <span class="n">comparison</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">baseline_class</span><span class="p">,</span> <span class="n">test_class</span><span class="p">)</span>
-  
+
   <span class="n">brca_hd_tep_se_counts</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)</span><span class="o">$</span><span class="n">counts</span>
   <span class="n">brca_hd_tep_se_groups</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)</span><span class="o">$</span><span class="n">class</span>
 
-  <span class="c1">### Find genes (rows) with a minimum number of counts 
+  <span class="c1">### Find genes (rows) with a minimum number of counts
 </span>  <span class="n">index_test_class</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_groups</span> <span class="o">==</span> <span class="n">comparison</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
   <span class="n">index_baseline_class</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_groups</span> <span class="o">==</span> <span class="n">comparison</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
   <span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
-    <span class="n">rowSums</span><span class="p">(</span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_se_counts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">min_counts</span><span class="p">)</span> <span class="o">&gt;=</span> 
+    <span class="n">rowSums</span><span class="p">(</span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_se_counts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">min_counts</span><span class="p">)</span> <span class="o">&gt;=</span>
       <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline_class</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test_class</span><span class="p">))</span>
-  
+
   <span class="c1">### Subset the original data accordingly
 </span>  <span class="n">brca_hd_tep_dge_counts</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_counts</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,]</span>
-  
+
   <span class="c1">### Push the data into the edgeR::DGEList
-</span>  <span class="n">brca_hd_tep_filtered_dge</span> <span class="o">&lt;-</span> 
+</span>  <span class="n">brca_hd_tep_filtered_dge</span> <span class="o">&lt;-</span>
     <span class="n">edgeR</span><span class="o">::</span><span class="n">DGEList</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">brca_hd_tep_dge_counts</span><span class="p">,</span> <span class="n">group</span> <span class="o">=</span> <span class="n">brca_hd_tep_se_groups</span><span class="p">)</span></code></pre></figure>
 
 <p>Note that our end product is a very convenient class, the <code class="highlighter-rouge">edgeR::DGEList</code> from the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR package</a>.</p>
@@ -934,7 +936,7 @@ Let us begin by loading the required R packages we’ll need in this R Notebook.
 
   <span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
   <span class="n">brca_hd_tep_tmm_normalized_expression_df</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">meta_df</span><span class="p">,</span> <span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">,</span>  <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-  
+
   <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="p">)[,</span><span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">)])</span></code></pre></figure>
 
 <table>
