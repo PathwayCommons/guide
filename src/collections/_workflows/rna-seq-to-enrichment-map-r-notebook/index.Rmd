@@ -23,36 +23,56 @@ badges: R Notebook
 ```
 
 <div class="alert alert-info">
-  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> distilled from the pathway enrichment analysis workflow entitled 'RNA-Seq to Enrichment Map'
+  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'
 </div>
 
 ## A. Overview
+
+<div class="alert alert-warning">
+  <p>Section TODOs</p> 
+  <ul> <li>Install R software requirements </li> </ul>
+</div>
 
 This R Notebook documents a comparison mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA-Seq count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) then visualized as an [Enrichment Map](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984).
 
 ### Software requirements
 
-We will be using the following R packages along the way so please do install before beginning.
+We will be using the following R packages along the way.
 
-- BioConductor
+- [BioConductor](https://bioconductor.org/)
   - [`SummarizedExperiment`](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html)
   - [`edgeR`](https://bioconductor.org/packages/release/bioc/html/edgeR.html)
 
-- CRAN
+- [CRAN](https://cran.r-project.org/)
   - [`devtools`](https://cran.r-project.org/web/packages/devtools/README.html)
+
+Let us install these before we begin.
+
+```{r, eval=FALSE}
+### CRAN
+# install.packages("devtools")
+
+### Bioconductor
+# source("https://bioconductor.org/biocLite.R")
+# biocLite("edgeR", "SummarizedExperiment")
+```
 
 ## B. Sample Study
 
-In this workflow we will use expression data collected in a study by Myron G. Best and colleagues (Best 2015) whose aim was to differentiate blood platelets from healthy donors (HD) to those diagnosed with a breast cancer (BrCa) towards a proof-of-principle for blood-based cancer diagnosis.
+<div class="alert alert-warning">
+  <p>Section TODOs</p> 
+  <ul><li>Familiarize yourself with study data and related files </li></ul>
+</div>
+
+In this workflow we will use expression data collected in a study by Myron G. Best and colleagues [^1] whose aim was to differentiate blood platelets from healthy donors (HD) to those diagnosed with a breast cancer (BrCa) towards a proof-of-principle for blood-based cancer diagnosis.
 
 ### Rationale
 
-The primary physiological role of platelets is to sense and accumulate at the sites of damaged endothelial tissue and initiate a blood clot to mitigate and vessel leakage (Semple 2011). Previous observations are consistent with the notion that platelets have close contact with cancer cells - a process termed ‘education’ - and may play a role in their metastatic potential (Gay 2011). Diversity in tumour-educated platelets (TEP) could be clinically relevant if they enable discrimination between different stages of a malignancy.
+The primary physiological role of platelets is to sense and accumulate at the sites of damaged endothelial tissue and initiate a blood clot to mitigate and vessel leakage[^2]. Previous observations are consistent with the notion that platelets have close contact with cancer cells - a process termed ‘education’ - and may play a role in their metastatic potential[^3]. Diversity in tumour-educated platelets (TEP) could be clinically relevant if they enable discrimination between different stages of a malignancy.
 
 ### RNA-Seq Data
 
-Best *et al.* collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. Herein, we will be restricting our attention to a subset of 5 patient samples from each class. The metadata for the RNA-Seq files is contained in a file named `tep_rnaseq_metadata.txt` which lists RNA-Seq data filenames ('id') and 'class' of each patient sample (Table I).
-Let us begin by loading the required R packages we'll need in this R Notebook.
+Best *et al.* collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. Herein, we will be restricting our attention to a subset of 5 patient samples from each class. The metadata for the RNA-Seq files is contained in a file named `tep_rnaseq_metadata.txt` which lists RNA-Seq data filenames ('id') and the 'class' of each patient sample (Table I).
 
 ```{r, results='asis'}
   ### Declare general file directory paths
@@ -76,65 +96,46 @@ Let us begin by loading the required R packages we'll need in this R Notebook.
 **Table I. Patient TEP RNA-Seq metadata (`tep_rnaseq_metadata.txt`)**
 ```{r, results='asis'}
   tep_rnaseq_metadata_df <- read.table(tep_rnaseq_metadata,header = TRUE)
-  knitr::kable(tep_rnaseq_metadata_df, caption="Table I. Patient TEP RNA-Seq metadata (tep_rnaseq_metadata.txt)")
+  knitr::kable(tep_rnaseq_metadata_df)
 ```
 
-Each RNA-Seq record is a tab-delimited text file contains 57 736 rows: The first column holds an [Ensembl gene](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) ID and the second column a read count for transcripts mapped. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II. Note the absence of a header.
+Each RNA-Seq record is a tabular text file that contains 57 736 rows: The first column holds an [Ensembl](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) ID and the second column a read count for transcripts mapped to that ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
 
 **Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt**
 ```{r, results='asis'}
   index_HD_1_htsqct <- grepl("HD-1_htsqct.txt", tep_rnaseq_filelist)
   rnaseq_HD_1_htsqct <- read.table(tep_rnaseq_filelist[index_HD_1_htsqct],
     check.names=FALSE)
-  knitr::kable(head(rnaseq_HD_1_htsqct),
-    caption="Excerpt of RNA-Seq file HD-1_htsqct.txt", col.names=c("",""))
+  knitr::kable(head(rnaseq_HD_1_htsqct), col.names=c("",""))
 ```
 
 ## C. Data Pre-Processing
 
-At the end of this section we wish to have the RNA-Seq data into a format that we can more easily pipe into our differential gene expression testing procedure.
+<div class="alert alert-warning">
+  <p>Section TODOs</p> 
+  <ul>
+    <li>Perform RNA-Seq data gene ID mapping</li>
+    <li>Merge RNA-Seq data into a single R object</li>
+  </ul>
+</div>
+
+At the end of this section we wish to have the RNA-Seq data into an R data strcuture that we can more easily pipe into our differential gene expression testing procedures.
 
 ### Gene identifier mapping
 
-We need to translate Ensembl identifiers (Table II) to a corresponding [HGNC](http://www.genenames.org/) approved symbol, when available. This is neccessary in order to have our gene names match up with the pathway-associated gene identifiers used in our pathway enrichment analysis. It may not always be possible to perform this mapping, in which case, we simply omit the gene from any of our RNA-Seq data moving forward.
+Our pathway enrichment analysis will attempt to identify gene sets/pathways that are enriched in gene expression data. We will be using gene sets/pathways named with the [HGNC](http://www.genenames.org/) approved symbol. Since our RNA-Seq data use Ensembl identifiers (Table II) we will need to 'map' these to their HGNC  symbol. It may not always be possible to perform this mapping, in which case, we simply omit the gene from any of our RNA-Seq data moving forward.
 
 ### RNA-Seq data merging
 
-We will take the individual RNA-Seq data files and merge them and any associated metadata into a single object, the [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html).
+We will take the individual RNA-Seq data files and merge them and any associated metadata into a single object, the [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html)[^4].
 
-> A SummarizedExperiment stores experimental assays as a rectangular array whose rows correspond to the (genomic) ranges and whose columns correspond to the different samples. The SummarizedExperiment class stores metadata on the rows and columns. Metadata on the samples usually include experimental or observational covariates ... Row metadata comprise the start and end coordinates of each feature and the identifier of the containing polymer, for example, the chromosome name. (Huber 2015)
+> A SummarizedExperiment stores experimental assays as a rectangular array whose rows correspond to the (genomic) ranges and whose columns correspond to the different samples. The SummarizedExperiment class stores metadata on the rows and columns. Metadata on the samples usually include experimental or observational covariates ... Row metadata comprise the start and end coordinates of each feature and the identifier of the containing polymer, for example, the chromosome name.
 
 ***
 
-With these tasks in mind, we will offload the work onto a function `emRNASeq::merge_data` that performs the required ID-mapping and data merging and returns a single `SummarizedExperiment` instance. The relevant help documentation is reproduced below.
+Because of the numerous formats and states that raw RNA-Seq data can present itself, we will not expend much effort in this notebook defining 'data munging' tasks. Instead, we offload the work onto [a custom package (`emRNASeq`)](https://github.com/jvwong/emRNASeq) with functions that perform the required ID-mapping and data merging and returns a single `SummarizedExperiment` instance. Please refer to the source documentation for more details.
 
-<div class="alert alert-info">
-  merge_data {emRNASeq}
-  <br/><br/>
-
-  <h4>Merge a set of files representing RNA sequencing gene counts</h4>
-  <br/>
-
-  <h5>Description</h5>
-  <p>1. Default parameter is do nothing (already matching gene set ids) 2. Optional parameter is to map from input to target namespace. Data files must be in tab-delimited format with two columns and no header. The classes are defined by a meta data file which is a tab-delimited text file with headers for the sample read 'id' and 'class'. Each row entry is a corresponding filename and class assignment. Only accepts pair-wise comparison so there must be exactly 2 classes.</p>
-  <br/>
-
-  <h5>Usage</h5>
-  <p><code>merge_data(tep_rnaseq_metadata, species, source_name, target_name, ...)</code></p>
-  <br/>
-
-  <h5>Arguments</h5>
-  <p><code>metadata_file</code>	A metadata file</p>
-  <p><code>species</code> A character array indicating the species with which to fetch gene models from bioMart, If NULL this mapping will not be performed</p>
-  <p><code>source_name</code>	attribute (gene namespace) input</p>
-  <p><code>target_name</code>	attribute (gene namespace) desired</p>
-  <br/>
-
-  <h5>Value</h5>
-  <p>A SummarizedExperiment</p>
-</div>
-
-Let's use our package to perform the ID-mapping and data merging.
+Let's perform the ID-mapping and data merging.
 ```{r}
   library(devtools)
   library("SummarizedExperiment")
@@ -181,16 +182,35 @@ Note that we were only able to successfully map 34 996 HGNC symbols from the ori
 Finally, we can peek at the assay data using the `SummarizedExperiment::assay` function.
 
 ```{r, results='asis'}
-  knitr::kable(head(SummarizedExperiment::assays(brca_hd_tep_se)$counts)[, c(1,2,6,7)])
+  knitr::kable(head(SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]])[, c(1,2,6,7)])
 ```
 
 ## D. Differential Expression Testing
 
-Our approach to pathway enrichment analysis using **GSEA** requires a ranked list [(RNK; Ranked list file format )](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29) of genes ordered according to the p-value derived form differential expression testing.
+<div class="alert alert-warning">
+  <p>Section TODOs</p> 
+  <ul>
+    <li>GSEA requirement</li>
+    <ul>
+      <li>
+        <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29" target="_blank">Ranked list file (RNK)</a>: Single list of genes ordered according to the p-value derived form differential expression testing. 
+      </li>
+    </ul>
+    
+    <li>Enrichment Map requirements</li>
+    <ul>
+      <li>
+        <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29" target="_blank">Text file for expression dataset (TXT)</a>: A file containing normalized gene expression values.  
+      </li>
+      <li>
+        <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29" target="_blank">Categorical class file (CLS)</a>: A description of each sample's class. 
+      </li>
+    </ul>
+  </ul>
+</div>
 
-Our **Enrichment Map** pathway visualization will use files containing normalized gene expression values [(TXT; Text file format for expression dataset)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29) along with a description of each sample's class [(CLS; Categorical class file format)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29)). It will be convenient to generate the expression and class files alongside the RNA-Seq data transformations.
 
-We will be using the `edgeR` Bioconductor package for RNA-Seq data transformations.
+It will be convenient to generate the expression and class files alongside the RNA-Seq data transformations. We will be using the `edgeR` Bioconductor package.
 
 ### Filtering
 
@@ -207,12 +227,12 @@ RNA species with very low mapped read counts in a small number of samples can be
   test_class <- "BrCa"
   comparison <- c(baseline_class, test_class)
 
-  brca_hd_tep_se_counts <- SummarizedExperiment::assays(brca_hd_tep_se)$counts
-  brca_hd_tep_se_groups <- SummarizedExperiment::colData(brca_hd_tep_se)$class
+  brca_hd_tep_se_counts <- SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]]
+  brca_hd_tep_se_group <- SummarizedExperiment::colData(brca_hd_tep_se)[["class"]]
 
   ### Find genes (rows) with a minimum number of counts
-  index_test_class <- brca_hd_tep_se_groups == comparison[1]
-  index_baseline_class <- brca_hd_tep_se_groups == comparison[2]
+  index_test_class <- brca_hd_tep_se_group == comparison[1]
+  index_baseline_class <- brca_hd_tep_se_group == comparison[2]
   row_with_mincount <-
     rowSums(edgeR::cpm(brca_hd_tep_se_counts) > min_counts) >=
       min(sum(index_baseline_class), sum(index_test_class))
@@ -222,39 +242,39 @@ RNA species with very low mapped read counts in a small number of samples can be
 
   ### Push the data into the edgeR::DGEList
   brca_hd_tep_filtered_dge <-
-    edgeR::DGEList(counts = brca_hd_tep_dge_counts, group = brca_hd_tep_se_groups)
+    edgeR::DGEList(counts = brca_hd_tep_dge_counts, group = brca_hd_tep_se_group)
 ```
 
-Note that our end product is a very convenient class, the `edgeR::DGEList` from the [edgeR package](https://bioconductor.org/packages/release/bioc/html/edgeR.html).
+Note that our end product is a very convenient class, the `edgeR::DGEList`.
 
 > The main components of an DGEList object are a matrix counts containing the integer counts, a data.frame samples containing information about the samples or libraries, and a optional data.frame genes containing annotation for the genes or genomic features. The data.frame samples contains a column lib.size for the library size or sequencing depth for each sample. If not specified by the user, the library sizes will be computed from the column sums of the counts. For classic edgeR the data.frame samples must also contain a column group, identifying the group membership of each sample.
 
 With this in mind, let's take a look at the 'counts' component.
 
 ```{r, results='asis'}
-  knitr::kable(head(brca_hd_tep_filtered_dge$counts)[, c(1,2,5,6)])
+  knitr::kable(head(brca_hd_tep_filtered_dge[["counts"]])[, c(1,2,5,6)])
 ```
 
 Similarly, we can peek inside the 'samples' component.
 
 ```{r, results='asis'}
-  knitr::kable(brca_hd_tep_filtered_dge$samples)
+  knitr::kable(brca_hd_tep_filtered_dge[["samples"]])
 ```
 
 
 
 ### Normalization
 
-RNA for a sample can be sequenced to varying ‘depths’. This means that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM; Robinson & Oshlack 2010) that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
+RNA for a sample can be sequenced to varying ‘depths’ in that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM)[^5] that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
 
 ```{r, results='asis'}
   brca_hd_tep_tmm_normalized_dge <- emRNASeq::normalize_rseq(brca_hd_tep_filtered_dge)
-  knitr::kable(brca_hd_tep_tmm_normalized_dge$samples)
+  knitr::kable(brca_hd_tep_tmm_normalized_dge[["samples"]])
 ```
 
 Note that the TMM-normalized `DGEList` called `brca_hd_tep_tmm_normalized_dge` has updated column `norm.factors` in component 'samples'. This value will be used to determine an 'effective library size', leaving the raw counts untouched.
 
-#### Gene expression output file
+#### Text file for expression dataset (TXT)
 
 As a convenient side effect of our work, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display expression for any enriched pathways in our Enrichment Map.
 
@@ -279,84 +299,150 @@ In this step we perform a pair-wise comparison of RNA species counts in BrCa sam
 - Declare the null hypothesis of no difference in RNA counts for each gene
 - Define a null distribution that describes how RNA counts vary under circumstances where there is no association between RNA counts and class
 - Calculate the probability (p-value) of observing a difference in RNA species counts at least as extreme as the one observed assuming the null hypothesis/distribution
+- Perform multiple-testing correction 
 
 ```{r}
+  ### Calculate variability (dispersions) in data
   brca_hd_tep_fitted_commondisp_dge <- edgeR::estimateCommonDisp(brca_hd_tep_tmm_normalized_dge)
   brca_hd_tep_fitted_tagwise_dge <- edgeR::estimateTagwiseDisp(brca_hd_tep_fitted_commondisp_dge)
 
+  ### Perform differential expression testing (comparison is 'BrCa' vs 'HD')
   brca_hd_tep_de_tested_dge <- edgeR::exactTest(brca_hd_tep_fitted_tagwise_dge, pair = comparison)
 
+  ### Perform multiple-testing correction using Benjamini-Hockberg procedure 
   brca_hd_tep_de_tested_tt <- edgeR::topTags(brca_hd_tep_de_tested_dge,
     n = nrow(brca_hd_tep_tmm_normalized_dge),
     adjust.method = "BH",
     sort.by = "PValue")
 ```
 
-Describe `brca_hd_tep_de_tested_tt`
+The result of these transformations is a `topTags` object named `brca_hd_tep_de_tested_tt`. We can peek inside our result to view the list of genes ranked by p-value from differential expression testing. 
 
-#### Output file: Rank list
 
-At this stage, we can generate a rank file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count (Table 6).
-
-Describe rank file generation
-
-```{r}
-#' Generate text file content for genes ranked by a funtion of p-value for differential expression
-#'
-#' Creates content conforming to \href{http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29}{GSEA's text file format for a ranked list file (.rnk)}. The column header names are arbitrary. The gene rank is based on: \eqn{sign(log(fold_change) * -log( pvalue )}.
-#'
-#' @param de_tested_tt This is the \code{\link[edgeR]{TopTags}} object emerging from \code{\link{process_rseq}}
-#'
-#' @return a \code{\link[base]{data.frame}} of the ranks
-#'
-#' @export
-format_ranks_gsea <- function(de_tested_tt){
-
-  rank_values <- sign(de_tested_tt$table$logFC) * (-1) * log10(de_tested_tt$table$PValue)
-  rank_values_max <- max(rank_values[ rank_values != Inf ])
-  rank_values_unique <- sapply( rank_values, function(x) replace(x, is.infinite(x), sign(x) * (rank_values_max + runif(1))) )
-  genenames <- (rownames(de_tested_tt$table))
-
-  ranks_df <- data.frame(gene=genenames,
-    rank=rank_values_unique,
-    stringsAsFactors = FALSE)
-  ordered_ranks_df <- ranks_df[order(ranks_df[,2], decreasing = TRUE), ]
-
-  return(ordered_ranks_df)
-}
+```{r, results='asis'}
+  knitr::kable(head(brca_hd_tep_de_tested_tt[["table"]]))
 ```
 
-#### Output file: Phenotypes
+#### Rank list file (RNK)
+
+At this stage, we can generate a rank list file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.
 
 ```{r}
-#' Generate categorical class text file content
-#'
-#' Creates content conforming to \href{http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29}{GSEA's text file format for discrete classes}.
-#'
-#' @param filtered_dge A \code{\link[edgeR]{DGEList}}, typically a filtered version coming out of  \code{\link{filter_rseq}}
-#' @param de_tested_tt A \code{\link[edgeR]{TopTags}}
-#'
-#' @return a matrix
-#'
-#' @export
-format_class_gsea <- function(filtered_dge, de_tested_tt){
+  ### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD 
+  brca_hd_tep_rank_values <- sign(brca_hd_tep_de_tested_tt[["table"]][["logFC"]]) * (-1) * log10(brca_hd_tep_de_tested_tt[["table"]][["PValue"]])
 
-  n_samples <- dim(filtered_dge)[2]
+  ### Take into account log10(0) = -Inf 
+  brca_hd_tep_rank_values_max <- max(brca_hd_tep_rank_values[ brca_hd_tep_rank_values != Inf ])
+  brca_hd_tep_rank_values_unique <- sapply( brca_hd_tep_rank_values, 
+                                            function(x) replace(x, is.infinite(x), 
+                                            sign(x) * (brca_hd_tep_rank_values_max + runif(1))) )
+  
+  
+  ### Construct the data frame we wish place into a tabular file
+  genenames <- (rownames(brca_hd_tep_de_tested_tt[["table"]]))
+  brca_hd_tep_ranks_df <- data.frame(gene=genenames,
+                                     rank=brca_hd_tep_rank_values_unique,
+                                     stringsAsFactors = FALSE)
+  brca_hd_tep_ordered_ranks_df <- brca_hd_tep_ranks_df[order(brca_hd_tep_ranks_df[,2], decreasing = TRUE), ]
+```
+
+Let's peek at the top and bottom of our rank list data frame `brca_hd_tep_ordered_ranks_df`.
+
+```{r, results='asis'}
+  ranks_head <- head(brca_hd_tep_ordered_ranks_df, n=5)
+  rownames(ranks_head) <- NULL
+  knitr::kable(ranks_head)
+```
+```{r, results='asis'}
+  ranks_tail <- tail(brca_hd_tep_ordered_ranks_df, n=5)
+  rownames(ranks_tail) <- NULL
+  knitr::kable(ranks_tail)
+```
+
+#### Categorical class file (CLS)
+
+This file will be used in the Enrichment Map so that we can differentiate (i.e. colour) those pathways ‘up-regulated’ in HD versus BrCa samples. The CLS format contains information about the sample classes (aka ‘condition’, ‘phenotype’) and assigns each sample to one class.
+
+```{r}
+  n_samples <- dim(brca_hd_tep_filtered_dge)[2]
   n_classes <- 2
 
   l1 <- paste(n_samples, n_classes, "1")
-  l2 <- paste("#", de_tested_tt$comparison[1], de_tested_tt$comparison[2])
-  l3 <- paste(filtered_dge$samples$group, collapse = " ")
+  l2 <- paste("#", brca_hd_tep_de_tested_tt[["comparison"]][1], brca_hd_tep_de_tested_tt[["comparison"]][2])
+  l3 <- paste(brca_hd_tep_filtered_dge[["samples"]][["group"]], collapse = " ")
 
-  return(rbind(l1, l2, l3))
-}
+  brca_hd_tep_cls <- rbind(l1, l2, l3)
+```
+
+The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
+
+|  |   |  | | |
+| --- |  --- | --- | --- | --- |
+| Total samples |  Total classes | 1 |  | |
+| # |  Class Name | Class Name |  | |
+| Sample 1 class |  Sample 2 class | Sample 3 class | ... | Sample N class | 
+
+
+```{r, results='asis'}
+  rownames(brca_hd_tep_cls) <- NULL
+  knitr::kable(brca_hd_tep_cls)
+```
+
+## E. Gene Set Enrichment Analysis
+
+[GSEA](http://software.broadinstitute.org/gsea/index.jsp) comes as stand-alone Java program with many customizable options. It can be easily run through its integrated user interface. To make this a seemless pipeline we can run GSEA from the command line with a set of options. Any of the supplied options can be customized and there are many additional options that can be specified. For more details see [here](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from).
+
+In the below command the following options have been specified:
+
+  - rpt_label - name of the directory with output
+  - out - directory where to place the result directory.
+  - gmx - path to the gene set definition (gmt) file
+  - rnk - path to the rank file
+  - collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols
+  - nperm - number of permutations
+  - permute - permute gene sets or phentoypes. For GSEA preranked you can only permute genesets.
+  - scoring_scheme -
+  - num - number of results to plot output file for
+  - rnd_seed - random seed to use
+  - set_max - maximum size for individual gene sets. In GSEA interface this is set to 500 but we prefer to use a more stringent setting of 200.
+  - set_min - minimum size for individual gene sets
+  - zip_report - true/false to zip output directory
+  - gui - true/false. When running GSEA from the commandline this needs to be false.
+
+```{r, eval=FALSE}
+  gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea2-2.2.3.jar")
+  gsea_working_dir <- getwd()
+  gsea_analysis_name <- "tep_BrCa_HD"
+  gsea_rpt_label <- "label"
+  gsea_gs_range <- []
+  
+  command <- paste("java -cp", gsea_jar_path, 
+                   "-Xmx1G xtools.gsea.GseaPreranked",
+                   "-rpt_label", analysis_name,
+                   "-out", working_dir,
+                   "-gmx", dest_gmt_file, 
+                   "-rnk", paste(working_dir,rnk_file,sep="/"),
+                   "-collapse false",
+                   "-scoring_scheme weighted",
+                   "-nperm 1000",
+                   "-permute gene_set",
+                   "-num 100",
+                   "-plot_top_x 20",
+                   "-rnd_seed 12345",
+                   "-set_max 200",
+                   "-set_min 15",
+                   "-zip_report false",
+                
+                   , "-gui false > gsea_output.txt",sep=" "
+                  )
+  system(command)
 ```
 
 
 ## References
-- [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)
-- [Daniele Merico *et al.* Enrichment Map: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation. PLoS One. 2010; 5(11): e13984](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984)
-- [Gay LJ and Felding-Habermann B. Contribution of platelets to tumour metastasis. Nat Rev Cancer. 2011 Feb;11(2):123-34](https://www.ncbi.nlm.nih.gov/pubmed/21258396)
-- [Huber *et al.* Orchestrating high-throughput genomic analysis with Bioconductor. Nature Methods. 2015 Feb, 12(2)](http://www.nature.com/doifinder/10.1038/nmeth.3252)
-- [Robinson MD and Oshlack 1. A scaling normalization method for differential expression analysis of RNA-seq data. Genome Biology 2010, 11:R25](http://genomebiology.com/2010/11/3/R25)
-- [Semple JW. *et al*. Platelets and the immune continuum. Nat Rev Immunol. 2011 Apr;11(4):264-74](https://www.ncbi.nlm.nih.gov/pubmed/21436837)
+[^1]: [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)
+[^2]: [Semple JW. *et al*. Platelets and the immune continuum. Nat Rev Immunol. 2011 Apr;11(4):264-74](https://www.ncbi.nlm.nih.gov/pubmed/21436837)
+[^3]: [Gay LJ and Felding-Habermann B. Contribution of platelets to tumour metastasis. Nat Rev Cancer. 2011 Feb;11(2):123-34](https://www.ncbi.nlm.nih.gov/pubmed/21258396)
+[^4]: [Huber *et al.* Orchestrating high-throughput genomic analysis with Bioconductor. Nature Methods. 2015 Feb, 12(2)](http://www.nature.com/doifinder/10.1038/nmeth.3252)
+[^5]: [Robinson MD and Oshlack 1. A scaling normalization method for differential expression analysis of RNA-seq data. Genome Biology 2010, 11:R25](http://genomebiology.com/2010/11/3/R25)
+[^6]: [Daniele Merico *et al.* Enrichment Map: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation. PLoS One. 2010; 5(11): e13984](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984)
