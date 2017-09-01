@@ -22,3 +22,9 @@ cache/
 .Rproj.user
 .RData
 src/collections/**/**/*.html
+src/collections/**/**/*.cls
+src/collections/**/**/*.rnk
+src/collections/**/**/gsea*.txt
+src/collections/**/**/*_expression.txt
+src/collections/**/**/gsea_output
+src/collections/**/**/*_cache

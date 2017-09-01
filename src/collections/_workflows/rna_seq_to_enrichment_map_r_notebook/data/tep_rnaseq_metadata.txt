@@ -1,0 +1,11 @@
+id	class
+MGH-BrCa-H-74_htsqct.txt	BrCa
+MGH-BrCa-H-68_htsqct.txt	BrCa
+MGH-BrCa-H-66_htsqct.txt	BrCa
+MGH-BrCa-H-59_htsqct.txt	BrCa
+MGH-BrCa-H-11_htsqct.txt	BrCa
+HD-5_htsqct.txt	HD
+HD-4_htsqct.txt	HD
+HD-3-1_htsqct.txt	HD
+HD-2-1_htsqct.txt	HD
+HD-1_htsqct.txt	HD
