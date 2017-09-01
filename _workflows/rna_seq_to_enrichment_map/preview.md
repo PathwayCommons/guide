@@ -7,7 +7,7 @@ figures:
   figure_1: figure_processdata_em_overview.jpg
 tables:
 layout: embedded
-group: rna-seq-to-enrichment-map
+group: rna_seq_to_enrichment_map
 reflist:
   - 26525104
   - 21637797

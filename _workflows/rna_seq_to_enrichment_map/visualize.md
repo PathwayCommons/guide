@@ -22,7 +22,7 @@ figures:
   figure_16: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
 layout: embedded
-group: rna-seq-to-enrichment-map
+group: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 10802651
@@ -31,7 +31,7 @@ reflist:
 comments: yes
 ---
 
-{% assign workflow = (site.workflows | where: 'group' , 'rna-seq-to-enrichment-map') %}
+{% assign workflow = (site.workflows | where: 'group' , 'rna_seq_to_enrichment_map') %}
 {% assign process_data = (workflow | where: 'title' , 'Process Data' | first) %}
 {% assign identify_pathways = (workflow | where: 'title' , 'Identify Pathways' | first) %}
 {% assign visualize = (workflow | where: 'title' , 'Visualize' | first) %}

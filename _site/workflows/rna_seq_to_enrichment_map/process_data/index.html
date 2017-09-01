@@ -58,7 +58,7 @@
             <div class="linkout clearfix">
               <ul class="list-inline pull-right">
               <li>
-  <a href="http://twitter.com/intent/tweet?text=Derive a list of differentially expressed genes from RNA sequencing data+http://pathwaycommons.github.io/guide/workflows/rna-seq-to-enrichment-map/process_data/&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=Derive a list of differentially expressed genes from RNA sequencing data+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/process_data/&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -66,7 +66,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna-seq-to-enrichment-map/process_data/"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/process_data/"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -108,7 +108,7 @@
 
 <p><br /></p>
 
-<p><img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_overview.jpg" alt="image" class="img-responsive short" /></p>
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_overview.jpg" alt="image" class="img-responsive short" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Goals.</strong> To illustrate construction of an Enrichment Map, we follow the work done by Best et al. (Best 2015) comparing RNA-Seq profiles of platelets from healthy donors (HD) to those with breast cancer (BrCa) with the goal of defining blood-based diagnostic signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-Seq profiles from platelet samples. In this workflow step, we use the RNA-Seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are files which are the dependencies for subsequent workflow steps. Besides downloading these files and understanding what they contain, there is no further action to be taken in the workflow.
 </div>
@@ -121,7 +121,7 @@
 
 <p>Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy needed to reliably differentiate between normal and pathological states. Blood-based biomarkers have been aggressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 2).</p>
 
-<p><img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_joose_cancell_2015_figure_1.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_joose_cancell_2015_figure_1.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Blood-based cancer biopsies.</strong> Blood can be separated into different fractions in order to enrich for tumor-associated biomarkers. From the mononuclear cell fraction, circulating tumor cells (CTCs) may provide genomic, transcriptomic, and proteomic information on the tumor. From plasma or serum, cell-free nucleotides and exosomes can be further used to interrogate cancer-secreted bioparticles. <em>Adapted from Joose et al. (Joose 2015), Figure 1</em>.
 </div>
@@ -140,7 +140,7 @@
 
 <p>Platelets have been implicated in aiding and abetting the metastatic potential of cancer cells through a variety of routes (Gay 2011) (Figure 3). First, they aggregate in order to shield cancer cells that have entered the vasculature from immune cell recognition. Second, they facilitate their extravasation by enabling cancer cell to arrest and adhesion at points in the vasculature. Third, platelets secrete variety of molecules that support cancer cell survival and promote endothelial permeability, further promoting their extravasation.</p>
 
-<p><img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_gay_figure_2.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_gay_figure_2.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Molecular coordination between platelets and tumour cells supports metastasis from the bloodstream.</strong> As platelets become activated, they undergo a shape change, increase their adhesiveness, release granules and microparticles, and perpetuate the cohesion of heteroaggregates containing tumour cells, platelets and leukocytes. Platelet granules contain growth factors, chemokines and proteases. During cohesion, circulating tumour cells can interact with activated platelets and leukocytes, and form heteroaggregates that support attachment to the endothelium and thereby contribute to metastasis. During adhesion, initial, transient adhesion is followed by firm attachment that is mediated by integrins and intercellular cell adhesion molecules. During immune evasion, multivalent plasma proteins form intercellular bridges, and activated platelets and fibrinogen protect tumour cells from natural killer cell lysis during haematogenous metastasis. GP, glycoprotein; icAM, intercellular adhesion molecule; PAr, protease-activated receptor; PsGL1, P-selectin- glycoprotein ligand 1; sLea, sialyl Lewis a antigen; sLex, sialyl Lewis x antigen; vcAM vascular cell adhesion molecule; vWF, von Willebrand factor. <em>Adapted from Gay et al. (Gay 2011), Figure 2</em>.
 </div>
@@ -156,13 +156,13 @@
 <p>Best <em>et al.</em> prospectively collected blood platelets from 55 healthy donors (HD) and from 189 treated and untreated patients with cancers at varying stages (Table 1). In particular, 39 of these were from breast cancers (BrCa) which will be the focus of our workflow.</p>
 
 <p><strong>Table 1. Summary of Patient Characteristics</strong> <em><small>Adapted from Best et al.</small></em>
-<img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_best_table_1.png" alt="image" class="img-responsive" /></p>
+<img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_best_table_1.png" alt="image" class="img-responsive" /></p>
 
 <h4 id="rna-sequencing-and-analysis">RNA sequencing and analysis</h4>
 
 <p>Figure 4 depicts the sample collection and processing scheme. For each patient, approximately 100-500 picograms of total platelet RNA  - the equivalent content in less than a drop of blood - was extracted for sequencing.</p>
 
-<p><img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_best_figure_1.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_best_figure_1.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated platelets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
 </div>
@@ -175,7 +175,7 @@
 
 <p>Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm trained to assign the correct category for each sample. In this case, the authors reported a 100% test accuracy in discriminating platelets derived from normal versus breast cancer patients (Figure 5).</p>
 
-<p><img src="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/figure_processdata_best_figure_s2c.png" alt="image" class="img-responsive" /></p>
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/figure_processdata_best_figure_s2c.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. Sample classification accuracy and sensitivity.</strong> Cross table of Support Vector Machine algorithm diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. <em>Adapted from Best et al. (Best 2015), Figure S2C</em>.
 </div>
@@ -284,7 +284,7 @@
   </tbody>
 </table>
 
-<p><a href="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/htseq_hd_brca_best_cancell_2015.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Raw RNA-Seq (.zip)</a></p>
+<p><a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/htseq_hd_brca_best_cancell_2015.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Raw RNA-Seq (.zip)</a></p>
 
 <p>We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains the name (id) of each RNA-Seq file and its corresponding class (Table 3).</p>
 
@@ -325,7 +325,7 @@
   </tbody>
 </table>
 
-<p><a href="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/tep_phenotypes.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Metadata (.zip)</a></p>
+<p><a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/tep_phenotypes.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Metadata (.zip)</a></p>
 
 <h3 id="analysis">Analysis</h3>
 
@@ -495,7 +495,7 @@
   <li>Ranks
     <ul>
       <li>Genes ranked as a function of p-value from differential expression.
-  <a href="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></li>
+  <a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></li>
     </ul>
   </li>
 </ol>
@@ -506,12 +506,12 @@
   <li>Expression
     <ul>
       <li>Normalized counts for RNA species in for each sample.
-  <a href="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/brca_hd_tep_expression.txt" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a></li>
+  <a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_expression.txt" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a></li>
     </ul>
   </li>
   <li>Phenotype
     <ul>
-      <li>Declaration of classes and sample assignment. <a href="/guide/media/workflows/rna-seq-to-enrichment-map/process_data/brca_hd_tep_phenotype.cls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a></li>
+      <li>Declaration of classes and sample assignment. <a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_phenotype.cls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a></li>
     </ul>
   </li>
 </ol>
@@ -533,8 +533,8 @@
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
     var disqus_config = function () {
-    this.page.url = "http://pathwaycommons.github.io/guide/workflows/rna-seq-to-enrichment-map/process_data";  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "/workflows/rna-seq-to-enrichment-map/process_data"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/process_data";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/rna_seq_to_enrichment_map/process_data"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

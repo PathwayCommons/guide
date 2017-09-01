@@ -18,7 +18,7 @@ data:
   rank: brca_hd_tep_ranks.rnk
   expression: brca_hd_tep_expression.txt
   phenotype: brca_hd_tep_phenotype.cls
-group: rna-seq-to-enrichment-map
+group: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 26525104

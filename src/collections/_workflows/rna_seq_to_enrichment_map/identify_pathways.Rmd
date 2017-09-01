@@ -19,14 +19,14 @@ data:
   report_brca: gsea_report_for_brca.xls
   report_hd: gsea_report_for_hd.xls
   rank: brca_hd_tep_ranks.rnk
-group: rna-seq-to-enrichment-map
+group: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 26525104
 comments: yes
 ---
 
-{% assign workflow = (site.workflows | where: 'group' , 'rna-seq-to-enrichment-map') %}
+{% assign workflow = (site.workflows | where: 'group' , 'rna_seq_to_enrichment_map') %}
 {% assign process_data = (workflow | where: 'title' , 'Process Data' | first) %}
 {% assign identify_pathways = (workflow | where: 'title' , 'Identify Pathways' | first) %}
 {% assign visualize = (workflow | where: 'title' , 'Visualize' | first) %}
