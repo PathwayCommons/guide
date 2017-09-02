@@ -8,7 +8,7 @@ output:
     toc_depth: 2
 category: Pathway Enrichment Analysis
 layout: r-notebook
-cover: null
+cover: cover.png
 draft: FALSE
 pdf: yes
 splash: "Perform differential expression analysis of platelet RNA-Seq data, identify
