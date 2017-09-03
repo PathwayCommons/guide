@@ -1,0 +1,9 @@
+{% if page.pdf %}
+<li>
+  <a data-toggle="tooltip"
+    title="View PDF"
+    href="{{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.pdf }}">
+    <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>
+  </a>
+</li>
+{% endif %}
