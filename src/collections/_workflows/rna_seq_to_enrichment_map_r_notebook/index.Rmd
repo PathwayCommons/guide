@@ -11,8 +11,7 @@ layout: r-notebook
 cover: cover.png
 draft: FALSE
 pdf: rna_seq_to_enrichment_map.Rmd
-splash: "Perform differential expression analysis of platelet RNA-Seq data, identify
-  altered pathways then visualize them using Enrichment Map <p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
+splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
 subtitle: Process platelet RNA-Seq data, identify altered pathways then visualize
   using Enrichment Map
 badges: R Notebook
