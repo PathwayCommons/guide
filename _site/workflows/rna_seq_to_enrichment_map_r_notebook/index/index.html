@@ -211,22 +211,20 @@
 
       <li></li>
       
-        
-<li>
+        <li>
   <a data-toggle="tooltip"
-    title="View PDF"
-    href="/guide/media/workflows/rna_seq_to_enrichment_map_r_notebook/index/rna_seq_to_enrichment_map.Rmd">
-    <i class="fa fa-file-code-o fa-2x" aria-hidden="true"></i>
+    title="Download"
+    href="/guide/media/workflows/rna_seq_to_enrichment_map_r_notebook/index/rna_seq_to_enrichment_map_r_notebook.zip">
+    <i class="fa fa-download fa-2x" aria-hidden="true"></i>
   </a>
 </li>
-
 
       
       </ul>
     </div>
     <hr/>
     <div class="alert alert-info">
-  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'
+  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'. This notebook and file dependencies are available for downloaded via the <i class="fa fa-download" aria-hidden="true"></i> link (top, right).
 </div>
 
 <h2 id="a-overview">A. Overview</h2>
@@ -1396,7 +1394,12 @@
 
 <p>We’re ready to declare our options for the Enrichment Map Cytoscape app.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Define thresholds for GSEA enrichments
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Construct path to GSEA results - 'edb' folder
+</span>  <span class="c1">### Ouptut from GSEA - update below to match your directory name
+</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="s2">"tep_BrCa_HD.GseaPreranked.1504539031238"</span><span class="p">)</span>
+  <span class="n">gsea_results_filename</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span> <span class="s2">"edb"</span><span class="p">,</span> <span class="s2">"results.edb"</span><span class="p">)</span>
+
+  <span class="c1">### Define thresholds for GSEA enrichments
 </span>  <span class="n">em_pvalue_gsea_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.01"</span>
   <span class="n">em_qvalue_gsea_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.01"</span>
 
@@ -1404,23 +1407,19 @@
 </span>  <span class="n">em_similarity_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.375"</span>
   <span class="n">em_similarity_metric</span> <span class="o">=</span> <span class="s2">"COMBINED"</span>
 
-  <span class="c1">### GSEA results - 'edb' folder
-</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="s2">"tep_BrCa_HD.GseaPreranked.1504286739887"</span><span class="p">)</span>
-  <span class="n">gsea_results_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span> <span class="s2">"edb"</span><span class="p">,</span> <span class="s2">"results.edb"</span><span class="p">)</span>
-
   <span class="c1">#######################################
 </span>  <span class="c1">#create EM pvalue &lt; 0.01 and qvalue &lt; 0.01
 </span>  <span class="c1">#######################################
 </span>  <span class="n">em_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"enrichmentmap build analysisType=gsea"</span><span class="p">,</span>
-                     <span class="s2">"gmtFile="</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
-                     <span class="s2">"pvalue="</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span>
-                     <span class="s2">"qvalue="</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span>
-                     <span class="s2">"similaritycutoff="</span><span class="p">,</span> <span class="n">em_similarity_threshold</span><span class="p">,</span>
-                     <span class="s2">"coeffecients="</span><span class="p">,</span> <span class="n">em_similarity_metric</span><span class="p">,</span>
-                     <span class="s2">"ranksDataset1="</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
-                     <span class="s2">"enrichmentsDataset1="</span><span class="p">,</span> <span class="n">gsea_results_filename</span><span class="p">,</span>
-                     <span class="s2">"expressionDataset1="</span><span class="p">,</span> <span class="n">expression_dataset_path</span><span class="p">,</span>
-                     <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+                    <span class="s2">"gmtFile="</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
+                    <span class="s2">"pvalue="</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span>
+                    <span class="s2">"qvalue="</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span>
+                    <span class="s2">"similaritycutoff="</span><span class="p">,</span> <span class="n">em_similarity_threshold</span><span class="p">,</span>
+                    <span class="s2">"coeffecients="</span><span class="p">,</span> <span class="n">em_similarity_metric</span><span class="p">,</span>
+                    <span class="s2">"ranksDataset1="</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
+                    <span class="s2">"enrichmentsDataset1="</span><span class="p">,</span> <span class="n">gsea_results_filename</span><span class="p">,</span>
+                    <span class="s2">"expressionDataset1="</span><span class="p">,</span> <span class="n">expression_dataset_path</span><span class="p">,</span>
+                    <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
 
   <span class="c1">#enrichment map command will return the suid of newly created network.
 </span>  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span></code></pre></figure>

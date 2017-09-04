@@ -10,7 +10,7 @@ category: Pathway Enrichment Analysis
 layout: r-notebook
 cover: cover.png
 draft: FALSE
-pdf: rna_seq_to_enrichment_map.Rmd
+download: rna_seq_to_enrichment_map_r_notebook.zip
 splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
 subtitle: Process platelet RNA-Seq data, identify altered pathways then visualize
   using Enrichment Map
@@ -20,7 +20,7 @@ badges: R Notebook
 
 
 <div class="alert alert-info">
-  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'
+  This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'. This notebook and file dependencies are available for downloaded via the <i class="fa fa-download" aria-hidden="true"></i> link (top, right).
 </div>
 
 ## A. Overview
@@ -724,6 +724,11 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
 
 
 {% highlight r %}
+  ### Construct path to GSEA results - 'edb' folder
+  ### Ouptut from GSEA - update below to match your directory name
+  gsea_results <- file.path(gsea_out, "tep_BrCa_HD.GseaPreranked.1504539031238")
+  gsea_results_filename <- file.path(gsea_results, "edb", "results.edb")
+
   ### Define thresholds for GSEA enrichments
   em_pvalue_gsea_threshold <- "0.01"
   em_qvalue_gsea_threshold <- "0.01"
@@ -732,28 +737,23 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   em_similarity_threshold <- "0.375"
   em_similarity_metric = "COMBINED"
 
-  ### GSEA results - 'edb' folder
-  gsea_results <- file.path(gsea_out, "tep_BrCa_HD.GseaPreranked.1504286739887")
-  gsea_results_path <- file.path(gsea_results, "edb", "results.edb")
-
   #######################################
   #create EM pvalue < 0.01 and qvalue < 0.01
   #######################################
   em_command = paste("enrichmentmap build analysisType=gsea",
-                     "gmtFile=", gsea_gmx,
-                     "pvalue=", em_pvalue_gsea_threshold,
-                     "qvalue=", em_qvalue_gsea_threshold,
-                     "similaritycutoff=", em_similarity_threshold,
-                     "coeffecients=", em_similarity_metric,
-                     "ranksDataset1=", gsea_rank_list_path,
-                     "enrichmentsDataset1=", gsea_results_filename,
-                     "expressionDataset1=", expression_dataset_path,
-                     sep=" ")
+                    "gmtFile=", gsea_gmx,
+                    "pvalue=", em_pvalue_gsea_threshold,
+                    "qvalue=", em_qvalue_gsea_threshold,
+                    "similaritycutoff=", em_similarity_threshold,
+                    "coeffecients=", em_similarity_metric,
+                    "ranksDataset1=", gsea_rank_list_path,
+                    "enrichmentsDataset1=", gsea_results_filename,
+                    "expressionDataset1=", expression_dataset_path,
+                    sep=" ")
 
   #enrichment map command will return the suid of newly created network.
   response <- r2cytoscape::commandRun(em_command)
 {% endhighlight %}
-
 
 ## References
 [^1]: [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)

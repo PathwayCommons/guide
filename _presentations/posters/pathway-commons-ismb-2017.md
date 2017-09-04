@@ -7,7 +7,7 @@ location: Prague, Czech Republic
 cover: cover.jpg
 layout: document
 figure: pc-poster-ismb-2017_95cmx130cm.png
-pdf: pc-poster-ismb-2017_95cmx130cm.pdf
+download: pc-poster-ismb-2017_95cmx130cm.pdf
 badges:
 ---
 

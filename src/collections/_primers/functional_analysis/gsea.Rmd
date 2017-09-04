@@ -1,7 +1,7 @@
 ---
 title: Gene Set Enrichment Analysis
 date: 2016-04-20
-pdf: gsea_subramanian_pnas_v102_43_2005.pdf
+download: gsea_subramanian_pnas_v102_43_2005.pdf
 layout: document
 category: functional_analysis
 figures:

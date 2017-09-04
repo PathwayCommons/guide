@@ -8,7 +8,7 @@ figures:
   figure_4: figure_chinen_6a.png
 badge: pathway enrichment
 cover: cover.jpg
-pdf:
+download:
 date: 2016-09-05
 layout: document
 category: Pathway_Enrichment_Analysis
