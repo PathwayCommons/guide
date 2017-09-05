@@ -475,27 +475,27 @@ In our GSEA run, the following relevant options have been specified:
   gsea_min_gs_size <- 15
   gsea_max_gs_size <- 200
 
-  ### Execute GSEA
-  # command <- paste("java -cp", gsea_jar_path,
-  #                  "-Xmx1G xtools.gsea.GseaPreranked",
-  #                  "-rpt_label", gsea_analysis_name,
-  #                  "-out", gsea_out,
-  #                  "-gmx", gsea_gmx,
-  #                  "-rnk", gsea_rank_list_path,
-  #                  "-nperm", gsea_num_permutations,
-  #                  "-set_min", gsea_min_gs_size,
-  #                  "-set_max", gsea_max_gs_size,
-  #                  "-collapse false",
-  #                  "-scoring_scheme weighted",
-  #                  "-permute gene_set",
-  #                  "-num 100",
-  #                  "-plot_top_x 20",
-  #                  "-rnd_seed 12345",
-  #                  "-zip_report false",
-  #                  "-gui false",
-  #                  ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
-  #           sep=" ")
-  # system(command)
+  ## Execute GSEA
+  command <- paste("java -cp", gsea_jar_path,
+                   "-Xmx1G xtools.gsea.GseaPreranked",
+                   "-rpt_label", gsea_analysis_name,
+                   "-out", gsea_out,
+                   "-gmx", gsea_gmx,
+                   "-rnk", gsea_rank_list_path,
+                   "-nperm", gsea_num_permutations,
+                   "-set_min", gsea_min_gs_size,
+                   "-set_max", gsea_max_gs_size,
+                   "-collapse false",
+                   "-scoring_scheme weighted",
+                   "-permute gene_set",
+                   "-num 100",
+                   "-plot_top_x 20",
+                   "-rnd_seed 12345",
+                   "-zip_report false",
+                   "-gui false",
+                   ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
+            sep=" ")
+  system(command)
 ```
 
 In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in `gsea_out` that contains reports and figures generated during GSEA.
