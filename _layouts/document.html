@@ -9,7 +9,9 @@ layout: page
       <ul class="list-inline pull-right">
       {% include icons/social.html %}
       <li></li>
-      {% if page.download %}
+      {% if page.pdf %}
+        {% include icons/pdf.html %}
+      {% elsif page.download %}
         {% include icons/download.html %}
       {% endif %}
       </ul>

@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 2
 category: Pathway Enrichment Analysis
-layout: r-notebook
+layout: document
 cover: cover.png
 draft: FALSE
 download: rna_seq_to_enrichment_map_r_notebook.zip
@@ -523,7 +523,7 @@ At this stage, we can generate a rank list file where row names are gene symbols
                                      stringsAsFactors = FALSE)
   brca_hd_tep_ordered_ranks_df <- brca_hd_tep_ranks_df[order(brca_hd_tep_ranks_df[,2], decreasing = TRUE), ]
 
-  ## Write out
+  ## Write out to file
   rank_list_path <- file.path(getwd(), "brca_hd_tep.rnk")
   write.table(brca_hd_tep_ordered_ranks_df,
               quote=FALSE,
@@ -583,10 +583,9 @@ This file will be used in the Enrichment Map so that we can differentiate (i.e. 
   l1 <- paste(n_samples, n_classes, "1")
   l2 <- paste("#", brca_hd_tep_de_tested_tt[["comparison"]][1], brca_hd_tep_de_tested_tt[["comparison"]][2])
   l3 <- paste(brca_hd_tep_filtered_dge[["samples"]][["group"]], collapse = " ")
-
   brca_hd_tep_cls <- rbind(l1, l2, l3)
 
-  ### Write out
+  ### Write out to file
   categorical_class_path <- file.path(getwd(), "brca_hd_tep.cls")
   write(brca_hd_tep_cls,
         file=categorical_class_path,
@@ -627,7 +626,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 
 A [gene set database](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats) is a text file that describes names of gene sets and one of more gene IDs that are in that gene set. We will be using the [Gene Matric Transposed (GMT)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29) format.
 
-For your convenience, gene set database (GMT) files for [human, mouse and rat are curated by the Bader lab](http://download.baderlab.org/EM_Genesets/) on a regular basis from various sources. In this instance we provide `Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt` which is a database of human gene sets that you can download [here](http://download.baderlab.org/EM_Genesets/August_01_2017/Human/symbol/Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt) that contains all the pathways and does not include terms inferred from electronic annotations (IEA).
+For your convenience, gene set database (GMT) files for [human, mouse and rat are curated by the Bader lab](http://download.baderlab.org/EM_Genesets/) on a regular basis from various sources. In this instance we provide [`Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt`](http://download.baderlab.org/EM_Genesets/August_01_2017/Human/symbol/Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt) which is a database of human gene sets that does not include terms inferred from electronic annotations (iea).
 
 ### Run GSEA
 
@@ -635,20 +634,18 @@ GSEA comes as stand-alone Java program.  Recall that we asked you to register, l
 
 In our GSEA run, the following relevant options have been specified:
 
-  - rpt_label - name of output folder for this run
-  - out - parent directory for output
-  - gmx - path to the gene set definition (gmt) file
-  - rnk - path to out rank list file
-  - nperm - number of permutations to generate null distribution
-  - set_min (set_max) - restrict candidate gene sets to those with these number of genes
-  - collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols
-  - scoring_scheme - how to calculate contributions of genes to a gene set's score
-  - permute - permute gene sets or phentoypes. For GSEA preranked you can only permute genesets.
-  - num - number of results to plot output file for
-  - rnd_seed - random seed to use
-  - zip_report - true/false to zip output directory
-  - gui - true/false. When running GSEA from the commandline this needs to be false.
-
+  - *rpt_label* - name of output folder for this run
+  - *out* - directory for results
+  - *gmx* - path to the gene set definition (gmt) file
+  - *rnk* - path to rank list file (RNK)
+  - *nperm* - number of permutations to generate null distribution
+  - *set_min (set_max)* - limits on number of genes for candidate gene sets
+  - *scoring_scheme* - how to calculate contributions of genes to a gene set's score
+  - *permute* - for GSEA preranked you can only permute via gene_sets
+  - *num* - number of results to plot output file for
+  - *rnd_seed* - random seed to use
+  - *zip_report* - zip to output directory
+  - *gui* - when running from the commandline this needs to be false
 
 <div class="alert alert-danger">
   GSEA can take many minutes to complete. Mileage may vary depending on the settings. Our analysis took 5 minutes on a MacBook Air (Early 2015), 2.2 GHz Intel Core i7 (8GB 16600 MHz DDR3).
@@ -656,7 +653,7 @@ In our GSEA run, the following relevant options have been specified:
 
 
 {% highlight r %}
-  ### Declare common user-defined settings
+  ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"
   gsea_analysis_name <- "tep_BrCa_HD"
@@ -670,29 +667,31 @@ In our GSEA run, the following relevant options have been specified:
   gsea_max_gs_size <- 200
 
   ### Execute GSEA
-  command <- paste("java -cp", gsea_jar_path,
-                   "-Xmx1G xtools.gsea.GseaPreranked",
-                   "-rpt_label", gsea_analysis_name,
-                   "-out", gsea_out,
-                   "-gmx", gsea_gmx,
-                   "-rnk", gsea_rank_list_path,
-                   "-nperm", gsea_num_permutations,
-                   "-set_min", gsea_min_gs_size,
-                   "-set_max", gsea_max_gs_size,
-                   "-collapse false",
-                   "-scoring_scheme weighted",
-                   "-permute gene_set",
-                   "-num 100",
-                   "-plot_top_x 20",
-                   "-rnd_seed 12345",
-                   "-zip_report false",
-                   "-gui false",
-                   ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
-            sep=" ")
-  system(command)
+  # command <- paste("java -cp", gsea_jar_path,
+  #                  "-Xmx1G xtools.gsea.GseaPreranked",
+  #                  "-rpt_label", gsea_analysis_name,
+  #                  "-out", gsea_out,
+  #                  "-gmx", gsea_gmx,
+  #                  "-rnk", gsea_rank_list_path,
+  #                  "-nperm", gsea_num_permutations,
+  #                  "-set_min", gsea_min_gs_size,
+  #                  "-set_max", gsea_max_gs_size,
+  #                  "-collapse false",
+  #                  "-scoring_scheme weighted",
+  #                  "-permute gene_set",
+  #                  "-num 100",
+  #                  "-plot_top_x 20",
+  #                  "-rnd_seed 12345",
+  #                  "-zip_report false",
+  #                  "-gui false",
+  #                  ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
+  #           sep=" ")
+  # system(command)
 {% endhighlight %}
 
-In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in  `gsea_out` that contains reports and figures generated during GSEA. Look for the following files:
+In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in `gsea_out` that contains reports and figures generated during GSEA.
+
+Look for the following files:
 
 - `index.html` - This is a [GSEA report](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_GSEA_Report) that summarizes the analysis results
 - `gsea_report_for_na_pos_XXXXXXXXXXXXX.xls` - The collection of gene sets enriched in the BrCa class. The 'pos' label originates from the way in which we compared the RNA-Seq classes, that is, BrCa relative to HD
@@ -726,7 +725,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
 {% highlight r %}
   ### Construct path to GSEA results - 'edb' folder
   ### Ouptut from GSEA - update below to match your directory name
-  gsea_results <- file.path(gsea_out, "tep_BrCa_HD.GseaPreranked.1504539031238")
+  gsea_results <- file.path(gsea_out, "tep_BrCa_HD.GseaPreranked.1504624413376")
   gsea_results_filename <- file.path(gsea_results, "edb", "results.edb")
 
   ### Define thresholds for GSEA enrichments

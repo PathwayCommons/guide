@@ -8,7 +8,7 @@ badges:
 layout: document
 category: slides
 cover: cover.jpg
-download: introduction-paxtoolsr-metabolomics-29-06-2016.pdf
+pdf: introduction-paxtoolsr-metabolomics-29-06-2016.pdf
 figure: paxtoolsr.html
 ---
 

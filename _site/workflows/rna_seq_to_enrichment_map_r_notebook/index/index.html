@@ -187,8 +187,7 @@
   <h1 class="page-title">RNA-Seq to Enrichment Map - R Notebook</h1>
   <div class="collection">
   <div class="document">
-    <div class="subtitle"><em>Process platelet RNA-Seq data, identify altered pathways then visualize using Enrichment Map</em></div>
-    <div class="date"><em>2017-08-01</em></div>
+    <div class="subtitle">Process platelet RNA-Seq data, identify altered pathways then visualize using Enrichment Map</div>
     <hr/>
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
@@ -1141,7 +1140,7 @@
                                      <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
   <span class="n">brca_hd_tep_ordered_ranks_df</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_ranks_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span> <span class="p">]</span>
 
-  <span class="c1">## Write out
+  <span class="c1">## Write out to file
 </span>  <span class="n">rank_list_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span> <span class="s2">"brca_hd_tep.rnk"</span><span class="p">)</span>
   <span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="p">,</span>
               <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
@@ -1235,10 +1234,9 @@
   <span class="n">l1</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">)</span>
   <span class="n">l2</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">1</span><span class="p">],</span> <span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">2</span><span class="p">])</span>
   <span class="n">l3</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]][[</span><span class="s2">"group"</span><span class="p">]],</span> <span class="n">collapse</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
-
   <span class="n">brca_hd_tep_cls</span> <span class="o">&lt;-</span> <span class="n">rbind</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">l3</span><span class="p">)</span>
 
-  <span class="c1">### Write out
+  <span class="c1">### Write out to file
 </span>  <span class="n">categorical_class_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span> <span class="s2">"brca_hd_tep.cls"</span><span class="p">)</span>
   <span class="n">write</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">,</span>
         <span class="n">file</span><span class="o">=</span><span class="n">categorical_class_path</span><span class="p">,</span>
@@ -1302,7 +1300,7 @@
 
 <p>A <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats">gene set database</a> is a text file that describes names of gene sets and one of more gene IDs that are in that gene set. We will be using the <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29">Gene Matric Transposed (GMT)</a> format.</p>
 
-<p>For your convenience, gene set database (GMT) files for <a href="http://download.baderlab.org/EM_Genesets/">human, mouse and rat are curated by the Bader lab</a> on a regular basis from various sources. In this instance we provide <code class="highlighter-rouge">Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt</code> which is a database of human gene sets that you can download <a href="http://download.baderlab.org/EM_Genesets/August_01_2017/Human/symbol/Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt">here</a> that contains all the pathways and does not include terms inferred from electronic annotations (IEA).</p>
+<p>For your convenience, gene set database (GMT) files for <a href="http://download.baderlab.org/EM_Genesets/">human, mouse and rat are curated by the Bader lab</a> on a regular basis from various sources. In this instance we provide <a href="http://download.baderlab.org/EM_Genesets/August_01_2017/Human/symbol/Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt"><code class="highlighter-rouge">Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt</code></a> which is a database of human gene sets that does not include terms inferred from electronic annotations (iea).</p>
 
 <h3 id="run-gsea">Run GSEA</h3>
 
@@ -1311,26 +1309,25 @@
 <p>In our GSEA run, the following relevant options have been specified:</p>
 
 <ul>
-  <li>rpt_label - name of output folder for this run</li>
-  <li>out - parent directory for output</li>
-  <li>gmx - path to the gene set definition (gmt) file</li>
-  <li>rnk - path to out rank list file</li>
-  <li>nperm - number of permutations to generate null distribution</li>
-  <li>set_min (set_max) - restrict candidate gene sets to those with these number of genes</li>
-  <li>collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols</li>
-  <li>scoring_scheme - how to calculate contributions of genes to a gene set’s score</li>
-  <li>permute - permute gene sets or phentoypes. For GSEA preranked you can only permute genesets.</li>
-  <li>num - number of results to plot output file for</li>
-  <li>rnd_seed - random seed to use</li>
-  <li>zip_report - true/false to zip output directory</li>
-  <li>gui - true/false. When running GSEA from the commandline this needs to be false.</li>
+  <li><em>rpt_label</em> - name of output folder for this run</li>
+  <li><em>out</em> - directory for results</li>
+  <li><em>gmx</em> - path to the gene set definition (gmt) file</li>
+  <li><em>rnk</em> - path to rank list file (RNK)</li>
+  <li><em>nperm</em> - number of permutations to generate null distribution</li>
+  <li><em>set_min (set_max)</em> - limits on number of genes for candidate gene sets</li>
+  <li><em>scoring_scheme</em> - how to calculate contributions of genes to a gene set’s score</li>
+  <li><em>permute</em> - for GSEA preranked you can only permute via gene_sets</li>
+  <li><em>num</em> - number of results to plot output file for</li>
+  <li><em>rnd_seed</em> - random seed to use</li>
+  <li><em>zip_report</em> - zip to output directory</li>
+  <li><em>gui</em> - when running from the commandline this needs to be false</li>
 </ul>
 
 <div class="alert alert-danger">
   GSEA can take many minutes to complete. Mileage may vary depending on the settings. Our analysis took 5 minutes on a MacBook Air (Early 2015), 2.2 GHz Intel Core i7 (8GB 16600 MHz DDR3).
 </div>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Declare common user-defined settings
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Declare user-defined settings
 </span>  <span class="n">gsea_jar_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="s2">"/Users/jeffreywong/bin/gsea-3.0.jar"</span><span class="p">)</span>
   <span class="n">gsea_rpt_label</span> <span class="o">&lt;-</span> <span class="s2">"tep_BrCa_HD_analysis"</span>
   <span class="n">gsea_analysis_name</span> <span class="o">&lt;-</span> <span class="s2">"tep_BrCa_HD"</span>
@@ -1344,28 +1341,30 @@
   <span class="n">gsea_max_gs_size</span> <span class="o">&lt;-</span> <span class="m">200</span>
 
   <span class="c1">### Execute GSEA
-</span>  <span class="n">command</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"java -cp"</span><span class="p">,</span> <span class="n">gsea_jar_path</span><span class="p">,</span>
-                   <span class="s2">"-Xmx1G xtools.gsea.GseaPreranked"</span><span class="p">,</span>
-                   <span class="s2">"-rpt_label"</span><span class="p">,</span> <span class="n">gsea_analysis_name</span><span class="p">,</span>
-                   <span class="s2">"-out"</span><span class="p">,</span> <span class="n">gsea_out</span><span class="p">,</span>
-                   <span class="s2">"-gmx"</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
-                   <span class="s2">"-rnk"</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
-                   <span class="s2">"-nperm"</span><span class="p">,</span> <span class="n">gsea_num_permutations</span><span class="p">,</span>
-                   <span class="s2">"-set_min"</span><span class="p">,</span> <span class="n">gsea_min_gs_size</span><span class="p">,</span>
-                   <span class="s2">"-set_max"</span><span class="p">,</span> <span class="n">gsea_max_gs_size</span><span class="p">,</span>
-                   <span class="s2">"-collapse false"</span><span class="p">,</span>
-                   <span class="s2">"-scoring_scheme weighted"</span><span class="p">,</span>
-                   <span class="s2">"-permute gene_set"</span><span class="p">,</span>
-                   <span class="s2">"-num 100"</span><span class="p">,</span>
-                   <span class="s2">"-plot_top_x 20"</span><span class="p">,</span>
-                   <span class="s2">"-rnd_seed 12345"</span><span class="p">,</span>
-                   <span class="s2">"-zip_report false"</span><span class="p">,</span>
-                   <span class="s2">"-gui false"</span><span class="p">,</span>
-                   <span class="s2">"&gt;"</span><span class="p">,</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"gsea_output_"</span><span class="p">,</span> <span class="n">gsea_rpt_label</span><span class="p">,</span> <span class="s2">".txt"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
-            <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
-  <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></code></pre></figure>
+</span>  <span class="c1"># command &lt;- paste("java -cp", gsea_jar_path,
+</span>  <span class="c1">#                  "-Xmx1G xtools.gsea.GseaPreranked",
+</span>  <span class="c1">#                  "-rpt_label", gsea_analysis_name,
+</span>  <span class="c1">#                  "-out", gsea_out,
+</span>  <span class="c1">#                  "-gmx", gsea_gmx,
+</span>  <span class="c1">#                  "-rnk", gsea_rank_list_path,
+</span>  <span class="c1">#                  "-nperm", gsea_num_permutations,
+</span>  <span class="c1">#                  "-set_min", gsea_min_gs_size,
+</span>  <span class="c1">#                  "-set_max", gsea_max_gs_size,
+</span>  <span class="c1">#                  "-collapse false",
+</span>  <span class="c1">#                  "-scoring_scheme weighted",
+</span>  <span class="c1">#                  "-permute gene_set",
+</span>  <span class="c1">#                  "-num 100",
+</span>  <span class="c1">#                  "-plot_top_x 20",
+</span>  <span class="c1">#                  "-rnd_seed 12345",
+</span>  <span class="c1">#                  "-zip_report false",
+</span>  <span class="c1">#                  "-gui false",
+</span>  <span class="c1">#                  "&gt;", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
+</span>  <span class="c1">#           sep=" ")
+</span>  <span class="err">#</span> <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></code></pre></figure>
 
-<p>In this case, we will have a directory <code class="highlighter-rouge">tep_BrCa_HD.Preranked.XXXXXXXXXXXXX</code> inside of the directory declared by in  <code class="highlighter-rouge">gsea_out</code> that contains reports and figures generated during GSEA. Look for the following files:</p>
+<p>In this case, we will have a directory <code class="highlighter-rouge">tep_BrCa_HD.Preranked.XXXXXXXXXXXXX</code> inside of the directory declared by in <code class="highlighter-rouge">gsea_out</code> that contains reports and figures generated during GSEA.</p>
+
+<p>Look for the following files:</p>
 
 <ul>
   <li><code class="highlighter-rouge">index.html</code> - This is a <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_GSEA_Report">GSEA report</a> that summarizes the analysis results</li>
@@ -1396,7 +1395,7 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Construct path to GSEA results - 'edb' folder
 </span>  <span class="c1">### Ouptut from GSEA - update below to match your directory name
-</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="s2">"tep_BrCa_HD.GseaPreranked.1504539031238"</span><span class="p">)</span>
+</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="s2">"tep_BrCa_HD.GseaPreranked.1504624413376"</span><span class="p">)</span>
   <span class="n">gsea_results_filename</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span> <span class="s2">"edb"</span><span class="p">,</span> <span class="s2">"results.edb"</span><span class="p">)</span>
 
   <span class="c1">### Define thresholds for GSEA enrichments

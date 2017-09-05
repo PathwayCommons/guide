@@ -2,13 +2,10 @@
 title: Tour - Pathway Search
 subtitle: A brief overview of the Pathway Commons pathway Search web app
 date: August 21, 2017
-location:
 badges: Google Slide
 layout: document
 category: slides
 cover: cover.png
-pdf:
-figure:
 ---
 
 <div class="embed-responsive embed-responsive-16by9">
