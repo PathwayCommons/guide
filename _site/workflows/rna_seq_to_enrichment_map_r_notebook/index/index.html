@@ -1340,27 +1340,27 @@
   <span class="n">gsea_min_gs_size</span> <span class="o">&lt;-</span> <span class="m">15</span>
   <span class="n">gsea_max_gs_size</span> <span class="o">&lt;-</span> <span class="m">200</span>
 
-  <span class="c1">### Execute GSEA
-</span>  <span class="c1"># command &lt;- paste("java -cp", gsea_jar_path,
-</span>  <span class="c1">#                  "-Xmx1G xtools.gsea.GseaPreranked",
-</span>  <span class="c1">#                  "-rpt_label", gsea_analysis_name,
-</span>  <span class="c1">#                  "-out", gsea_out,
-</span>  <span class="c1">#                  "-gmx", gsea_gmx,
-</span>  <span class="c1">#                  "-rnk", gsea_rank_list_path,
-</span>  <span class="c1">#                  "-nperm", gsea_num_permutations,
-</span>  <span class="c1">#                  "-set_min", gsea_min_gs_size,
-</span>  <span class="c1">#                  "-set_max", gsea_max_gs_size,
-</span>  <span class="c1">#                  "-collapse false",
-</span>  <span class="c1">#                  "-scoring_scheme weighted",
-</span>  <span class="c1">#                  "-permute gene_set",
-</span>  <span class="c1">#                  "-num 100",
-</span>  <span class="c1">#                  "-plot_top_x 20",
-</span>  <span class="c1">#                  "-rnd_seed 12345",
-</span>  <span class="c1">#                  "-zip_report false",
-</span>  <span class="c1">#                  "-gui false",
-</span>  <span class="c1">#                  "&gt;", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
-</span>  <span class="c1">#           sep=" ")
-</span>  <span class="err">#</span> <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></code></pre></figure>
+  <span class="c1">## Execute GSEA
+</span>  <span class="n">command</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"java -cp"</span><span class="p">,</span> <span class="n">gsea_jar_path</span><span class="p">,</span>
+                   <span class="s2">"-Xmx1G xtools.gsea.GseaPreranked"</span><span class="p">,</span>
+                   <span class="s2">"-rpt_label"</span><span class="p">,</span> <span class="n">gsea_analysis_name</span><span class="p">,</span>
+                   <span class="s2">"-out"</span><span class="p">,</span> <span class="n">gsea_out</span><span class="p">,</span>
+                   <span class="s2">"-gmx"</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
+                   <span class="s2">"-rnk"</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
+                   <span class="s2">"-nperm"</span><span class="p">,</span> <span class="n">gsea_num_permutations</span><span class="p">,</span>
+                   <span class="s2">"-set_min"</span><span class="p">,</span> <span class="n">gsea_min_gs_size</span><span class="p">,</span>
+                   <span class="s2">"-set_max"</span><span class="p">,</span> <span class="n">gsea_max_gs_size</span><span class="p">,</span>
+                   <span class="s2">"-collapse false"</span><span class="p">,</span>
+                   <span class="s2">"-scoring_scheme weighted"</span><span class="p">,</span>
+                   <span class="s2">"-permute gene_set"</span><span class="p">,</span>
+                   <span class="s2">"-num 100"</span><span class="p">,</span>
+                   <span class="s2">"-plot_top_x 20"</span><span class="p">,</span>
+                   <span class="s2">"-rnd_seed 12345"</span><span class="p">,</span>
+                   <span class="s2">"-zip_report false"</span><span class="p">,</span>
+                   <span class="s2">"-gui false"</span><span class="p">,</span>
+                   <span class="s2">"&gt;"</span><span class="p">,</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"gsea_output_"</span><span class="p">,</span> <span class="n">gsea_rpt_label</span><span class="p">,</span> <span class="s2">".txt"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+  <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></code></pre></figure>
 
 <p>In this case, we will have a directory <code class="highlighter-rouge">tep_BrCa_HD.Preranked.XXXXXXXXXXXXX</code> inside of the directory declared by in <code class="highlighter-rouge">gsea_out</code> that contains reports and figures generated during GSEA.</p>
 
