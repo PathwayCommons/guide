@@ -20,12 +20,20 @@ badges: R Notebook
 ```{r include=FALSE}
   knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
 ```
-
 <div class="alert alert-info">
   This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'. This notebook and file dependencies are available for downloaded via the <i class="fa fa-download" aria-hidden="true"></i> link (top, right).
 </div>
 
-## A. Overview
+## Table of Contents
+
+  - [A. Overview](#overview)
+  - [B. Sample Study](#sampleStudy)
+  - [C. Data Pre-Processing](#dataPreProcessing)
+  - [D. Differential Expression Testing](#differentialExpressionTesting)
+  - [E. Gene Set Enrichment Analysis](#geneSetEnrichmentAnalysis)
+  - [F. Enrichment Map](#enrichmentMap)
+
+## <a href="overview" name="overview">A. Overview</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -46,7 +54,7 @@ We will be using the following software and packages along the way.
 - [Java](https://www.java.com/en/) (v8)
   - [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) - Java Jar file (3.0)
   - [Cytoscape](http://www.cytoscape.org/) (3.5.1)
-  - [r2cytoscape]() ()
+  - [r2cytoscape](https://github.com/cytoscape/cytoscape-automation/tree/78c068f6293630693682a40d371646013343ae37/for-scripters/R/r2cytoscape) (Commit 78c068f629)
 
 #### GSEA
 
@@ -54,15 +62,18 @@ After [registering](http://software.broadinstitute.org/gsea/register.jsp), [logi
 
 #### Cytoscape
 
-After installing Cytoscape you'll need to load in several apps. Do this through the `Apps -> App Manager` in the toolbar.
+After installing Cytoscape you'll need to load in the Enrichment Map app. Do this through the `Apps -> App Manager` in the toolbar.
 
 - [EnrichmentMap](http://apps.cytoscape.org/apps/enrichmentmap) (3.0.0)
+
+For subsequent clustering and automated labelling of gene set themes, you should consider installing the following apps:
+
 - [Clustermaker2](http://apps.cytoscape.org/apps/clustermaker2) (1.1.0)
 - [WordCloud](http://apps.cytoscape.org/apps/wordcloud) (3.1.0)
 - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate) (1.1.0)
 
 
-## B. Sample Study
+## <a href="sampleStudy" name="sampleStudy">B. Sample Study</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -104,7 +115,7 @@ Best *et al.* collected blood platelets from 55 HD and from 39 individuals with 
   knitr::kable(tep_rnaseq_metadata_df)
 ```
 
-Each RNA-Seq record is a tabular text file that contains 57 736 rows: The first column holds an [Ensembl](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) ID and the second column a read count for transcripts mapped to that ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
+Each RNA-Seq measurement is represented is a tabular text file that contains 57 736 rows: The first column holds an [Ensembl](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) ID and the second column a read count for transcripts mapped to that ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
 
 **Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt**
 ```{r, results='asis'}
@@ -114,7 +125,7 @@ Each RNA-Seq record is a tabular text file that contains 57 736 rows: The first 
   knitr::kable(head(rnaseq_HD_1_htsqct), col.names=c("",""))
 ```
 
-## C. Data Pre-Processing
+## <a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -188,7 +199,7 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
   knitr::kable(head(SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]])[, c(1,2,6,7)])
 ```
 
-## D. Differential Expression Testing
+## <a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -276,7 +287,7 @@ Note that the TMM-normalized `DGEList` called `brca_hd_tep_tmm_normalized_dge` h
 
 #### Text file for expression dataset (TXT)
 
-As a convenient side effect of our work, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display expression for any enriched pathways in our Enrichment Map.
+As a convenient side effect of our work, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.
 
 ```{r}
 
@@ -422,12 +433,12 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
   brca_hd_tep_cls
 ```
 
-## E. Gene Set Enrichment Analysis
+## <a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
   <ul>
-    <li>Obtain gene set database</li>
+    <li>Obtain gene set database of candidates</li>
     <li>Run GSEA and obtain enriched gene sets</li>
   </ul>
 </div>
@@ -508,7 +519,7 @@ Look for the following files:
 
 Please refer to the GSEA documentation on ['Interpreting GSEA Results'](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results) for full details.
 
-## F. Enrichment Map
+## <a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -516,6 +527,10 @@ Please refer to the GSEA documentation on ['Interpreting GSEA Results'](http://s
     <li>Obtain an Enrichment Map of the enriched pathways</li>
   </ul>
 </div>
+
+Enrichment Map[^6] is a visualization analysis tool that organizes gene sets into an information-rich similarity network. The true power of Enrichment Map is that it is a visual display method that reduces complexity by grouping similar gene sets as defined by the number of overlapping genes.
+
+Gene sets are represented as nodes whose radius is proportional to the number of genes. Edges indicate nodes with shared genes, where the thickness of the line is proportional to the degree of overlap. Finally, EM can use node color to represent other dimensions of the data, for example, gene sets enriched in different classes.
 
 ### Cytoscape
 
@@ -560,6 +575,8 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   #enrichment map command will return the suid of newly created network.
   response <- r2cytoscape::commandRun(em_command)
 ```
+
+Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.  
 
 ## References
 [^1]: [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)
