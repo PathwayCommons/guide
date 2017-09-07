@@ -256,6 +256,9 @@
       <li><a href="https://bioconductor.org/">BiocInstaller</a> (&gt;=1.24.0)</li>
       <li><a href="https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a> (&gt;= 1.2.3)</li>
       <li><a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> (&gt;= 3.14.0)</li>
+      <li><a href="https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a> (&gt;= 1.26.4)</li>
+      <li><a href="https://bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>	(&gt;= 2.8.2)</li>
+      <li><a href="https://bioconductor.org/packages/release/bioc/html/biomaRt.html">biomaRt</a> (&gt;= 2.30.0)</li>
       <li><a href="https://cran.r-project.org/web/packages/devtools/README.html">devtools</a> (&gt;=1.13.3)</li>
     </ul>
   </li>
@@ -446,19 +449,217 @@
 
 <hr />
 
-<p>We offload all of the above work onto a custom R package <a href="https://github.com/jvwong/emRNASeq">(<code class="highlighter-rouge">emRNASeq</code>)</a> with functions that perform the required ID-mapping and data merging and returns a single <code class="highlighter-rouge">SummarizedExperiment</code> instance. Please refer to the R help documentation for more details.</p>
+<p>We offload the above work onto an R function <code class="highlighter-rouge">merge_data</code> and its helpers that perform the required ID-mapping and data merging and returns a single <code class="highlighter-rouge">SummarizedExperiment</code> instance.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">#' Merge a set of files representing RNA sequencing gene counts
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' 1. Default parameter is do nothing (already matching gene set ids)
+</span>  <span class="c1">#' 2. Optional parameter is to map from input to target namespace
+</span>  <span class="c1">#' Data files must be in tab-delimited format with two columns and no header. The classes are defined by a meta data file which is a tab-delimited text file with headers for the sample read 'id' and 'class'. Each row entry is a corresponding filename and class assignment. Only accepts pair-wise comparison so there must be exactly 2 classes.
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @param metadata_file A metadata file
+</span>  <span class="c1">#' @param species A character array indicating the species with which to fetch gene models from bioMart, If NULL this mapping will not be performed
+</span>  <span class="c1">#' @param source_name attribute (gene namespace) input
+</span>  <span class="c1">#' @param target_name attribute (gene namespace) desired
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @return A \code{\link[SummarizedExperiment]{SummarizedExperiment}}
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @export
+</span>  <span class="n">merge_data</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="k">...</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">is.character</span><span class="p">(</span><span class="n">species</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'species must be of class character'</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">&lt;-</span> <span class="m">0</span>
+    <span class="n">class_order</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">()</span>
+    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">create_meta</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span>
+
+    <span class="n">filelist</span> <span class="o">&lt;-</span> <span class="n">list</span><span class="p">(</span><span class="k">...</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">is.list</span><span class="p">(</span><span class="n">filelist</span><span class="p">)){</span>
+      <span class="n">filelist</span> <span class="o">&lt;-</span> <span class="n">unlist</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">dim</span><span class="p">(</span><span class="n">meta</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">length</span><span class="p">(</span><span class="n">filelist</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'Mismatch in files declared in metadata'</span><span class="p">)</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">file</span> <span class="k">in</span> <span class="n">filelist</span><span class="p">){</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">file</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'invalid file/directory'</span><span class="p">)</span>
+
+      <span class="n">fname</span> <span class="o">&lt;-</span> <span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+      <span class="n">findex</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span> <span class="o">==</span> <span class="n">fname</span><span class="p">)</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">findex</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'Could not find match in metadata for '</span><span class="p">,</span> <span class="n">fname</span><span class="p">))</span>
+
+      <span class="n">class_order</span> <span class="o">&lt;-</span> <span class="n">append</span><span class="p">(</span><span class="n">class_order</span><span class="p">,</span> <span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span> <span class="o">==</span> <span class="n">fname</span><span class="p">))</span>
+
+      <span class="n">input_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">file</span><span class="p">,</span>
+        <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
+        <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
+        <span class="n">row.names</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+      <span class="n">colnames</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">tools</span><span class="o">::</span><span class="n">file_path_sans_ext</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="m">0</span><span class="p">){</span>
+        <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">input_df</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+        <span class="k">next</span><span class="p">()</span>
+      <span class="p">}</span>
+
+      <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span>
+        <span class="n">input_df</span><span class="p">,</span>
+        <span class="n">by</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span>
+        <span class="n">all</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+      <span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">data_df</span><span class="o">$</span><span class="n">Row.names</span>
+      <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">subset</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="o">-</span><span class="n">Row.names</span><span class="p">)</span>
+      <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+    <span class="p">}</span>
+
+    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">get_gene_model</span><span class="p">(</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span> <span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">is.null</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span> <span class="s1">'Could not reliably map input gene ids'</span> <span class="p">)</span>
+
+    <span class="c1"># Sync up data rows (name, order) with gene_model returned
+</span>    <span class="n">data_df_mapped</span> <span class="o">&lt;-</span> <span class="n">map_names</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">gene_model</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
+
+    <span class="c1"># Create the SummarizedExperiment
+</span>    <span class="n">colData</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">class</span><span class="o">=</span><span class="n">meta</span><span class="p">[</span><span class="n">class_order</span><span class="p">,]</span><span class="o">$</span><span class="n">class</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="n">colnames</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">))</span>
+
+    <span class="n">data_se</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">SummarizedExperiment</span><span class="p">(</span>
+      <span class="n">assays</span> <span class="o">=</span> <span class="n">list</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">data.matrix</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">)),</span>
+      <span class="n">rowRanges</span> <span class="o">=</span> <span class="n">gene_model</span><span class="p">,</span>
+      <span class="n">colData</span><span class="o">=</span><span class="n">colData</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">data_se</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="c1">#' Create a data frame housing the RNA-seq metadata
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' This function requires a tab-delimited text file with headers for
+</span>  <span class="c1">#' the sample read 'id' and 'class'. Each row entry is a corresponding filename
+</span>  <span class="c1">#' and class assignment. Only accepts pair-wise comparison so there must be
+</span>  <span class="c1">#' exactly 2 classes.
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @param metadata_file a path to a tab-delimited metadata file
+</span>  <span class="c1">#' @return A data frame
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @export
+</span>  <span class="n">create_meta</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'file does not exist'</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">".txt$"</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)){</span>
+      <span class="n">stop</span><span class="p">(</span><span class="s2">"Uploaded file must be a tab-delimited .txt file!"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span>
+      <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
+      <span class="n">colClasses</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"character"</span><span class="p">,</span> <span class="s2">"factor"</span><span class="p">),</span>
+      <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"class"</span><span class="p">)))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">length</span><span class="p">(</span><span class="n">levels</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">class</span><span class="p">))</span> <span class="o">==</span> <span class="m">2</span><span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'require 2 classes'</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="c1">#' Normalize the data.frame nameswith those on a \code{\link[GenomicRanges]{GRanges}} object
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' Assumes that the gene_model has a meta-data column with source_name
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @param data_df the data frame to synchronize
+</span>  <span class="c1">#' @param gene_model the \code{\link[GenomicRanges]{GRanges}} object to match rows with
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @return A \code{\link[base]{data.frame}} with the same rows and names as the input \code{\link[GenomicRanges]{GRanges}}
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @export
+</span>  <span class="n">map_names</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">gene_model</span><span class="p">,</span> <span class="n">source_name</span><span class="p">){</span>
+
+    <span class="c1"># Filter data_df for source_name
+</span>    <span class="n">indices_data_df_source</span> <span class="o">&lt;-</span> <span class="n">rownames</span><span class="p">(</span> <span class="n">data_df</span> <span class="p">)</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span> <span class="n">gene_model</span> <span class="p">)[[</span><span class="n">source_name</span><span class="p">]]</span>
+    <span class="n">subset_data_df_source</span> <span class="o">&lt;-</span> <span class="n">data_df</span><span class="p">[</span> <span class="n">indices_data_df_source</span><span class="p">,</span> <span class="p">]</span>
+
+    <span class="c1"># Recreate the data frame
+</span>    <span class="n">merged_data_df</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span> <span class="n">subset_data_df_source</span><span class="p">,</span>
+      <span class="n">data.frame</span><span class="p">(</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span> <span class="n">gene_model</span> <span class="p">),</span> <span class="n">target_name</span> <span class="o">=</span> <span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span> <span class="p">),</span>
+      <span class="n">by.x</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span> <span class="n">by.y</span> <span class="o">=</span> <span class="n">source_name</span><span class="p">)</span>
+
+    <span class="c1"># merged data could still have duplicates!
+</span>    <span class="c1"># indices_merged_data_df_unique &lt;- !duplicated(merged_data_df[[ "Row.names" ]])
+</span>    <span class="c1"># merged_data_df_unique &lt;- merged_data_df[indices_merged_data_df_unique,]
+</span>
+    <span class="c1"># Set row names to target_name
+</span>    <span class="n">row.names</span><span class="p">(</span> <span class="n">merged_data_df</span> <span class="p">)</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="o">$</span><span class="n">target_name</span>
+    <span class="c1"># Drop name columns
+</span>    <span class="n">merged_data_df</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="p">[,</span> <span class="o">-</span><span class="n">which</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Row.names"</span><span class="p">,</span> <span class="s2">"target_name"</span><span class="p">))</span> <span class="p">]</span>
+
+    <span class="c1"># Reorder the rows to match
+</span>    <span class="n">merged_data_df_reordered</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="p">[</span> <span class="n">match</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">),</span> <span class="n">rownames</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)),</span> <span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">merged_data_df_reordered</span><span class="p">)</span>
+  <span class="p">}</span>
+
+
+  <span class="c1">#' Retrieve the gene info
+</span>  <span class="c1">#'
+</span>  <span class="c1">#'  !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @param data_df the data frame of genes (rownames) and samples (colnames)
+</span>  <span class="c1">#' @param species the species (mouse, human)
+</span>  <span class="c1">#' @param source_name attribute (gene namespace) input
+</span>  <span class="c1">#' @param target_name attribute (gene namespace) desired
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @return A \code{\link[GenomicRanges]{GRanges}} having unique and valid target_name entries
+</span>  <span class="c1">#'
+</span>  <span class="c1">#' @export
+</span>  <span class="n">get_gene_model</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span> <span class="p">){</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">missing</span><span class="p">(</span><span class="n">species</span><span class="p">)</span> <span class="o">||</span>
+        <span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"mouse"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+        <span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"human"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s2">"Species must be human or mouse"</span><span class="p">)</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="k">switch</span><span class="p">(</span><span class="n">species</span><span class="p">,</span>
+      <span class="n">mouse</span> <span class="o">=</span> <span class="s2">"mmusculus_gene_ensembl"</span><span class="p">,</span>
+      <span class="n">human</span> <span class="o">=</span> <span class="s2">"hsapiens_gene_ensembl"</span><span class="p">)</span>
+    <span class="n">mart_used</span> <span class="o">=</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">useMart</span><span class="p">(</span><span class="s2">"ENSEMBL_MART_ENSEMBL"</span><span class="p">)</span>
+    <span class="n">ensembl</span> <span class="o">=</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">useDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">mart</span> <span class="o">=</span> <span class="n">mart_used</span><span class="p">)</span>
+    <span class="n">attributes_available</span> <span class="o">&lt;-</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">listAttributes</span><span class="p">(</span><span class="n">ensembl</span><span class="p">)</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">source_name</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span> <span class="o">||</span>
+        <span class="o">!</span><span class="n">target_name</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span> <span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="s2">"Invalid source/target name"</span><span class="p">)</span>
+
+    <span class="n">bm_info</span> <span class="o">&lt;-</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">getBM</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"chromosome_name"</span><span class="p">,</span>
+      <span class="s2">"start_position"</span><span class="p">,</span> <span class="s2">"end_position"</span><span class="p">,</span> <span class="s2">"strand"</span><span class="p">,</span>
+      <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span><span class="p">),</span>
+      <span class="n">filters</span> <span class="o">=</span> <span class="n">source_name</span><span class="p">,</span>
+      <span class="n">values</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">),</span>
+      <span class="n">mart</span> <span class="o">=</span> <span class="n">ensembl</span><span class="p">)</span>
+
+    <span class="n">rowRanges</span> <span class="o">&lt;-</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">GRanges</span><span class="p">(</span><span class="n">seqnames</span> <span class="o">=</span> <span class="n">paste0</span><span class="p">(</span><span class="s2">"chr"</span><span class="p">,</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">chromosome_name</span><span class="p">),</span>
+      <span class="n">ranges</span> <span class="o">=</span> <span class="n">IRanges</span><span class="o">::</span><span class="n">IRanges</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">start_position</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">end_position</span><span class="p">),</span>
+      <span class="n">strand</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">strand</span><span class="p">)</span>
+
+    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">bm_info</span><span class="p">[[</span><span class="n">source_name</span><span class="p">]])</span>
+    <span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+    <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">meta</span>
+
+    <span class="n">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">bm_info</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
+
+    <span class="c1"># Filter gene_model for valid target_name
+</span>    <span class="c1"># GRanges objects act like vectors for subsetting
+</span>    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">rowRanges</span><span class="p">[</span> <span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">gene_model</span><span class="p">[</span> <span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)[[</span><span class="n">source_name</span><span class="p">]])</span> <span class="p">]</span>
+    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">gene_model</span><span class="p">[</span> <span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span> <span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span>
+  <span class="p">}</span></code></pre></figure>
 
 <p>Let’s perform the ID-mapping and data merging.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span>
-  <span class="n">library</span><span class="p">(</span><span class="s2">"SummarizedExperiment"</span><span class="p">)</span>
-  <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"jvwong/emRNASeq"</span><span class="p">)</span>
-
-  <span class="n">source_name</span> <span class="o">&lt;-</span> <span class="s2">"ensembl_gene_id"</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">source_name</span> <span class="o">&lt;-</span> <span class="s2">"ensembl_gene_id"</span>
   <span class="n">target_name</span> <span class="o">&lt;-</span> <span class="s2">"hgnc_symbol"</span>
   <span class="n">species</span> <span class="o">&lt;-</span> <span class="s2">"human"</span>
 
-  <span class="n">brca_hd_tep_se</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">merge_data</span><span class="p">(</span>
+  <span class="n">brca_hd_tep_se</span> <span class="o">&lt;-</span> <span class="n">merge_data</span><span class="p">(</span>
     <span class="n">tep_rnaseq_metadata</span><span class="p">,</span>
     <span class="n">species</span><span class="p">,</span>
     <span class="n">source_name</span><span class="p">,</span>
@@ -706,9 +907,7 @@
 
 <p>RNA species with very low mapped read counts in a small number of samples can be highly variable. Consequently, we choose to ignore these in the search for differential expression. Best <em>et al.</em> use the rule of thumb that ‘genes with less than five (non-normalized) read counts in all samples were excluded from analyses’.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">library</span><span class="p">(</span><span class="n">edgeR</span><span class="p">)</span>
-
-  <span class="c1">### Minimum number of mapped read counts per sample
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Minimum number of mapped read counts per sample
 </span>  <span class="n">min_counts</span> <span class="o">&lt;-</span> <span class="m">5</span>
 
   <span class="c1">### Declare baseline (i.e. control) and test classes
@@ -880,7 +1079,7 @@
 
 <p>RNA for a sample can be sequenced to varying ‘depths’ in that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM)<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup> that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_tmm_normalized_dge</span> <span class="o">&lt;-</span> <span class="n">emRNASeq</span><span class="o">::</span><span class="n">normalize_rseq</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_tmm_normalized_dge</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">calcNormFactors</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"TMM"</span><span class="p">)</span>
   <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
 
 <table>
