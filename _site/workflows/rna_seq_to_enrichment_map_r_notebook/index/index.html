@@ -260,13 +260,13 @@
       <li><a href="https://bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>	(&gt;= 2.8.2)</li>
       <li><a href="https://bioconductor.org/packages/release/bioc/html/biomaRt.html">biomaRt</a> (&gt;= 2.30.0)</li>
       <li><a href="https://cran.r-project.org/web/packages/devtools/README.html">devtools</a> (&gt;=1.13.3)</li>
+      <li><a href="https://github.com/cytoscape/cytoscape-automation/tree/78c068f6293630693682a40d371646013343ae37/for-scripters/R/r2cytoscape">r2cytoscape</a> (Commit 78c068f629)</li>
     </ul>
   </li>
   <li><a href="https://www.java.com/en/">Java</a> (v8)
     <ul>
       <li><a href="http://software.broadinstitute.org/gsea/index.jsp">Gene Set Enrichment Analysis (GSEA)</a> - Java Jar file (3.0)</li>
       <li><a href="http://www.cytoscape.org/">Cytoscape</a> (3.5.1)</li>
-      <li><a href="https://github.com/cytoscape/cytoscape-automation/tree/78c068f6293630693682a40d371646013343ae37/for-scripters/R/r2cytoscape">r2cytoscape</a> (Commit 78c068f629)</li>
     </ul>
   </li>
 </ul>
@@ -294,7 +294,7 @@
 <h2 id="a-hrefsamplestudy-namesamplestudyb-sample-studya"><a href="sampleStudy" name="sampleStudy">B. Sample Study</a></h2>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul><li>Familiarize yourself with study data and related files</li></ul>
 </div>
 
@@ -381,7 +381,7 @@
   </tbody>
 </table>
 
-<p>Each RNA-Seq measurement is represented is a tabular text file that contains 57 736 rows: The first column holds an <a href="http://www.ensembl.org/info/genome/genebuild/genome_annotation.html">Ensembl</a> ID and the second column a read count for transcripts mapped to that ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample <code class="highlighter-rouge">HD-1_htsqct.txt</code> is shown below in Table II.</p>
+<p>Each RNA-Seq measurement is represented as a tabular text file that, in this instance, contains 57 736 rows: The first column holds an <a href="http://www.ensembl.org/info/genome/genebuild/genome_annotation.html">Ensembl ID</a> representing a region of the human genome and the second column a read count for transcripts mapped to that Ensembl ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample <code class="highlighter-rouge">HD-1_htsqct.txt</code> is shown below in Table II.</p>
 
 <p><strong>Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt</strong></p>
 
@@ -428,16 +428,16 @@
 <h2 id="a-hrefdatapreprocessing-namedatapreprocessingc-data-pre-processinga"><a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a></h2>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul><li>Perform RNA-Seq data gene ID mapping</li>
   <li>Merge RNA-Seq data into a single R object</li></ul>
 </div>
 
-<p>At the end of this section we wish to have the RNA-Seq data into an R data strcuture that we can more easily pipe into our differential gene expression testing procedures. Because of the numerous formats and states that raw RNA-Seq data can present itself, we will not expend much effort in this notebook defining such ‘data munging’ tasks.</p>
+<p>At the end of this section we wish to have the RNA-Seq data into an R data strcuture that we can more easily pipe into our differential gene expression testing procedures. Because of the numerous formats and states that raw RNA-Seq data can present itself, you may require a customized approach.</p>
 
 <h3 id="gene-identifier-mapping">Gene identifier mapping</h3>
 
-<p>Our pathway enrichment analysis in GSEA identifies gene sets that are enriched in gene expression data. We will be using candidate gene sets named with the <a href="http://www.genenames.org/">HGNC</a> approved symbol. Since our RNA-Seq data use Ensembl identifiers (Table II) we will need to ‘map’ these to their corresponding HGNC symbol. If it is not possible to perform this mapping, we simply omit the gene.</p>
+<p>Our pathway enrichment analysis in GSEA identifies gene sets that are enriched in gene expression data. We will be using candidate gene sets named with the <a href="http://www.genenames.org/">HGNC</a> approved symbol. Since our RNA-Seq data use Ensembl identifiers (Table II) we will need to ‘map’ these to their corresponding HGNC symbol. If it is not possible to perform this mapping, we simply omit the gene. Also, beware of duplicates.</p>
 
 <h3 id="rna-seq-data-merging">RNA-Seq data merging</h3>
 
@@ -881,7 +881,7 @@
 <h2 id="a-hrefdifferentialexpressiontesting-namedifferentialexpressiontestingd-differential-expression-testinga"><a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>GSEA input file dependencies</li>
     <ul>
@@ -901,7 +901,7 @@
   </ul>
 </div>
 
-<p>It will be convenient to generate the expression and class files alongside the RNA-Seq data transformations. We will be using the <code class="highlighter-rouge">edgeR</code> Bioconductor package.</p>
+<p>It will be convenient to generate the ranked list, expression and class files alongside the RNA-Seq data transformations. We will be using the <code class="highlighter-rouge">edgeR</code> Bioconductor package.</p>
 
 <h3 id="filtering">Filtering</h3>
 
@@ -1159,7 +1159,7 @@
 
 <h4 id="text-file-for-expression-dataset-txt">Text file for expression dataset (TXT)</h4>
 
-<p>As a convenient side effect of our work, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.</p>
+<p>At this point we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Combine two data frames - gene metadata and sample counts
 </span>  <span class="n">brca_hd_tep_tmm_normalized_mat</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span> <span class="n">normalized.lib.size</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
@@ -1504,7 +1504,7 @@
 <h2 id="a-hrefgenesetenrichmentanalysis-namegenesetenrichmentanalysise-gene-set-enrichment-analysisa"><a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>Obtain gene set database of candidates</li>
     <li>Run GSEA and obtain enriched gene sets</li>
@@ -1519,7 +1519,7 @@
 
 <h3 id="run-gsea">Run GSEA</h3>
 
-<p>GSEA comes as stand-alone Java program.  Recall that we asked you to register, login and download the Java jar file to a convenient location (e.g. <code class="highlighter-rouge">/Users/username/bin/gsea-3.0.jar</code>). We will run GSEA via R with a set of options. Any of the supplied options can be customized and there are many   <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from">additional options</a>.</p>
+<p>GSEA comes as stand-alone Java program.  Recall that we asked you to register, login and download the Java jar file to a convenient location (e.g. <code class="highlighter-rouge">/Users/username/bin/gsea-3.0.jar</code>). We will run GSEA via R with a set of options. Any of the supplied options can be <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from">customized</a>.</p>
 
 <p>In our GSEA run, the following relevant options have been specified:</p>
 
@@ -1592,7 +1592,7 @@
 <h2 id="a-hrefenrichmentmap-nameenrichmentmapf-enrichment-mapa"><a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a></h2>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>Obtain an Enrichment Map of the enriched pathways</li>
   </ul>
@@ -1642,7 +1642,7 @@
   <span class="c1">#enrichment map command will return the suid of newly created network.
 </span>  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span></code></pre></figure>
 
-<p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
+<p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
 
 <h2 id="references">References</h2>
 <div class="footnotes">

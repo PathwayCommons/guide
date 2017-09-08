@@ -52,10 +52,11 @@ We will be using the following software and packages along the way.
   - [IRanges](https://bioconductor.org/packages/release/bioc/html/IRanges.html)	(>= 2.8.2)
   - [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) (>= 2.30.0)
   - [devtools](https://cran.r-project.org/web/packages/devtools/README.html) (>=1.13.3)
+  - [r2cytoscape](https://github.com/cytoscape/cytoscape-automation/tree/78c068f6293630693682a40d371646013343ae37/for-scripters/R/r2cytoscape) (Commit 78c068f629)
+
 - [Java](https://www.java.com/en/) (v8)
   - [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) - Java Jar file (3.0)
   - [Cytoscape](http://www.cytoscape.org/) (3.5.1)
-  - [r2cytoscape](https://github.com/cytoscape/cytoscape-automation/tree/78c068f6293630693682a40d371646013343ae37/for-scripters/R/r2cytoscape) (Commit 78c068f629)
 
 #### GSEA
 
@@ -77,7 +78,7 @@ For subsequent clustering and automated labelling of gene set themes, you should
 ## <a href="sampleStudy" name="sampleStudy">B. Sample Study</a>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul><li>Familiarize yourself with study data and related files</li></ul>
 </div>
 
@@ -133,7 +134,7 @@ Best *et al.* collected blood platelets from 55 HD and from 39 individuals with 
 |HD-2-1_htsqct.txt        |HD    |
 |HD-1_htsqct.txt          |HD    |
 
-Each RNA-Seq measurement is represented is a tabular text file that contains 57 736 rows: The first column holds an [Ensembl](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) ID and the second column a read count for transcripts mapped to that ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
+Each RNA-Seq measurement is represented as a tabular text file that, in this instance, contains 57 736 rows: The first column holds an [Ensembl ID](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) representing a region of the human genome and the second column a read count for transcripts mapped to that Ensembl ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
 
 **Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt**
 
@@ -158,16 +159,16 @@ Each RNA-Seq measurement is represented is a tabular text file that contains 57 
 ## <a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul><li>Perform RNA-Seq data gene ID mapping</li>
   <li>Merge RNA-Seq data into a single R object</li></ul>
 </div>
 
-At the end of this section we wish to have the RNA-Seq data into an R data strcuture that we can more easily pipe into our differential gene expression testing procedures. Because of the numerous formats and states that raw RNA-Seq data can present itself, we will not expend much effort in this notebook defining such 'data munging' tasks.
+At the end of this section we wish to have the RNA-Seq data into an R data strcuture that we can more easily pipe into our differential gene expression testing procedures. Because of the numerous formats and states that raw RNA-Seq data can present itself, you may require a customized approach.
 
 ### Gene identifier mapping
 
-Our pathway enrichment analysis in GSEA identifies gene sets that are enriched in gene expression data. We will be using candidate gene sets named with the [HGNC](http://www.genenames.org/) approved symbol. Since our RNA-Seq data use Ensembl identifiers (Table II) we will need to 'map' these to their corresponding HGNC symbol. If it is not possible to perform this mapping, we simply omit the gene.
+Our pathway enrichment analysis in GSEA identifies gene sets that are enriched in gene expression data. We will be using candidate gene sets named with the [HGNC](http://www.genenames.org/) approved symbol. Since our RNA-Seq data use Ensembl identifiers (Table II) we will need to 'map' these to their corresponding HGNC symbol. If it is not possible to perform this mapping, we simply omit the gene. Also, beware of duplicates.
 
 ### RNA-Seq data merging
 
@@ -498,7 +499,7 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
 ## <a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>GSEA input file dependencies</li>
     <ul>
@@ -519,7 +520,7 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
 </div>
 
 
-It will be convenient to generate the expression and class files alongside the RNA-Seq data transformations. We will be using the `edgeR` Bioconductor package.
+It will be convenient to generate the ranked list, expression and class files alongside the RNA-Seq data transformations. We will be using the `edgeR` Bioconductor package.
 
 ### Filtering
 
@@ -626,7 +627,7 @@ Note that the TMM-normalized `DGEList` called `brca_hd_tep_tmm_normalized_dge` h
 
 #### Text file for expression dataset (TXT)
 
-As a convenient side effect of our work, we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.
+At this point we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.
 
 
 {% highlight r %}
@@ -830,7 +831,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 ## <a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>Obtain gene set database of candidates</li>
     <li>Run GSEA and obtain enriched gene sets</li>
@@ -845,7 +846,7 @@ For your convenience, gene set database (GMT) files for [human, mouse and rat ar
 
 ### Run GSEA
 
-GSEA comes as stand-alone Java program.  Recall that we asked you to register, login and download the Java jar file to a convenient location (e.g. `/Users/username/bin/gsea-3.0.jar`). We will run GSEA via R with a set of options. Any of the supplied options can be customized and there are many   [additional options](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from).
+GSEA comes as stand-alone Java program.  Recall that we asked you to register, login and download the Java jar file to a convenient location (e.g. `/Users/username/bin/gsea-3.0.jar`). We will run GSEA via R with a set of options. Any of the supplied options can be [customized](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from).
 
 In our GSEA run, the following relevant options have been specified:
 
@@ -917,7 +918,7 @@ Please refer to the GSEA documentation on ['Interpreting GSEA Results'](http://s
 ## <a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
 
 <div class="alert alert-warning">
-  <p>Section TODOs</p>
+  <p>Section To Dos</p>
   <ul>
     <li>Obtain an Enrichment Map of the enriched pathways</li>
   </ul>
@@ -973,7 +974,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   response <- r2cytoscape::commandRun(em_command)
 {% endhighlight %}
 
-Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
+Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 
 ## References
 [^1]: [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)
