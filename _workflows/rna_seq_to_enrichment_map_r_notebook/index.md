@@ -881,7 +881,10 @@ In our GSEA run, the following relevant options have been specified:
   gsea_num_permutations <- 1000
   gsea_min_gs_size <- 15
   gsea_max_gs_size <- 200
+{% endhighlight %}
 
+
+{% highlight r %}
   ## Execute GSEA
   command <- paste("java -cp", gsea_jar_path,
                    "-Xmx1G xtools.gsea.GseaPreranked",
@@ -907,6 +910,10 @@ In our GSEA run, the following relevant options have been specified:
 
 In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in `gsea_out` that contains reports and figures generated during GSEA.
 
+
+{% highlight r %}
+  gsea_tep_BrCa_HD_analysis_directory <- list.files(path = gsea_out, pattern = "\\.GseaPreranked")
+{% endhighlight %}
 Look for the following files:
 
 - `index.html` - This is a [GSEA report](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_GSEA_Report) that summarizes the analysis results
@@ -935,6 +942,10 @@ Recall that we asked you to download and install Cytoscape (3.5.1) along with va
 
 {% highlight r %}
   devtools::install_github("cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape")
+
+  # Basic connection settings
+  port.number = 1234
+  base.url = paste("http://localhost:", toString(port.number), "/v1", sep="")
 {% endhighlight %}
 
 ### Create Enrichment Map
@@ -945,7 +956,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
 {% highlight r %}
   ### Construct path to GSEA results - 'edb' folder
   ### Ouptut from GSEA - update below to match your directory name
-  gsea_results <- file.path(gsea_out, "tep_BrCa_HD.GseaPreranked.1504624413376")
+  gsea_results <- file.path(gsea_out, gsea_tep_BrCa_HD_analysis_directory)
   gsea_results_filename <- file.path(gsea_results, "edb", "results.edb")
 
   ### Define thresholds for GSEA enrichments
@@ -959,6 +970,10 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   #######################################
   #create EM pvalue < 0.01 and qvalue < 0.01
   #######################################
+  em_network_name <- paste(gsea_analysis_name, em_pvalue_gsea_threshold, em_qvalue_gsea_threshold, sep="_")
+{% endhighlight %}
+
+{% highlight r %}
   em_command = paste("enrichmentmap build analysisType=gsea",
                     "gmtFile=", gsea_gmx,
                     "pvalue=", em_pvalue_gsea_threshold,
@@ -970,11 +985,45 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "expressionDataset1=", expression_dataset_path,
                     sep=" ")
 
-  #enrichment map command will return the suid of newly created network.
-  response <- r2cytoscape::commandRun(em_command)
+  current_network_suid <- r2cytoscape::commandRun(em_command)
+  response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
 {% endhighlight %}
 
-Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
+Let's take a peek at the Enrichment Map.
+
+
+{% highlight r %}
+  em_output <- file.path(getwd(), "em_output.png")
+  url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
+  response <- httr::GET(url=url_png)
+  writeBin(response$content, em_output)
+{% endhighlight %}
+![Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output.png){: .img-responsive }
+
+Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
+
+
+{% highlight r %}
+  ### Auto-Annotate the Enrichment Map
+  aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
+  
+  ### Enrichment Map command will return the suid of newly created network.
+  response <- r2cytoscape::commandRun(aa_command)
+{% endhighlight %}
+
+Finally, let's get a view of our annotated Enrichment Map.
+
+
+{% highlight r %}
+  em_output_aa <- file.path(getwd(), "em_output_aa.png")
+  url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
+  response <- httr::GET(url=url_png)
+  writeBin(response$content, em_output_file)
+{% endhighlight %}
+
+![Annotated Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output_aa.png){: .img-responsive }
+
+Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 
 ## References
 [^1]: [Best MG *et al.* RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676](http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499)

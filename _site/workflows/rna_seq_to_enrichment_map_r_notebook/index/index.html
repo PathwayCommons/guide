@@ -1553,9 +1553,9 @@
   <span class="n">gsea_rank_list_path</span> <span class="o">&lt;-</span> <span class="n">rank_list_path</span>
   <span class="n">gsea_num_permutations</span> <span class="o">&lt;-</span> <span class="m">1000</span>
   <span class="n">gsea_min_gs_size</span> <span class="o">&lt;-</span> <span class="m">15</span>
-  <span class="n">gsea_max_gs_size</span> <span class="o">&lt;-</span> <span class="m">200</span>
+  <span class="n">gsea_max_gs_size</span> <span class="o">&lt;-</span> <span class="m">200</span></code></pre></figure>
 
-  <span class="c1">## Execute GSEA
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">## Execute GSEA
 </span>  <span class="n">command</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"java -cp"</span><span class="p">,</span> <span class="n">gsea_jar_path</span><span class="p">,</span>
                    <span class="s2">"-Xmx1G xtools.gsea.GseaPreranked"</span><span class="p">,</span>
                    <span class="s2">"-rpt_label"</span><span class="p">,</span> <span class="n">gsea_analysis_name</span><span class="p">,</span>
@@ -1578,6 +1578,8 @@
   <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></code></pre></figure>
 
 <p>In this case, we will have a directory <code class="highlighter-rouge">tep_BrCa_HD.Preranked.XXXXXXXXXXXXX</code> inside of the directory declared by in <code class="highlighter-rouge">gsea_out</code> that contains reports and figures generated during GSEA.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">gsea_tep_BrCa_HD_analysis_directory</span> <span class="o">&lt;-</span> <span class="n">list.files</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">gsea_out</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s2">"\\.GseaPreranked"</span><span class="p">)</span></code></pre></figure>
 
 <p>Look for the following files:</p>
 
@@ -1606,7 +1608,11 @@
 
 <p>Recall that we asked you to download and install Cytoscape (3.5.1) along with various apps. Open Cytoscape on your computer as this notebook will run commands to it through a custom package  <a href="https://github.com/cytoscape/cytoscape-automation"><code class="highlighter-rouge">cytoscape-automation/r2cytoscape</code></a> (0.0.3).</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape"</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape"</span><span class="p">)</span>
+
+  <span class="c1"># Basic connection settings
+</span>  <span class="n">port.number</span> <span class="o">=</span> <span class="m">1234</span>
+  <span class="n">base.url</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"http://localhost:"</span><span class="p">,</span> <span class="n">toString</span><span class="p">(</span><span class="n">port.number</span><span class="p">),</span> <span class="s2">"/v1"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span></code></pre></figure>
 
 <h3 id="create-enrichment-map">Create Enrichment Map</h3>
 
@@ -1614,7 +1620,7 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Construct path to GSEA results - 'edb' folder
 </span>  <span class="c1">### Ouptut from GSEA - update below to match your directory name
-</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="s2">"tep_BrCa_HD.GseaPreranked.1504624413376"</span><span class="p">)</span>
+</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="p">)</span>
   <span class="n">gsea_results_filename</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span> <span class="s2">"edb"</span><span class="p">,</span> <span class="s2">"results.edb"</span><span class="p">)</span>
 
   <span class="c1">### Define thresholds for GSEA enrichments
@@ -1628,7 +1634,9 @@
   <span class="c1">#######################################
 </span>  <span class="c1">#create EM pvalue &lt; 0.01 and qvalue &lt; 0.01
 </span>  <span class="c1">#######################################
-</span>  <span class="n">em_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"enrichmentmap build analysisType=gsea"</span><span class="p">,</span>
+</span>  <span class="n">em_network_name</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">gsea_analysis_name</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"_"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">em_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"enrichmentmap build analysisType=gsea"</span><span class="p">,</span>
                     <span class="s2">"gmtFile="</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
                     <span class="s2">"pvalue="</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span>
                     <span class="s2">"qvalue="</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span>
@@ -1639,10 +1647,36 @@
                     <span class="s2">"expressionDataset1="</span><span class="p">,</span> <span class="n">expression_dataset_path</span><span class="p">,</span>
                     <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
 
-  <span class="c1">#enrichment map command will return the suid of newly created network.
-</span>  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span></code></pre></figure>
+  <span class="n">current_network_suid</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span>
+  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span> <span class="n">network</span> <span class="o">=</span> <span class="n">current_network_suid</span><span class="p">)</span></code></pre></figure>
 
-<p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
+<p>Let’s take a peek at the Enrichment Map.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">em_output</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span> <span class="s2">"em_output.png"</span><span class="p">)</span>
+  <span class="n">url_png</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span> <span class="s2">"networks"</span><span class="p">,</span> <span class="n">current_network_suid</span><span class="p">,</span> <span class="s2">"views/first.png"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span>
+  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span>
+  <span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span> <span class="n">em_output</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map_r_notebook/index/em_output.png" alt="Enrichment Map" class="img-responsive" /></p>
+
+<p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Auto-Annotate the Enrichment Map
+</span>  <span class="n">aa_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span> <span class="n">em_network_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+  
+  <span class="c1">### Enrichment Map command will return the suid of newly created network.
+</span>  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span></code></pre></figure>
+
+<p>Finally, let’s get a view of our annotated Enrichment Map.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">em_output_aa</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span> <span class="s2">"em_output_aa.png"</span><span class="p">)</span>
+  <span class="n">url_png</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span> <span class="s2">"networks"</span><span class="p">,</span> <span class="n">current_network_suid</span><span class="p">,</span> <span class="s2">"views/first.png"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span>
+  <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span>
+  <span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span> <span class="n">em_output_file</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map_r_notebook/index/em_output_aa.png" alt="Annotated Enrichment Map" class="img-responsive" /></p>
+
+<p>Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
 
 <h2 id="references">References</h2>
 <div class="footnotes">
