@@ -17,7 +17,7 @@ subtitle: Process platelet RNA-Seq data, identify altered pathways then visualiz
 badges: R Notebook
 ---
 
-```{r include=FALSE}
+```{r setGlobals, include=FALSE}
   knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
 ```
 <div class="alert alert-info">
@@ -94,10 +94,12 @@ The primary physiological role of platelets is to sense and accumulate at the si
 
 Best *et al.* collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. Herein, we will be restricting our attention to a subset of 5 patient samples from each class. The metadata for the RNA-Seq files is contained in a file named `tep_rnaseq_metadata.txt` which lists RNA-Seq data filenames ('id') and the 'class' of each patient sample (Table I).
 
-```{r, results='asis'}
+```{r declareFilePaths, results='asis'}
   ### Declare general file directory paths
   base_dir <- getwd()
   data_dir <- file.path(base_dir, "data")
+  output_dir <- file.path(base_dir, "output")
+  dir.create(output_dir, showWarnings = FALSE)
 
   ### Declare paths to RNA-Seq (meta)data files
   tep_rnaseq_metadata <- file.path(data_dir, "tep_rnaseq_metadata.txt")
@@ -114,7 +116,7 @@ Best *et al.* collected blood platelets from 55 HD and from 39 individuals with 
 ```
 
 **Table I. Patient TEP RNA-Seq metadata (`tep_rnaseq_metadata.txt`)**
-```{r, results='asis'}
+```{r showRNASeqMetaData, results='asis'}
   tep_rnaseq_metadata_df <- read.table(tep_rnaseq_metadata,header = TRUE)
   knitr::kable(tep_rnaseq_metadata_df)
 ```
@@ -122,7 +124,7 @@ Best *et al.* collected blood platelets from 55 HD and from 39 individuals with 
 Each RNA-Seq measurement is represented as a tabular text file that, in this instance, contains 57 736 rows: The first column holds an [Ensembl ID](http://www.ensembl.org/info/genome/genebuild/genome_annotation.html) representing a region of the human genome and the second column a read count for transcripts mapped to that Ensembl ID. All of this is typically taken care of by your sequencing facility. An excerpt of raw data for sample `HD-1_htsqct.txt` is shown below in Table II.
 
 **Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt**
-```{r, results='asis'}
+```{r showRNASeqExcerpt, results='asis'}
   index_HD_1_htsqct <- grepl("HD-1_htsqct.txt", tep_rnaseq_filelist)
   rnaseq_HD_1_htsqct <- read.table(tep_rnaseq_filelist[index_HD_1_htsqct],
     check.names=FALSE)
@@ -154,7 +156,9 @@ We will take the individual RNA-Seq data files and merge them and any associated
 
 We offload the above work onto an R function `merge_data` and its helpers that perform the required ID-mapping and data merging and returns a single `SummarizedExperiment` instance.
 
-```{r}
+```{r declareMergeFunctions}
+  library("SummarizedExperiment")
+  
   #' Merge a set of files representing RNA sequencing gene counts
   #'
   #' 1. Default parameter is do nothing (already matching gene set ids)
@@ -360,7 +364,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
 
 
 Let's perform the ID-mapping and data merging.
-```{r}
+```{r mergeRNASeq}
   source_name <- "ensembl_gene_id"
   target_name <- "hgnc_symbol"
   species <- "human"
@@ -374,7 +378,7 @@ Let's perform the ID-mapping and data merging.
 ```
 
 The result of the merge is a `SummarizedExperiment` object named `brca_hd_tep_se`.
-```{r}
+```{r showSE}
   brca_hd_tep_se
 ```
 
@@ -382,18 +386,18 @@ The `SummarizedExperiment` package provides a number of helpful accessor functio
 
 For instance, we can take a peek at the column (sample) metadata using the `SummarizedExperiment::colData` function.
 
-```{r, results='asis'}
+```{r showSEColumns, results='asis'}
   knitr::kable(SummarizedExperiment::colData(brca_hd_tep_se))
 ```
 
 Similarly, we can peek at an excerpt of the row metadata (i.e. [GenomicRanges](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html)) using the `SummarizedExperiment::rowRanges` function.
 
-```{r, results='asis'}
+```{r showSERanges, results='asis'}
   brca_hd_tep_rowRanged_df <- as.data.frame(SummarizedExperiment::rowRanges(brca_hd_tep_se))
   knitr::kable(head(brca_hd_tep_rowRanged_df))
 ```
 
-```{r}
+```{r showSERangesdim}
   dim(brca_hd_tep_rowRanged_df)
 ```
 
@@ -401,7 +405,7 @@ Note that we were only able to successfully map 34 996 unique HGNC symbols from 
 
 Finally, we can peek at the assay data using the `SummarizedExperiment::assay` function.
 
-```{r, results='asis'}
+```{r showSEAssayExcerpt, results='asis'}
   knitr::kable(head(SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]])[, c(1,2,6,7)])
 ```
 
@@ -435,7 +439,7 @@ It will be convenient to generate the ranked list, expression and class files al
 
 RNA species with very low mapped read counts in a small number of samples can be highly variable. Consequently, we choose to ignore these in the search for differential expression. Best *et al.* use the rule of thumb that ‘genes with less than five (non-normalized) read counts in all samples were excluded from analyses’.
 
-```{r, results='asis'}
+```{r filterRNASeq, results='asis'}
   ### Minimum number of mapped read counts per sample
   min_counts <- 5
 
@@ -468,13 +472,13 @@ Note that our end product is a very convenient class, the `edgeR::DGEList`.
 
 With this in mind, let's take a look at the 'counts' component.
 
-```{r, results='asis'}
+```{r showDGECounts, results='asis'}
   knitr::kable(head(brca_hd_tep_filtered_dge[["counts"]])[, c(1,2,5,6)])
 ```
 
 Similarly, we can peek inside the 'samples' component.
 
-```{r, results='asis'}
+```{r showDGESamples, results='asis'}
   knitr::kable(brca_hd_tep_filtered_dge[["samples"]])
 ```
 
@@ -482,7 +486,7 @@ Similarly, we can peek inside the 'samples' component.
 
 RNA for a sample can be sequenced to varying ‘depths’ in that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM)[^5] that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.
 
-```{r, results='asis'}
+```{r normalizeRNASeq, results='asis'}
   brca_hd_tep_tmm_normalized_dge <- edgeR::calcNormFactors(brca_hd_tep_filtered_dge, method = "TMM")
   knitr::kable(brca_hd_tep_tmm_normalized_dge[["samples"]])
 ```
@@ -493,7 +497,7 @@ Note that the TMM-normalized `DGEList` called `brca_hd_tep_tmm_normalized_dge` h
 
 At this point we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.
 
-```{r}
+```{r makeExprDataFile}
 
   ### Combine two data frames - gene metadata and sample counts
   brca_hd_tep_tmm_normalized_mat <- edgeR::cpm(brca_hd_tep_tmm_normalized_dge, normalized.lib.size=TRUE)
@@ -507,7 +511,7 @@ At this point we can generate an expression file of normalized RNA counts where 
   brca_hd_tep_tmm_normalized_expression_df <- data.frame(meta_df, brca_hd_tep_tmm_normalized_mat,  check.names = FALSE)
 
   ### Write out
-  expression_dataset_path <- file.path(getwd(), "brca_hd_tep_tmm_normalized_expression.txt")
+  expression_dataset_path <- file.path(output_dir, "brca_hd_tep_tmm_normalized_expression.txt")
   write.table(brca_hd_tep_tmm_normalized_expression_df,
               quote=FALSE,
               sep = "\t",
@@ -517,7 +521,7 @@ At this point we can generate an expression file of normalized RNA counts where 
 
 We should have a file `brca_hd_tep_tmm_normalized_expression.txt` containing the following tab-delimited content:
 
-```{r, results='asis'}
+```{r showExprDataFile, results='asis'}
   brca_hd_tep_tmm_normalized_expression_file_df <- read.table(expression_dataset_path,
                                                               header = TRUE,
                                                              check.names = FALSE)
@@ -533,7 +537,7 @@ In this step we perform a pair-wise comparison of RNA species counts in BrCa sam
 - Calculate the probability (p-value) of observing a difference in RNA species counts at least as extreme as the one observed assuming the null hypothesis/distribution
 - Perform multiple-testing correction
 
-```{r}
+```{r deTesting}
   ### Calculate variability (dispersions) in data
   brca_hd_tep_fitted_commondisp_dge <- edgeR::estimateCommonDisp(brca_hd_tep_tmm_normalized_dge)
   brca_hd_tep_fitted_tagwise_dge <- edgeR::estimateTagwiseDisp(brca_hd_tep_fitted_commondisp_dge)
@@ -551,7 +555,7 @@ In this step we perform a pair-wise comparison of RNA species counts in BrCa sam
 The result of these transformations is a `topTags` object named `brca_hd_tep_de_tested_tt`. We can peek inside our result to view the list of genes ranked by p-value from differential expression testing.
 
 
-```{r, results='asis'}
+```{r showDETesting, results='asis'}
   knitr::kable(head(brca_hd_tep_de_tested_tt[["table"]]))
 ```
 
@@ -559,7 +563,7 @@ The result of these transformations is a `topTags` object named `brca_hd_tep_de_
 
 At this stage, we can generate a rank list file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.
 
-```{r}
+```{r makeRnkFile}
   ### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD
   brca_hd_tep_rank_values <- sign(brca_hd_tep_de_tested_tt[["table"]][["logFC"]]) * (-1) * log10(brca_hd_tep_de_tested_tt[["table"]][["PValue"]])
 
@@ -578,7 +582,7 @@ At this stage, we can generate a rank list file where row names are gene symbols
   brca_hd_tep_ordered_ranks_df <- brca_hd_tep_ranks_df[order(brca_hd_tep_ranks_df[,2], decreasing = TRUE), ]
 
   ## Write out to file
-  rank_list_path <- file.path(getwd(), "brca_hd_tep.rnk")
+  rank_list_path <- file.path(output_dir, "brca_hd_tep.rnk")
   write.table(brca_hd_tep_ordered_ranks_df,
               quote=FALSE,
               sep = "\t",
@@ -588,7 +592,7 @@ At this stage, we can generate a rank list file where row names are gene symbols
 
 Let's peek at the top and bottom of our rank list saved in `brca_hd_tep.rnk`.
 
-```{r, results='asis'}
+```{r showRankFile, results='asis'}
   brca_hd_tep_ordered_ranks_file_df <- read.table(rank_list_path,
                                                   header = TRUE,
                                                   check.names = FALSE)
@@ -597,7 +601,7 @@ Let's peek at the top and bottom of our rank list saved in `brca_hd_tep.rnk`.
   rownames(ranks_head) <- NULL
   knitr::kable(ranks_head)
 ```
-```{r, results='asis'}
+```{r showRankFileTail, results='asis'}
   ranks_tail <- tail(brca_hd_tep_ordered_ranks_file_df, n=5)
   rownames(ranks_tail) <- NULL
   knitr::kable(ranks_tail)
@@ -607,7 +611,7 @@ Let's peek at the top and bottom of our rank list saved in `brca_hd_tep.rnk`.
 
 This file will be used in the Enrichment Map so that we can differentiate (i.e. colour) those pathways ‘up-regulated’ in HD versus BrCa samples. The CLS format contains information about the sample classes (aka ‘condition’, ‘phenotype’) and assigns each sample to one class.
 
-```{r}
+```{r makeCLSFile}
   n_samples <- dim(brca_hd_tep_filtered_dge)[2]
   n_classes <- 2
 
@@ -617,7 +621,7 @@ This file will be used in the Enrichment Map so that we can differentiate (i.e. 
   brca_hd_tep_cls <- rbind(l1, l2, l3)
 
   ### Write out to file
-  categorical_class_path <- file.path(getwd(), "brca_hd_tep.cls")
+  categorical_class_path <- file.path(output_dir, "brca_hd_tep.cls")
   write(brca_hd_tep_cls,
         file=categorical_class_path,
         sep = "\t")
@@ -632,7 +636,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 | Sample 1 class |  Sample 2 class | Sample 3 class | ... | Sample N class |
 
 
-```{r, results='asis'}
+```{r showCLSFile, results='asis'}
   rownames(brca_hd_tep_cls) <- NULL
   brca_hd_tep_cls
 ```
@@ -676,7 +680,8 @@ In our GSEA run, the following relevant options have been specified:
   GSEA can take many minutes to complete. Mileage may vary depending on the settings. Our analysis took 5 minutes on a MacBook Air (Early 2015), 2.2 GHz Intel Core i7 (8GB 16600 MHz DDR3).
 </div>
 
-```{r}
+```{r runGSEA}
+  doEnrichment <- FALSE
   ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"
@@ -689,9 +694,7 @@ In our GSEA run, the following relevant options have been specified:
   gsea_num_permutations <- 1000
   gsea_min_gs_size <- 15
   gsea_max_gs_size <- 200
-```
 
-```{r, eval=FALSE}
   ## Execute GSEA
   command <- paste("java -cp", gsea_jar_path,
                    "-Xmx1G xtools.gsea.GseaPreranked",
@@ -712,7 +715,10 @@ In our GSEA run, the following relevant options have been specified:
                    "-gui false",
                    ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
             sep=" ")
-  system(command)
+
+  if( doEnrichment ){
+    system(command)
+  }
 ```
 
 In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in `gsea_out` that contains reports and figures generated during GSEA.
@@ -745,7 +751,7 @@ Gene sets are represented as nodes whose radius is proportional to the number of
 
 Recall that we asked you to download and install Cytoscape (3.5.1) along with various apps. Open Cytoscape on your computer as this notebook will run commands to it through a custom package  [`cytoscape-automation/r2cytoscape`](https://github.com/cytoscape/cytoscape-automation) (0.0.3).
 
-```{r}
+```{r setupCyRest}
   devtools::install_github("cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape")
 
   # Basic connection settings
@@ -757,7 +763,7 @@ Recall that we asked you to download and install Cytoscape (3.5.1) along with va
 
 We're ready to declare our options for the Enrichment Map Cytoscape app.
 
-```{r}
+```{r runEM}
   ### Construct path to GSEA results - 'edb' folder
   ### Ouptut from GSEA - update below to match your directory name
   gsea_results <- file.path(gsea_out, gsea_tep_BrCa_HD_analysis_directory)
@@ -775,8 +781,6 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   #create EM pvalue < 0.01 and qvalue < 0.01
   #######################################
   em_network_name <- paste(gsea_analysis_name, em_pvalue_gsea_threshold, em_qvalue_gsea_threshold, sep="_")
-```
-```{r, eval=FALSE}
   em_command = paste("enrichmentmap build analysisType=gsea",
                     "gmtFile=", gsea_gmx,
                     "pvalue=", em_pvalue_gsea_threshold,
@@ -787,41 +791,56 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "enrichmentsDataset1=", gsea_results_filename,
                     "expressionDataset1=", expression_dataset_path,
                     sep=" ")
-
-  current_network_suid <- r2cytoscape::commandRun(em_command)
-  response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
+  current_network_suid <- 0
+  if( doEnrichment ){
+    current_network_suid <- r2cytoscape::commandRun(em_command)    
+    response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
+  }  
+  
 ```
 
 Let's take a peek at the Enrichment Map.
 
-```{r, eval=FALSE}
-  em_output <- file.path(getwd(), "em_output.png")
+```{r makeEMNetworkImage}
+  em_output <- file.path(output_dir, "em_output.png")
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  response <- httr::GET(url=url_png)
-  writeBin(response$content, em_output)
+  
+  ### Pause for Cytoscape to render
+  if( doEnrichment ){
+    Sys.sleep(10)
+    response <- httr::GET(url=url_png)
+    writeBin(response$content, em_output)
+  }
 ```
-![Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output.png){: .img-responsive }
+![Enrichment Map](../output/em_output.png)
 
 Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
 
-```{r, eval=FALSE}
+```{r aaEM}
   ### Auto-Annotate the Enrichment Map
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
   
   ### Enrichment Map command will return the suid of newly created network.
-  response <- r2cytoscape::commandRun(aa_command)
+  if( doEnrichment ){
+    response <- r2cytoscape::commandRun(aa_command)
+  }  
 ```
 
 Finally, let's get a view of our annotated Enrichment Map.
 
-```{r, eval=FALSE}
-  em_output_aa <- file.path(getwd(), "em_output_aa.png")
+```{r makeAAEMNetworkImage}
+  em_output_aa <- file.path(output_dir, "em_output_aa.png")
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  response <- httr::GET(url=url_png)
-  writeBin(response$content, em_output_file)
+  
+  ### Pause for Cytoscape to render
+  if( doEnrichment ){
+    Sys.sleep(30)
+    response <- httr::GET(url=url_png)
+    writeBin(response$content, em_output_aa)
+  }
 ```
 
-![Annotated Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output_aa.png){: .img-responsive }
+![Annotated Enrichment Map](../output/em_output_aa.png)
 
 Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 

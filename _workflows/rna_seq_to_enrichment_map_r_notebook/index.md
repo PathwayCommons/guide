@@ -97,6 +97,8 @@ Best *et al.* collected blood platelets from 55 HD and from 39 individuals with 
   ### Declare general file directory paths
   base_dir <- getwd()
   data_dir <- file.path(base_dir, "data")
+  output_dir <- file.path(base_dir, "output")
+  dir.create(output_dir, showWarnings = FALSE)
 
   ### Declare paths to RNA-Seq (meta)data files
   tep_rnaseq_metadata <- file.path(data_dir, "tep_rnaseq_metadata.txt")
@@ -183,6 +185,8 @@ We offload the above work onto an R function `merge_data` and its helpers that p
 
 
 {% highlight r %}
+  library("SummarizedExperiment")
+  
   #' Merge a set of files representing RNA sequencing gene counts
   #'
   #' 1. Default parameter is do nothing (already matching gene set ids)
@@ -643,7 +647,7 @@ At this point we can generate an expression file of normalized RNA counts where 
   brca_hd_tep_tmm_normalized_expression_df <- data.frame(meta_df, brca_hd_tep_tmm_normalized_mat,  check.names = FALSE)
 
   ### Write out
-  expression_dataset_path <- file.path(getwd(), "brca_hd_tep_tmm_normalized_expression.txt")
+  expression_dataset_path <- file.path(output_dir, "brca_hd_tep_tmm_normalized_expression.txt")
   write.table(brca_hd_tep_tmm_normalized_expression_df,
               quote=FALSE,
               sep = "\t",
@@ -740,7 +744,7 @@ At this stage, we can generate a rank list file where row names are gene symbols
   brca_hd_tep_ordered_ranks_df <- brca_hd_tep_ranks_df[order(brca_hd_tep_ranks_df[,2], decreasing = TRUE), ]
 
   ## Write out to file
-  rank_list_path <- file.path(getwd(), "brca_hd_tep.rnk")
+  rank_list_path <- file.path(output_dir, "brca_hd_tep.rnk")
   write.table(brca_hd_tep_ordered_ranks_df,
               quote=FALSE,
               sep = "\t",
@@ -802,7 +806,7 @@ This file will be used in the Enrichment Map so that we can differentiate (i.e. 
   brca_hd_tep_cls <- rbind(l1, l2, l3)
 
   ### Write out to file
-  categorical_class_path <- file.path(getwd(), "brca_hd_tep.cls")
+  categorical_class_path <- file.path(output_dir, "brca_hd_tep.cls")
   write(brca_hd_tep_cls,
         file=categorical_class_path,
         sep = "\t")
@@ -869,6 +873,7 @@ In our GSEA run, the following relevant options have been specified:
 
 
 {% highlight r %}
+  doEnrichment <- TRUE
   ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"
@@ -881,10 +886,7 @@ In our GSEA run, the following relevant options have been specified:
   gsea_num_permutations <- 1000
   gsea_min_gs_size <- 15
   gsea_max_gs_size <- 200
-{% endhighlight %}
 
-
-{% highlight r %}
   ## Execute GSEA
   command <- paste("java -cp", gsea_jar_path,
                    "-Xmx1G xtools.gsea.GseaPreranked",
@@ -905,7 +907,10 @@ In our GSEA run, the following relevant options have been specified:
                    "-gui false",
                    ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
             sep=" ")
-  system(command)
+
+  if( doEnrichment ){
+    system(command)
+  }
 {% endhighlight %}
 
 In this case, we will have a directory `tep_BrCa_HD.Preranked.XXXXXXXXXXXXX` inside of the directory declared by in `gsea_out` that contains reports and figures generated during GSEA.
@@ -971,9 +976,6 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
   #create EM pvalue < 0.01 and qvalue < 0.01
   #######################################
   em_network_name <- paste(gsea_analysis_name, em_pvalue_gsea_threshold, em_qvalue_gsea_threshold, sep="_")
-{% endhighlight %}
-
-{% highlight r %}
   em_command = paste("enrichmentmap build analysisType=gsea",
                     "gmtFile=", gsea_gmx,
                     "pvalue=", em_pvalue_gsea_threshold,
@@ -984,21 +986,28 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "enrichmentsDataset1=", gsea_results_filename,
                     "expressionDataset1=", expression_dataset_path,
                     sep=" ")
-
-  current_network_suid <- r2cytoscape::commandRun(em_command)
-  response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
+  current_network_suid <- 0
+  if( doEnrichment ){
+    current_network_suid <- r2cytoscape::commandRun(em_command)    
+    response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
+  }  
 {% endhighlight %}
 
 Let's take a peek at the Enrichment Map.
 
 
 {% highlight r %}
-  em_output <- file.path(getwd(), "em_output.png")
+  em_output <- file.path(output_dir, "em_output.png")
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  response <- httr::GET(url=url_png)
-  writeBin(response$content, em_output)
+  
+  ### Pause for Cytoscape to render
+  if( doEnrichment ){
+    Sys.sleep(10)
+    response <- httr::GET(url=url_png)
+    writeBin(response$content, em_output)
+  }
 {% endhighlight %}
-![Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output.png){: .img-responsive }
+![Enrichment Map](../output/em_output.png)
 
 Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
 
@@ -1008,20 +1017,27 @@ Often times, the complexity of an Enrichment Map can be reduced even further: Cl
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
   
   ### Enrichment Map command will return the suid of newly created network.
-  response <- r2cytoscape::commandRun(aa_command)
+  if( doEnrichment ){
+    response <- r2cytoscape::commandRun(aa_command)
+  }  
 {% endhighlight %}
 
 Finally, let's get a view of our annotated Enrichment Map.
 
 
 {% highlight r %}
-  em_output_aa <- file.path(getwd(), "em_output_aa.png")
+  em_output_aa <- file.path(output_dir, "em_output_aa.png")
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  response <- httr::GET(url=url_png)
-  writeBin(response$content, em_output_file)
+  
+  ### Pause for Cytoscape to render
+  if( doEnrichment ){
+    Sys.sleep(30)
+    response <- httr::GET(url=url_png)
+    writeBin(response$content, em_output_aa)
+  }
 {% endhighlight %}
 
-![Annotated Enrichment Map]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/em_output_aa.png){: .img-responsive }
+![Annotated Enrichment Map](../output/em_output_aa.png)
 
 Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 
