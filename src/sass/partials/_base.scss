@@ -183,6 +183,10 @@ img.left {
         margin-bottom: 0;
       }
 
+      .list-group-item-reference {
+        font-size: 0.8rem;          
+      }
+
       p {
         font-size: 0.9rem;
         line-height: 1.5em;
@@ -207,6 +211,9 @@ img.left {
           font-size: 1.25rem;
           margin-bottom: 1.375rem;
 
+        }        
+        .list-group-item-reference {
+          font-size: 0.9rem;          
         }
         p {
           text-align: left;

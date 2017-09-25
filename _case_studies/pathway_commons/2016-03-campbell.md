@@ -1,18 +1,19 @@
 ---
 title: Gene’s Addiction
 subtitle: Pathway Commons data links known human cancer driver genes to kinases whose function is required to sustain tumor cell viability
+reference: Campbell <em>et al</em> Cell Rep (2016)
 figure: campbell_figure.jpg
 cover: cover.jpg
-pdf: case_study_campbell.pdf
+pdf: 
 date: 2016-03-15
 layout: document
 category: Pathway_Commons
 reflist:
-  - 10783304
-  - 18079171
-  - 17344846
   - 26947069
-  - 23539594
+  - 17344846
+  - 18079171
+  - 23539594    
+  - 10783304 
 ---
 
 ## Quick Summary

@@ -1,10 +1,11 @@
 ---
 title: Dark Matter
-subtitle: In brain tumors, pathway analysis links epigenetic alterations to pathways targeted by chemotherapy in  hematopoietic malignancies
+subtitle: In brain tumors, pathway analysis links epigenetic alterations to pathways targeted by chemotherapy in  hematopoietic malignancies 
+reference: Mack <em>et al.</em> Nature (2014)
 figure: mack_figure.jpg
 badge: pathway enrichment
 cover: cover.jpg
-pdf: caseStudy_mack_nature_2014.pdf
+pdf: 
 date: 2014-02-27
 layout: document
 category: Pathway_Enrichment_Analysis
