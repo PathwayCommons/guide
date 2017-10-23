@@ -873,7 +873,7 @@ In our GSEA run, the following relevant options have been specified:
 
 
 {% highlight r %}
-  doEnrichment <- TRUE
+  doEnrichment <- FALSE
   ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"

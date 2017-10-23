@@ -1,0 +1,42 @@
+---
+title: Press Pause
+subtitle: Enrichment analysis identifies transcriptional elongation factors as key vulnerabilities for glioblastoma growth <em>in vivo</em> 
+reference: Miller <em>et al.</em> Nature 547 (2017)
+figure: mack_figure.jpg
+badge: pathway enrichment
+cover: 
+pdf: 
+date: 2017-07-01
+layout: document
+category: Pathway_Enrichment_Analysis
+draft: TRUE
+reflist:
+  - 22770212
+  - 24153301
+  - 28886003
+  - 28678782
+---
+
+## Quick Summary
+* point
+
+## Author Profile
+
+## Context
+Genes encoding chromatin regulators are often altered in cancers and a growing body of experimental observations is consistent with the notion that global epigenetic remodelling is a common event in oncogenesis (Dawson 2012). This evidence provided a rationale for development of drugs targeting protein  regulators of chromatin state and transcription. Indeed, the US Food and Drug Administration has approved for routine clinical use several small molecule inhibitors of such proteins (Helin 2013). Functional screens represent an attractive approach (Letai 2017).
+
+## Question
+Context specificity - in vivo vs in vitro?     
+
+## Goals
+
+## Approach
+
+  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figure }}){: height="100px".img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. </strong> 
+</div>
+<br/><br/>
+
+## Summary

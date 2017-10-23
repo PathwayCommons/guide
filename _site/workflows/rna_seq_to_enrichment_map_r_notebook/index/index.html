@@ -17,7 +17,12 @@
   </title>
 
   <!-- Icons -->
-  <link rel="shortcut icon" href="/guide/media/favicon.ico">
+  <link rel="shortcut icon" href="/guide/media/favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/guide/media/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/media/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/guide/media/favicons/manifest.json">
+  <meta name="theme-color" content="#ffffff">
 
   <!-- CSS -->
   
@@ -1546,7 +1551,7 @@
   GSEA can take many minutes to complete. Mileage may vary depending on the settings. Our analysis took 5 minutes on a MacBook Air (Early 2015), 2.2 GHz Intel Core i7 (8GB 16600 MHz DDR3).
 </div>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">doEnrichment</span> <span class="o">&lt;-</span> <span class="n">TRUE</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">doEnrichment</span> <span class="o">&lt;-</span> <span class="n">FALSE</span>
   <span class="c1">### Declare user-defined settings
 </span>  <span class="n">gsea_jar_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="s2">"/Users/jeffreywong/bin/gsea-3.0.jar"</span><span class="p">)</span>
   <span class="n">gsea_rpt_label</span> <span class="o">&lt;-</span> <span class="s2">"tep_BrCa_HD_analysis"</span>
