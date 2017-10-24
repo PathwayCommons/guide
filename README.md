@@ -111,7 +111,7 @@ Every collection is presented as a listing in the sidebar. Collections are direc
   collections:
     case_studies:
       output: true
-      permalink: /case_studies/:path/
+      permalink: /:collection/:path/
       index: /case_studies/archive/
       description: Case Studies
   ...
@@ -125,3 +125,5 @@ Every collection is presented as a listing in the sidebar. Collections are direc
   Remember to link to internal content (collections, files) using the template variables described in the section 'URLs, Media and Static File locations'.
 
   As mentioned, this site supports adding content in R Markdown which allows you to add R code directly to your pages. To process R Markdown and have it render pure Markdown, we recommend you should use the [Gulp](http://gulpjs.com/) tools provided in the development [remote](https://github.com/jvwong/guide_development) which is configured to automate all steps of (R) Markdown file procerssing and copying into the  parent directory.
+
+> NB 2: For files accessing content in the same directory, please use `permalink: /:collection/:path./:output_ext` in your front-matter. This will place the resulting html file in the parent directory and not a subdirectory named after the file. For example, contributors using an R Markdown file (e.g. `code.Rmd`) accessing data and files in the same directory will use this to ensure consistency with use in R Studio. Otherwise, the R Markdown file will be converted to HTML placed in a sub-directory e.g. 'code/index.html'. See `_workflows/rna_seq_to_enrichment_map_r_notebook` for example.

@@ -15,6 +15,7 @@ splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class
 subtitle: Process platelet RNA-Seq data, identify altered pathways then visualize
   using Enrichment Map
 badges: R Notebook
+permalink: /:collection/:path./:output_ext
 ---
 
 
@@ -1006,7 +1007,7 @@ Let's take a peek at the Enrichment Map.
     writeBin(response$content, em_output)
   }
 {% endhighlight %}
-![Enrichment Map](../output/em_output.png)
+![Enrichment Map](./em_output.png)
 
 Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
 
@@ -1036,7 +1037,7 @@ Finally, let's get a view of our annotated Enrichment Map.
   }
 {% endhighlight %}
 
-![Annotated Enrichment Map](../output/em_output_aa.png)
+![Annotated Enrichment Map](./em_output_aa.png)
 
 Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 

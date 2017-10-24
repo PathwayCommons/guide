@@ -36,10 +36,6 @@ exclude:
 # Plugins
 plugins: [jekyll-watch, jekyll_github_sample]
 
-# Outputting
-# post permalink style 'pretty' (/:categories/:year/:month/:day/:title/)
-permalink: pretty
-
 # Markdown Processors
 kramdown:
   input: GFM
@@ -48,24 +44,24 @@ kramdown:
 collections:
   case_studies:
     output: true
-    permalink: /case_studies/:path/
+    permalink: /:collection/:path/
     index: /case_studies/archive/
     description: Case Studies
 
   presentations:
     output: true
-    permalink: /presentations/:path/
+    permalink: /:collection/:path/
     index: /presentations/archive/
     description: Presentations
 
   primers:
     output: true
-    permalink: /primers/:path/
+    permalink: /:collection/:path/
     index: /primers/archive/
     description: Primers
 
   workflows:
     output: true
-    permalink: /workflows/:path/
+    permalink: /:collection/:path/
     index: /workflows/archive/
     description: Workflows
