@@ -26,11 +26,11 @@ reflist:
 comments: yes
 ---
 
-{% assign workflow = (site.workflows | where: 'group' , 'rna_seq_to_enrichment_map') %}
-{% assign process_data = (workflow | where: 'title' , 'Process Data' | first) %}
-{% assign identify_pathways = (workflow | where: 'title' , 'Identify Pathways' | first) %}
-{% assign visualize = (workflow | where: 'title' , 'Visualize' | first) %}
-{% assign gsea = (site.primers | where: 'title' , 'Gene Set Enrichment Analysis' | first) %}
+{% assign workflow = site.workflows | where: 'group' , 'rna_seq_to_enrichment_map' %}
+{% assign process_data = workflow | where: 'title' , 'Process Data' | first %}
+{% assign identify_pathways = workflow | where: 'title' , 'Identify Pathways' | first %}
+{% assign visualize = workflow | where: 'title' , 'Visualize' | first %}
+{% assign gsea = site.primers | where: 'title' , 'Gene Set Enrichment Analysis' | first %}
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)

@@ -6,8 +6,8 @@ figures:
   figure_1: index/figure_index_workflow_gdc.png
 ---
 
-{% assign enrichment_workflows = (site.workflows | where: 'category' , 'Pathway Enrichment Analysis') %}
-{% assign rnaseq_em_workflow_index = (enrichment_workflows | where: 'title' , 'RNA-Seq to Enrichment Map' | first) %}
+{% assign enrichment_workflows = site.workflows | where: 'category' , 'Pathway Enrichment Analysis' %}
+{% assign rnaseq_em_workflow_index = enrichment_workflows | where: 'title' , 'RNA-Seq to Enrichment Map' | first %}
 
 ## A resource for *pathway* understanding and analysis
 

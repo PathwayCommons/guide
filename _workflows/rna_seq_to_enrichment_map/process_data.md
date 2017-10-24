@@ -34,7 +34,7 @@ reflist:
 comments: yes
 ---
 
-{% assign rna_sequencing_analysis = (site.primers | where: 'title' , 'RNA Sequencing Analysis' | first) %}
+{% assign rna_sequencing_analysis = site.primers | where: 'title' , 'RNA Sequencing Analysis' | first %}
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)

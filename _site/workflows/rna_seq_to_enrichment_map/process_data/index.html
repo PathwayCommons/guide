@@ -95,7 +95,7 @@
 
 <hr />
 
-<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
 <div class="alert alert-warning text-justify" role="alert">
   This workflow step provides files in the <a href="#output">Output</a> section that are dependencies for the remaining steps. The goals for this step then are to read through this section, download the files and make sure you are aware of their contents and relevance. No further action on your part is necessary.
@@ -118,7 +118,7 @@
   <strong>Figure 1. Goals.</strong> To illustrate construction of an Enrichment Map, we follow the work done by Best et al. (Best 2015) comparing RNA-Seq profiles of platelets from healthy donors (HD) to those with breast cancer (BrCa) with the goal of defining blood-based diagnostic signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-Seq profiles from platelet samples. In this workflow step, we use the RNA-Seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are files which are the dependencies for subsequent workflow steps. Besides downloading these files and understanding what they contain, there is no further action to be taken in the workflow.
 </div>
 
-<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+<h2 id="ii-background"><a href="#background" name="background">II. Background</a></h2>
 
 <p>This workflow is framed using sample data from a study by Best <em>et al.</em> who developed aimed to provide a proof-of-principle for platelet-based cancer diagnosis. We briefly review this and related material in this section.</p>
 
@@ -198,7 +198,7 @@
 
 <p>While a list of genes expression differences with exquisite discriminatory power for breast cancer diagnosis is useful <em>per se</em>, we can go a step further: What biological processes distinguish platelets from and healthy and diseased patients? In other words, we wish to better understand how those differences in RNA species might underlie various <em>pathways</em> inside a cell. What does the transcriptomic data really <em>mean</em>?</p>
 
-<h2 id="a-hrefworkflowstep-nameworkflowstepiii-workflow-stepa"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
+<h2 id="iii-workflow-step"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
 
 <div class="box">
   <div class="box-title">Box 2. Workflow Terminology</div>
@@ -340,7 +340,7 @@
   <p>We refer the reader to our primer on <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/" target="_blank">RNA sequencing analysis</a> for a detailed description of the theory underlying the processing steps described here.</p>
 </blockquote>
 
-<h4 id="data-wrangling">1. Data wrangling</h4>
+<h4 id="1-data-wrangling">1. Data wrangling</h4>
 
 <p>Getting the data into the format that is useful for downstream analysis is an important but often under-appreciated aspect of computational biology research. In this case, there are three tasks that we must accomplish with our data and metadata.</p>
 
@@ -381,13 +381,13 @@
   </tbody>
 </table>
 
-<h4 id="filtering">2. Filtering</h4>
+<h4 id="2-filtering">2. Filtering</h4>
 
 <p>Biological processes are inherently noisy (Raser 2005) and the same goes for gene expression. Some of this gene expression noise arises from the stochastic nature of biochemical reactions which are rather pronounced when dealing with small numbers of molecules.</p>
 
 <p>In practical terms, RNA species with very low mapped read counts in a small number of samples can be highly variable. Consequently, we choose to ignore these in the search for differential expression. Best <em>et al.</em> use the rule of thumb that ‘genes with less than five (non-normalized) read counts in all samples were excluded from analyses’.</p>
 
-<h4 id="normalization">3. Normalization</h4>
+<h4 id="3-normalization">3. Normalization</h4>
 
 <p>RNA for a sample can be sequenced to varying ‘depths’. This means that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. The reason for this lies in the nature of next-generation sequencing technologies. Nevertheless, what most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth.</p>
 
@@ -446,7 +446,7 @@
   </tbody>
 </table>
 
-<h4 id="differential-expression-testing">4. Differential expression testing</h4>
+<h4 id="4-differential-expression-testing">4. Differential expression testing</h4>
 
 <p>In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a ‘hypothesis-testing’ technique that entails the following:</p>
 
@@ -491,7 +491,7 @@
   </tbody>
 </table>
 
-<h3 id="a-hrefoutput-nameoutputoutputa"><a href="#output" name="output">Output</a></h3>
+<h3 id="output"><a href="#output" name="output">Output</a></h3>
 
 <p>Listed below are the outputs of this step that will be required as input dependencies for the next steps of the workflow.</p>
 

@@ -231,7 +231,7 @@
 
 <hr />
 
-<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
 <p>Large-scale genome sequencing and gene expression analyses can result in lists of genes whose immediate relevance to the study objective may be unclear. Approaches collectively referred to as ‘enrichment’ or ‘overrepresentation’ analyses all aim to distill from more meaningful biological themes from reams of biological data.</p>
 
@@ -245,7 +245,7 @@
   <li>Be aware of the meaning of a p-value arising from Fisher’s Exact Test</li>
 </ol>
 
-<h2 id="a-hrefsetup-namesetupii-setup-for-enrichment-analysisa"><a href="#setup" name="setup">II. Setup for enrichment analysis</a></h2>
+<h2 id="ii-setup-for-enrichment-analysis"><a href="#setup" name="setup">II. Setup for enrichment analysis</a></h2>
 
 <h3 id="contingency-tables">Contingency tables</h3>
 <p>Data from experiments can often be classified in several ways, for example, by age, gender and treatment response. One may wonder if the proportions within one category are associated with the proportions of another category. For example, it is common to ask if individuals treated with a drug respond more often than those with a placebo. In the case where there are two categories of interest the data can be displayed as a 2-by-2 <em>contingency table</em>.</p>
@@ -266,7 +266,7 @@
 
 <p>We seemed quite confident that observing 12 DEG out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.</p>
 
-<h2 id="a-hreffishersexacttest-namefishersexacttestiii-fishers-exact-testa"><a href="#fishersExactTest" name="fishersExactTest">III. Fisher’s Exact Test</a></h2>
+<h2 id="iii-fishers-exact-test"><a href="#fishersExactTest" name="fishersExactTest">III. Fisher’s Exact Test</a></h2>
 
 <h3 id="what-are-the-chances">What are the chances?</h3>
 <p>Fisher’s exact test is a statistical procedure developed by R. A. Fisher in the mid 1930’s (Fisher 1935). Strictly speaking, the test is used to determine the probabilities of observing the various joint values within a contingency table under two important assumptions:</p>
@@ -361,7 +361,7 @@
 
 <p>This result is just under double the one-sided p-value, resulting from an ‘uneven’ distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.</p>
 
-<h2 id="a-hrefcaveats-namecaveatsiv-caveatsa"><a href="#caveats" name="caveats">IV. Caveats</a></h2>
+<h2 id="iv-caveats"><a href="#caveats" name="caveats">IV. Caveats</a></h2>
 <p>There has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up on.</p>
 
 <hr />

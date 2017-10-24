@@ -34,11 +34,11 @@ exclude:
 #**************** Override defaults ****************
 
 # Plugins
-gems:                [jekyll-watch, jekyll_github_sample]
+plugins: [jekyll-watch, jekyll_github_sample]
 
 # Outputting
 # post permalink style 'pretty' (/:categories/:year/:month/:day/:title/)
-permalink:     pretty
+permalink: pretty
 
 # Markdown Processors
 kramdown:

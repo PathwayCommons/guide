@@ -96,7 +96,7 @@
 
 <hr />
 
-<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
 <p><a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">Previously</a>, we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?</p>
 
@@ -108,7 +108,7 @@
   <li>Be able to generate a figure describing the landscape of altered pathways</li>
 </ol>
 
-<h2 id="a-hrefbackground-namebackgroundii-backgrounda"><a href="#background" name="background">II. Background</a></h2>
+<h2 id="ii-background"><a href="#background" name="background">II. Background</a></h2>
 
 <p>EM was originally described by Merico <em>et al.</em> (Merico 2010) as an aid in the interpretation of gene sets emerging from enrichment analyses. The motivation for this tool is the growing number of gene sets and gene annotation detail being made available, which leads to large numbers of gene sets emerging from enrichment analyses. Even with stringent criteria, it is not uncommon for analyses to generate hundreds or thousands of pathways, making results difficult to interpret on whole. To illustrate the value of EM, let us return to our analysis of alterations in pathways of platelets by Best <em>et al.</em>.</p>
 
@@ -253,7 +253,7 @@
   Take a moment to reflect on how the previous workflow step outputs are dependencies for the Enrichment Map. In particular, review your understanding of what the rank file, phenotype file, enrichment reports and rank file contain and how they were obtained. This will ease the process of creating and understanding what the Enrichment Map results mean.
 </div>
 
-<h2 id="a-hrefworkflowstep-nameworkflowstepiii-workflow-stepa"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
+<h2 id="iii-workflow-step"><a href="#workflow_step" name="workflow_step">III. Workflow Step</a></h2>
 
 <p>Below, we describe the process of loading our file dependencies from previous workflow steps (i.e. enrichment reports, expression, phenotypes, ranks) into the <a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a> desktop software towards generating an Enrichment Map similar to Figure 3. We will then provide some tips on how to navigate, tune and interpret the EM in an effort to facilitate new scientific insight.</p>
 
@@ -332,7 +332,7 @@
 
 <h3 id="analysis">Analysis</h3>
 
-<h4 id="load-dependencies">1. Load dependencies</h4>
+<h4 id="1-load-dependencies">1. Load dependencies</h4>
 
 <p>Having obtained the six (6) file dependencies you may now load these into the Cytoscape Enrichment Map app via the <code class="highlighter-rouge">Control Panel</code> (Figure 6).</p>
 
@@ -342,7 +342,7 @@
   <strong>Figure 6. Enrichment Map file load.</strong> Shown is the <code>Control Panel</code> tab for the <code>Enrichment Map Input</code>. Load in the file dependencies for <code>GMT File</code>, <code>Expression</code>, <code>Enrichments 1/2</code>, <code>Ranks</code> and <code>Classes</code>.
 </div>
 
-<h4 id="configure">2. Configure</h4>
+<h4 id="2-configure">2. Configure</h4>
 
 <p>In the <code class="highlighter-rouge">Control Panel</code> tab for Enrichment Map (Figure 6), make the following adjustments to the following sections.</p>
 
@@ -374,7 +374,7 @@
   <p>You will be able to adjust the cutoff parameters later on in the <code class="highlighter-rouge">Results Panel</code> after the Enrichment Map is built and displayed</p>
 </blockquote>
 
-<h4 id="build">3. Build</h4>
+<h4 id="3-build">3. Build</h4>
 
 <p>Click <code class="highlighter-rouge">Build</code> to generate the EM displayed in Figure 7. Take some time to examine main window displaying the network. In particular, in the lower right region of the main window there is a bird’s eye view showing the region displayed in the main view. Let us recap what we are seeing in the main view:</p>
 
@@ -573,7 +573,7 @@
 
 <p>Cytoscape affords the user a great deal of control over <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styles</a> and <a href="http://manual.cytoscape.org/en/stable/Navigation_and_Layout.html?highlight=layout" target="_blank">layout</a>. There is only so much that can be automated, so it will be up to you to tweak the look of the Enrichment Map to suit your needs. Please refer to the <a href="http://manual.cytoscape.org/en/stable/index.html" target="_blank">user manual</a> for full description of capabilities.</p>
 
-<h2 id="a-hrefinterpretation-nameinterpretationiv-interpretationa"><a href="#interpretation" name="interpretation">IV. Interpretation</a></h2>
+<h2 id="iv-interpretation"><a href="#interpretation" name="interpretation">IV. Interpretation</a></h2>
 
 <p>So what now? Below, we list some helpful tips to aid you in extracting value from an enrichment analysis.</p>
 
@@ -581,7 +581,7 @@
   <p>Check out a <a href="/guide/case_studies/pathway_enrichment_analysis/2016-09-chinen/" target="_blank">case study</a> to see how an Enrichment Map workflow was used to provide the basis for experimentally verifiable, mechanistic insights into cell function</p>
 </blockquote>
 
-<h3 id="build-trust">1. Build trust</h3>
+<h3 id="1-build-trust">1. Build trust</h3>
 
 <p>No algorithm or statistic can replace the experience, expertise and critical eye of you the researcher. The best place to start with a completed EM is to examine it for genes, pathways and themes that would be expected <em>a priori</em>. These are unsurprising results that have either been previously reported or which one could have easily guessed before the analysis was even performed. Do the results pass the sanity test?</p>
 
@@ -599,13 +599,13 @@
   <strong>Figure 15. Gene ontology relationship for gene set cluster 'blood coagulation platelet activation'.</strong> <em>Adapted from <a href="http://www.ebi.ac.uk/QuickGO/" target="_blank">QuickGO.</a></em>
 </div>
 
-<h3 id="identify-novelinteresting-groups">2. Identify novel/interesting groups</h3>
+<h3 id="2-identify-novelinteresting-groups">2. Identify novel/interesting groups</h3>
 
 <p>This is where the rubber meets the road: The enrichment analysis and EM are evidence that helps you to bridge bodies of knowledge and make new, interesting connections. The discoveries that will nourish a steady-stream of publications and earn the envy of peers is largely up to you.</p>
 
 <p>One simple way to get the creative juices flowing is to try and understand whether there are established connections between certain gene sets/groups and your specific biological context of interest. For example, one can ask whether there is an established connections between cytokine signaling pathways (‘IL-3’, ‘IL-5’, ‘IL-6’), platelets and malignancies.</p>
 
-<h3 id="drill-down-to-gene-expression">3. Drill down to gene expression</h3>
+<h3 id="3-drill-down-to-gene-expression">3. Drill down to gene expression</h3>
 
 <p>Perhaps we’ve noticed an interesting pathway not previously reported in our context. One way to build confidence in the result is to simply examine visually whether there is a contrast in expression between classes.</p>
 
@@ -627,7 +627,7 @@
   </div>
 </div>
 
-<h3 id="drill-down-to-the-pathway">4. Drill down to the pathway</h3>
+<h3 id="4-drill-down-to-the-pathway">4. Drill down to the pathway</h3>
 
 <p>Coming soon to a web app near you:</p>
 

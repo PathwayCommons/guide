@@ -231,7 +231,7 @@
 </ul>
 <hr />
 
-<h2 id="a-hrefhypergeometric-namehypergeometrici-hypergeometric-distributiona"><a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a></h2>
+<h2 id="i-hypergeometric-distribution"><a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a></h2>
 
 <h3 id="physical-setup">Physical setup</h3>
 <p>Suppose we have a collection of <script type="math/tex">N</script> objects which can be classified into two distinct categories or two types. Denote the categories:</p>
@@ -277,32 +277,32 @@ a total of <script type="math/tex">r</script></p>
 
 <script type="math/tex; mode=display">f(x) = \frac{\binom{4}{x}\cdot\binom{52-4}{5-x}}{\binom{52}{5}}</script>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of selecting Aces from a standard deck of cards
-</span>
-<span class="c1"># Initialize our relevant variables
-</span><span class="n">nAces</span> <span class="o">&lt;-</span> <span class="m">4</span> <span class="c1"># Available aces
-</span><span class="n">nOther</span> <span class="o">&lt;-</span> <span class="m">48</span> <span class="c1"># Available non-aces
-</span><span class="n">nDeal</span>  <span class="o">&lt;-</span> <span class="m">5</span> <span class="c1"># Number of cards dealt
-</span><span class="n">aces</span> <span class="o">&lt;-</span> <span class="m">0</span><span class="o">:</span><span class="m">4</span> <span class="c1"># The vector declaring the number of aces
-</span>
-<span class="c1"># Use the dhyper built-in function for hypergeometric probability
-</span><span class="n">probability</span> <span class="o">&lt;-</span> <span class="n">dhyper</span><span class="p">(</span><span class="n">aces</span><span class="p">,</span> <span class="n">nAces</span><span class="p">,</span> <span class="n">nOther</span><span class="p">,</span> <span class="n">nDeal</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span> <span class="n">x</span> <span class="o">=</span> <span class="n">aces</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">probability</span> <span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of selecting Aces from a standard deck of cards</span><span class="w">
 
-<span class="c1"># Bar plot
-</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span> <span class="o">+</span>
-  <span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span>
-        <span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span>
-        <span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span>
-        <span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
-        <span class="p">)</span> <span class="o">+</span>
-  <span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span> <span class="s2">"#2c3e50"</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">"Number of Aces"</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">nAces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Available aces</span><span class="w">
+</span><span class="n">nOther</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="c1"># Available non-aces</span><span class="w">
+</span><span class="n">nDeal</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c1"># Number of cards dealt</span><span class="w">
+</span><span class="n">aces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="w"> </span><span class="c1"># The vector declaring the number of aces</span><span class="w">
+
+</span><span class="c1"># Use the dhyper built-in function for hypergeometric probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dhyper</span><span class="p">(</span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">nAces</span><span class="p">,</span><span class="w"> </span><span class="n">nOther</span><span class="p">,</span><span class="w"> </span><span class="n">nDeal</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Bar plot</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w">
+        </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="s2">"#2c3e50"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of Aces"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
 
 <p><img src="/guide/media/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" /></p>
 
-<h2 id="a-hrefbinomial-namebinomialii-binomial-distributiona"><a href="#binomial" name="binomial">II. Binomial distribution</a></h2>
+<h2 id="ii-binomial-distribution"><a href="#binomial" name="binomial">II. Binomial distribution</a></h2>
 
 <h3 id="physical-setup-1">Physical setup</h3>
 <p>Consider an experiment in which we have two distinct types of outcomes that can be categorized as</p>
@@ -378,30 +378,30 @@ counting rules and notation.</p>
 
 <script type="math/tex; mode=display">f(x) = \binom{10}{x} (1/6)^x(1-(1/6))^{10-x}</script>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of sixes in 10 tosses of a fair die
-# Initialize our relevant variables
-</span><span class="n">trials</span> <span class="o">&lt;-</span> <span class="m">10</span>
-<span class="n">sixes</span>  <span class="o">&lt;-</span> <span class="m">0</span><span class="o">:</span><span class="m">10</span> <span class="c1"># The vector declaring the number of successes
-</span><span class="n">p</span>      <span class="o">&lt;-</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span>  <span class="c1"># The probability of a given face
-</span>
-<span class="c1"># Use the dbinom built-in function for binomial probability
-</span><span class="n">probability</span> <span class="o">&lt;-</span> <span class="n">dbinom</span><span class="p">(</span><span class="n">sixes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span> <span class="n">x</span> <span class="o">=</span> <span class="n">sixes</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">probability</span> <span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of sixes in 10 tosses of a fair die</span><span class="w">
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">trials</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="n">sixes</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="c1"># The vector declaring the number of successes</span><span class="w">
+</span><span class="n">p</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="w">  </span><span class="c1"># The probability of a given face</span><span class="w">
 
-<span class="c1"># Bar plot
-</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span> <span class="o">+</span>
-  <span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span>
-        <span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span>
-        <span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span>
-        <span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
-        <span class="p">)</span> <span class="o">+</span>
-  <span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span> <span class="s2">"#2c3e50"</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">"Number of Sixes"</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
+</span><span class="c1"># Use the dbinom built-in function for binomial probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dbinom</span><span class="p">(</span><span class="n">sixes</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="n">p</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sixes</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Bar plot</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w">
+        </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="s2">"#2c3e50"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of Sixes"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
 
 <p><img src="/guide/media/primers/statistics/distributions/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto auto auto 0;" /></p>
 
-<h2 id="a-hrefpoisson-namepoissoniii-poisson-distributiona"><a href="#Poisson" name="Poisson">III. Poisson distribution</a></h2>
+<h2 id="iii-poisson-distribution"><a href="#Poisson" name="Poisson">III. Poisson distribution</a></h2>
 
 <h3 id="physical-setup-2">Physical setup</h3>
 <p>Consider a limiting case of the binomial distribution as <script type="math/tex">n\rightarrow\infty</script> and <script type="math/tex">p\rightarrow 0</script> but <script type="math/tex">np=\mu</script> is fixed. This means that the event of interest is relatively rare. Then <script type="math/tex">X</script> has a <strong>Poisson distribution</strong> <script type="math/tex">P \sim Poisson(\mu)</script>.</p>
@@ -448,19 +448,19 @@ counting rules and notation.</p>
 
 <script type="math/tex; mode=display">f(x) = \frac{ \left(\frac{200}{365}\right)^x}{x!} e^{-\left(\frac{200}{365}\right)}</script>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of two people born on December 25th
-# Initialize our relevant variables
-</span><span class="n">n</span>  <span class="o">&lt;-</span> <span class="m">200</span>   <span class="c1"># The number of people
-</span><span class="n">p</span>  <span class="o">&lt;-</span> <span class="m">1</span><span class="o">/</span><span class="m">365</span> <span class="c1"># The probability of a birthday on Dec. 25
-</span><span class="n">mu</span> <span class="o">&lt;-</span> <span class="n">n</span><span class="o">*</span><span class="n">p</span>   <span class="c1"># The mean
-</span>
-<span class="c1"># Use the dpois built-in function for Poisson probability
-</span><span class="n">probability</span> <span class="o">&lt;-</span> <span class="n">dpois</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-<span class="n">probability</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of two people born on December 25th</span><span class="w">
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">n</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">200</span><span class="w">   </span><span class="c1"># The number of people</span><span class="w">
+</span><span class="n">p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">365</span><span class="w"> </span><span class="c1"># The probability of a birthday on Dec. 25</span><span class="w">
+</span><span class="n">mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="w">   </span><span class="c1"># The mean</span><span class="w">
+
+</span><span class="c1"># Use the dpois built-in function for Poisson probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dpois</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">probability</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 0.086791</code></pre></figure>
 
-<h2 id="a-hrefgamma-namegammaiv-gamma-distributiona"><a href="#gamma" name="gamma">IV. Gamma distribution</a></h2>
+<h2 id="iv-gamma-distribution"><a href="#gamma" name="gamma">IV. Gamma distribution</a></h2>
 
 <h3 id="gamma-function">Gamma function</h3>
 
@@ -490,7 +490,7 @@ counting rules and notation.</p>
 
 <p>then <script type="math/tex">X</script> has a <strong>gamma distribution</strong> <script type="math/tex">X\sim Gamma(x; \alpha,\beta)</script>. Typically, <script type="math/tex">\alpha</script> is called the  ‘shape’ parameter and <script type="math/tex">\beta</script> the ‘scale’ or ‘rate’.</p>
 
-<h2 id="a-hrefnegativebinomial-namenegativebinomialv-negative-binomial-distributiona"><a href="#negativeBinomial" name="negativeBinomial">V. Negative binomial distribution</a></h2>
+<h2 id="v-negative-binomial-distribution"><a href="#negativeBinomial" name="negativeBinomial">V. Negative binomial distribution</a></h2>
 
 <h3 id="physical-setup-3">Physical setup</h3>
 <p>The setup is very similar to the binomial. Consider an experiment in which we have two distinct types of outcomes that can be categorized as</p>

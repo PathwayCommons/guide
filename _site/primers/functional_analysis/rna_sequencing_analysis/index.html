@@ -234,7 +234,7 @@
 
 <hr />
 
-<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
 <div class="alert alert-warning text-justify" role="alert">
   We have focused our discussion on those capabilities available as part of the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html" target="_blank">edgeR</a> software package.
@@ -249,7 +249,7 @@
   <li>Be familiar with the statistical models describing variability in count data</li>
 </ol>
 
-<h2 id="a-hrefopportunitieschallenges-nameopportunitieschallengesii-opportunities-and-challengesa"><a href="#opportunitiesChallenges" name="opportunitiesChallenges">II. Opportunities and challenges</a></h2>
+<h2 id="ii-opportunities-and-challenges"><a href="#opportunitiesChallenges" name="opportunitiesChallenges">II. Opportunities and challenges</a></h2>
 <p>It’s a simple question: What genes are expressed differently between two biological states? In basic research it is common to assess how a treatment modifies expression <em>in vitro</em> relative to controls. In a translational context one often desires to determine how expression evolves over the course of a pathology. While microarrays paved the way for rapid, inexpensive measurements of thousands of transcripts, in the last decade it has been usurped by deep sequencing technologies. As always, RNA-seq technologies come with their unique set of experimental, technical and data analysis challenges.</p>
 
 <p>Using high-throughput sequencing technology to analyze the abundance of RNA species has several advantages over hybridization-based methods such as microarrays (Wang 2009). RNA-seq methods can provide unprecedented insight into alternative splicing, transcriptional initiation and termination, post-transcriptional modification and novel  RNA species. From a technical standpoint, the method is unparalleled with respect to measurement noise, sensitivity, dynamic range and reproducibility. The discrete counts arising from sequencing methods are more intuitive than fluorescence intensities. Depending on the conditions, sequencing sensitivity can approach 1 transcript per cell. With great power, however, comes great responsibility.</p>
@@ -262,7 +262,7 @@
 
 <p>In practice, assessing differential expression entails a hypothesis test that calculates the probability of an observed difference in RNA species counts between groups/subtypes assuming the null hypothesis of no association between subtypes. Statistical models are introduced into this process in order to provide a more explicit and rigorous basis for modeling variability. Unlike microarrays, which provide continuous measures of fluorescence intensity associated with labelled nucleic acids, deep sequencing produces discrete counts better described by a distinct set of statistical models.</p>
 
-<h2 id="a-hrefrnasequencing-namernasequencingiii-rna-sequencinga"><a href="#rnaSequencing" name="rnaSequencing">III. RNA sequencing</a></h2>
+<h2 id="iii-rna-sequencing"><a href="#rnaSequencing" name="rnaSequencing">III. RNA sequencing</a></h2>
 
 <p>This section includes a very brief review of RNA-seq concepts and terminology that will be a basis for discussion of data normalization. Many of the <a href="/guide/datasets/archive/">TCGA RNA sequencing data sets</a> we describe were generated using the Illumina platform and for that reason we focus on their technology.</p>
 
@@ -320,7 +320,7 @@
   <strong>Video 2. Illumina patterned flow cell technology.</strong>
 </div>
 
-<h2 id="a-hrefnormalization-namenormalizationiv-normalizationa"><a href="#normalization" name="normalization">IV. Normalization</a></h2>
+<h2 id="iv-normalization"><a href="#normalization" name="normalization">IV. Normalization</a></h2>
 
 <h3 id="variation">Variation</h3>
 
@@ -605,7 +605,7 @@ the counts.</em></p>
   <footnote class="pull-right">- edgeR User Guide, Chapter 2.7.3 </footnote>
 </blockquote>
 
-<h2 id="a-hrefdifferentialexpression-namedifferentialexpressionv-differential-expression-testinga"><a href="#differentialExpression" name="differentialExpression">V. Differential expression testing</a></h2>
+<h2 id="v-differential-expression-testing"><a href="#differentialExpression" name="differentialExpression">V. Differential expression testing</a></h2>
 
 <div class="alert alert-warning text-justify" role="alert">
   We are going to lean heavily on our primer for <a href="/guide/primers/statistics/distributions/">Distributions</a>. In particular, you may wish to review our section on the <a href="/guide/primers/statistics/distributions/#negativeBinomial">Negative binomial distribution</a>. We will also use a lot of concepts from our section on <a href="/guide/primers/statistics/fishers_exact_test/">Fisher's Exact Test</a> and <a href="/guide/primers/statistics/multiple_testing/">Multiple Testing</a>.
@@ -704,7 +704,7 @@ the counts.</em></p>
 
 <p>Here the <script type="math/tex">\phi</script> is the dispersion, <script type="math/tex">n_T</script> is the number of samples of type <script type="math/tex">T</script> and <script type="math/tex">\lambda_i</script> is the relative abundance of the gene. But let’s back up a bit. We seemed to pull this negative binomial distribution out of a magic hat. Where does this originate? What do all these parameters really mean and how do we get them?</p>
 
-<h2 id="a-hrefmodellingcounts-namemodellingcountsvi-modelling-countsa"><a href="#modellingCounts" name="modellingCounts">VI. Modelling counts</a></h2>
+<h2 id="vi-modelling-counts"><a href="#modellingCounts" name="modellingCounts">VI. Modelling counts</a></h2>
 
 <p>Our goal here is to rationalize the negative binomial distribution as an acceptable null <a href="/guide/primers/statistics/definitions/#probabilityFunction">probability distribution</a> which we can use to map an observed RNA-seq sequenced read count to a corresponding p-value <script type="math/tex">P</script>. In simple terms, trying to derive the null distribution corresponds to the question: How are RNA-seq mapped sequence reads distributed? Another way of stating this is: How do RNA-seq mapped sequence read data vary?</p>
 
@@ -797,7 +797,7 @@ the counts.</em></p>
   <footer class="text-right"><a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR User Guide</a></footer>
 </blockquote>
 
-<h2 id="a-hrefdispersionestimation-namedispersionestimationvii-dispersion-estimationa"><a href="#dispersionEstimation" name="dispersionEstimation">VII. Dispersion estimation</a></h2>
+<h2 id="vii-dispersion-estimation"><a href="#dispersionEstimation" name="dispersionEstimation">VII. Dispersion estimation</a></h2>
 
 <p>Let us preview what we will discuss in this section. Recall in the previous section <a href="#differentialExpression">differential expression testing</a> we defined our test statistics - the number of observed counts <script type="math/tex">Y_{ij}</script> for the gene of interest in each subtype.</p>
 

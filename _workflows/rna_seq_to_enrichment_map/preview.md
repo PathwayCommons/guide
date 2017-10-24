@@ -16,8 +16,8 @@ reflist:
 comments: yes
 ---
 
-{% assign bad_blood = (site.case_studies | where: 'title' , 'Bad Blood' | first) %}
-{% assign dark_matter = (site.case_studies | where: 'title' , 'Dark Matter' | first) %}
+{% assign bad_blood = site.case_studies | where: 'title' , 'Bad Blood' | first %}
+{% assign dark_matter = site.case_studies | where: 'title' , 'Dark Matter' | first %}
 
 ## Why think in terms of pathways?
 

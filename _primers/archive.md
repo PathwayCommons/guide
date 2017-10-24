@@ -9,7 +9,7 @@ categories:
 ---
 
 {% for category in page.categories %}
-  {% assign docs = (site.primers | where: 'category' , category ) %}
+  {% assign docs = site.primers | where: 'category' , category %}
 
   <h2 class="page-category">{{ category | capitalize | replace: "_", " " }}</h2>
   <hr/>

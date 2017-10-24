@@ -233,7 +233,7 @@
 
 <hr />
 
-<h2 id="a-hrefgoals-namegoalsi-goalsa"><a href="#goals" name="goals">I. Goals</a></h2>
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
 <p>Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.</p>
 
@@ -249,7 +249,7 @@
   <li>Be familiar with Benjamini-Hochberg control of false discovery rates</li>
 </ol>
 
-<h2 id="a-hrefhypothesistestingerrors-namehypothesistestingerrorsii-hypothesis-testing-errorsa"><a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a></h2>
+<h2 id="ii-hypothesis-testing-errors"><a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a></h2>
 
 <p>For better or worse, hypothesis testing as it is known today represents a gatekeeper for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in <a href="#multipleTestingControl">section III</a>.</p>
 
@@ -342,7 +342,7 @@
   <footnote class="pull-right">-R. A. Fisher (Goodman 1998)</footnote>
 </blockquote>
 
-<h2 id="a-hrefmultipletestingcontrol-namemultipletestingcontroliii-multiple-testing-controla"><a href="#multipleTestingControl" name="multipleTestingControl">III. Multiple testing control</a></h2>
+<h2 id="iii-multiple-testing-control"><a href="#multipleTestingControl" name="multipleTestingControl">III. Multiple testing control</a></h2>
 
 <p>The introductory section provides an intuitive feel for the errors associated with multiple testing. In this section our goal is to put those concepts on more rigorous footing and examine some perspectives on error control.</p>
 
@@ -369,7 +369,7 @@
 
 <p>Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant (<script type="math/tex">V</script>). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.</p>
 
-<h2 id="a-hrefcontrollingfwer-namecontrollingfweriv-controlling-the-family-wise-error-rate-fwera"><a href="#controllingFWER" name="controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a></h2>
+<h2 id="iv-controlling-the-family-wise-error-rate-fwer"><a href="#controllingFWER" name="controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a></h2>
 
 <p><strong>Definition</strong> The <strong>family-wise error rate (FWER)</strong> is the probability of at least one (1 or more) type I error</p>
 
@@ -408,13 +408,13 @@
 
 <p>Indeed our discussion above would indicate that large-scale experiments are exploratory in nature and that we should be assured that testing errors are of minor consequence. We could accept more potential errors as a reasonable trade-off for identifying more significant genes. There are many other arguments made over the past few decades against using such control procedures, some of which border on the philosophical (Goodman 1998, Savitz 1995). Some even have gone as far as to call for the abandonment of correction procedures altogether (Rothman 1990). At least two arguments are relevant to the context of multiple testing involving large-scale experimental data.</p>
 
-<h4 id="the-composite-universal-null-hypothesis-is-irrelevant">1. The composite “universal” null hypothesis is irrelevant</h4>
+<h4 id="1-the-composite-universal-null-hypothesis-is-irrelevant">1. The composite “universal” null hypothesis is irrelevant</h4>
 
 <p>The origin of the Bonferroni correction is predicated on the universal hypothesis that only purely random processes govern all the variability of all the observations in hand. The omnibus alternative hypothesis is that some associations are present in the data. Rejection of the null hypothesis amounts to a statement merely that at least one of the assumptions underlying the null hypothesis is invalid, however, it does not specify exactly what aspect.</p>
 
 <p>Concretely, testing a multitude of genes for differential expression in treatment and control cells on a microarray could be grounds for Bonferroni correction. However, rejecting the composite null hypothesis that purely random processes governs expression of all genes represented on the array is not very interesting. Rather, researchers are more interested in which genes or subsets demonstrate these non-random expression patterns following treatment.</p>
 
-<h4 id="penalty-for-peeking-and-p-hacking">2. Penalty for peeking and ‘p hacking’</h4>
+<h4 id="2-penalty-for-peeking-and-p-hacking">2. Penalty for peeking and ‘p hacking’</h4>
 
 <p>This argument boils down to the argument: Why should one independent test result impact the outcome of another?</p>
 
@@ -422,7 +422,7 @@
 
 <p>Alternatively, ‘p-hacking’ is the process of creatively organizing data sets in such a fashion such that the p-values remain below the significance threshold. For example, imagine we perform 100 tests and each results in a <script type="math/tex">p=0.001</script>. A Bonferroni-adjusted significance level is <script type="math/tex">0.0005</script> meaning none of the latter results are deemed significant. Suppose that we break these 100 tests into 5 groups of 20 and publish each group separately. In this case the significance level is <script type="math/tex">0.0025</script> and in all cases the tests are significant.</p>
 
-<h2 id="a-hrefcontrollingfdr-namecontrollingfdrv-controlling-the-false-discovery-rate-fdra"><a href="#controllingFDR" name="controllingFDR">V. Controlling the false discovery rate (FDR)</a></h2>
+<h2 id="v-controlling-the-false-discovery-rate-fdr"><a href="#controllingFDR" name="controllingFDR">V. Controlling the false discovery rate (FDR)</a></h2>
 
 <p>Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant (<script type="math/tex">R</script>) with the true (<script type="math/tex">m_0</script>) and false (<script type="math/tex">m_1=m-m_0</script>) null hypotheses.</p>
 
@@ -638,7 +638,7 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
 
 <p>Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2014).</p>
 
-<h2 id="a-hrefappendixa-nameappendixaappendix-a-proof-of-lemma-1a"><a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a></h2>
+<h2 id="appendix-a-proof-of-lemma-1"><a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a></h2>
 
 <p>We intend on proving Lemma 1 that underlies the BH procedure for control of the FDR. The proof is adapted from the original publication by Benjamini and Hochberg (Benjamini 1995) with variant notation and diagrams for clarification purposes. We provide some notation and restate the lemma followed by the proof.</p>
 
@@ -674,7 +674,7 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
 
     <p>There are a few not so obvious details that we will need along the way. We present these as a set of numbered ‘asides’ that we will refer back to.</p>
 
-    <h4 id="distribution-of-true-null-hypothesis-p-values">1. Distribution of true null hypothesis p-values</h4>
+    <h4 id="1-distribution-of-true-null-hypothesis-p-values">1. Distribution of true null hypothesis p-values</h4>
 
     <p>The true null hypotheses are associated with p-values <script type="math/tex">X_1, \dots, X_{m_0}</script> that are distributed according to a standard uniform distribution, that is, <script type="math/tex">X\sim U(0,1)</script>. The proof of this follows.</p>
 
@@ -711,7 +711,7 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
 
     <p>This means that <script type="math/tex">P(F_0(T) \lt F_0(t)) = F_0(t)</script> which happens when <script type="math/tex">F_0(t) \sim U(0,1)</script>.</p>
 
-    <h4 id="distribution-of-the-largest-order-statistic">2. Distribution of the largest order statistic</h4>
+    <h4 id="2-distribution-of-the-largest-order-statistic">2. Distribution of the largest order statistic</h4>
 
     <p>Suppose that <script type="math/tex">Y_1,\ldots, Y_n</script> are <script type="math/tex">n</script> independent variates, each with cdf <script type="math/tex">F(y)</script>. Let <script type="math/tex">F_{(i)}(y)</script> for <script type="math/tex">i=1,\ldots,n</script> denote the cdf of the <script type="math/tex">i^{th}</script> order statistic <script type="math/tex">Y_{(i)}</script>. Then the cdf of the largest order statistic <script type="math/tex">Y_{(n)}</script> is given by</p>
 

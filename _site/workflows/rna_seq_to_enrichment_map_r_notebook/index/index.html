@@ -242,7 +242,7 @@
   <li><a href="#enrichmentMap">F. Enrichment Map</a></li>
 </ul>
 
-<h2 id="a-hrefoverview-nameoverviewa-overviewa"><a href="overview" name="overview">A. Overview</a></h2>
+<h2 id="a-overview"><a href="overview" name="overview">A. Overview</a></h2>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -296,7 +296,7 @@
   <li><a href="http://apps.cytoscape.org/apps/autoannotate">AutoAnnotate</a> (1.1.0)</li>
 </ul>
 
-<h2 id="a-hrefsamplestudy-namesamplestudyb-sample-studya"><a href="sampleStudy" name="sampleStudy">B. Sample Study</a></h2>
+<h2 id="b-sample-study"><a href="sampleStudy" name="sampleStudy">B. Sample Study</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -313,29 +313,29 @@
 
 <p>Best <em>et al.</em> collected blood platelets from 55 HD and from 39 individuals with BrCa and subjected these samples to RNA-sequencing. Herein, we will be restricting our attention to a subset of 5 patient samples from each class. The metadata for the RNA-Seq files is contained in a file named <code class="highlighter-rouge">tep_rnaseq_metadata.txt</code> which lists RNA-Seq data filenames (‘id’) and the ‘class’ of each patient sample (Table I).</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Declare general file directory paths
-</span>  <span class="n">base_dir</span> <span class="o">&lt;-</span> <span class="n">getwd</span><span class="p">()</span>
-  <span class="n">data_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
-  <span class="n">output_dir</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">)</span>
-  <span class="n">dir.create</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">showWarnings</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Declare general file directory paths</span><span class="w">
+  </span><span class="n">base_dir</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">getwd</span><span class="p">()</span><span class="w">
+  </span><span class="n">data_dir</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"data"</span><span class="p">)</span><span class="w">
+  </span><span class="n">output_dir</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"output"</span><span class="p">)</span><span class="w">
+  </span><span class="n">dir.create</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">showWarnings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Declare paths to RNA-Seq (meta)data files
-</span>  <span class="n">tep_rnaseq_metadata</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"tep_rnaseq_metadata.txt"</span><span class="p">)</span>
-  <span class="n">tep_rnaseq_filelist</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-74_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-68_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-66_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-59_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"MGH-BrCa-H-11_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-5_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-4_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-3-1_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-2-1_htsqct.txt"</span><span class="p">),</span>
-                           <span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"HD-1_htsqct.txt"</span><span class="p">))</span></code></pre></figure>
+  </span><span class="c1">### Declare paths to RNA-Seq (meta)data files</span><span class="w">
+  </span><span class="n">tep_rnaseq_metadata</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"tep_rnaseq_metadata.txt"</span><span class="p">)</span><span class="w">
+  </span><span class="n">tep_rnaseq_filelist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"MGH-BrCa-H-74_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"MGH-BrCa-H-68_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"MGH-BrCa-H-66_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"MGH-BrCa-H-59_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"MGH-BrCa-H-11_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"HD-5_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"HD-4_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"HD-3-1_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"HD-2-1_htsqct.txt"</span><span class="p">),</span><span class="w">
+                           </span><span class="n">file.path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"HD-1_htsqct.txt"</span><span class="p">))</span></code></pre></figure>
 
 <p><strong>Table I. Patient TEP RNA-Seq metadata (<code class="highlighter-rouge">tep_rnaseq_metadata.txt</code>)</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">tep_rnaseq_metadata_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_metadata</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">tep_rnaseq_metadata_df</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">tep_rnaseq_metadata_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_metadata</span><span class="p">,</span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">tep_rnaseq_metadata_df</span><span class="p">)</span></code></pre></figure>
 
 <table>
   <thead>
@@ -392,10 +392,10 @@
 
 <p><strong>Table II. Excerpt of RNA-Seq file HD-1_htsqct.txt</strong></p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">index_HD_1_htsqct</span> <span class="o">&lt;-</span> <span class="n">grepl</span><span class="p">(</span><span class="s2">"HD-1_htsqct.txt"</span><span class="p">,</span> <span class="n">tep_rnaseq_filelist</span><span class="p">)</span>
-  <span class="n">rnaseq_HD_1_htsqct</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_filelist</span><span class="p">[</span><span class="n">index_HD_1_htsqct</span><span class="p">],</span>
-    <span class="n">check.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">rnaseq_HD_1_htsqct</span><span class="p">),</span> <span class="n">col.names</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="s2">""</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">index_HD_1_htsqct</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">grepl</span><span class="p">(</span><span class="s2">"HD-1_htsqct.txt"</span><span class="p">,</span><span class="w"> </span><span class="n">tep_rnaseq_filelist</span><span class="p">)</span><span class="w">
+  </span><span class="n">rnaseq_HD_1_htsqct</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">tep_rnaseq_filelist</span><span class="p">[</span><span class="n">index_HD_1_htsqct</span><span class="p">],</span><span class="w">
+    </span><span class="n">check.names</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">rnaseq_HD_1_htsqct</span><span class="p">),</span><span class="w"> </span><span class="n">col.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="s2">""</span><span class="p">))</span></code></pre></figure>
 
 <table>
   <thead>
@@ -432,7 +432,7 @@
   </tbody>
 </table>
 
-<h2 id="a-hrefdatapreprocessing-namedatapreprocessingc-data-pre-processinga"><a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a></h2>
+<h2 id="c-data-pre-processing"><a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -458,226 +458,226 @@
 
 <p>We offload the above work onto an R function <code class="highlighter-rouge">merge_data</code> and its helpers that perform the required ID-mapping and data merging and returns a single <code class="highlighter-rouge">SummarizedExperiment</code> instance.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">library</span><span class="p">(</span><span class="s2">"SummarizedExperiment"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">library</span><span class="p">(</span><span class="s2">"SummarizedExperiment"</span><span class="p">)</span><span class="w">
   
-  <span class="c1">#' Merge a set of files representing RNA sequencing gene counts
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' 1. Default parameter is do nothing (already matching gene set ids)
-</span>  <span class="c1">#' 2. Optional parameter is to map from input to target namespace
-</span>  <span class="c1">#' Data files must be in tab-delimited format with two columns and no header. The classes are defined by a meta data file which is a tab-delimited text file with headers for the sample read 'id' and 'class'. Each row entry is a corresponding filename and class assignment. Only accepts pair-wise comparison so there must be exactly 2 classes.
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @param metadata_file A metadata file
-</span>  <span class="c1">#' @param species A character array indicating the species with which to fetch gene models from bioMart, If NULL this mapping will not be performed
-</span>  <span class="c1">#' @param source_name attribute (gene namespace) input
-</span>  <span class="c1">#' @param target_name attribute (gene namespace) desired
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @return A \code{\link[SummarizedExperiment]{SummarizedExperiment}}
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @export
-</span>  <span class="n">merge_data</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="k">...</span><span class="p">)</span> <span class="p">{</span>
+  </span><span class="cd">#' Merge a set of files representing RNA sequencing gene counts</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' 1. Default parameter is do nothing (already matching gene set ids)</span><span class="w">
+  </span><span class="cd">#' 2. Optional parameter is to map from input to target namespace</span><span class="w">
+  </span><span class="cd">#' Data files must be in tab-delimited format with two columns and no header. The classes are defined by a meta data file which is a tab-delimited text file with headers for the sample read 'id' and 'class'. Each row entry is a corresponding filename and class assignment. Only accepts pair-wise comparison so there must be exactly 2 classes.</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @param metadata_file A metadata file</span><span class="w">
+  </span><span class="cd">#' @param species A character array indicating the species with which to fetch gene models from bioMart, If NULL this mapping will not be performed</span><span class="w">
+  </span><span class="cd">#' @param source_name attribute (gene namespace) input</span><span class="w">
+  </span><span class="cd">#' @param target_name attribute (gene namespace) desired</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @return A \code{\link[SummarizedExperiment]{SummarizedExperiment}}</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @export</span><span class="w">
+  </span><span class="n">merge_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">source_name</span><span class="p">,</span><span class="w"> </span><span class="n">target_name</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">is.character</span><span class="p">(</span><span class="n">species</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'species must be of class character'</span><span class="p">)</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">is.character</span><span class="p">(</span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'species must be of class character'</span><span class="p">)</span><span class="w">
 
-    <span class="n">i</span> <span class="o">&lt;-</span> <span class="m">0</span>
-    <span class="n">class_order</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">()</span>
-    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">create_meta</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span>
+    </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
+    </span><span class="n">class_order</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">()</span><span class="w">
+    </span><span class="n">meta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">create_meta</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span><span class="w">
 
-    <span class="n">filelist</span> <span class="o">&lt;-</span> <span class="n">list</span><span class="p">(</span><span class="k">...</span><span class="p">)</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">is.list</span><span class="p">(</span><span class="n">filelist</span><span class="p">)){</span>
-      <span class="n">filelist</span> <span class="o">&lt;-</span> <span class="n">unlist</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span>
-    <span class="p">}</span>
+    </span><span class="n">filelist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">...</span><span class="p">)</span><span class="w">
+    </span><span class="k">if</span><span class="p">(</span><span class="nf">is.list</span><span class="p">(</span><span class="n">filelist</span><span class="p">)){</span><span class="w">
+      </span><span class="n">filelist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span><span class="n">dim</span><span class="p">(</span><span class="n">meta</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">length</span><span class="p">(</span><span class="n">filelist</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'Mismatch in files declared in metadata'</span><span class="p">)</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">meta</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">filelist</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'Mismatch in files declared in metadata'</span><span class="p">)</span><span class="w">
 
-    <span class="k">for</span><span class="p">(</span><span class="n">file</span> <span class="k">in</span> <span class="n">filelist</span><span class="p">){</span>
+    </span><span class="k">for</span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">filelist</span><span class="p">){</span><span class="w">
 
-      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">file</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'invalid file/directory'</span><span class="p">)</span>
+      </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">file</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'invalid file/directory'</span><span class="p">)</span><span class="w">
 
-      <span class="n">fname</span> <span class="o">&lt;-</span> <span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-      <span class="n">findex</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span> <span class="o">==</span> <span class="n">fname</span><span class="p">)</span>
+      </span><span class="n">fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w">
+      </span><span class="n">findex</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fname</span><span class="p">)</span><span class="w">
 
-      <span class="k">if</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">findex</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'Could not find match in metadata for '</span><span class="p">,</span> <span class="n">fname</span><span class="p">))</span>
+      </span><span class="k">if</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">findex</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'Could not find match in metadata for '</span><span class="p">,</span><span class="w"> </span><span class="n">fname</span><span class="p">))</span><span class="w">
 
-      <span class="n">class_order</span> <span class="o">&lt;-</span> <span class="n">append</span><span class="p">(</span><span class="n">class_order</span><span class="p">,</span> <span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span> <span class="o">==</span> <span class="n">fname</span><span class="p">))</span>
+      </span><span class="n">class_order</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">append</span><span class="p">(</span><span class="n">class_order</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fname</span><span class="p">))</span><span class="w">
 
-      <span class="n">input_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">file</span><span class="p">,</span>
-        <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
-        <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
-        <span class="n">row.names</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span>
-        <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
-        <span class="n">header</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-      <span class="n">colnames</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">tools</span><span class="o">::</span><span class="n">file_path_sans_ext</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+      </span><span class="n">input_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="w">
+        </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+        </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+        </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">
+        </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w">
+        </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+      </span><span class="n">colnames</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tools</span><span class="o">::</span><span class="n">file_path_sans_ext</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="w">
 
-      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="m">0</span><span class="p">){</span>
-        <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">input_df</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
-        <span class="k">next</span><span class="p">()</span>
-      <span class="p">}</span>
+      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">){</span><span class="w">
+        </span><span class="n">data_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">input_df</span><span class="w">
+        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w">
+        </span><span class="k">next</span><span class="p">()</span><span class="w">
+      </span><span class="p">}</span><span class="w">
 
-      <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span>
-        <span class="n">input_df</span><span class="p">,</span>
-        <span class="n">by</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span>
-        <span class="n">all</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-      <span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">data_df</span><span class="o">$</span><span class="n">Row.names</span>
-      <span class="n">data_df</span> <span class="o">&lt;-</span> <span class="n">subset</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="o">-</span><span class="n">Row.names</span><span class="p">)</span>
-      <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
-    <span class="p">}</span>
+      </span><span class="n">data_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span><span class="w">
+        </span><span class="n">input_df</span><span class="p">,</span><span class="w">
+        </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"row.names"</span><span class="p">,</span><span class="w">
+        </span><span class="n">all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+      </span><span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_df</span><span class="o">$</span><span class="n">Row.names</span><span class="w">
+      </span><span class="n">data_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">Row.names</span><span class="p">)</span><span class="w">
+      </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 
-    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">get_gene_model</span><span class="p">(</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span> <span class="p">)</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">is.null</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span> <span class="s1">'Could not reliably map input gene ids'</span> <span class="p">)</span>
+    </span><span class="n">gene_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get_gene_model</span><span class="p">(</span><span class="w"> </span><span class="n">data_df</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">source_name</span><span class="p">,</span><span class="w"> </span><span class="n">target_name</span><span class="w"> </span><span class="p">)</span><span class="w">
+    </span><span class="k">if</span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="w"> </span><span class="s1">'Could not reliably map input gene ids'</span><span class="w"> </span><span class="p">)</span><span class="w">
 
-    <span class="c1"># Sync up data rows (name, order) with gene_model returned
-</span>    <span class="n">data_df_mapped</span> <span class="o">&lt;-</span> <span class="n">map_names</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">gene_model</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
+    </span><span class="c1"># Sync up data rows (name, order) with gene_model returned</span><span class="w">
+    </span><span class="n">data_df_mapped</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_names</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span><span class="w"> </span><span class="n">gene_model</span><span class="p">,</span><span class="w"> </span><span class="n">source_name</span><span class="p">)</span><span class="w">
 
-    <span class="c1"># Create the SummarizedExperiment
-</span>    <span class="n">colData</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">class</span><span class="o">=</span><span class="n">meta</span><span class="p">[</span><span class="n">class_order</span><span class="p">,]</span><span class="o">$</span><span class="n">class</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="n">colnames</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">))</span>
+    </span><span class="c1"># Create the SummarizedExperiment</span><span class="w">
+    </span><span class="n">colData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">class</span><span class="o">=</span><span class="n">meta</span><span class="p">[</span><span class="n">class_order</span><span class="p">,]</span><span class="o">$</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="o">=</span><span class="n">colnames</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">))</span><span class="w">
 
-    <span class="n">data_se</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">SummarizedExperiment</span><span class="p">(</span>
-      <span class="n">assays</span> <span class="o">=</span> <span class="n">list</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">data.matrix</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">)),</span>
-      <span class="n">rowRanges</span> <span class="o">=</span> <span class="n">gene_model</span><span class="p">,</span>
-      <span class="n">colData</span><span class="o">=</span><span class="n">colData</span><span class="p">)</span>
+    </span><span class="n">data_se</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">SummarizedExperiment</span><span class="p">(</span><span class="w">
+      </span><span class="n">assays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.matrix</span><span class="p">(</span><span class="n">data_df_mapped</span><span class="p">)),</span><span class="w">
+      </span><span class="n">rowRanges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gene_model</span><span class="p">,</span><span class="w">
+      </span><span class="n">colData</span><span class="o">=</span><span class="n">colData</span><span class="p">)</span><span class="w">
 
-    <span class="k">return</span><span class="p">(</span><span class="n">data_se</span><span class="p">)</span>
-  <span class="p">}</span>
+    </span><span class="nf">return</span><span class="p">(</span><span class="n">data_se</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 
-  <span class="c1">#' Create a data frame housing the RNA-seq metadata
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' This function requires a tab-delimited text file with headers for
-</span>  <span class="c1">#' the sample read 'id' and 'class'. Each row entry is a corresponding filename
-</span>  <span class="c1">#' and class assignment. Only accepts pair-wise comparison so there must be
-</span>  <span class="c1">#' exactly 2 classes.
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @param metadata_file a path to a tab-delimited metadata file
-</span>  <span class="c1">#' @return A data frame
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @export
-</span>  <span class="n">create_meta</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span> <span class="p">{</span>
+  </span><span class="cd">#' Create a data frame housing the RNA-seq metadata</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' This function requires a tab-delimited text file with headers for</span><span class="w">
+  </span><span class="cd">#' the sample read 'id' and 'class'. Each row entry is a corresponding filename</span><span class="w">
+  </span><span class="cd">#' and class assignment. Only accepts pair-wise comparison so there must be</span><span class="w">
+  </span><span class="cd">#' exactly 2 classes.</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @param metadata_file a path to a tab-delimited metadata file</span><span class="w">
+  </span><span class="cd">#' @return A data frame</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @export</span><span class="w">
+  </span><span class="n">create_meta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'file does not exist'</span><span class="p">)</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">".txt$"</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)){</span>
-      <span class="n">stop</span><span class="p">(</span><span class="s2">"Uploaded file must be a tab-delimited .txt file!"</span><span class="p">)</span>
-    <span class="p">}</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'file does not exist'</span><span class="p">)</span><span class="w">
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">".txt$"</span><span class="p">,</span><span class="w"> </span><span class="n">metadata_file</span><span class="p">)){</span><span class="w">
+      </span><span class="n">stop</span><span class="p">(</span><span class="s2">"Uploaded file must be a tab-delimited .txt file!"</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 
-    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span>
-      <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span>
-      <span class="n">colClasses</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"character"</span><span class="p">,</span> <span class="s2">"factor"</span><span class="p">),</span>
-      <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+    </span><span class="n">meta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span><span class="w">
+      </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+      </span><span class="n">colClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"factor"</span><span class="p">),</span><span class="w">
+      </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"class"</span><span class="p">)))</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">length</span><span class="p">(</span><span class="n">levels</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">class</span><span class="p">))</span> <span class="o">==</span> <span class="m">2</span><span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="s1">'require 2 classes'</span><span class="p">)</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span><span class="w">
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">length</span><span class="p">(</span><span class="n">levels</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'require 2 classes'</span><span class="p">)</span><span class="w">
 
-    <span class="k">return</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
-  <span class="p">}</span>
+    </span><span class="nf">return</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 
-  <span class="c1">#' Normalize the data.frame nameswith those on a \code{\link[GenomicRanges]{GRanges}} object
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' Assumes that the gene_model has a meta-data column with source_name
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @param data_df the data frame to synchronize
-</span>  <span class="c1">#' @param gene_model the \code{\link[GenomicRanges]{GRanges}} object to match rows with
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @return A \code{\link[base]{data.frame}} with the same rows and names as the input \code{\link[GenomicRanges]{GRanges}}
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @export
-</span>  <span class="n">map_names</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">gene_model</span><span class="p">,</span> <span class="n">source_name</span><span class="p">){</span>
+  </span><span class="cd">#' Normalize the data.frame nameswith those on a \code{\link[GenomicRanges]{GRanges}} object</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' Assumes that the gene_model has a meta-data column with source_name</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @param data_df the data frame to synchronize</span><span class="w">
+  </span><span class="cd">#' @param gene_model the \code{\link[GenomicRanges]{GRanges}} object to match rows with</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @return A \code{\link[base]{data.frame}} with the same rows and names as the input \code{\link[GenomicRanges]{GRanges}}</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @export</span><span class="w">
+  </span><span class="n">map_names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span><span class="w"> </span><span class="n">gene_model</span><span class="p">,</span><span class="w"> </span><span class="n">source_name</span><span class="p">){</span><span class="w">
 
-    <span class="c1"># Filter data_df for source_name
-</span>    <span class="n">indices_data_df_source</span> <span class="o">&lt;-</span> <span class="n">rownames</span><span class="p">(</span> <span class="n">data_df</span> <span class="p">)</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span> <span class="n">gene_model</span> <span class="p">)[[</span><span class="n">source_name</span><span class="p">]]</span>
-    <span class="n">subset_data_df_source</span> <span class="o">&lt;-</span> <span class="n">data_df</span><span class="p">[</span> <span class="n">indices_data_df_source</span><span class="p">,</span> <span class="p">]</span>
+    </span><span class="c1"># Filter data_df for source_name</span><span class="w">
+    </span><span class="n">indices_data_df_source</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="w"> </span><span class="n">data_df</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="w"> </span><span class="n">gene_model</span><span class="w"> </span><span class="p">)[[</span><span class="n">source_name</span><span class="p">]]</span><span class="w">
+    </span><span class="n">subset_data_df_source</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_df</span><span class="p">[</span><span class="w"> </span><span class="n">indices_data_df_source</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
 
-    <span class="c1"># Recreate the data frame
-</span>    <span class="n">merged_data_df</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span> <span class="n">subset_data_df_source</span><span class="p">,</span>
-      <span class="n">data.frame</span><span class="p">(</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span> <span class="n">gene_model</span> <span class="p">),</span> <span class="n">target_name</span> <span class="o">=</span> <span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span> <span class="p">),</span>
-      <span class="n">by.x</span> <span class="o">=</span> <span class="s2">"row.names"</span><span class="p">,</span> <span class="n">by.y</span> <span class="o">=</span> <span class="n">source_name</span><span class="p">)</span>
+    </span><span class="c1"># Recreate the data frame</span><span class="w">
+    </span><span class="n">merged_data_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="w"> </span><span class="n">subset_data_df_source</span><span class="p">,</span><span class="w">
+      </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="w"> </span><span class="n">gene_model</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">target_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w">
+      </span><span class="n">by.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"row.names"</span><span class="p">,</span><span class="w"> </span><span class="n">by.y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source_name</span><span class="p">)</span><span class="w">
 
-    <span class="c1"># merged data could still have duplicates!
-</span>    <span class="c1"># indices_merged_data_df_unique &lt;- !duplicated(merged_data_df[[ "Row.names" ]])
-</span>    <span class="c1"># merged_data_df_unique &lt;- merged_data_df[indices_merged_data_df_unique,]
-</span>
-    <span class="c1"># Set row names to target_name
-</span>    <span class="n">row.names</span><span class="p">(</span> <span class="n">merged_data_df</span> <span class="p">)</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="o">$</span><span class="n">target_name</span>
-    <span class="c1"># Drop name columns
-</span>    <span class="n">merged_data_df</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="p">[,</span> <span class="o">-</span><span class="n">which</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Row.names"</span><span class="p">,</span> <span class="s2">"target_name"</span><span class="p">))</span> <span class="p">]</span>
+    </span><span class="c1"># merged data could still have duplicates!</span><span class="w">
+    </span><span class="c1"># indices_merged_data_df_unique &lt;- !duplicated(merged_data_df[[ "Row.names" ]])</span><span class="w">
+    </span><span class="c1"># merged_data_df_unique &lt;- merged_data_df[indices_merged_data_df_unique,]</span><span class="w">
 
-    <span class="c1"># Reorder the rows to match
-</span>    <span class="n">merged_data_df_reordered</span> <span class="o">&lt;-</span> <span class="n">merged_data_df</span><span class="p">[</span> <span class="n">match</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">),</span> <span class="n">rownames</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)),</span> <span class="p">]</span>
+    </span><span class="c1"># Set row names to target_name</span><span class="w">
+    </span><span class="n">row.names</span><span class="p">(</span><span class="w"> </span><span class="n">merged_data_df</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merged_data_df</span><span class="o">$</span><span class="n">target_name</span><span class="w">
+    </span><span class="c1"># Drop name columns</span><span class="w">
+    </span><span class="n">merged_data_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merged_data_df</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="n">which</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Row.names"</span><span class="p">,</span><span class="w"> </span><span class="s2">"target_name"</span><span class="p">))</span><span class="w"> </span><span class="p">]</span><span class="w">
 
-    <span class="k">return</span><span class="p">(</span><span class="n">merged_data_df_reordered</span><span class="p">)</span>
-  <span class="p">}</span>
+    </span><span class="c1"># Reorder the rows to match</span><span class="w">
+    </span><span class="n">merged_data_df_reordered</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merged_data_df</span><span class="p">[</span><span class="w"> </span><span class="n">match</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">),</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">merged_data_df</span><span class="p">)),</span><span class="w"> </span><span class="p">]</span><span class="w">
+
+    </span><span class="nf">return</span><span class="p">(</span><span class="n">merged_data_df_reordered</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 
 
-  <span class="c1">#' Retrieve the gene info
-</span>  <span class="c1">#'
-</span>  <span class="c1">#'  !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @param data_df the data frame of genes (rownames) and samples (colnames)
-</span>  <span class="c1">#' @param species the species (mouse, human)
-</span>  <span class="c1">#' @param source_name attribute (gene namespace) input
-</span>  <span class="c1">#' @param target_name attribute (gene namespace) desired
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @return A \code{\link[GenomicRanges]{GRanges}} having unique and valid target_name entries
-</span>  <span class="c1">#'
-</span>  <span class="c1">#' @export
-</span>  <span class="n">get_gene_model</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span> <span class="p">){</span>
+  </span><span class="cd">#' Retrieve the gene info</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#'  !!!!!!!!!!!!Alert alert alert ---- mapping between namespaces is not bijective.!!!!!!!!!!!!!</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @param data_df the data frame of genes (rownames) and samples (colnames)</span><span class="w">
+  </span><span class="cd">#' @param species the species (mouse, human)</span><span class="w">
+  </span><span class="cd">#' @param source_name attribute (gene namespace) input</span><span class="w">
+  </span><span class="cd">#' @param target_name attribute (gene namespace) desired</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @return A \code{\link[GenomicRanges]{GRanges}} having unique and valid target_name entries</span><span class="w">
+  </span><span class="cd">#'</span><span class="w">
+  </span><span class="cd">#' @export</span><span class="w">
+  </span><span class="n">get_gene_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="w"> </span><span class="n">data_df</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">source_name</span><span class="p">,</span><span class="w"> </span><span class="n">target_name</span><span class="w"> </span><span class="p">){</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span><span class="n">missing</span><span class="p">(</span><span class="n">species</span><span class="p">)</span> <span class="o">||</span>
-        <span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"mouse"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-        <span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"human"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span> <span class="n">stop</span><span class="p">(</span><span class="s2">"Species must be human or mouse"</span><span class="p">)</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="nf">missing</span><span class="p">(</span><span class="n">species</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w">
+        </span><span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"mouse"</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">ignore.case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+        </span><span class="o">!</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"human"</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">ignore.case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s2">"Species must be human or mouse"</span><span class="p">)</span><span class="w">
 
-    <span class="n">dataset</span> <span class="o">=</span> <span class="k">switch</span><span class="p">(</span><span class="n">species</span><span class="p">,</span>
-      <span class="n">mouse</span> <span class="o">=</span> <span class="s2">"mmusculus_gene_ensembl"</span><span class="p">,</span>
-      <span class="n">human</span> <span class="o">=</span> <span class="s2">"hsapiens_gene_ensembl"</span><span class="p">)</span>
-    <span class="n">mart_used</span> <span class="o">=</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">useMart</span><span class="p">(</span><span class="s2">"ENSEMBL_MART_ENSEMBL"</span><span class="p">)</span>
-    <span class="n">ensembl</span> <span class="o">=</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">useDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">mart</span> <span class="o">=</span> <span class="n">mart_used</span><span class="p">)</span>
-    <span class="n">attributes_available</span> <span class="o">&lt;-</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">listAttributes</span><span class="p">(</span><span class="n">ensembl</span><span class="p">)</span>
+    </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">switch</span><span class="p">(</span><span class="n">species</span><span class="p">,</span><span class="w">
+      </span><span class="n">mouse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mmusculus_gene_ensembl"</span><span class="p">,</span><span class="w">
+      </span><span class="n">human</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"hsapiens_gene_ensembl"</span><span class="p">)</span><span class="w">
+    </span><span class="n">mart_used</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">biomaRt</span><span class="o">::</span><span class="n">useMart</span><span class="p">(</span><span class="s2">"ENSEMBL_MART_ENSEMBL"</span><span class="p">)</span><span class="w">
+    </span><span class="n">ensembl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">biomaRt</span><span class="o">::</span><span class="n">useDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span><span class="w"> </span><span class="n">mart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mart_used</span><span class="p">)</span><span class="w">
+    </span><span class="n">attributes_available</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">biomaRt</span><span class="o">::</span><span class="n">listAttributes</span><span class="p">(</span><span class="n">ensembl</span><span class="p">)</span><span class="w">
 
-    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">source_name</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span> <span class="o">||</span>
-        <span class="o">!</span><span class="n">target_name</span> <span class="o">%</span><span class="k">in</span><span class="o">%</span> <span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span> <span class="p">)</span> <span class="n">stop</span><span class="p">(</span><span class="s2">"Invalid source/target name"</span><span class="p">)</span>
+    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">source_name</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span><span class="w"> </span><span class="o">||</span><span class="w">
+        </span><span class="o">!</span><span class="n">target_name</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">attributes_available</span><span class="o">$</span><span class="n">name</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s2">"Invalid source/target name"</span><span class="p">)</span><span class="w">
 
-    <span class="n">bm_info</span> <span class="o">&lt;-</span> <span class="n">biomaRt</span><span class="o">::</span><span class="n">getBM</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"chromosome_name"</span><span class="p">,</span>
-      <span class="s2">"start_position"</span><span class="p">,</span> <span class="s2">"end_position"</span><span class="p">,</span> <span class="s2">"strand"</span><span class="p">,</span>
-      <span class="n">source_name</span><span class="p">,</span> <span class="n">target_name</span><span class="p">),</span>
-      <span class="n">filters</span> <span class="o">=</span> <span class="n">source_name</span><span class="p">,</span>
-      <span class="n">values</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">),</span>
-      <span class="n">mart</span> <span class="o">=</span> <span class="n">ensembl</span><span class="p">)</span>
+    </span><span class="n">bm_info</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">biomaRt</span><span class="o">::</span><span class="n">getBM</span><span class="p">(</span><span class="n">attributes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"chromosome_name"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"start_position"</span><span class="p">,</span><span class="w"> </span><span class="s2">"end_position"</span><span class="p">,</span><span class="w"> </span><span class="s2">"strand"</span><span class="p">,</span><span class="w">
+      </span><span class="n">source_name</span><span class="p">,</span><span class="w"> </span><span class="n">target_name</span><span class="p">),</span><span class="w">
+      </span><span class="n">filters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source_name</span><span class="p">,</span><span class="w">
+      </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">data_df</span><span class="p">),</span><span class="w">
+      </span><span class="n">mart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ensembl</span><span class="p">)</span><span class="w">
 
-    <span class="n">rowRanges</span> <span class="o">&lt;-</span> <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">GRanges</span><span class="p">(</span><span class="n">seqnames</span> <span class="o">=</span> <span class="n">paste0</span><span class="p">(</span><span class="s2">"chr"</span><span class="p">,</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">chromosome_name</span><span class="p">),</span>
-      <span class="n">ranges</span> <span class="o">=</span> <span class="n">IRanges</span><span class="o">::</span><span class="n">IRanges</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">start_position</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">end_position</span><span class="p">),</span>
-      <span class="n">strand</span> <span class="o">=</span> <span class="n">bm_info</span><span class="o">$</span><span class="n">strand</span><span class="p">)</span>
+    </span><span class="n">rowRanges</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">GRanges</span><span class="p">(</span><span class="n">seqnames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"chr"</span><span class="p">,</span><span class="w"> </span><span class="n">bm_info</span><span class="o">$</span><span class="n">chromosome_name</span><span class="p">),</span><span class="w">
+      </span><span class="n">ranges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IRanges</span><span class="o">::</span><span class="n">IRanges</span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bm_info</span><span class="o">$</span><span class="n">start_position</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bm_info</span><span class="o">$</span><span class="n">end_position</span><span class="p">),</span><span class="w">
+      </span><span class="n">strand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bm_info</span><span class="o">$</span><span class="n">strand</span><span class="p">)</span><span class="w">
 
-    <span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">bm_info</span><span class="p">[[</span><span class="n">source_name</span><span class="p">]])</span>
-    <span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
-    <span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">meta</span>
+    </span><span class="n">meta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">bm_info</span><span class="p">[[</span><span class="n">source_name</span><span class="p">]])</span><span class="w">
+    </span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span><span class="w">
+    </span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">meta</span><span class="w">
 
-    <span class="n">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">bm_info</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
+    </span><span class="nf">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">bm_info</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span><span class="w">
 
-    <span class="c1"># Filter gene_model for valid target_name
-</span>    <span class="c1"># GRanges objects act like vectors for subsetting
-</span>    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">rowRanges</span><span class="p">[</span> <span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span> <span class="p">]</span>
-    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">gene_model</span><span class="p">[</span> <span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)[[</span><span class="n">source_name</span><span class="p">]])</span> <span class="p">]</span>
-    <span class="n">gene_model</span> <span class="o">&lt;-</span> <span class="n">gene_model</span><span class="p">[</span> <span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span> <span class="p">]</span>
+    </span><span class="c1"># Filter gene_model for valid target_name</span><span class="w">
+    </span><span class="c1"># GRanges objects act like vectors for subsetting</span><span class="w">
+    </span><span class="n">gene_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rowRanges</span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">rowRanges</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="n">gene_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gene_model</span><span class="p">[</span><span class="w"> </span><span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">GenomicRanges</span><span class="o">::</span><span class="n">mcols</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)[[</span><span class="n">source_name</span><span class="p">]])</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="n">gene_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gene_model</span><span class="p">[</span><span class="w"> </span><span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">gene_model</span><span class="p">))</span><span class="w"> </span><span class="p">]</span><span class="w">
 
-    <span class="k">return</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span>
-  <span class="p">}</span></code></pre></figure>
+    </span><span class="nf">return</span><span class="p">(</span><span class="n">gene_model</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span></code></pre></figure>
 
 <p>Let’s perform the ID-mapping and data merging.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">source_name</span> <span class="o">&lt;-</span> <span class="s2">"ensembl_gene_id"</span>
-  <span class="n">target_name</span> <span class="o">&lt;-</span> <span class="s2">"hgnc_symbol"</span>
-  <span class="n">species</span> <span class="o">&lt;-</span> <span class="s2">"human"</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">source_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"ensembl_gene_id"</span><span class="w">
+  </span><span class="n">target_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"hgnc_symbol"</span><span class="w">
+  </span><span class="n">species</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"human"</span><span class="w">
 
-  <span class="n">brca_hd_tep_se</span> <span class="o">&lt;-</span> <span class="n">merge_data</span><span class="p">(</span>
-    <span class="n">tep_rnaseq_metadata</span><span class="p">,</span>
-    <span class="n">species</span><span class="p">,</span>
-    <span class="n">source_name</span><span class="p">,</span>
-    <span class="n">target_name</span><span class="p">,</span>
-    <span class="n">tep_rnaseq_filelist</span><span class="p">)</span></code></pre></figure>
+  </span><span class="n">brca_hd_tep_se</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge_data</span><span class="p">(</span><span class="w">
+    </span><span class="n">tep_rnaseq_metadata</span><span class="p">,</span><span class="w">
+    </span><span class="n">species</span><span class="p">,</span><span class="w">
+    </span><span class="n">source_name</span><span class="p">,</span><span class="w">
+    </span><span class="n">target_name</span><span class="p">,</span><span class="w">
+    </span><span class="n">tep_rnaseq_filelist</span><span class="p">)</span></code></pre></figure>
 
 <p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_se</code>.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_se</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_se</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">## class: RangedSummarizedExperiment 
 ## dim: 34996 10 
@@ -693,7 +693,7 @@
 
 <p>For instance, we can take a peek at the column (sample) metadata using the <code class="highlighter-rouge">SummarizedExperiment::colData</code> function.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span></code></pre></figure>
 
 <table>
   <thead>
@@ -748,8 +748,8 @@
 
 <p>Similarly, we can peek at an excerpt of the row metadata (i.e. <a href="https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a>) using the <code class="highlighter-rouge">SummarizedExperiment::rowRanges</code> function.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_rowRanged_df</span> <span class="o">&lt;-</span> <span class="n">as.data.frame</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">rowRanges</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_rowRanged_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">rowRanges</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">))</span></code></pre></figure>
 
 <table>
   <thead>
@@ -821,7 +821,7 @@
   </tbody>
 </table>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">dim</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="nf">dim</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">)</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 34996     6</code></pre></figure>
 
@@ -829,7 +829,7 @@
 
 <p>Finally, we can peek at the assay data using the <code class="highlighter-rouge">SummarizedExperiment::assay</code> function.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]])[,</span> <span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">)])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]])[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">)])</span></code></pre></figure>
 
 <table>
   <thead>
@@ -887,7 +887,7 @@
   </tbody>
 </table>
 
-<h2 id="a-hrefdifferentialexpressiontesting-namedifferentialexpressiontestingd-differential-expression-testinga"><a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
+<h2 id="d-differential-expression-testing"><a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -916,30 +916,30 @@
 
 <p>RNA species with very low mapped read counts in a small number of samples can be highly variable. Consequently, we choose to ignore these in the search for differential expression. Best <em>et al.</em> use the rule of thumb that ‘genes with less than five (non-normalized) read counts in all samples were excluded from analyses’.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Minimum number of mapped read counts per sample
-</span>  <span class="n">min_counts</span> <span class="o">&lt;-</span> <span class="m">5</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Minimum number of mapped read counts per sample</span><span class="w">
+  </span><span class="n">min_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w">
 
-  <span class="c1">### Declare baseline (i.e. control) and test classes
-</span>  <span class="n">baseline_class</span> <span class="o">&lt;-</span> <span class="s2">"HD"</span>
-  <span class="n">test_class</span> <span class="o">&lt;-</span> <span class="s2">"BrCa"</span>
-  <span class="n">comparison</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">baseline_class</span><span class="p">,</span> <span class="n">test_class</span><span class="p">)</span>
+  </span><span class="c1">### Declare baseline (i.e. control) and test classes</span><span class="w">
+  </span><span class="n">baseline_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"HD"</span><span class="w">
+  </span><span class="n">test_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"BrCa"</span><span class="w">
+  </span><span class="n">comparison</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">baseline_class</span><span class="p">,</span><span class="w"> </span><span class="n">test_class</span><span class="p">)</span><span class="w">
 
-  <span class="n">brca_hd_tep_se_counts</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]]</span>
-  <span class="n">brca_hd_tep_se_group</span> <span class="o">&lt;-</span> <span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"class"</span><span class="p">]]</span>
+  </span><span class="n">brca_hd_tep_se_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]]</span><span class="w">
+  </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"class"</span><span class="p">]]</span><span class="w">
 
-  <span class="c1">### Find genes (rows) with a minimum number of counts
-</span>  <span class="n">index_test_class</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_group</span> <span class="o">==</span> <span class="n">comparison</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
-  <span class="n">index_baseline_class</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_group</span> <span class="o">==</span> <span class="n">comparison</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
-  <span class="n">row_with_mincount</span> <span class="o">&lt;-</span>
-    <span class="n">rowSums</span><span class="p">(</span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_se_counts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">min_counts</span><span class="p">)</span> <span class="o">&gt;=</span>
-      <span class="n">min</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">index_baseline_class</span><span class="p">),</span> <span class="n">sum</span><span class="p">(</span><span class="n">index_test_class</span><span class="p">))</span>
+  </span><span class="c1">### Find genes (rows) with a minimum number of counts</span><span class="w">
+  </span><span class="n">index_test_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
+  </span><span class="n">index_baseline_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
+  </span><span class="n">row_with_mincount</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
+    </span><span class="n">rowSums</span><span class="p">(</span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_se_counts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">min_counts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w">
+      </span><span class="nf">min</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">index_baseline_class</span><span class="p">),</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">index_test_class</span><span class="p">))</span><span class="w">
 
-  <span class="c1">### Subset the original data accordingly
-</span>  <span class="n">brca_hd_tep_dge_counts</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_se_counts</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,]</span>
+  </span><span class="c1">### Subset the original data accordingly</span><span class="w">
+  </span><span class="n">brca_hd_tep_dge_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_counts</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,]</span><span class="w">
 
-  <span class="c1">### Push the data into the edgeR::DGEList
-</span>  <span class="n">brca_hd_tep_filtered_dge</span> <span class="o">&lt;-</span>
-    <span class="n">edgeR</span><span class="o">::</span><span class="n">DGEList</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">brca_hd_tep_dge_counts</span><span class="p">,</span> <span class="n">group</span> <span class="o">=</span> <span class="n">brca_hd_tep_se_group</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1">### Push the data into the edgeR::DGEList</span><span class="w">
+  </span><span class="n">brca_hd_tep_filtered_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
+    </span><span class="n">edgeR</span><span class="o">::</span><span class="n">DGEList</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brca_hd_tep_dge_counts</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="p">)</span></code></pre></figure>
 
 <p>Note that our end product is a very convenient class, the <code class="highlighter-rouge">edgeR::DGEList</code>.</p>
 
@@ -949,7 +949,7 @@
 
 <p>With this in mind, let’s take a look at the ‘counts’ component.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"counts"</span><span class="p">]])[,</span> <span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">)])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"counts"</span><span class="p">]])[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">)])</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1009,7 +1009,7 @@
 
 <p>Similarly, we can peek inside the ‘samples’ component.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1088,8 +1088,8 @@
 
 <p>RNA for a sample can be sequenced to varying ‘depths’ in that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM)<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup> that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_tmm_normalized_dge</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">calcNormFactors</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"TMM"</span><span class="p">)</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">calcNormFactors</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TMM"</span><span class="p">)</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1170,31 +1170,31 @@
 
 <p>At this point we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Combine two data frames - gene metadata and sample counts
-</span>  <span class="n">brca_hd_tep_tmm_normalized_mat</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span> <span class="n">normalized.lib.size</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Combine two data frames - gene metadata and sample counts</span><span class="w">
+  </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span><span class="w"> </span><span class="n">normalized.lib.size</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 
-  <span class="n">meta_df</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span>
-    <span class="n">NAME</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span>
-    <span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span>
-    <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+  </span><span class="n">meta_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+    </span><span class="n">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span><span class="w">
+    </span><span class="n">DESCRIPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span><span class="w">
+    </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 
-  <span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
-  <span class="n">brca_hd_tep_tmm_normalized_expression_df</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">meta_df</span><span class="p">,</span> <span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">,</span>  <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+  </span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">meta_df</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">,</span><span class="w">  </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Write out
-</span>  <span class="n">expression_dataset_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"brca_hd_tep_tmm_normalized_expression.txt"</span><span class="p">)</span>
-  <span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="p">,</span>
-              <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
-              <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
-              <span class="n">file</span><span class="o">=</span><span class="n">expression_dataset_path</span><span class="p">,</span>
-              <span class="n">row.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1">### Write out</span><span class="w">
+  </span><span class="n">expression_dataset_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep_tmm_normalized_expression.txt"</span><span class="p">)</span><span class="w">
+  </span><span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="p">,</span><span class="w">
+              </span><span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+              </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w">
+              </span><span class="n">file</span><span class="o">=</span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
+              </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
 
 <p>We should have a file <code class="highlighter-rouge">brca_hd_tep_tmm_normalized_expression.txt</code> containing the following tab-delimited content:</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_tmm_normalized_expression_file_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">expression_dataset_path</span><span class="p">,</span>
-                                                              <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span>
-                                                             <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_file_df</span><span class="p">)[,</span><span class="n">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">)])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_tmm_normalized_expression_file_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
+                                                              </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+                                                             </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_file_df</span><span class="p">)[,</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">)])</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1270,22 +1270,22 @@
   <li>Perform multiple-testing correction</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Calculate variability (dispersions) in data
-</span>  <span class="n">brca_hd_tep_fitted_commondisp_dge</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">)</span>
-  <span class="n">brca_hd_tep_fitted_tagwise_dge</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Calculate variability (dispersions) in data</span><span class="w">
+  </span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">)</span><span class="w">
+  </span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Perform differential expression testing (comparison is 'BrCa' vs 'HD')
-</span>  <span class="n">brca_hd_tep_de_tested_dge</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">exactTest</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="p">,</span> <span class="n">pair</span> <span class="o">=</span> <span class="n">comparison</span><span class="p">)</span>
+  </span><span class="c1">### Perform differential expression testing (comparison is 'BrCa' vs 'HD')</span><span class="w">
+  </span><span class="n">brca_hd_tep_de_tested_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">exactTest</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="p">,</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">comparison</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Perform multiple-testing correction using Benjamini-Hockberg procedure
-</span>  <span class="n">brca_hd_tep_de_tested_tt</span> <span class="o">&lt;-</span> <span class="n">edgeR</span><span class="o">::</span><span class="n">topTags</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_dge</span><span class="p">,</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">nrow</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">),</span>
-    <span class="n">adjust.method</span> <span class="o">=</span> <span class="s2">"BH"</span><span class="p">,</span>
-    <span class="n">sort.by</span> <span class="o">=</span> <span class="s2">"PValue"</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1">### Perform multiple-testing correction using Benjamini-Hockberg procedure</span><span class="w">
+  </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">topTags</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_dge</span><span class="p">,</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrow</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">),</span><span class="w">
+    </span><span class="n">adjust.method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"BH"</span><span class="p">,</span><span class="w">
+    </span><span class="n">sort.by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"PValue"</span><span class="p">)</span></code></pre></figure>
 
 <p>The result of these transformations is a <code class="highlighter-rouge">topTags</code> object named <code class="highlighter-rouge">brca_hd_tep_de_tested_tt</code>. We can peek inside our result to view the list of genes ranked by p-value from differential expression testing.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1347,40 +1347,40 @@
 
 <p>At this stage, we can generate a rank list file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD
-</span>  <span class="n">brca_hd_tep_rank_values</span> <span class="o">&lt;-</span> <span class="n">sign</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"logFC"</span><span class="p">]])</span> <span class="o">*</span> <span class="p">(</span><span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="n">log10</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"PValue"</span><span class="p">]])</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD</span><span class="w">
+  </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sign</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"logFC"</span><span class="p">]])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">log10</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"PValue"</span><span class="p">]])</span><span class="w">
 
-  <span class="c1">### Take into account log10(0) = -Inf
-</span>  <span class="n">brca_hd_tep_rank_values_max</span> <span class="o">&lt;-</span> <span class="n">max</span><span class="p">(</span><span class="n">brca_hd_tep_rank_values</span><span class="p">[</span> <span class="n">brca_hd_tep_rank_values</span> <span class="o">!=</span> <span class="n">Inf</span> <span class="p">])</span>
-  <span class="n">brca_hd_tep_rank_values_unique</span> <span class="o">&lt;-</span> <span class="n">sapply</span><span class="p">(</span> <span class="n">brca_hd_tep_rank_values</span><span class="p">,</span>
-                                            <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">replace</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">is.infinite</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
-                                            <span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">brca_hd_tep_rank_values_max</span> <span class="o">+</span> <span class="n">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span> <span class="p">)</span>
+  </span><span class="c1">### Take into account log10(0) = -Inf</span><span class="w">
+  </span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">brca_hd_tep_rank_values</span><span class="p">[</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">Inf</span><span class="w"> </span><span class="p">])</span><span class="w">
+  </span><span class="n">brca_hd_tep_rank_values_unique</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="p">,</span><span class="w">
+                                            </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">replace</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">is.infinite</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w">
+                                            </span><span class="nf">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="p">)</span><span class="w">
 
 
-  <span class="c1">### Construct the data frame we wish place into a tabular file
-</span>  <span class="n">genenames</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span>
-  <span class="n">brca_hd_tep_ranks_df</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span>
-                                     <span class="n">rank</span><span class="o">=</span><span class="n">brca_hd_tep_rank_values_unique</span><span class="p">,</span>
-                                     <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
-  <span class="n">brca_hd_tep_ordered_ranks_df</span> <span class="o">&lt;-</span> <span class="n">brca_hd_tep_ranks_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span> <span class="p">]</span>
+  </span><span class="c1">### Construct the data frame we wish place into a tabular file</span><span class="w">
+  </span><span class="n">genenames</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span><span class="w">
+  </span><span class="n">brca_hd_tep_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span><span class="w">
+                                     </span><span class="n">rank</span><span class="o">=</span><span class="n">brca_hd_tep_rank_values_unique</span><span class="p">,</span><span class="w">
+                                     </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+  </span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
 
-  <span class="c1">## Write out to file
-</span>  <span class="n">rank_list_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"brca_hd_tep.rnk"</span><span class="p">)</span>
-  <span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="p">,</span>
-              <span class="n">quote</span><span class="o">=</span><span class="n">FALSE</span><span class="p">,</span>
-              <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">,</span>
-              <span class="n">file</span><span class="o">=</span><span class="n">rank_list_path</span><span class="p">,</span>
-              <span class="n">row.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1">## Write out to file</span><span class="w">
+  </span><span class="n">rank_list_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep.rnk"</span><span class="p">)</span><span class="w">
+  </span><span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="p">,</span><span class="w">
+              </span><span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+              </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w">
+              </span><span class="n">file</span><span class="o">=</span><span class="n">rank_list_path</span><span class="p">,</span><span class="w">
+              </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
 
 <p>Let’s peek at the top and bottom of our rank list saved in <code class="highlighter-rouge">brca_hd_tep.rnk</code>.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">brca_hd_tep_ordered_ranks_file_df</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="n">rank_list_path</span><span class="p">,</span>
-                                                  <span class="n">header</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span>
-                                                  <span class="n">check.names</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_ordered_ranks_file_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="n">rank_list_path</span><span class="p">,</span><span class="w">
+                                                  </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+                                                  </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 
-  <span class="n">ranks_head</span> <span class="o">&lt;-</span> <span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_file_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
-  <span class="n">rownames</span><span class="p">(</span><span class="n">ranks_head</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">ranks_head</span><span class="p">)</span></code></pre></figure>
+  </span><span class="n">ranks_head</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_file_df</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">5</span><span class="p">)</span><span class="w">
+  </span><span class="n">rownames</span><span class="p">(</span><span class="n">ranks_head</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">ranks_head</span><span class="p">)</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1413,9 +1413,9 @@
   </tbody>
 </table>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">ranks_tail</span> <span class="o">&lt;-</span> <span class="n">tail</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_file_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
-  <span class="n">rownames</span><span class="p">(</span><span class="n">ranks_tail</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
-  <span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">ranks_tail</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">ranks_tail</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tail</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_file_df</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">5</span><span class="p">)</span><span class="w">
+  </span><span class="n">rownames</span><span class="p">(</span><span class="n">ranks_tail</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">ranks_tail</span><span class="p">)</span></code></pre></figure>
 
 <table>
   <thead>
@@ -1452,19 +1452,19 @@
 
 <p>This file will be used in the Enrichment Map so that we can differentiate (i.e. colour) those pathways ‘up-regulated’ in HD versus BrCa samples. The CLS format contains information about the sample classes (aka ‘condition’, ‘phenotype’) and assigns each sample to one class.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">n_samples</span> <span class="o">&lt;-</span> <span class="n">dim</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
-  <span class="n">n_classes</span> <span class="o">&lt;-</span> <span class="m">2</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">n_samples</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">
+  </span><span class="n">n_classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">
 
-  <span class="n">l1</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">)</span>
-  <span class="n">l2</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span> <span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">1</span><span class="p">],</span> <span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">2</span><span class="p">])</span>
-  <span class="n">l3</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]][[</span><span class="s2">"group"</span><span class="p">]],</span> <span class="n">collapse</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">)</span>
-  <span class="n">brca_hd_tep_cls</span> <span class="o">&lt;-</span> <span class="n">rbind</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">l3</span><span class="p">)</span>
+  </span><span class="n">l</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="w"> </span><span class="n">n_classes</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">)</span><span class="w">
+  </span><span class="n">l</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">2</span><span class="p">])</span><span class="w">
+  </span><span class="n">l</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]][[</span><span class="s2">"group"</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">)</span><span class="w">
+  </span><span class="n">brca_hd_tep_cls</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">l</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">3</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Write out to file
-</span>  <span class="n">categorical_class_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"brca_hd_tep.cls"</span><span class="p">)</span>
-  <span class="n">write</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">,</span>
-        <span class="n">file</span><span class="o">=</span><span class="n">categorical_class_path</span><span class="p">,</span>
-        <span class="n">sep</span> <span class="o">=</span> <span class="s2">"\t"</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1">### Write out to file</span><span class="w">
+  </span><span class="n">categorical_class_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep.cls"</span><span class="p">)</span><span class="w">
+  </span><span class="n">write</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">,</span><span class="w">
+        </span><span class="n">file</span><span class="o">=</span><span class="n">categorical_class_path</span><span class="p">,</span><span class="w">
+        </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">)</span></code></pre></figure>
 
 <p>The matrix <code class="highlighter-rouge">brca_hd_tep_cls</code> has the following format, assuming N samples:</p>
 
@@ -1503,14 +1503,13 @@
   </tbody>
 </table>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
-  <span class="n">brca_hd_tep_cls</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+  </span><span class="n">brca_hd_tep_cls</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> [,1]                                      [1,] "10 2 1"                                  [2,] "# HD BrCa"                               [3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [,1]                                      [1,] "10 2 1"                                  [2,] "# HD BrCa"                               [3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
+</code></pre></div></div>
 
-<h2 id="a-hrefgenesetenrichmentanalysis-namegenesetenrichmentanalysise-gene-set-enrichment-analysisa"><a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
+<h2 id="e-gene-set-enrichment-analysis"><a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -1551,48 +1550,48 @@
   GSEA can take many minutes to complete. Mileage may vary depending on the settings. Our analysis took 5 minutes on a MacBook Air (Early 2015), 2.2 GHz Intel Core i7 (8GB 16600 MHz DDR3).
 </div>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">doEnrichment</span> <span class="o">&lt;-</span> <span class="n">FALSE</span>
-  <span class="c1">### Declare user-defined settings
-</span>  <span class="n">gsea_jar_path</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="s2">"/Users/jeffreywong/bin/gsea-3.0.jar"</span><span class="p">)</span>
-  <span class="n">gsea_rpt_label</span> <span class="o">&lt;-</span> <span class="s2">"tep_BrCa_HD_analysis"</span>
-  <span class="n">gsea_analysis_name</span> <span class="o">&lt;-</span> <span class="s2">"tep_BrCa_HD"</span>
-  <span class="n">gsea_out</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span> <span class="s2">"gsea_output"</span><span class="p">)</span>
-  <span class="n">gsea_gmx</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span>
-                        <span class="s2">"data"</span><span class="p">,</span>
-                        <span class="s2">"Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt"</span><span class="p">)</span>
-  <span class="n">gsea_rank_list_path</span> <span class="o">&lt;-</span> <span class="n">rank_list_path</span>
-  <span class="n">gsea_num_permutations</span> <span class="o">&lt;-</span> <span class="m">1000</span>
-  <span class="n">gsea_min_gs_size</span> <span class="o">&lt;-</span> <span class="m">15</span>
-  <span class="n">gsea_max_gs_size</span> <span class="o">&lt;-</span> <span class="m">200</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="c1">### Declare user-defined settings</span><span class="w">
+  </span><span class="n">gsea_jar_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="s2">"/Users/jeffreywong/bin/gsea-3.0.jar"</span><span class="p">)</span><span class="w">
+  </span><span class="n">gsea_rpt_label</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"tep_BrCa_HD_analysis"</span><span class="w">
+  </span><span class="n">gsea_analysis_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"tep_BrCa_HD"</span><span class="w">
+  </span><span class="n">gsea_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w"> </span><span class="s2">"gsea_output"</span><span class="p">)</span><span class="w">
+  </span><span class="n">gsea_gmx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w">
+                        </span><span class="s2">"data"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt"</span><span class="p">)</span><span class="w">
+  </span><span class="n">gsea_rank_list_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rank_list_path</span><span class="w">
+  </span><span class="n">gsea_num_permutations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
+  </span><span class="n">gsea_min_gs_size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">15</span><span class="w">
+  </span><span class="n">gsea_max_gs_size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">200</span><span class="w">
 
-  <span class="c1">## Execute GSEA
-</span>  <span class="n">command</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"java -cp"</span><span class="p">,</span> <span class="n">gsea_jar_path</span><span class="p">,</span>
-                   <span class="s2">"-Xmx1G xtools.gsea.GseaPreranked"</span><span class="p">,</span>
-                   <span class="s2">"-rpt_label"</span><span class="p">,</span> <span class="n">gsea_analysis_name</span><span class="p">,</span>
-                   <span class="s2">"-out"</span><span class="p">,</span> <span class="n">gsea_out</span><span class="p">,</span>
-                   <span class="s2">"-gmx"</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
-                   <span class="s2">"-rnk"</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
-                   <span class="s2">"-nperm"</span><span class="p">,</span> <span class="n">gsea_num_permutations</span><span class="p">,</span>
-                   <span class="s2">"-set_min"</span><span class="p">,</span> <span class="n">gsea_min_gs_size</span><span class="p">,</span>
-                   <span class="s2">"-set_max"</span><span class="p">,</span> <span class="n">gsea_max_gs_size</span><span class="p">,</span>
-                   <span class="s2">"-collapse false"</span><span class="p">,</span>
-                   <span class="s2">"-scoring_scheme weighted"</span><span class="p">,</span>
-                   <span class="s2">"-permute gene_set"</span><span class="p">,</span>
-                   <span class="s2">"-num 100"</span><span class="p">,</span>
-                   <span class="s2">"-plot_top_x 20"</span><span class="p">,</span>
-                   <span class="s2">"-rnd_seed 12345"</span><span class="p">,</span>
-                   <span class="s2">"-zip_report false"</span><span class="p">,</span>
-                   <span class="s2">"-gui false"</span><span class="p">,</span>
-                   <span class="s2">"&gt;"</span><span class="p">,</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"gsea_output_"</span><span class="p">,</span> <span class="n">gsea_rpt_label</span><span class="p">,</span> <span class="s2">".txt"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
-            <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+  </span><span class="c1">## Execute GSEA</span><span class="w">
+  </span><span class="n">command</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"java -cp"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_jar_path</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-Xmx1G xtools.gsea.GseaPreranked"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-rpt_label"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_analysis_name</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-out"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_out</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-gmx"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_gmx</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-rnk"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_rank_list_path</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-nperm"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_num_permutations</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-set_min"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_min_gs_size</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-set_max"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_max_gs_size</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-collapse false"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-scoring_scheme weighted"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-permute gene_set"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-num 100"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-plot_top_x 20"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-rnd_seed 12345"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-zip_report false"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"-gui false"</span><span class="p">,</span><span class="w">
+                   </span><span class="s2">"&gt;"</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"gsea_output_"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_rpt_label</span><span class="p">,</span><span class="w"> </span><span class="s2">".txt"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span><span class="w">
+            </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
 
-  <span class="k">if</span><span class="p">(</span> <span class="n">doEnrichment</span> <span class="o">==</span> <span class="n">TRUE</span> <span class="p">){</span>
-    <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-  <span class="p">}</span></code></pre></figure>
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+    </span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span></code></pre></figure>
 
 <p>In this case, we will have a directory <code class="highlighter-rouge">tep_BrCa_HD.Preranked.XXXXXXXXXXXXX</code> inside of the directory declared by in <code class="highlighter-rouge">gsea_out</code> that contains reports and figures generated during GSEA.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">gsea_tep_BrCa_HD_analysis_directory</span> <span class="o">&lt;-</span> <span class="n">list.files</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">gsea_out</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s2">"\\.GseaPreranked"</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">list.files</span><span class="p">(</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gsea_out</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\\.GseaPreranked"</span><span class="p">)</span></code></pre></figure>
 
 <p>Look for the following files:</p>
 
@@ -1604,7 +1603,7 @@
 
 <p>Please refer to the GSEA documentation on <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results">‘Interpreting GSEA Results’</a> for full details.</p>
 
-<h2 id="a-hrefenrichmentmap-nameenrichmentmapf-enrichment-mapa"><a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a></h2>
+<h2 id="f-enrichment-map"><a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -1621,83 +1620,83 @@
 
 <p>Recall that we asked you to download and install Cytoscape (3.5.1) along with various apps. Open Cytoscape on your computer as this notebook will run commands to it through a custom package  <a href="https://github.com/cytoscape/cytoscape-automation"><code class="highlighter-rouge">cytoscape-automation/r2cytoscape</code></a> (0.0.3).</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"cytoscape/cytoscape-automation/for-scripters/R/r2cytoscape"</span><span class="p">)</span><span class="w">
 
-  <span class="c1"># Basic connection settings
-</span>  <span class="n">port.number</span> <span class="o">=</span> <span class="m">1234</span>
-  <span class="n">base.url</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"http://localhost:"</span><span class="p">,</span> <span class="n">toString</span><span class="p">(</span><span class="n">port.number</span><span class="p">),</span> <span class="s2">"/v1"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span></code></pre></figure>
+  </span><span class="c1"># Basic connection settings</span><span class="w">
+  </span><span class="n">port.number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1234</span><span class="w">
+  </span><span class="n">base.url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"http://localhost:"</span><span class="p">,</span><span class="w"> </span><span class="n">toString</span><span class="p">(</span><span class="n">port.number</span><span class="p">),</span><span class="w"> </span><span class="s2">"/v1"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span></code></pre></figure>
 
 <h3 id="create-enrichment-map">Create Enrichment Map</h3>
 
 <p>We’re ready to declare our options for the Enrichment Map Cytoscape app.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Construct path to GSEA results - 'edb' folder
-</span>  <span class="c1">### Ouptut from GSEA - update below to match your directory name
-</span>  <span class="n">gsea_results</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span> <span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="p">)</span>
-  <span class="n">gsea_results_filename</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span> <span class="s2">"edb"</span><span class="p">,</span> <span class="s2">"results.edb"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Construct path to GSEA results - 'edb' folder</span><span class="w">
+  </span><span class="c1">### Ouptut from GSEA - update below to match your directory name</span><span class="w">
+  </span><span class="n">gsea_results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="p">)</span><span class="w">
+  </span><span class="n">gsea_results_filename</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span><span class="w"> </span><span class="s2">"edb"</span><span class="p">,</span><span class="w"> </span><span class="s2">"results.edb"</span><span class="p">)</span><span class="w">
 
-  <span class="c1">### Define thresholds for GSEA enrichments
-</span>  <span class="n">em_pvalue_gsea_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.01"</span>
-  <span class="n">em_qvalue_gsea_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.01"</span>
+  </span><span class="c1">### Define thresholds for GSEA enrichments</span><span class="w">
+  </span><span class="n">em_pvalue_gsea_threshold</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
+  </span><span class="n">em_qvalue_gsea_threshold</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
 
-  <span class="c1">### Define thresholds for gene set similarity
-</span>  <span class="n">em_similarity_threshold</span> <span class="o">&lt;-</span> <span class="s2">"0.375"</span>
-  <span class="n">em_similarity_metric</span> <span class="o">=</span> <span class="s2">"COMBINED"</span>
+  </span><span class="c1">### Define thresholds for gene set similarity</span><span class="w">
+  </span><span class="n">em_similarity_threshold</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"0.375"</span><span class="w">
+  </span><span class="n">em_similarity_metric</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"COMBINED"</span><span class="w">
 
-  <span class="c1">#######################################
-</span>  <span class="c1">#create EM pvalue &lt; 0.01 and qvalue &lt; 0.01
-</span>  <span class="c1">#######################################
-</span>  <span class="n">em_network_name</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">gsea_analysis_name</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"_"</span><span class="p">)</span>
-  <span class="n">em_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"enrichmentmap build analysisType=gsea"</span><span class="p">,</span>
-                    <span class="s2">"gmtFile="</span><span class="p">,</span> <span class="n">gsea_gmx</span><span class="p">,</span>
-                    <span class="s2">"pvalue="</span><span class="p">,</span> <span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span>
-                    <span class="s2">"qvalue="</span><span class="p">,</span> <span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span>
-                    <span class="s2">"similaritycutoff="</span><span class="p">,</span> <span class="n">em_similarity_threshold</span><span class="p">,</span>
-                    <span class="s2">"coeffecients="</span><span class="p">,</span> <span class="n">em_similarity_metric</span><span class="p">,</span>
-                    <span class="s2">"ranksDataset1="</span><span class="p">,</span> <span class="n">gsea_rank_list_path</span><span class="p">,</span>
-                    <span class="s2">"enrichmentsDataset1="</span><span class="p">,</span> <span class="n">gsea_results_filename</span><span class="p">,</span>
-                    <span class="s2">"expressionDataset1="</span><span class="p">,</span> <span class="n">expression_dataset_path</span><span class="p">,</span>
-                    <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
-  <span class="n">current_network_suid</span> <span class="o">&lt;-</span> <span class="m">0</span>
-  <span class="k">if</span><span class="p">(</span> <span class="n">doEnrichment</span> <span class="o">==</span> <span class="n">TRUE</span> <span class="p">){</span>
-    <span class="n">current_network_suid</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span>    
-    <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span> <span class="n">network</span> <span class="o">=</span> <span class="n">current_network_suid</span><span class="p">)</span>
-  <span class="p">}</span>  </code></pre></figure>
+  </span><span class="c1">#######################################</span><span class="w">
+  </span><span class="c1">#create EM pvalue &lt; 0.01 and qvalue &lt; 0.01</span><span class="w">
+  </span><span class="c1">#######################################</span><span class="w">
+  </span><span class="n">em_network_name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">gsea_analysis_name</span><span class="p">,</span><span class="w"> </span><span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span><span class="w"> </span><span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"_"</span><span class="p">)</span><span class="w">
+  </span><span class="n">em_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"enrichmentmap build analysisType=gsea"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"gmtFile="</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_gmx</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"pvalue="</span><span class="p">,</span><span class="w"> </span><span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"qvalue="</span><span class="p">,</span><span class="w"> </span><span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"similaritycutoff="</span><span class="p">,</span><span class="w"> </span><span class="n">em_similarity_threshold</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"coeffecients="</span><span class="p">,</span><span class="w"> </span><span class="n">em_similarity_metric</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"ranksDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_rank_list_path</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"enrichmentsDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_results_filename</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"expressionDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
+                    </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
+  </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+    </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">    
+    </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
 
 <p>Let’s take a peek at the Enrichment Map.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">em_output</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"em_output.png"</span><span class="p">)</span>
-  <span class="n">url_png</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span> <span class="s2">"networks"</span><span class="p">,</span> <span class="n">current_network_suid</span><span class="p">,</span> <span class="s2">"views/first.png"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"em_output.png"</span><span class="p">)</span><span class="w">
+  </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
-  <span class="c1">### Pause for Cytoscape to render
-</span>  <span class="k">if</span><span class="p">(</span> <span class="n">doEnrichment</span> <span class="o">==</span> <span class="n">TRUE</span> <span class="p">){</span>
-    <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span>
-    <span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span> <span class="n">em_output</span><span class="p">)</span>
-  <span class="p">}</span></code></pre></figure>
+  </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+    </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
+    </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span></code></pre></figure>
 
 <p><img src="../output/em_output.png" alt="Enrichment Map" /></p>
 
 <p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1">### Auto-Annotate the Enrichment Map
-</span>  <span class="n">aa_command</span> <span class="o">=</span> <span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span> <span class="n">em_network_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Auto-Annotate the Enrichment Map</span><span class="w">
+  </span><span class="n">aa_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span><span class="w"> </span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   
-  <span class="c1">### Enrichment Map command will return the suid of newly created network.
-</span>  <span class="k">if</span><span class="p">(</span> <span class="n">doEnrichment</span> <span class="o">==</span> <span class="n">TRUE</span> <span class="p">){</span>
-    <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">r2cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span>
-  <span class="p">}</span>  </code></pre></figure>
+  </span><span class="c1">### Enrichment Map command will return the suid of newly created network.</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+    </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
 
 <p>Finally, let’s get a view of our annotated Enrichment Map.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">  <span class="n">em_output_aa</span> <span class="o">&lt;-</span> <span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"em_output_aa.png"</span><span class="p">)</span>
-  <span class="n">url_png</span> <span class="o">&lt;-</span> <span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span> <span class="s2">"networks"</span><span class="p">,</span> <span class="n">current_network_suid</span><span class="p">,</span> <span class="s2">"views/first.png"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"em_output_aa.png"</span><span class="p">)</span><span class="w">
+  </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
-  <span class="c1">### Pause for Cytoscape to render
-</span>  <span class="k">if</span><span class="p">(</span> <span class="n">doEnrichment</span> <span class="o">==</span> <span class="n">TRUE</span> <span class="p">){</span>
-    <span class="n">Sys.sleep</span><span class="p">(</span><span class="m">30</span><span class="p">)</span>
-    <span class="n">response</span> <span class="o">&lt;-</span> <span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span>
-    <span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span> <span class="n">em_output_aa</span><span class="p">)</span>
-  <span class="p">}</span></code></pre></figure>
+  </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+    </span><span class="n">Sys.sleep</span><span class="p">(</span><span class="m">30</span><span class="p">)</span><span class="w">
+    </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
+    </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output_aa</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span></code></pre></figure>
 
 <p><img src="../output/em_output_aa.png" alt="Annotated Enrichment Map" /></p>
 
@@ -1707,22 +1706,22 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p><a href="http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499">Best MG <em>et al.</em> RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://linkinghub.elsevier.com/retrieve/pii/S1535610815003499">Best MG <em>et al.</em> RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass, and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9; 28(5): 666–676</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/21436837">Semple JW. <em>et al</em>. Platelets and the immune continuum. Nat Rev Immunol. 2011 Apr;11(4):264-74</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/21436837">Semple JW. <em>et al</em>. Platelets and the immune continuum. Nat Rev Immunol. 2011 Apr;11(4):264-74</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/21258396">Gay LJ and Felding-Habermann B. Contribution of platelets to tumour metastasis. Nat Rev Cancer. 2011 Feb;11(2):123-34</a> <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p><a href="https://www.ncbi.nlm.nih.gov/pubmed/21258396">Gay LJ and Felding-Habermann B. Contribution of platelets to tumour metastasis. Nat Rev Cancer. 2011 Feb;11(2):123-34</a> <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p><a href="http://www.nature.com/doifinder/10.1038/nmeth.3252">Huber <em>et al.</em> Orchestrating high-throughput genomic analysis with Bioconductor. Nature Methods. 2015 Feb, 12(2)</a> <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://www.nature.com/doifinder/10.1038/nmeth.3252">Huber <em>et al.</em> Orchestrating high-throughput genomic analysis with Bioconductor. Nature Methods. 2015 Feb, 12(2)</a> <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p><a href="http://genomebiology.com/2010/11/3/R25">Robinson MD and Oshlack 1. A scaling normalization method for differential expression analysis of RNA-seq data. Genome Biology 2010, 11:R25</a> <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://genomebiology.com/2010/11/3/R25">Robinson MD and Oshlack 1. A scaling normalization method for differential expression analysis of RNA-seq data. Genome Biology 2010, 11:R25</a> <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p><a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Daniele Merico <em>et al.</em> Enrichment Map: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation. PLoS One. 2010; 5(11): e13984</a> <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Daniele Merico <em>et al.</em> Enrichment Map: A Network-Based Method for Gene-Set Enrichment Visualization and Interpretation. PLoS One. 2010; 5(11): e13984</a> <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
