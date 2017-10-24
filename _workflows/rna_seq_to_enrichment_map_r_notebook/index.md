@@ -908,7 +908,7 @@ In our GSEA run, the following relevant options have been specified:
                    ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
             sep=" ")
 
-  if( doEnrichment ){
+  if( doEnrichment == TRUE ){
     system(command)
   }
 {% endhighlight %}
@@ -987,7 +987,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "expressionDataset1=", expression_dataset_path,
                     sep=" ")
   current_network_suid <- 0
-  if( doEnrichment ){
+  if( doEnrichment == TRUE ){
     current_network_suid <- r2cytoscape::commandRun(em_command)    
     response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
   }  
@@ -1001,8 +1001,7 @@ Let's take a peek at the Enrichment Map.
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
   
   ### Pause for Cytoscape to render
-  if( doEnrichment ){
-    Sys.sleep(10)
+  if( doEnrichment == TRUE ){
     response <- httr::GET(url=url_png)
     writeBin(response$content, em_output)
   }
@@ -1017,7 +1016,7 @@ Often times, the complexity of an Enrichment Map can be reduced even further: Cl
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
   
   ### Enrichment Map command will return the suid of newly created network.
-  if( doEnrichment ){
+  if( doEnrichment == TRUE ){
     response <- r2cytoscape::commandRun(aa_command)
   }  
 {% endhighlight %}
@@ -1030,7 +1029,7 @@ Finally, let's get a view of our annotated Enrichment Map.
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
   
   ### Pause for Cytoscape to render
-  if( doEnrichment ){
+  if( doEnrichment == TRUE ){
     Sys.sleep(30)
     response <- httr::GET(url=url_png)
     writeBin(response$content, em_output_aa)
