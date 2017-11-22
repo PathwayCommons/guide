@@ -787,7 +787,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "pvalue=", em_pvalue_gsea_threshold,
                     "qvalue=", em_qvalue_gsea_threshold,
                     "similaritycutoff=", em_similarity_threshold,
-                    "coeffecients=", em_similarity_metric,
+                    "coefficients=", em_similarity_metric,
                     "ranksDataset1=", gsea_rank_list_path,
                     "enrichmentsDataset1=", gsea_results_filename,
                     "expressionDataset1=", expression_dataset_path,
