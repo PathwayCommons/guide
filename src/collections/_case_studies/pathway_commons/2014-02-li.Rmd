@@ -57,7 +57,7 @@ Do BTM provide any value in describing vaccine responses? For each vaccine trans
 
 <br/>
 
-  ![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figure }}){: .img-responsive }
+![image]({{ site.baseurl }}/{{ site.media_root }}{{ page.id }}/{{ page.figure }}){: .img-responsive }
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Overview of blood transcription module (BTM) creation.</strong> A master network is created from blood transcriptomes gathered from Gene Expression Omnibus; Edges connect genes with high mutual information. An interaction subnetwork is identified by intersecting the master with an ‘interactome’ network consisting of gene interactions drawn from Pathway Commons. Finally, densely connected BTM are identified within the subnetwork. Process is repeated for other context-specific subnetworks.

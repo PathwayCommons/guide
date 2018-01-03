@@ -23,7 +23,7 @@ reflist:
 ## Author Profile
 
 ## Context
-Genes encoding chromatin regulators are often altered in cancers and a growing body of experimental observations is consistent with the notion that global epigenetic remodelling is a common event in oncogenesis (Dawson 2012). This evidence provided a rationale for development of drugs targeting protein  regulators of chromatin state and transcription. Indeed, the US Food and Drug Administration has approved for routine clinical use several small molecule inhibitors of such proteins (Helin 2013). Functional screens represent an attractive approach (Letai 2017).
+Genes encoding chromatin regulators are often altered in cancers and a growing body of experimental observations is consistent with the notion that global epigenetic remodelling is a common event in oncogenesis (Dawson 2012). This evidence provided a rationale for development of drugs targeting protein regulators of chromatin state and transcription. Indeed, the US Food and Drug Administration has approved for routine clinical use several small molecule inhibitors of such proteins (Helin 2013). Functional screens represent an attractive approach (Letai 2017).
 
 ## Question
 Context specificity - in vivo vs in vitro?     

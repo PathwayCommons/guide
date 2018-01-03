@@ -682,7 +682,7 @@ In our GSEA run, the following relevant options have been specified:
 </div>
 
 ```{r runGSEA}
-  doEnrichment <- FALSE
+  doEnrichment <- TRUE
   ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"
@@ -690,7 +690,7 @@ In our GSEA run, the following relevant options have been specified:
   gsea_out <- file.path(getwd(), "gsea_output")
   gsea_gmx <- file.path(getwd(),
                         "data",
-                        "Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt")
+                        "PathwayCommons9.All.hgnc.names.gmt")
   gsea_rank_list_path <- rank_list_path
   gsea_num_permutations <- 1000
   gsea_min_gs_size <- 15
