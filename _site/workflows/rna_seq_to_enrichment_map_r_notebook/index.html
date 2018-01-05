@@ -242,7 +242,7 @@
   <li><a href="#enrichmentMap">F. Enrichment Map</a></li>
 </ul>
 
-<h2 id="a-overview"><a href="overview" name="overview">A. Overview</a></h2>
+<h2 id="a-overview"><a href="#overview" name="overview">A. Overview</a></h2>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -296,7 +296,7 @@
   <li><a href="http://apps.cytoscape.org/apps/autoannotate">AutoAnnotate</a> (1.1.0)</li>
 </ul>
 
-<h2 id="b-sample-study"><a href="sampleStudy" name="sampleStudy">B. Sample Study</a></h2>
+<h2 id="b-sample-study"><a href="#sampleStudy" name="sampleStudy">B. Sample Study</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -432,7 +432,7 @@
   </tbody>
 </table>
 
-<h2 id="c-data-pre-processing"><a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a></h2>
+<h2 id="c-data-pre-processing"><a href="#dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -563,8 +563,7 @@
       </span><span class="n">colClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"factor"</span><span class="p">),</span><span class="w">
       </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 
-    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span><span class="w">
-    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">length</span><span class="p">(</span><span class="n">levels</span><span class="p">(</span><span class="n">meta</span><span class="o">$</span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'require 2 classes'</span><span class="p">)</span><span class="w">
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span><span class="w">    
 
     </span><span class="nf">return</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -887,7 +886,7 @@
   </tbody>
 </table>
 
-<h2 id="d-differential-expression-testing"><a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
+<h2 id="d-differential-expression-testing"><a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -1509,7 +1508,7 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [,1]                                      [1,] "10 2 1"                                  [2,] "# HD BrCa"                               [3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
 </code></pre></div></div>
 
-<h2 id="e-gene-set-enrichment-analysis"><a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
+<h2 id="e-gene-set-enrichment-analysis"><a href="#geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -1558,7 +1557,7 @@
   </span><span class="n">gsea_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w"> </span><span class="s2">"gsea_output"</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_gmx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w">
                         </span><span class="s2">"data"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt"</span><span class="p">)</span><span class="w">
+                        </span><span class="s2">"PathwayCommons9.All.hgnc.names.gmt"</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_rank_list_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rank_list_path</span><span class="w">
   </span><span class="n">gsea_num_permutations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
   </span><span class="n">gsea_min_gs_size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">15</span><span class="w">
@@ -1603,7 +1602,7 @@
 
 <p>Please refer to the GSEA documentation on <a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results">‘Interpreting GSEA Results’</a> for full details.</p>
 
-<h2 id="f-enrichment-map"><a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a></h2>
+<h2 id="f-enrichment-map"><a href="#enrichmentMap" name="enrichmentMap">F. Enrichment Map</a></h2>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -1652,7 +1651,7 @@
                     </span><span class="s2">"pvalue="</span><span class="p">,</span><span class="w"> </span><span class="n">em_pvalue_gsea_threshold</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"qvalue="</span><span class="p">,</span><span class="w"> </span><span class="n">em_qvalue_gsea_threshold</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"similaritycutoff="</span><span class="p">,</span><span class="w"> </span><span class="n">em_similarity_threshold</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"coeffecients="</span><span class="p">,</span><span class="w"> </span><span class="n">em_similarity_metric</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"coefficients="</span><span class="p">,</span><span class="w"> </span><span class="n">em_similarity_metric</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"ranksDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_rank_list_path</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"enrichmentsDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_results_filename</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"expressionDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
@@ -1662,6 +1661,8 @@
     </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">    
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in curl::curl_fetch_memory(url, handle = handle): Failed to connect to localhost port 1234: Connection refused</code></pre></figure>
 
 <p>Let’s take a peek at the Enrichment Map.</p>
 

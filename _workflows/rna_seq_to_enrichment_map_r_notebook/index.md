@@ -32,7 +32,7 @@ permalink: /:collection/:path./:output_ext
   - [E. Gene Set Enrichment Analysis](#geneSetEnrichmentAnalysis)
   - [F. Enrichment Map](#enrichmentMap)
 
-## <a href="overview" name="overview">A. Overview</a>
+## <a href="#overview" name="overview">A. Overview</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -76,7 +76,7 @@ For subsequent clustering and automated labelling of gene set themes, you should
 - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate) (1.1.0)
 
 
-## <a href="sampleStudy" name="sampleStudy">B. Sample Study</a>
+## <a href="#sampleStudy" name="sampleStudy">B. Sample Study</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -159,7 +159,7 @@ Each RNA-Seq measurement is represented as a tabular text file that, in this ins
 |ENSG00000000460 |  11|
 |ENSG00000000938 | 159|
 
-## <a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
+## <a href="#dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -291,8 +291,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
       colClasses = c("character", "factor"),
       sep = "\t", header=TRUE)
 
-    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')
-    if(!length(levels(meta$class)) == 2) stop('require 2 classes')
+    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')    
 
     return(meta)
   }
@@ -501,7 +500,7 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
 |RNU6-1157P |                    0|                    0|           0|           0|
 |RNU4-85P   |                    0|                    0|           0|           0|
 
-## <a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
+## <a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -833,7 +832,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 [2,] "# HD BrCa"                              
 [3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
 
-## <a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
+## <a href="#geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -882,7 +881,7 @@ In our GSEA run, the following relevant options have been specified:
   gsea_out <- file.path(getwd(), "gsea_output")
   gsea_gmx <- file.path(getwd(),
                         "data",
-                        "Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt")
+                        "PathwayCommons9.All.hgnc.names.gmt")
   gsea_rank_list_path <- rank_list_path
   gsea_num_permutations <- 1000
   gsea_min_gs_size <- 15
@@ -928,7 +927,7 @@ Look for the following files:
 
 Please refer to the GSEA documentation on ['Interpreting GSEA Results'](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results) for full details.
 
-## <a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
+## <a href="#enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -982,7 +981,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "pvalue=", em_pvalue_gsea_threshold,
                     "qvalue=", em_qvalue_gsea_threshold,
                     "similaritycutoff=", em_similarity_threshold,
-                    "coeffecients=", em_similarity_metric,
+                    "coefficients=", em_similarity_metric,
                     "ranksDataset1=", gsea_rank_list_path,
                     "enrichmentsDataset1=", gsea_results_filename,
                     "expressionDataset1=", expression_dataset_path,
@@ -992,6 +991,12 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
     current_network_suid <- r2cytoscape::commandRun(em_command)    
     response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
   }  
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in curl::curl_fetch_memory(url, handle = handle): Failed to connect to localhost port 1234: Connection refused
 {% endhighlight %}
 
 Let's take a peek at the Enrichment Map.

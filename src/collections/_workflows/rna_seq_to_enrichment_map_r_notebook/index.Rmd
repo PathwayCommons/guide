@@ -34,7 +34,7 @@ permalink: /:collection/:path./:output_ext
   - [E. Gene Set Enrichment Analysis](#geneSetEnrichmentAnalysis)
   - [F. Enrichment Map](#enrichmentMap)
 
-## <a href="overview" name="overview">A. Overview</a>
+## <a href="#overview" name="overview">A. Overview</a>
 
 <div class="alert alert-warning">
   <p>Section TODOs</p>
@@ -78,7 +78,7 @@ For subsequent clustering and automated labelling of gene set themes, you should
 - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate) (1.1.0)
 
 
-## <a href="sampleStudy" name="sampleStudy">B. Sample Study</a>
+## <a href="#sampleStudy" name="sampleStudy">B. Sample Study</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -132,7 +132,7 @@ Each RNA-Seq measurement is represented as a tabular text file that, in this ins
   knitr::kable(head(rnaseq_HD_1_htsqct), col.names=c("",""))
 ```
 
-## <a href="dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
+## <a href="#dataPreProcessing" name="dataPreProcessing">C. Data Pre-Processing</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -263,8 +263,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
       colClasses = c("character", "factor"),
       sep = "\t", header=TRUE)
 
-    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')
-    if(!length(levels(meta$class)) == 2) stop('require 2 classes')
+    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')    
 
     return(meta)
   }
@@ -410,7 +409,7 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
   knitr::kable(head(SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]])[, c(1,2,6,7)])
 ```
 
-## <a href="differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
+## <a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -642,7 +641,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
   brca_hd_tep_cls
 ```
 
-## <a href="geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
+## <a href="#geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
@@ -682,7 +681,7 @@ In our GSEA run, the following relevant options have been specified:
 </div>
 
 ```{r runGSEA}
-  doEnrichment <- TRUE
+  doEnrichment <- FALSE
   ### Declare user-defined settings
   gsea_jar_path <- file.path("/Users/jeffreywong/bin/gsea-3.0.jar")
   gsea_rpt_label <- "tep_BrCa_HD_analysis"
@@ -735,7 +734,7 @@ Look for the following files:
 
 Please refer to the GSEA documentation on ['Interpreting GSEA Results'](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results) for full details.
 
-## <a href="enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
+## <a href="#enrichmentMap" name="enrichmentMap">F. Enrichment Map</a>
 
 <div class="alert alert-warning">
   <p>Section To Dos</p>
