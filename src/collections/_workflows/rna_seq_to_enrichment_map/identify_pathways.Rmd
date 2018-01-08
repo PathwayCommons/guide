@@ -63,9 +63,9 @@ By then end of this discussion you should:
 
 A detailed description of GSEA is beyond the scope of this section. For a more technical explanation please refer to our [GSEA primer]({{site.baseurl}}{{ gsea.url }}){: target="_blank"}. Recall that, in addition to a rank file, GSEA requires a set of candidate gene sets in the form of a gene set database file (Figure 1). Below we describe a typical gene set database and provide an extremely brief overview for how GSEA operates.
 
-### What is a 'gene set'?
+### Is there a difference between 'gene sets' and 'pathways'?
 
-GSEA searches through candidate gene sets to identify those that are enriched within our ranked gene list. For practical purposes, a 'pathway' is equivalent to a 'gene set' and simply describes  a list of gene names that have been grouped together based upon some known relationship.
+GSEA searches through candidate gene sets to identify those that are enriched within our ranked gene list. 'Gene sets' are a set of genes grouped together based upon some known relationship. For example, a gene set could consist of  loci assigned to a particular chromosomal band. Alternatively, pathways - those genes whose coordinated activity lead to change or produce a product - can also be represented as a gene set. For example, a gene set for a pathway could be represented by genes involved in DNA damage cell cycle checkpoint.   
 
 Concretely, let us consider the [IL-5 Signaling Pathway](http://www.netpath.org/pathways?path_id=NetPath_17){: target="_blank"} curated by as part of the NetPath database (Figure 2).
 
