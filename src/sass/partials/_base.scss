@@ -97,58 +97,13 @@ img.left {
   *
   */
 .panelista {
- background-color: $inverse;
  position: relative;
- margin-bottom: 2rem;
- height: 10rem;
  width: auto;
 
- .panelista-shade {
-   position: absolute;
-   background-image: url("/guide/media/overview.png");
-   z-index: 1;
-   top: 0;
-   bottom: 0;
-   left: 0;
-   right: 0;
-   padding: 1.5rem 1rem;
-   overflow: hidden;
-
-   h1 {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color:  $midnight-blue;
-   }
+ .panelista-shade {  
    p {
-     font-size: 1rem;
-     font-weight: 400;
-     color:  $midnight-blue;
-   }
- }
-}
-@media (min-width: 768px) {
- .panelista {
-   height: 16rem;
-   margin-bottom: 3rem;
-
-   .panelista-shade {
-     background-image: url("/guide/media/overview.png");
-     .panelist-banner {
-       position: absolute;
-       z-index: -1;
-       top: 0;
-       right: 0;
-       padding: 1em;
-     }
-
-     h1 {
-      font-size: 1.8rem;
-      color: $midnight-blue;
-     }
-     p {
-       font-size: 1.2rem;
-       color: $midnight-blue;
-     }
+     font-size: 1.1rem;
+     font-weight: 400;    
    }
  }
 }
