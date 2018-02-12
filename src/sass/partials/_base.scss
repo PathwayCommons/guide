@@ -92,21 +92,6 @@ img.left {
 //
 /* Large devices (large desktops, 1200px and up) */
 // @media (min-width: @screen-lg-min) { ... }
- /*
-  * panelista -  a jumbotron rip-off
-  *
-  */
-.panelista {
- position: relative;
- width: auto;
-
- .panelista-shade {  
-   p {
-     font-size: 1.1rem;
-     font-weight: 400;    
-   }
- }
-}
 
 /*
  * List groups items with class .archive
@@ -190,16 +175,6 @@ img.left {
         padding: 1em;
       }
     }
-  }
-}
-
-/*
- * Linkout
- *
- */
-.linkout {
-  ul.list-inline {
-    margin-bottom: 0;
   }
 }
 
