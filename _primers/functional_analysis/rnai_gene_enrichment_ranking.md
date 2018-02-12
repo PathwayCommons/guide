@@ -1,42 +1,25 @@
 ---
-title: Gene Set Enrichment Analysis
-date: 2016-04-20
-pdf: gsea_subramanian_pnas_v102_43_2005.pdf
+title: RNAi Gene Enrichment Ranking
+date: 2018-02-07
+pdf: riger_luo_pnas_v105_51_2008.pdf
 layout: document
 category: functional_analysis
-figures:
-  figure_1: figure_gsea_local.png
-  figure_2: figure_gsea_global.png
-  figure_3: figure_gsea_ks.png
-  figure_4: figure_gsea_null.jpg
-  figure_5: figure_gsea_bimodalnull.png
-  figure_6: figure_gsea_fdr.png
-comments: true
+figures:  
+comments: false
 reflist:
-  - 19192285
-  - 15647293
-  - 15226741
-  - 20048385
-  - 15994189
-  - 22383865
-  - 12808457
-  - 20010596
-  - 16199517
-  - 23070592
-  - 26125594
 cover: cover.jpg
+draft: true
 ---
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
-  - {:.list-unstyled} [II. Background](#background)
-  - {:.list-unstyled} [III. Significance Analysis of Function and Expression](#safe)
+  - {:.list-unstyled} [II. Background](#background)  
 
 <hr/>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to identify pathways enriched in ranked gene lists, with a particulat emphasis on ordering basedon a measure of differential gene expression. We aim to convey how the approach works from an intuitive standpoint before dividing into a full discussion of the statistical underpinnings. By then end of this discussion you should:
+In this section we discuss the use of [RNAi Gene Enrichment Ranking (RIGER)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to identify pathways enriched in ranked gene lists, with a particulat emphasis on ordering basedon a measure of differential gene expression. We aim to convey how the approach works from an intuitive standpoint before dividing into a full discussion of the statistical underpinnings. By then end of this discussion you should:
 
 1. Understand what you can get out of GSEA
 2. Be aware of the advantages over previous methods

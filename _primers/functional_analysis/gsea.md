@@ -36,7 +36,7 @@ cover: cover.jpg
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to identify pathways enriched in ranked gene lists, with a particulat emphasis on ordering basedon a measure of differential gene expression. We aim to convey how the approach works from an intuitive standpoint before dividing into a full discussion of the statistical underpinnings. By then end of this discussion you should:
+In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to identify pathways enriched in ranked gene lists, with a particular emphasis on ordering based on a measure of differential gene expression. We aim to convey how the approach works from an intuitive standpoint before dividing into a full discussion of the statistical underpinnings. By then end of this discussion you should:
 
 1. Understand what you can get out of GSEA
 2. Be aware of the advantages over previous methods
