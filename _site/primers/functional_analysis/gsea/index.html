@@ -347,7 +347,7 @@
     S^{GSEA}_k = \sup_{1 \leq i \leq n} (F^{G_k}_i-F^{\bar{G}_k}_i)
 \end{equation}</script>
 
-<p>Where the indices <script type="math/tex">i</script> represents the position or rank in <script type="math/tex">L</script>. The <script type="math/tex">S^{GSEA}_k</script> is the largest difference in <script type="math/tex">F</script> which are the (weighted) empirical cumulative distribution functions.</p>
+<p>Where <script type="math/tex">sup</script> is the supremum and the indices <script type="math/tex">i</script> represents the position or rank in <script type="math/tex">L</script>. The <script type="math/tex">S^{GSEA}_k</script> is the largest difference in <script type="math/tex">F</script> which are the (weighted) empirical cumulative distribution functions.</p>
 
 <script type="math/tex; mode=display">\begin{equation} \label{eq:2}
     F^{G_k}_i = \frac{\sum\limits_{t=1}^i |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}{\sum\limits_{t=1}^n |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}
@@ -357,7 +357,7 @@
     F^{\bar{G}_k}_i = \frac{\sum\limits_{t=1}^i \mathbb{1}_{\{gene_t \in \bar{G}_k\}}}{n-n_k}
 \end{equation}</script>
 
-<p>We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let’s see what happens when we vary the exponent <script type="math/tex">\alpha</script>.</p>
+<p>Where <script type="math/tex">\mathbb{1}</script> is the indicator function for membership in the specified gene set. We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let’s see what happens when we vary the exponent <script type="math/tex">\alpha</script>.</p>
 
 <h4 id="equal-weights-the-classic-kolmogorov-smirnov-statistic">Equal weights: The ‘classic’ Kolmogorov-Smirnov statistic</h4>
 

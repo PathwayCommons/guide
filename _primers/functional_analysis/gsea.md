@@ -135,7 +135,7 @@ $$
 \end{equation}
 $$
 
-Where the indices $$i$$ represents the position or rank in $$L$$. The $$S^{GSEA}_k$$ is the largest difference in $$F$$ which are the (weighted) empirical cumulative distribution functions.
+Where $$sup$$ is the supremum and the indices $$i$$ represents the position or rank in $$L$$. The $$S^{GSEA}_k$$ is the largest difference in $$F$$ which are the (weighted) empirical cumulative distribution functions.
 
 $$
 \begin{equation} \label{eq:2}
@@ -149,7 +149,7 @@ $$
 \end{equation}
 $$
 
-We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
+Where $$\mathbb{1}$$ is the indicator function for membership in the specified gene set. We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let's see what happens when we vary the exponent $$\alpha$$.
 
 #### Equal weights: The 'classic' Kolmogorov-Smirnov statistic
 
