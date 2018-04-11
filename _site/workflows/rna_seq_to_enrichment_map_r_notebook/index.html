@@ -133,8 +133,6 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
-          <span class="text-danger">-- Development Version</span>
-        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -1559,7 +1557,7 @@
   </span><span class="n">gsea_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w"> </span><span class="s2">"gsea_output"</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_gmx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">getwd</span><span class="p">(),</span><span class="w">
                         </span><span class="s2">"data"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"PathwayCommons9.All.hgnc.names.gmt"</span><span class="p">)</span><span class="w">
+                        </span><span class="s2">"Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt"</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_rank_list_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rank_list_path</span><span class="w">
   </span><span class="n">gsea_num_permutations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
   </span><span class="n">gsea_min_gs_size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">15</span><span class="w">
@@ -1631,7 +1629,8 @@
 
 <p>We’re ready to declare our options for the Enrichment Map Cytoscape app.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Construct path to GSEA results - 'edb' folder</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="c1">### Construct path to GSEA results - 'edb' folder</span><span class="w">
   </span><span class="c1">### Ouptut from GSEA - update below to match your directory name</span><span class="w">
   </span><span class="n">gsea_results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_results_filename</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span><span class="w"> </span><span class="s2">"edb"</span><span class="p">,</span><span class="w"> </span><span class="s2">"results.edb"</span><span class="p">)</span><span class="w">
@@ -1659,25 +1658,24 @@
                     </span><span class="s2">"expressionDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
                     </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">    
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in curl::curl_fetch_memory(url, handle = handle): Failed to connect to localhost port 1234: Connection refused</code></pre></figure>
-
 <p>Let’s take a peek at the Enrichment Map.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"em_output.png"</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output.png"</span><span class="w">
+  </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
     </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span></code></pre></figure>
 
-<p><img src="./em_output.png" alt="Enrichment Map" /></p>
+<p><img src="em_output.png" alt="Enrichment Map" /></p>
 
 <p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.</p>
 
@@ -1685,23 +1683,24 @@
   </span><span class="n">aa_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span><span class="w"> </span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Enrichment Map command will return the suid of newly created network.</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
 
 <p>Finally, let’s get a view of our annotated Enrichment Map.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"em_output_aa.png"</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_aa_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output_aa.png"</span><span class="w">
+  </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_aa_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">Sys.sleep</span><span class="p">(</span><span class="m">30</span><span class="p">)</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
     </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output_aa</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span></code></pre></figure>
 
-<p><img src="./em_output_aa.png" alt="Annotated Enrichment Map" /></p>
+<p><img src="em_output_aa.png" alt="Annotated Enrichment Map" /></p>
 
 <p>Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
 
