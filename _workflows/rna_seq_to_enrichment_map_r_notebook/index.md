@@ -406,12 +406,6 @@ Let's perform the ID-mapping and data merging.
     tep_rnaseq_filelist)
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in biomaRt::useDataset(dataset, mart = mart_used): The given dataset:  hsapiens_gene_ensembl , is not valid.  Correct dataset names can be obtained with the listDatasets function.
-{% endhighlight %}
-
 The result of the merge is a `SummarizedExperiment` object named `brca_hd_tep_se`.
 
 {% highlight r %}
@@ -421,7 +415,15 @@ The result of the merge is a `SummarizedExperiment` object named `brca_hd_tep_se
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se' not found
+## class: RangedSummarizedExperiment 
+## dim: 35554 10 
+## metadata(0):
+## assays(1): counts
+## rownames(35554): RNU4-59P SNORD114-2 ... RNA5SP406 RN7SL285P
+## rowData names(1): ensembl_gene_id
+## colnames(10): MGH-BrCa-H-74_htsqct MGH-BrCa-H-68_htsqct ...
+##   HD-2-1_htsqct HD-1_htsqct
+## colData names(1): class
 {% endhighlight %}
 
 The `SummarizedExperiment` package provides a number of helpful accessor functions to examine the data.
@@ -435,34 +437,37 @@ For instance, we can take a peek at the column (sample) metadata using the `Summ
 
 
 
-{% highlight text %}
-## Error in SummarizedExperiment::colData(brca_hd_tep_se): object 'brca_hd_tep_se' not found
-{% endhighlight %}
+|                     |class |
+|:--------------------|:-----|
+|MGH-BrCa-H-74_htsqct |BrCa  |
+|MGH-BrCa-H-68_htsqct |BrCa  |
+|MGH-BrCa-H-66_htsqct |BrCa  |
+|MGH-BrCa-H-59_htsqct |BrCa  |
+|MGH-BrCa-H-11_htsqct |BrCa  |
+|HD-5_htsqct          |HD    |
+|HD-4_htsqct          |HD    |
+|HD-3-1_htsqct        |HD    |
+|HD-2-1_htsqct        |HD    |
+|HD-1_htsqct          |HD    |
 
 Similarly, we can peek at an excerpt of the row metadata (i.e. [GenomicRanges](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html)) using the `SummarizedExperiment::rowRanges` function.
 
 
 {% highlight r %}
   brca_hd_tep_rowRanged_df <- as.data.frame(SummarizedExperiment::rowRanges(brca_hd_tep_se))
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in SummarizedExperiment::rowRanges(brca_hd_tep_se): object 'brca_hd_tep_se' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   knitr::kable(head(brca_hd_tep_rowRanged_df))
 {% endhighlight %}
 
 
 
-{% highlight text %}
-## Error in head(brca_hd_tep_rowRanged_df): object 'brca_hd_tep_rowRanged_df' not found
-{% endhighlight %}
+|           |seqnames |     start|       end| width|strand |ensembl_gene_id |
+|:----------|:--------|---------:|---------:|-----:|:------|:---------------|
+|RNU4-59P   |chr1     |  92700819|  92700934|   116|-      |ENSG00000201317 |
+|SNORD114-2 |chr14    | 100951856| 100951933|    78|+      |ENSG00000200823 |
+|MIR1249    |chr22    |  45200954|  45201019|    66|-      |ENSG00000221598 |
+|RNA5SP48   |chr1     |  51973410|  51973535|   126|+      |ENSG00000200839 |
+|MIR1468    |chrX     |  63786002|  63786087|    86|-      |ENSG00000222532 |
+|RNU6-1019P |chr20    |   3360036|   3360142|   107|+      |ENSG00000201294 |
 
 
 {% highlight r %}
@@ -472,7 +477,7 @@ Similarly, we can peek at an excerpt of the row metadata (i.e. [GenomicRanges](h
 
 
 {% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_rowRanged_df' not found
+## [1] 35554     6
 {% endhighlight %}
 
 Note that we were only able to successfully map 34 996 unique HGNC symbols from the original set of Ensembl IDs.
@@ -486,9 +491,14 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
 
 
 
-{% highlight text %}
-## Error in SummarizedExperiment::assays(brca_hd_tep_se): object 'brca_hd_tep_se' not found
-{% endhighlight %}
+|           | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| HD-5_htsqct| HD-4_htsqct|
+|:----------|--------------------:|--------------------:|-----------:|-----------:|
+|RNU4-59P   |                    0|                    0|           0|           0|
+|SNORD114-2 |                    0|                    0|           0|           0|
+|MIR1249    |                    0|                    0|           0|           0|
+|RNA5SP48   |                    0|                    0|           0|           0|
+|MIR1468    |                    0|                    0|           0|           0|
+|RNU6-1019P |                    0|                    0|           0|           0|
 
 ## <a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
@@ -531,90 +541,21 @@ RNA species with very low mapped read counts in a small number of samples can be
   comparison <- c(baseline_class, test_class)
 
   brca_hd_tep_se_counts <- SummarizedExperiment::assays(brca_hd_tep_se)[["counts"]]
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in SummarizedExperiment::assays(brca_hd_tep_se): object 'brca_hd_tep_se' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_se_group <- SummarizedExperiment::colData(brca_hd_tep_se)[["class"]]
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in SummarizedExperiment::colData(brca_hd_tep_se): object 'brca_hd_tep_se' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Find genes (rows) with a minimum number of counts
   index_test_class <- brca_hd_tep_se_group == comparison[1]
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_group' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   index_baseline_class <- brca_hd_tep_se_group == comparison[2]
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_group' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   row_with_mincount <-
     rowSums(edgeR::cpm(brca_hd_tep_se_counts) > min_counts) >=
       min(sum(index_baseline_class), sum(index_test_class))
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in edgeR::cpm(brca_hd_tep_se_counts): object 'brca_hd_tep_se_counts' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Subset the original data accordingly
   brca_hd_tep_dge_counts <- brca_hd_tep_se_counts[row_with_mincount,]
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_counts' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Push the data into the edgeR::DGEList
   brca_hd_tep_filtered_dge <-
     edgeR::DGEList(counts = brca_hd_tep_dge_counts, group = brca_hd_tep_se_group)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in as.matrix(counts): object 'brca_hd_tep_dge_counts' not found
 {% endhighlight %}
 
 Note that our end product is a very convenient class, the `edgeR::DGEList`.
@@ -630,9 +571,14 @@ With this in mind, let's take a look at the 'counts' component.
 
 
 
-{% highlight text %}
-## Error in head(brca_hd_tep_filtered_dge[["counts"]]): object 'brca_hd_tep_filtered_dge' not found
-{% endhighlight %}
+|        | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| MGH-BrCa-H-11_htsqct| HD-5_htsqct|
+|:-------|--------------------:|--------------------:|--------------------:|-----------:|
+|APPL2   |                   11|                   40|                   30|           3|
+|WASHC4  |                   70|                   79|                  101|          19|
+|FDPS    |                    8|                   16|                   19|          35|
+|SRSF9   |                   35|                   59|                  131|           6|
+|DNTTIP2 |                   20|                   21|                   29|          14|
+|ELOA    |                   12|                    8|                   13|           9|
 
 Similarly, we can peek inside the 'samples' component.
 
@@ -643,9 +589,18 @@ Similarly, we can peek inside the 'samples' component.
 
 
 
-{% highlight text %}
-## Error in inherits(x, "list"): object 'brca_hd_tep_filtered_dge' not found
-{% endhighlight %}
+|                     |group | lib.size| norm.factors|
+|:--------------------|:-----|--------:|------------:|
+|MGH-BrCa-H-74_htsqct |BrCa  |  1011005|            1|
+|MGH-BrCa-H-68_htsqct |BrCa  |  1459179|            1|
+|MGH-BrCa-H-66_htsqct |BrCa  |  1104692|            1|
+|MGH-BrCa-H-59_htsqct |BrCa  |   375366|            1|
+|MGH-BrCa-H-11_htsqct |BrCa  |  1568065|            1|
+|HD-5_htsqct          |HD    |   978959|            1|
+|HD-4_htsqct          |HD    |   942307|            1|
+|HD-3-1_htsqct        |HD    |  1006691|            1|
+|HD-2-1_htsqct        |HD    |   771377|            1|
+|HD-1_htsqct          |HD    |  1295938|            1|
 
 ### Normalization
 
@@ -654,25 +609,23 @@ RNA for a sample can be sequenced to varying ‘depths’ in that the total numb
 
 {% highlight r %}
   brca_hd_tep_tmm_normalized_dge <- edgeR::calcNormFactors(brca_hd_tep_filtered_dge, method = "TMM")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in edgeR::calcNormFactors(brca_hd_tep_filtered_dge, method = "TMM"): object 'brca_hd_tep_filtered_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   knitr::kable(brca_hd_tep_tmm_normalized_dge[["samples"]])
 {% endhighlight %}
 
 
 
-{% highlight text %}
-## Error in inherits(x, "list"): object 'brca_hd_tep_tmm_normalized_dge' not found
-{% endhighlight %}
+|                     |group | lib.size| norm.factors|
+|:--------------------|:-----|--------:|------------:|
+|MGH-BrCa-H-74_htsqct |BrCa  |  1011005|    0.8483188|
+|MGH-BrCa-H-68_htsqct |BrCa  |  1459179|    0.9168334|
+|MGH-BrCa-H-66_htsqct |BrCa  |  1104692|    1.0608606|
+|MGH-BrCa-H-59_htsqct |BrCa  |   375366|    0.9403859|
+|MGH-BrCa-H-11_htsqct |BrCa  |  1568065|    1.1396483|
+|HD-5_htsqct          |HD    |   978959|    0.8043575|
+|HD-4_htsqct          |HD    |   942307|    1.0403290|
+|HD-3-1_htsqct        |HD    |  1006691|    0.9095096|
+|HD-2-1_htsqct        |HD    |   771377|    1.1217368|
+|HD-1_htsqct          |HD    |  1295938|    1.3246379|
 
 Note that the TMM-normalized `DGEList` called `brca_hd_tep_tmm_normalized_dge` has updated column `norm.factors` in component 'samples'. This value will be used to determine an 'effective library size', leaving the raw counts untouched.
 
@@ -684,56 +637,15 @@ At this point we can generate an expression file of normalized RNA counts where 
 {% highlight r %}
   ### Combine two data frames - gene metadata and sample counts
   brca_hd_tep_tmm_normalized_mat <- edgeR::cpm(brca_hd_tep_tmm_normalized_dge, normalized.lib.size=TRUE)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in edgeR::cpm(brca_hd_tep_tmm_normalized_dge, normalized.lib.size = TRUE): object 'brca_hd_tep_tmm_normalized_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   meta_df <- data.frame(
     NAME = rownames(brca_hd_tep_tmm_normalized_mat),
     DESCRIPTION = rownames(brca_hd_tep_tmm_normalized_mat),
     check.names = FALSE)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in rownames(brca_hd_tep_tmm_normalized_mat): object 'brca_hd_tep_tmm_normalized_mat' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   rownames(brca_hd_tep_tmm_normalized_mat) <- NULL
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in rownames(brca_hd_tep_tmm_normalized_mat) <- NULL: object 'brca_hd_tep_tmm_normalized_mat' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_tmm_normalized_expression_df <- data.frame(meta_df, brca_hd_tep_tmm_normalized_mat,  check.names = FALSE)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in data.frame(meta_df, brca_hd_tep_tmm_normalized_mat, check.names = FALSE): object 'meta_df' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Write out
   expression_dataset_path <- file.path(output_dir, "brca_hd_tep_tmm_normalized_expression.txt")
   write.table(brca_hd_tep_tmm_normalized_expression_df,
@@ -741,12 +653,6 @@ At this point we can generate an expression file of normalized RNA counts where 
               sep = "\t",
               file=expression_dataset_path,
               row.names = FALSE)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in is.data.frame(x): object 'brca_hd_tep_tmm_normalized_expression_df' not found
 {% endhighlight %}
 
 We should have a file `brca_hd_tep_tmm_normalized_expression.txt` containing the following tab-delimited content:
@@ -783,53 +689,16 @@ In this step we perform a pair-wise comparison of RNA species counts in BrCa sam
 {% highlight r %}
   ### Calculate variability (dispersions) in data
   brca_hd_tep_fitted_commondisp_dge <- edgeR::estimateCommonDisp(brca_hd_tep_tmm_normalized_dge)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in edgeR::estimateCommonDisp(brca_hd_tep_tmm_normalized_dge): object 'brca_hd_tep_tmm_normalized_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_fitted_tagwise_dge <- edgeR::estimateTagwiseDisp(brca_hd_tep_fitted_commondisp_dge)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in edgeR::estimateTagwiseDisp(brca_hd_tep_fitted_commondisp_dge): object 'brca_hd_tep_fitted_commondisp_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Perform differential expression testing (comparison is 'BrCa' vs 'HD')
   brca_hd_tep_de_tested_dge <- edgeR::exactTest(brca_hd_tep_fitted_tagwise_dge, pair = comparison)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in is(object, "DGEList"): object 'brca_hd_tep_fitted_tagwise_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Perform multiple-testing correction using Benjamini-Hockberg procedure
   brca_hd_tep_de_tested_tt <- edgeR::topTags(brca_hd_tep_de_tested_dge,
     n = nrow(brca_hd_tep_tmm_normalized_dge),
     adjust.method = "BH",
     sort.by = "PValue")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in edgeR::topTags(brca_hd_tep_de_tested_dge, n = nrow(brca_hd_tep_tmm_normalized_dge), : object 'brca_hd_tep_de_tested_dge' not found
 {% endhighlight %}
 
 The result of these transformations is a `topTags` object named `brca_hd_tep_de_tested_tt`. We can peek inside our result to view the list of genes ranked by p-value from differential expression testing.
@@ -842,9 +711,14 @@ The result of these transformations is a `topTags` object named `brca_hd_tep_de_
 
 
 
-{% highlight text %}
-## Error in head(brca_hd_tep_de_tested_tt[["table"]]): object 'brca_hd_tep_de_tested_tt' not found
-{% endhighlight %}
+|         |    logFC|   logCPM| PValue| FDR|
+|:--------|--------:|--------:|------:|---:|
+|TRIM58   | 6.576853| 7.817879|      0|   0|
+|ARHGAP45 | 6.612102| 9.047273|      0|   0|
+|NCK2     | 5.678860| 7.159602|      0|   0|
+|GAS2L1   | 5.944626| 7.487539|      0|   0|
+|SPTB     | 5.333839| 7.040788|      0|   0|
+|ANKRD9   | 6.912347| 6.213802|      0|   0|
 
 #### Rank list file (RNK)
 
@@ -854,83 +728,21 @@ At this stage, we can generate a rank list file where row names are gene symbols
 {% highlight r %}
   ### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD
   brca_hd_tep_rank_values <- sign(brca_hd_tep_de_tested_tt[["table"]][["logFC"]]) * (-1) * log10(brca_hd_tep_de_tested_tt[["table"]][["PValue"]])
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_de_tested_tt' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Take into account log10(0) = -Inf
   brca_hd_tep_rank_values_max <- max(brca_hd_tep_rank_values[ brca_hd_tep_rank_values != Inf ])
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_rank_values' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_rank_values_unique <- sapply( brca_hd_tep_rank_values,
                                             function(x) replace(x, is.infinite(x),
                                             sign(x) * (brca_hd_tep_rank_values_max + runif(1))) )
-{% endhighlight %}
 
 
-
-{% highlight text %}
-## Error in sapply(brca_hd_tep_rank_values, function(x) replace(x, is.infinite(x), : object 'brca_hd_tep_rank_values' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Construct the data frame we wish place into a tabular file
   genenames <- (rownames(brca_hd_tep_de_tested_tt[["table"]]))
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in rownames(brca_hd_tep_de_tested_tt[["table"]]): object 'brca_hd_tep_de_tested_tt' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_ranks_df <- data.frame(gene=genenames,
                                      rank=brca_hd_tep_rank_values_unique,
                                      stringsAsFactors = FALSE)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in data.frame(gene = genenames, rank = brca_hd_tep_rank_values_unique, : object 'genenames' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_ordered_ranks_df <- brca_hd_tep_ranks_df[order(brca_hd_tep_ranks_df[,2], decreasing = TRUE), ]
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_ranks_df' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ## Write out to file
   rank_list_path <- file.path(output_dir, "brca_hd_tep.rnk")
   write.table(brca_hd_tep_ordered_ranks_df,
@@ -938,12 +750,6 @@ At this stage, we can generate a rank list file where row names are gene symbols
               sep = "\t",
               file=rank_list_path,
               row.names = FALSE)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in is.data.frame(x): object 'brca_hd_tep_ordered_ranks_df' not found
 {% endhighlight %}
 
 Let's peek at the top and bottom of our rank list saved in `brca_hd_tep.rnk`.
@@ -992,78 +798,18 @@ This file will be used in the Enrichment Map so that we can differentiate (i.e. 
 
 {% highlight r %}
   n_samples <- dim(brca_hd_tep_filtered_dge)[2]
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_filtered_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   n_classes <- 2
 
   l1 <- paste(n_samples, n_classes, "1")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'n_samples' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   l2 <- paste("#", brca_hd_tep_de_tested_tt[["comparison"]][1], brca_hd_tep_de_tested_tt[["comparison"]][2])
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_de_tested_tt' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   l3 <- paste(brca_hd_tep_filtered_dge[["samples"]][["group"]], collapse = " ")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_filtered_dge' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_cls <- rbind(l1, l2, l3)
-{% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'l1' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   ### Write out to file
   categorical_class_path <- file.path(output_dir, "brca_hd_tep.cls")
   write(brca_hd_tep_cls,
         file=categorical_class_path,
         sep = "\t")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in cat(x, file = file, sep = c(rep.int(sep, ncolumns - 1), "\n"), : object 'brca_hd_tep_cls' not found
 {% endhighlight %}
 
 The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
@@ -1078,25 +824,13 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 
 {% highlight r %}
   rownames(brca_hd_tep_cls) <- NULL
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in rownames(brca_hd_tep_cls) <- NULL: object 'brca_hd_tep_cls' not found
-{% endhighlight %}
-
-
-
-{% highlight r %}
   brca_hd_tep_cls
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in eval(expr, envir, enclos): object 'brca_hd_tep_cls' not found
-{% endhighlight %}
+     [,1]                                     
+[1,] "10 2 1"                                 
+[2,] "# HD BrCa"                              
+[3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
 
 ## <a href="#geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a>
 
