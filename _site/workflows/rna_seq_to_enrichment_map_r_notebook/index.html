@@ -674,19 +674,13 @@
     </span><span class="n">target_name</span><span class="p">,</span><span class="w">
     </span><span class="n">tep_rnaseq_filelist</span><span class="p">)</span></code></pre></figure>
 
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in biomaRt::useDataset(dataset, mart = mart_used): The given dataset:  hsapiens_gene_ensembl , is not valid.  Correct dataset names can be obtained with the listDatasets function.</code></pre></figure>
+
 <p>The result of the merge is a <code class="highlighter-rouge">SummarizedExperiment</code> object named <code class="highlighter-rouge">brca_hd_tep_se</code>.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_se</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## class: RangedSummarizedExperiment 
-## dim: 34996 10 
-## metadata(0):
-## assays(1): counts
-## rownames(34996): RNU6-871P MIR626 ... RNA5SP302 RNU6-179P
-## rowData names(1): ensembl_gene_id
-## colnames(10): MGH-BrCa-H-74_htsqct MGH-BrCa-H-68_htsqct ...
-##   HD-2-1_htsqct HD-1_htsqct
-## colData names(1): class</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se' not found</code></pre></figure>
 
 <p>The <code class="highlighter-rouge">SummarizedExperiment</code> package provides a number of helpful accessor functions to examine the data.</p>
 
@@ -694,135 +688,21 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: left">class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-74_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-68_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-66_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-59_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-11_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-5_htsqct</td>
-      <td style="text-align: left">HD</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-4_htsqct</td>
-      <td style="text-align: left">HD</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-3-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-2-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in SummarizedExperiment::colData(brca_hd_tep_se): object 'brca_hd_tep_se' not found</code></pre></figure>
 
 <p>Similarly, we can peek at an excerpt of the row metadata (i.e. <a href="https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a>) using the <code class="highlighter-rouge">SummarizedExperiment::rowRanges</code> function.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_rowRanged_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">rowRanges</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span><span class="w">
-  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_rowRanged_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">rowRanges</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">))</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: left">seqnames</th>
-      <th style="text-align: right">start</th>
-      <th style="text-align: right">end</th>
-      <th style="text-align: right">width</th>
-      <th style="text-align: left">strand</th>
-      <th style="text-align: left">ensembl_gene_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">RNU6-871P</td>
-      <td style="text-align: left">chr12</td>
-      <td style="text-align: right">59450673</td>
-      <td style="text-align: right">59450772</td>
-      <td style="text-align: right">100</td>
-      <td style="text-align: left">-</td>
-      <td style="text-align: left">ENSG00000251931</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR626</td>
-      <td style="text-align: left">chr15</td>
-      <td style="text-align: right">41691585</td>
-      <td style="text-align: right">41691678</td>
-      <td style="text-align: right">94</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000207766</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU6-35P</td>
-      <td style="text-align: left">chr4</td>
-      <td style="text-align: right">109992325</td>
-      <td style="text-align: right">109992431</td>
-      <td style="text-align: right">107</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000207260</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR5694</td>
-      <td style="text-align: left">chr14</td>
-      <td style="text-align: right">67441855</td>
-      <td style="text-align: right">67441930</td>
-      <td style="text-align: right">76</td>
-      <td style="text-align: left">-</td>
-      <td style="text-align: left">ENSG00000265993</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU6-1157P</td>
-      <td style="text-align: left">chr11</td>
-      <td style="text-align: right">118593988</td>
-      <td style="text-align: right">118594093</td>
-      <td style="text-align: right">106</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000207185</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU4-85P</td>
-      <td style="text-align: left">chr3</td>
-      <td style="text-align: right">19996803</td>
-      <td style="text-align: right">19996925</td>
-      <td style="text-align: right">123</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000201545</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in SummarizedExperiment::rowRanges(brca_hd_tep_se): object 'brca_hd_tep_se' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in head(brca_hd_tep_rowRanged_df): object 'brca_hd_tep_rowRanged_df' not found</code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="nf">dim</span><span class="p">(</span><span class="n">brca_hd_tep_rowRanged_df</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 34996     6</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_rowRanged_df' not found</code></pre></figure>
 
 <p>Note that we were only able to successfully map 34 996 unique HGNC symbols from the original set of Ensembl IDs.</p>
 
@@ -830,61 +710,7 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]])[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">)])</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: right">MGH-BrCa-H-74_htsqct</th>
-      <th style="text-align: right">MGH-BrCa-H-68_htsqct</th>
-      <th style="text-align: right">HD-5_htsqct</th>
-      <th style="text-align: right">HD-4_htsqct</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">RNU6-871P</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR626</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU6-35P</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR5694</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU6-1157P</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU4-85P</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in SummarizedExperiment::assays(brca_hd_tep_se): object 'brca_hd_tep_se' not found</code></pre></figure>
 
 <h2 id="d-differential-expression-testing"><a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a></h2>
 
@@ -923,22 +749,39 @@
   </span><span class="n">test_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"BrCa"</span><span class="w">
   </span><span class="n">comparison</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">baseline_class</span><span class="p">,</span><span class="w"> </span><span class="n">test_class</span><span class="p">)</span><span class="w">
 
-  </span><span class="n">brca_hd_tep_se_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]]</span><span class="w">
-  </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"class"</span><span class="p">]]</span><span class="w">
+  </span><span class="n">brca_hd_tep_se_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">assays</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"counts"</span><span class="p">]]</span></code></pre></figure>
 
-  </span><span class="c1">### Find genes (rows) with a minimum number of counts</span><span class="w">
-  </span><span class="n">index_test_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
-  </span><span class="n">index_baseline_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
-  </span><span class="n">row_with_mincount</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in SummarizedExperiment::assays(brca_hd_tep_se): object 'brca_hd_tep_se' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SummarizedExperiment</span><span class="o">::</span><span class="n">colData</span><span class="p">(</span><span class="n">brca_hd_tep_se</span><span class="p">)[[</span><span class="s2">"class"</span><span class="p">]]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in SummarizedExperiment::colData(brca_hd_tep_se): object 'brca_hd_tep_se' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Find genes (rows) with a minimum number of counts</span><span class="w">
+  </span><span class="n">index_test_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">1</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_group' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">index_baseline_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">comparison</span><span class="p">[</span><span class="m">2</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_group' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">row_with_mincount</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
     </span><span class="n">rowSums</span><span class="p">(</span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_se_counts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">min_counts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w">
-      </span><span class="nf">min</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">index_baseline_class</span><span class="p">),</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">index_test_class</span><span class="p">))</span><span class="w">
+      </span><span class="nf">min</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">index_baseline_class</span><span class="p">),</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">index_test_class</span><span class="p">))</span></code></pre></figure>
 
-  </span><span class="c1">### Subset the original data accordingly</span><span class="w">
-  </span><span class="n">brca_hd_tep_dge_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_counts</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,]</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::cpm(brca_hd_tep_se_counts): object 'brca_hd_tep_se_counts' not found</code></pre></figure>
 
-  </span><span class="c1">### Push the data into the edgeR::DGEList</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Subset the original data accordingly</span><span class="w">
+  </span><span class="n">brca_hd_tep_dge_counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_se_counts</span><span class="p">[</span><span class="n">row_with_mincount</span><span class="p">,]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_se_counts' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Push the data into the edgeR::DGEList</span><span class="w">
   </span><span class="n">brca_hd_tep_filtered_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
     </span><span class="n">edgeR</span><span class="o">::</span><span class="n">DGEList</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brca_hd_tep_dge_counts</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brca_hd_tep_se_group</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in as.matrix(counts): object 'brca_hd_tep_dge_counts' not found</code></pre></figure>
 
 <p>Note that our end product is a very convenient class, the <code class="highlighter-rouge">edgeR::DGEList</code>.</p>
 
@@ -950,218 +793,25 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"counts"</span><span class="p">]])[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">)])</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: right">MGH-BrCa-H-74_htsqct</th>
-      <th style="text-align: right">MGH-BrCa-H-68_htsqct</th>
-      <th style="text-align: right">MGH-BrCa-H-11_htsqct</th>
-      <th style="text-align: right">HD-5_htsqct</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">MAP4K5</td>
-      <td style="text-align: right">255</td>
-      <td style="text-align: right">520</td>
-      <td style="text-align: right">854</td>
-      <td style="text-align: right">238</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SAV1</td>
-      <td style="text-align: right">167</td>
-      <td style="text-align: right">189</td>
-      <td style="text-align: right">323</td>
-      <td style="text-align: right">34</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">IRF3</td>
-      <td style="text-align: right">5</td>
-      <td style="text-align: right">5</td>
-      <td style="text-align: right">23</td>
-      <td style="text-align: right">22</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">ZC3H11A</td>
-      <td style="text-align: right">80</td>
-      <td style="text-align: right">145</td>
-      <td style="text-align: right">181</td>
-      <td style="text-align: right">16</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">NUP88</td>
-      <td style="text-align: right">24</td>
-      <td style="text-align: right">13</td>
-      <td style="text-align: right">49</td>
-      <td style="text-align: right">45</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">STXBP5-AS1</td>
-      <td style="text-align: right">67</td>
-      <td style="text-align: right">159</td>
-      <td style="text-align: right">90</td>
-      <td style="text-align: right">46</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in head(brca_hd_tep_filtered_dge[["counts"]]): object 'brca_hd_tep_filtered_dge' not found</code></pre></figure>
 
 <p>Similarly, we can peek inside the ‘samples’ component.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: left">group</th>
-      <th style="text-align: right">lib.size</th>
-      <th style="text-align: right">norm.factors</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-74_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1010942</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-68_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1458995</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-66_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1104454</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-59_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">375353</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-11_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1567897</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-5_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">978816</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-4_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">942170</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-3-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">1006665</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-2-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">771351</td>
-      <td style="text-align: right">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">1295886</td>
-      <td style="text-align: right">1</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in inherits(x, "list"): object 'brca_hd_tep_filtered_dge' not found</code></pre></figure>
 
 <h3 id="normalization">Normalization</h3>
 
 <p>RNA for a sample can be sequenced to varying ‘depths’ in that the total number of sequence reads mapped to a gene for an individual sequencing run is not necessarily constant. What most concerns us is not the absolute counts of an individual RNA species coming out of a sequencing run but rather the proportion. In practical terms, we desire a fair-comparison of RNA counts between samples that takes into account variation in depth. Our recommendation is to use a normalization technique called Trimmed mean of M-values (TMM)<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup> that effectively standardizes counts between distinct sequencing runs by assuming that most genes are not expected to alter their expression.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">calcNormFactors</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TMM"</span><span class="p">)</span><span class="w">
-  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">calcNormFactors</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TMM"</span><span class="p">)</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: left">group</th>
-      <th style="text-align: right">lib.size</th>
-      <th style="text-align: right">norm.factors</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-74_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1010942</td>
-      <td style="text-align: right">0.8467126</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-68_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1458995</td>
-      <td style="text-align: right">0.9171140</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-66_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1104454</td>
-      <td style="text-align: right">1.0598800</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-59_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">375353</td>
-      <td style="text-align: right">0.9411707</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MGH-BrCa-H-11_htsqct</td>
-      <td style="text-align: left">BrCa</td>
-      <td style="text-align: right">1567897</td>
-      <td style="text-align: right">1.1394811</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-5_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">978816</td>
-      <td style="text-align: right">0.8057214</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-4_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">942170</td>
-      <td style="text-align: right">1.0404548</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-3-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">1006665</td>
-      <td style="text-align: right">0.9094940</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-2-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">771351</td>
-      <td style="text-align: right">1.1216675</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">HD-1_htsqct</td>
-      <td style="text-align: left">HD</td>
-      <td style="text-align: right">1295886</td>
-      <td style="text-align: right">1.3247572</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::calcNormFactors(brca_hd_tep_filtered_dge, method = "TMM"): object 'brca_hd_tep_filtered_dge' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in inherits(x, "list"): object 'brca_hd_tep_tmm_normalized_dge' not found</code></pre></figure>
 
 <p>Note that the TMM-normalized <code class="highlighter-rouge">DGEList</code> called <code class="highlighter-rouge">brca_hd_tep_tmm_normalized_dge</code> has updated column <code class="highlighter-rouge">norm.factors</code> in component ‘samples’. This value will be used to determine an ‘effective library size’, leaving the raw counts untouched.</p>
 
@@ -1170,23 +820,34 @@
 <p>At this point we can generate an expression file of normalized RNA counts where row names are gene symbols and column names are sample IDs. We will use this later to be able to display an expression heatmap for any enriched pathway in our Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Combine two data frames - gene metadata and sample counts</span><span class="w">
-  </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span><span class="w"> </span><span class="n">normalized.lib.size</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+  </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">cpm</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">,</span><span class="w"> </span><span class="n">normalized.lib.size</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
 
-  </span><span class="n">meta_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::cpm(brca_hd_tep_tmm_normalized_dge, normalized.lib.size = TRUE): object 'brca_hd_tep_tmm_normalized_dge' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">meta_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
     </span><span class="n">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span><span class="w">
     </span><span class="n">DESCRIPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">),</span><span class="w">
-    </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+    </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
 
-  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
-  </span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">meta_df</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">,</span><span class="w">  </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in rownames(brca_hd_tep_tmm_normalized_mat): object 'brca_hd_tep_tmm_normalized_mat' not found</code></pre></figure>
 
-  </span><span class="c1">### Write out</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in rownames(brca_hd_tep_tmm_normalized_mat) &lt;- NULL: object 'brca_hd_tep_tmm_normalized_mat' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">meta_df</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_tmm_normalized_mat</span><span class="p">,</span><span class="w">  </span><span class="n">check.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in data.frame(meta_df, brca_hd_tep_tmm_normalized_mat, check.names = FALSE): object 'meta_df' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Write out</span><span class="w">
   </span><span class="n">expression_dataset_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep_tmm_normalized_expression.txt"</span><span class="p">)</span><span class="w">
   </span><span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_expression_df</span><span class="p">,</span><span class="w">
               </span><span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
               </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w">
               </span><span class="n">file</span><span class="o">=</span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
               </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in is.data.frame(x): object 'brca_hd_tep_tmm_normalized_expression_df' not found</code></pre></figure>
 
 <p>We should have a file <code class="highlighter-rouge">brca_hd_tep_tmm_normalized_expression.txt</code> containing the following tab-delimited content:</p>
 
@@ -1208,52 +869,52 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">MAP4K5</td>
-      <td style="text-align: left">MAP4K5</td>
-      <td style="text-align: right">297.905074</td>
-      <td style="text-align: right">388.620956</td>
-      <td style="text-align: right">301.78036</td>
-      <td style="text-align: right">181.57979</td>
+      <td style="text-align: left">APPL2</td>
+      <td style="text-align: left">APPL2</td>
+      <td style="text-align: right">12.825676</td>
+      <td style="text-align: right">29.89930</td>
+      <td style="text-align: right">3.809848</td>
+      <td style="text-align: right">10.20086</td>
     </tr>
     <tr>
-      <td style="text-align: left">SAV1</td>
-      <td style="text-align: left">SAV1</td>
-      <td style="text-align: right">195.098617</td>
-      <td style="text-align: right">141.248771</td>
-      <td style="text-align: right">43.11148</td>
-      <td style="text-align: right">20.40222</td>
+      <td style="text-align: left">WASHC4</td>
+      <td style="text-align: left">WASHC4</td>
+      <td style="text-align: right">81.617939</td>
+      <td style="text-align: right">59.05112</td>
+      <td style="text-align: right">24.129036</td>
+      <td style="text-align: right">110.16931</td>
     </tr>
     <tr>
-      <td style="text-align: left">IRF3</td>
-      <td style="text-align: left">IRF3</td>
-      <td style="text-align: right">5.841276</td>
-      <td style="text-align: right">3.736740</td>
-      <td style="text-align: right">27.89566</td>
-      <td style="text-align: right">32.64356</td>
+      <td style="text-align: left">FDPS</td>
+      <td style="text-align: left">FDPS</td>
+      <td style="text-align: right">9.327765</td>
+      <td style="text-align: right">11.95972</td>
+      <td style="text-align: right">44.448224</td>
+      <td style="text-align: right">24.48207</td>
     </tr>
     <tr>
-      <td style="text-align: left">ZC3H11A</td>
-      <td style="text-align: left">ZC3H11A</td>
-      <td style="text-align: right">93.460415</td>
-      <td style="text-align: right">108.365459</td>
-      <td style="text-align: right">20.28776</td>
-      <td style="text-align: right">73.44800</td>
+      <td style="text-align: left">SRSF9</td>
+      <td style="text-align: left">SRSF9</td>
+      <td style="text-align: right">40.808970</td>
+      <td style="text-align: right">44.10147</td>
+      <td style="text-align: right">7.619695</td>
+      <td style="text-align: right">0.00000</td>
     </tr>
     <tr>
-      <td style="text-align: left">NUP88</td>
-      <td style="text-align: left">NUP88</td>
-      <td style="text-align: right">28.038125</td>
-      <td style="text-align: right">9.715524</td>
-      <td style="text-align: right">57.05931</td>
-      <td style="text-align: right">71.40778</td>
+      <td style="text-align: left">DNTTIP2</td>
+      <td style="text-align: left">DNTTIP2</td>
+      <td style="text-align: right">23.319411</td>
+      <td style="text-align: right">15.69713</td>
+      <td style="text-align: right">17.779290</td>
+      <td style="text-align: right">14.28121</td>
     </tr>
     <tr>
-      <td style="text-align: left">STXBP5-AS1</td>
-      <td style="text-align: left">STXBP5-AS1</td>
-      <td style="text-align: right">78.273098</td>
-      <td style="text-align: right">118.828331</td>
-      <td style="text-align: right">58.32730</td>
-      <td style="text-align: right">67.32734</td>
+      <td style="text-align: left">ELOA</td>
+      <td style="text-align: left">ELOA</td>
+      <td style="text-align: right">13.991647</td>
+      <td style="text-align: right">5.97986</td>
+      <td style="text-align: right">11.429543</td>
+      <td style="text-align: right">0.00000</td>
     </tr>
   </tbody>
 </table>
@@ -1270,106 +931,77 @@
 </ul>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Calculate variability (dispersions) in data</span><span class="w">
-  </span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">)</span><span class="w">
-  </span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="p">)</span><span class="w">
+  </span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateCommonDisp</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">)</span></code></pre></figure>
 
-  </span><span class="c1">### Perform differential expression testing (comparison is 'BrCa' vs 'HD')</span><span class="w">
-  </span><span class="n">brca_hd_tep_de_tested_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">exactTest</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="p">,</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">comparison</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::estimateCommonDisp(brca_hd_tep_tmm_normalized_dge): object 'brca_hd_tep_tmm_normalized_dge' not found</code></pre></figure>
 
-  </span><span class="c1">### Perform multiple-testing correction using Benjamini-Hockberg procedure</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">estimateTagwiseDisp</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_commondisp_dge</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::estimateTagwiseDisp(brca_hd_tep_fitted_commondisp_dge): object 'brca_hd_tep_fitted_commondisp_dge' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Perform differential expression testing (comparison is 'BrCa' vs 'HD')</span><span class="w">
+  </span><span class="n">brca_hd_tep_de_tested_dge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">exactTest</span><span class="p">(</span><span class="n">brca_hd_tep_fitted_tagwise_dge</span><span class="p">,</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">comparison</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in is(object, "DGEList"): object 'brca_hd_tep_fitted_tagwise_dge' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Perform multiple-testing correction using Benjamini-Hockberg procedure</span><span class="w">
   </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">edgeR</span><span class="o">::</span><span class="n">topTags</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_dge</span><span class="p">,</span><span class="w">
     </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nrow</span><span class="p">(</span><span class="n">brca_hd_tep_tmm_normalized_dge</span><span class="p">),</span><span class="w">
     </span><span class="n">adjust.method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"BH"</span><span class="p">,</span><span class="w">
     </span><span class="n">sort.by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"PValue"</span><span class="p">)</span></code></pre></figure>
 
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in edgeR::topTags(brca_hd_tep_de_tested_dge, n = nrow(brca_hd_tep_tmm_normalized_dge), : object 'brca_hd_tep_de_tested_dge' not found</code></pre></figure>
+
 <p>The result of these transformations is a <code class="highlighter-rouge">topTags</code> object named <code class="highlighter-rouge">brca_hd_tep_de_tested_tt</code>. We can peek inside our result to view the list of genes ranked by p-value from differential expression testing.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span></code></pre></figure>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left"> </th>
-      <th style="text-align: right">logFC</th>
-      <th style="text-align: right">logCPM</th>
-      <th style="text-align: right">PValue</th>
-      <th style="text-align: right">FDR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">TRIM58</td>
-      <td style="text-align: right">6.577953</td>
-      <td style="text-align: right">7.818481</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">ARHGAP45</td>
-      <td style="text-align: right">6.612944</td>
-      <td style="text-align: right">9.047699</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">NCK2</td>
-      <td style="text-align: right">5.679970</td>
-      <td style="text-align: right">7.160183</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">GAS2L1</td>
-      <td style="text-align: right">5.946095</td>
-      <td style="text-align: right">7.488178</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SPTB</td>
-      <td style="text-align: right">5.334870</td>
-      <td style="text-align: right">7.041291</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">ANKRD9</td>
-      <td style="text-align: right">6.913215</td>
-      <td style="text-align: right">6.214325</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-  </tbody>
-</table>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in head(brca_hd_tep_de_tested_tt[["table"]]): object 'brca_hd_tep_de_tested_tt' not found</code></pre></figure>
 
 <h4 id="rank-list-file-rnk">Rank list file (RNK)</h4>
 
 <p>At this stage, we can generate a rank list file where row names are gene symbols and a single column indicates the rank calculated as a function of their p-value. The larger the magnitude of the positive or negative rank, the rarer such an observation would be under the assumption of no association between class and RNA count.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Rank by inverse of p-value taking into account 'sign' of change in BrCa (i.e. increase/decrease) relative to HD</span><span class="w">
-  </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sign</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"logFC"</span><span class="p">]])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">log10</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"PValue"</span><span class="p">]])</span><span class="w">
+  </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sign</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"logFC"</span><span class="p">]])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">log10</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]][[</span><span class="s2">"PValue"</span><span class="p">]])</span></code></pre></figure>
 
-  </span><span class="c1">### Take into account log10(0) = -Inf</span><span class="w">
-  </span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">brca_hd_tep_rank_values</span><span class="p">[</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">Inf</span><span class="w"> </span><span class="p">])</span><span class="w">
-  </span><span class="n">brca_hd_tep_rank_values_unique</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="p">,</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_de_tested_tt' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Take into account log10(0) = -Inf</span><span class="w">
+  </span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">brca_hd_tep_rank_values</span><span class="p">[</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">Inf</span><span class="w"> </span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_rank_values' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_rank_values_unique</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="w"> </span><span class="n">brca_hd_tep_rank_values</span><span class="p">,</span><span class="w">
                                             </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">replace</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">is.infinite</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w">
-                                            </span><span class="nf">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="p">)</span><span class="w">
+                                            </span><span class="nf">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">brca_hd_tep_rank_values_max</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="p">)</span></code></pre></figure>
 
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in sapply(brca_hd_tep_rank_values, function(x) replace(x, is.infinite(x), : object 'brca_hd_tep_rank_values' not found</code></pre></figure>
 
-  </span><span class="c1">### Construct the data frame we wish place into a tabular file</span><span class="w">
-  </span><span class="n">genenames</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span><span class="w">
-  </span><span class="n">brca_hd_tep_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Construct the data frame we wish place into a tabular file</span><span class="w">
+  </span><span class="n">genenames</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"table"</span><span class="p">]]))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in rownames(brca_hd_tep_de_tested_tt[["table"]]): object 'brca_hd_tep_de_tested_tt' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="n">genenames</span><span class="p">,</span><span class="w">
                                      </span><span class="n">rank</span><span class="o">=</span><span class="n">brca_hd_tep_rank_values_unique</span><span class="p">,</span><span class="w">
-                                     </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-  </span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
+                                     </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
 
-  </span><span class="c1">## Write out to file</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in data.frame(gene = genenames, rank = brca_hd_tep_rank_values_unique, : object 'genenames' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">brca_hd_tep_ranks_df</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_ranks_df' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">## Write out to file</span><span class="w">
   </span><span class="n">rank_list_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep.rnk"</span><span class="p">)</span><span class="w">
   </span><span class="n">write.table</span><span class="p">(</span><span class="n">brca_hd_tep_ordered_ranks_df</span><span class="p">,</span><span class="w">
               </span><span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
               </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w">
               </span><span class="n">file</span><span class="o">=</span><span class="n">rank_list_path</span><span class="p">,</span><span class="w">
               </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in is.data.frame(x): object 'brca_hd_tep_ordered_ranks_df' not found</code></pre></figure>
 
 <p>Let’s peek at the top and bottom of our rank list saved in <code class="highlighter-rouge">brca_hd_tep.rnk</code>.</p>
 
@@ -1391,23 +1023,23 @@
   <tbody>
     <tr>
       <td style="text-align: left">TRIM58</td>
-      <td style="text-align: right">34.46062</td>
+      <td style="text-align: right">34.42958</td>
     </tr>
     <tr>
       <td style="text-align: left">ARHGAP45</td>
-      <td style="text-align: right">32.99957</td>
+      <td style="text-align: right">32.96828</td>
     </tr>
     <tr>
       <td style="text-align: left">NCK2</td>
-      <td style="text-align: right">27.51070</td>
+      <td style="text-align: right">27.48727</td>
     </tr>
     <tr>
       <td style="text-align: left">GAS2L1</td>
-      <td style="text-align: right">23.96204</td>
+      <td style="text-align: right">23.93497</td>
     </tr>
     <tr>
       <td style="text-align: left">SPTB</td>
-      <td style="text-align: right">23.90996</td>
+      <td style="text-align: right">23.89270</td>
     </tr>
   </tbody>
 </table>
@@ -1426,23 +1058,23 @@
   <tbody>
     <tr>
       <td style="text-align: left">MS4A1</td>
-      <td style="text-align: right">-11.50463</td>
+      <td style="text-align: right">-11.50501</td>
     </tr>
     <tr>
       <td style="text-align: left">CD79A</td>
-      <td style="text-align: right">-11.53814</td>
+      <td style="text-align: right">-11.53616</td>
     </tr>
     <tr>
       <td style="text-align: left">MDM4</td>
-      <td style="text-align: right">-12.93184</td>
+      <td style="text-align: right">-12.93637</td>
     </tr>
     <tr>
       <td style="text-align: left">LYZ</td>
-      <td style="text-align: right">-15.42705</td>
+      <td style="text-align: right">-15.43126</td>
     </tr>
     <tr>
       <td style="text-align: left">CD74</td>
-      <td style="text-align: right">-16.58382</td>
+      <td style="text-align: right">-16.59050</td>
     </tr>
   </tbody>
 </table>
@@ -1451,19 +1083,35 @@
 
 <p>This file will be used in the Enrichment Map so that we can differentiate (i.e. colour) those pathways ‘up-regulated’ in HD versus BrCa samples. The CLS format contains information about the sample classes (aka ‘condition’, ‘phenotype’) and assigns each sample to one class.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">n_samples</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">
-  </span><span class="n">n_classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">n_samples</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span></code></pre></figure>
 
-  </span><span class="n">l</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="w"> </span><span class="n">n_classes</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">)</span><span class="w">
-  </span><span class="n">l</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">2</span><span class="p">])</span><span class="w">
-  </span><span class="n">l</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]][[</span><span class="s2">"group"</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">)</span><span class="w">
-  </span><span class="n">brca_hd_tep_cls</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">l</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">3</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_filtered_dge' not found</code></pre></figure>
 
-  </span><span class="c1">### Write out to file</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">n_classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">
+
+  </span><span class="n">l</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="w"> </span><span class="n">n_classes</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'n_samples' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">l</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">brca_hd_tep_de_tested_tt</span><span class="p">[[</span><span class="s2">"comparison"</span><span class="p">]][</span><span class="m">2</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_de_tested_tt' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">l</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">brca_hd_tep_filtered_dge</span><span class="p">[[</span><span class="s2">"samples"</span><span class="p">]][[</span><span class="s2">"group"</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_filtered_dge' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_cls</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">l</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="m">3</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'l1' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Write out to file</span><span class="w">
   </span><span class="n">categorical_class_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="s2">"brca_hd_tep.cls"</span><span class="p">)</span><span class="w">
   </span><span class="n">write</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">,</span><span class="w">
         </span><span class="n">file</span><span class="o">=</span><span class="n">categorical_class_path</span><span class="p">,</span><span class="w">
         </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in cat(x, file = file, sep = c(rep.int(sep, ncolumns - 1), "\n"), : object 'brca_hd_tep_cls' not found</code></pre></figure>
 
 <p>The matrix <code class="highlighter-rouge">brca_hd_tep_cls</code> has the following format, assuming N samples:</p>
 
@@ -1502,11 +1150,13 @@
   </tbody>
 </table>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
-  </span><span class="n">brca_hd_tep_cls</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">rownames</span><span class="p">(</span><span class="n">brca_hd_tep_cls</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span></code></pre></figure>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [,1]                                      [1,] "10 2 1"                                  [2,] "# HD BrCa"                               [3,] "BrCa BrCa BrCa BrCa BrCa HD HD HD HD HD"
-</code></pre></div></div>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in rownames(brca_hd_tep_cls) &lt;- NULL: object 'brca_hd_tep_cls' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">brca_hd_tep_cls</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in eval(expr, envir, enclos): object 'brca_hd_tep_cls' not found</code></pre></figure>
 
 <h2 id="e-gene-set-enrichment-analysis"><a href="#geneSetEnrichmentAnalysis" name="geneSetEnrichmentAnalysis">E. Gene Set Enrichment Analysis</a></h2>
 
@@ -1584,7 +1234,7 @@
                    </span><span class="s2">"&gt;"</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"gsea_output_"</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_rpt_label</span><span class="p">,</span><span class="w"> </span><span class="s2">".txt"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span><span class="w">
             </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
 
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span></code></pre></figure>
 
@@ -1629,8 +1279,7 @@
 
 <p>We’re ready to declare our options for the Enrichment Map Cytoscape app.</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
-  </span><span class="c1">### Construct path to GSEA results - 'edb' folder</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Construct path to GSEA results - 'edb' folder</span><span class="w">
   </span><span class="c1">### Ouptut from GSEA - update below to match your directory name</span><span class="w">
   </span><span class="n">gsea_results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_out</span><span class="p">,</span><span class="w"> </span><span class="n">gsea_tep_BrCa_HD_analysis_directory</span><span class="p">)</span><span class="w">
   </span><span class="n">gsea_results_filename</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">gsea_results</span><span class="p">,</span><span class="w"> </span><span class="s2">"edb"</span><span class="p">,</span><span class="w"> </span><span class="s2">"results.edb"</span><span class="p">)</span><span class="w">
@@ -1658,7 +1307,7 @@
                     </span><span class="s2">"expressionDataset1="</span><span class="p">,</span><span class="w"> </span><span class="n">expression_dataset_path</span><span class="p">,</span><span class="w">
                     </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">    
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
@@ -1666,16 +1315,16 @@
 <p>Let’s take a peek at the Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output.png"</span><span class="w">
-  </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_fname</span><span class="p">)</span><span class="w">
+  </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
     </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span></code></pre></figure>
 
-<p><img src="em_output.png" alt="Enrichment Map" /></p>
+<p><img src="output/em_output.png" alt="Enrichment Map" /></p>
 
 <p>Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.</p>
 
@@ -1683,24 +1332,24 @@
   </span><span class="n">aa_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span><span class="w"> </span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Enrichment Map command will return the suid of newly created network.</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
 
 <p>Finally, let’s get a view of our annotated Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_aa_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output_aa.png"</span><span class="w">
-  </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_aa_fname</span><span class="p">)</span><span class="w">
+  </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_aa_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
   
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
-  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichmentMap</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">TRUE</span><span class="w"> </span><span class="p">){</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">Sys.sleep</span><span class="p">(</span><span class="m">30</span><span class="p">)</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
     </span><span class="n">writeBin</span><span class="p">(</span><span class="n">response</span><span class="o">$</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">em_output_aa</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span></code></pre></figure>
 
-<p><img src="em_output_aa.png" alt="Annotated Enrichment Map" /></p>
+<p><img src="output/em_output_aa.png" alt="Annotated Enrichment Map" /></p>
 
 <p>Please refer to the full ‘RNA-Seq to Enrichment Map’ workflow for details.</p>
 

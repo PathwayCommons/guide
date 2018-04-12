@@ -717,7 +717,7 @@ In our GSEA run, the following relevant options have been specified:
                    ">", paste("gsea_output_", gsea_rpt_label, ".txt", sep=""),
             sep=" ")
 
-  if( doEnrichment == TRUE ){
+  if( isTRUE ( doEnrichment) ){
     system(command)
   }
 ```
@@ -765,7 +765,6 @@ Recall that we asked you to download and install Cytoscape (3.5.1) along with va
 We're ready to declare our options for the Enrichment Map Cytoscape app.
 
 ```{r runEM}
-  doEnrichmentMap <- FALSE
   ### Construct path to GSEA results - 'edb' folder
   ### Ouptut from GSEA - update below to match your directory name
   gsea_results <- file.path(gsea_out, gsea_tep_BrCa_HD_analysis_directory)
@@ -794,7 +793,7 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     "expressionDataset1=", expression_dataset_path,
                     sep=" ")
   current_network_suid <- 0
-  if( doEnrichmentMap == TRUE ){
+  if( isTRUE ( doEnrichment) ){
     current_network_suid <- r2cytoscape::commandRun(em_command)    
     response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
   }  
@@ -805,16 +804,16 @@ Let's take a peek at the Enrichment Map.
 
 ```{r makeEMNetworkImage}
   em_fname <- "em_output.png"
-  em_output <- file.path(base_dir, em_fname)
+  em_output <- file.path(output_dir, em_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
   
   ### Pause for Cytoscape to render
-  if( doEnrichmentMap == TRUE ){
+  if( isTRUE ( doEnrichment) ){
     response <- httr::GET(url=url_png)
     writeBin(response$content, em_output)
   }
 ```
-![Enrichment Map](`r em_fname`)
+![Enrichment Map](output/`r em_fname`)
 
 Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
 
@@ -823,7 +822,7 @@ Often times, the complexity of an Enrichment Map can be reduced even further: Cl
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
   
   ### Enrichment Map command will return the suid of newly created network.
-  if( doEnrichmentMap == TRUE ){
+  if( isTRUE ( doEnrichment) ){
     response <- r2cytoscape::commandRun(aa_command)
   }  
 ```
@@ -832,18 +831,18 @@ Finally, let's get a view of our annotated Enrichment Map.
 
 ```{r makeAAEMNetworkImage}
   em_aa_fname <- "em_output_aa.png"
-  em_output_aa <- file.path(base_dir, em_aa_fname)
+  em_output_aa <- file.path(output_dir, em_aa_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
   
   ### Pause for Cytoscape to render
-  if( doEnrichmentMap == TRUE ){
+  if( isTRUE ( doEnrichment) ){
     Sys.sleep(30)
     response <- httr::GET(url=url_png)
     writeBin(response$content, em_output_aa)
   }
 ```
 
-![Annotated Enrichment Map](`r em_aa_fname`)
+![Annotated Enrichment Map](output/`r em_aa_fname`)
 
 Please refer to the full 'RNA-Seq to Enrichment Map' workflow for details.
 
