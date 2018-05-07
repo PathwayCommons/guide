@@ -44,24 +44,24 @@ kramdown:
 collections:
   case_studies:
     output: true
-    permalink: /:collection/:path/
+    permalink: /:collection/:path
     index: /case_studies/archive/
     description: Case Studies
 
   presentations:
     output: true
-    permalink: /:collection/:path/
+    permalink: /:collection/:path
     index: /presentations/archive/
     description: Presentations
 
   primers:
     output: true
-    permalink: /:collection/:path/
+    permalink: /:collection/:path
     index: /primers/archive/
     description: Primers
 
   workflows:
     output: true
-    permalink: /:collection/:path/
+    permalink: /:collection/:path
     index: /workflows/archive/
     description: Workflows

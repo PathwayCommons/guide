@@ -1,21 +1,15 @@
 ---
 title: "RNA-Seq to Enrichment Map - R Notebook"
 author: "jvwong"
-date: '2017-08-01'
-output:
-  html_document:
-    toc: true
-    toc_depth: 2
+date: 2017-08-01
 category: Pathway Enrichment Analysis
 layout: document
 cover: cover.png
-draft: FALSE
 download: rna_seq_to_enrichment_map_r_notebook.zip
 splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
 subtitle: Process platelet RNA-Seq data, identify altered pathways then visualize
   using Enrichment Map
 badges: R Notebook
-permalink: /:collection/:path./:output_ext
 ---
 
 ```{r setGlobals, include=FALSE}
@@ -41,7 +35,7 @@ permalink: /:collection/:path./:output_ext
   <ul><li>Install software and package dependencies</li></ul>
 </div>
 
-This R Notebook documents a comparison mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA-Seq count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) then visualized as a [Cytoscape](http://www.cytoscape.org/) [Enrichment Map](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984).
+This R Notebook documents a comparison of mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA sequencing count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) then visualized as a [Cytoscape](http://www.cytoscape.org/) [Enrichment Map](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984).
 
 
 ### Software requirements
@@ -159,7 +153,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
 
 ```{r declareMergeFunctions}
   library("SummarizedExperiment")
-  
+
   #' Merge a set of files representing RNA sequencing gene counts
   #'
   #' 1. Default parameter is do nothing (already matching gene set ids)
@@ -263,7 +257,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
       colClasses = c("character", "factor"),
       sep = "\t", header=TRUE)
 
-    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')    
+    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')
 
     return(meta)
   }
@@ -794,10 +788,10 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     sep=" ")
   current_network_suid <- 0
   if( isTRUE ( doEnrichment) ){
-    current_network_suid <- r2cytoscape::commandRun(em_command)    
+    current_network_suid <- r2cytoscape::commandRun(em_command)
     response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
-  }  
-  
+  }
+
 ```
 
 Let's take a peek at the Enrichment Map.
@@ -806,7 +800,7 @@ Let's take a peek at the Enrichment Map.
   em_fname <- "em_output.png"
   em_output <- file.path(output_dir, em_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  
+
   ### Pause for Cytoscape to render
   if( isTRUE ( doEnrichment) ){
     response <- httr::GET(url=url_png)
@@ -815,16 +809,16 @@ Let's take a peek at the Enrichment Map.
 ```
 ![Enrichment Map](output/`r em_fname`)
 
-Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
+Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.
 
 ```{r aaEM}
   ### Auto-Annotate the Enrichment Map
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
-  
+
   ### Enrichment Map command will return the suid of newly created network.
   if( isTRUE ( doEnrichment) ){
     response <- r2cytoscape::commandRun(aa_command)
-  }  
+  }
 ```
 
 Finally, let's get a view of our annotated Enrichment Map.
@@ -833,7 +827,7 @@ Finally, let's get a view of our annotated Enrichment Map.
   em_aa_fname <- "em_output_aa.png"
   em_output_aa <- file.path(output_dir, em_aa_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  
+
   ### Pause for Cytoscape to render
   if( isTRUE ( doEnrichment) ){
     Sys.sleep(30)

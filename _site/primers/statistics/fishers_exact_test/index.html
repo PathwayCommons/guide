@@ -133,8 +133,6 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
-          <span class="text-danger">-- Development Version</span>
-        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -180,6 +178,11 @@
 
       <!-- we can only handle 1 nesting -->
       
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
         
           <li class="active">Fisher's Exact Test</li>
         
@@ -199,7 +202,7 @@
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
       <li>
-  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test/&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test/index&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -207,7 +210,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test/"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test/index"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -257,16 +260,16 @@
 </blockquote>
 
 <h3 id="a-gene-expression-study">A gene expression study</h3>
-<p>Suppose we undertake a gene expression analysis comparing subtypes of high-grade ovarian serous cancer (HGS-OvCa) and we derive a list of differentially expressed genes (DEGs). For the purposes of this discussion let us restrict an enrichment analysis to a single gene set, specifically genes involved in the GO biological process <a href="http://amigo.geneontology.org/amigo/term/GO:0006413">‘translation initiation’</a>. Table 1 depicts a contingency table corresponding to some hypothetical experimental results.</p>
+<p>Suppose we undertake a gene expression analysis comparing individuals with cancer to healthy individuals and derive a list of differentially expressed genes. For the purposes of this discussion let us restrict an enrichment analysis to a single gene set, specifically genes involved in the GO biological process <a href="http://amigo.geneontology.org/amigo/term/GO:0006413">‘translation initiation’</a>. Table 1 depicts a contingency table corresponding to some hypothetical experimental results.</p>
 
-<p><strong>Table 1. Contingency table for HGS-OvCa gene expression data</strong>
-<img src="/guide/media/primers/statistics/fishers_exact_test/table_1.jpg" alt="image" class="img-responsive slim left" /></p>
+<p><strong>Table 1. Contingency table for gene expression data</strong>
+<img src="table_1.png" alt="image" class="img-responsive slim left" /></p>
 
-<p>In this case, the expression of 32 genes has been analyzed: 15 DEG were identified and 15 genes were associated with the GO annotation ‘translation initiation’. The totals for DEG and gene set membership are the <em>marginal values</em>, as they lie on the periphery of our 2-by-2 table.</p>
+<p>In this case, the expression of 32 genes has been analyzed: 15 differentially expressed genes were identified and 15 genes were associated with the GO annotation ‘translation initiation’. The totals for differential expression and gene set membership are the <em>marginal values</em>, as they lie on the periphery of our 2-by-2 table.</p>
 
-<p>The middle cells contain <em>joint values</em> because they represent genes falling under two categories (Table 1, light blue). Here, 12 genes are both DEG and tagged with ‘translation initiation’. This seems like a large proportion of the marginal DEG total (12/15 DEGs) and our intuition might lead us to the opinion that this is a result worth following up on…</p>
+<p>The middle cells contain <em>joint values</em> because they represent genes falling under two categories (Table 1, light blue). Here, 12 genes are both differentially expressed and tagged with ‘translation initiation’. This seems like a large proportion of the marginal differentially expressed gene total (12/15 differentially expressed genes) and our intuition might lead us to the opinion that this is a result worth following up on…</p>
 
-<p>We seemed quite confident that observing 12 DEG out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.</p>
+<p>We seemed quite confident that observing 12 differentially expressed genes out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.</p>
 
 <h2 id="iii-fishers-exact-test"><a href="#fishersExactTest" name="fishersExactTest">III. Fisher’s Exact Test</a></h2>
 
@@ -278,41 +281,41 @@
   <li>There is no association between categorical values</li>
 </ol>
 
-<p>These assumptions constitute the ‘null hypothesis’ (<script type="math/tex">H_0</script>): We take the <em>a priori</em> stance that the categories are independent. We simply don’t know the ground truth of whether there exists a relationship between HGS-OvCa subtype gene expression and genes involved in ‘translation initiation’. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are referred to as ‘p-values’.</p>
+<p>These assumptions constitute the ‘null hypothesis’ (<script type="math/tex">H_0</script>): We take the <em>a priori</em> stance that the categories are independent. We simply don’t know the ground truth of whether there exists a relationship between cancer-related gene expression and genes involved in ‘translation initiation’. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are referred to as ‘p-values’.</p>
 
 <blockquote>
   <p>Smaller p-values point to an interesting result only if all of the assumptions used to compute the p-value are valid</p>
 </blockquote>
 
 <h3 id="the-possibilities-are-not-endless">The possibilities are not endless</h3>
-<p>Let us return to the HGS-OvCa gene expression analysis example. Fisher’s Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are <strong>in relation to all possible ones that could have given those same marginal totals given no association between categories</strong>. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).</p>
+<p>Let us return to the cancer gene expression analysis example. Fisher’s Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are <strong>in relation to all possible ones that could have given those same marginal totals given no association between categories</strong>. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).</p>
 
-<p><img src="/guide/media/primers/statistics/fishers_exact_test/figure_1.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_1.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing DEGs and those within the gene set.
+  <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing differentially expressed genes and those within the gene set.
 </div>
 
 <h3 id="let-us-count-the-ways">Let us count the ways</h3>
-<p>There may exist 16 possible arrangements of joint values for fixed marginal totals, however, this does not imply that each is equally likely. To see why, consider the arrangement in the first row and second column of (Figure 1; R1-C2): This arrangement is reproduced in Table 2 and shows 1 DEG that is a member of the gene set leaving 14 DEGs outside. To calculate the probability of this (unobserved) arrangement under the null hypothesis, we will make use of the rules for <a href="/guide/primers/statistics/permutations_combinations/">combinations</a>.</p>
+<p>There may exist 16 possible arrangements of joint values for fixed marginal totals, however, this does not imply that each is equally likely. To see why, consider the arrangement in the first row and second column of (Figure 1; R1-C2): This arrangement is reproduced in Table 2 and shows 1 differentially expressed gene that is a member of the gene set leaving 14 outside. To calculate the probability of this (unobserved) arrangement under the null hypothesis, we will make use of the rules for <a href="/guide/primers/statistics/permutations_combinations/">combinations</a>.</p>
 
 <p><strong>Table 2. Contingency table for arrangement R1-C2</strong>
-<img src="/guide/media/primers/statistics/fishers_exact_test/table_2.jpg" alt="image" class="img-responsive slim left" /></p>
+<img src="table_2.png" alt="image" class="img-responsive slim left" /></p>
 
-<p>R.A. Fisher’s insight was to leverage the rules for enumerating combinations to derive an exact probability for any given contingency table under the null hypothesis. For our 32 genes of which 15 are DEG and 15 are within a gene set, we must first calculate the ways that each of the joint values could have arisen simply by randomly selecting genes. We illustrate the process for the arrangement in Table 2 and the process proceeds by calculating three values, one for each row:</p>
+<p>R.A. Fisher’s insight was to leverage the rules for enumerating combinations to derive an exact probability for any given contingency table under the null hypothesis. For our 32 genes of which 15 are differentially expressed gene and 15 are within a gene set, we must first calculate the ways that each of the joint values could have arisen simply by randomly selecting genes. We illustrate the process for the arrangement in Table 2 and the process proceeds by calculating three values, one for each row:</p>
 
 <ol>
-  <li>Ways to select 1 DEG <em>without replacement</em> out of 15 tagged IN the gene set</li>
-  <li>Ways to select 14 DEGs <em>without replacement</em> from 17 tagged NOT IN the gene set</li>
-  <li>Ways to select 15 DEGs <em>without replacement</em> from 32 total</li>
+  <li>Ways to select 1 differentially expression gene <em>without replacement</em> out of 15 tagged IN the gene set</li>
+  <li>Ways to select 14 differentially expression genes <em>without replacement</em> from 17 tagged NOT IN the gene set</li>
+  <li>Ways to select 15 differentially expression genes <em>without replacement</em> from 32 total</li>
 </ol>
 
-<p>These three values are sufficient to calculate the probability of any particular contingency table. The first number represents the ways 1 DEG can be selected from 15 possible ‘IN Translation Initiation’ (Figure 2, top left). In statistical jargon, this is described as ‘15 Choose 1’. There are exactly 15 ways this can be done: One for each of the 15 genes with the tag.</p>
+<p>These three values are sufficient to calculate the probability of any particular contingency table. The first number represents the ways 1 differentially expressed gene can be selected from 15 possible ‘IN Translation Initiation’ (Figure 2, top left). In statistical jargon, this is described as ‘15 Choose 1’. There are exactly 15 ways this can be done: One for each of the 15 genes with the tag.</p>
 
-<p>Similarly, there are ‘17 Choose 14’ or 680 ways that 14 DEGs can be selected from 17 ‘NOT IN Translation Initiation’. To see this, consider the 17 genes labeled 16 through 32 in the top right group of Figure 2. We can choose 14 genes by selecting those labelled 16 through 29. Alternatively, one can also select 16 through 28 then 30 or for that matter 16 through 28 then 31 and so on. The third number ‘32 Choose 15’ is precisely 565 722 720.</p>
+<p>Similarly, there are ‘17 Choose 14’ or 680 ways that 14 differentially expressed genes can be selected from 17 ‘NOT IN Translation Initiation’. To see this, consider the 17 genes labeled 16 through 32 in the top right group of Figure 2. We can choose 14 genes by selecting those labelled 16 through 29. Alternatively, one can also select 16 through 28 then 30 or for that matter 16 through 28 then 31 and so on. The third number ‘32 Choose 15’ is precisely 565 722 720.</p>
 
-<p><img src="/guide/media/primers/statistics/fishers_exact_test/figure_2.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_2.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing DEGs from each group: 1 DEG from 'IN Translation Initiation'; 14 from 'NOT IN Translation Initiation'; and 15 DEGs from the 32 total genes.
+  <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing differentially expressed genes from each group: 1 differentially expressed gene from 'IN Translation Initiation'; 14 from 'NOT IN Translation Initiation'; and 15 differentially expressed genes from the 32 total genes.
 </div>
 
 <p>The probability of observing this arrangement then is given by the quotient:</p>
@@ -328,15 +331,16 @@
 <p>Some of you may recognize the expression on the left as the probability function for the <a href="/guide/primers/statistics/distributions/#hypergeometric">hypergeometric distribution</a>.</p>
 
 <h3 id="what-are-the-probabilities">What are the probabilities?</h3>
+
 <p>At this point we have the basic building blocks to describe Fisher’s Exact Test. Referring to our HGS-OvCa example, we have in hand the probability of our contingency table of observed joint values (Table 2). Fisher’s Exact Test amounts to summing the probability of observing our table of observed joint values <strong>in addition to those more extreme than our table</strong>. The possible tables and their respective probabilities are displayed in red Figure 3.</p>
 
-<p><img src="/guide/media/primers/statistics/fishers_exact_test/figure_3.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_3.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangments of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both DE and tagged with 'IN Translation Initiation'.
+  <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangments of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both differentially expressed and tagged with 'IN Translation Initiation'.
 </div>
 
 <h3 id="one-sided-tests">One-Sided tests</h3>
-<p>Figure 3 shows that our observed result in Table 1 has a probability equal to 0.0005469 (Figure 3, R4-C1). The one-sided test requires us to sum the probabilities of the observed table and those unobserved tables which possess more than 12 genes the are DE and IN the gene set (Figure 3, red)</p>
+<p>Figure 3 shows that our observed result in Table 1 has a probability equal to 0.0005469 (Figure 3, R4-C1). The one-sided test requires us to sum the probabilities of the observed table and those unobserved tables which possess more than 12 genes the are differentially expressed (DE) and IN the gene set (Figure 3, red)</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{equation*}
@@ -347,10 +351,10 @@
   \end{split}
 \end{equation*} %]]></script>
 
-<p>From this result, we claim that the probability of our observed data or that more extreme under the assumption that there is no association between expression and gene set membership is 0.0005726. Whether this represents an interesting discrepancy from the null hypothesis, an experiment worth repeating, or an ‘enrichment’ of genes in the set amongst DE genes is left up to the researcher’s interest and expertise.</p>
+<p>From this result, we claim that the probability of our observed data or that more extreme under the assumption that there is no association between expression and gene set membership is 0.0005726. Whether this represents an interesting discrepancy from the null hypothesis, an experiment worth repeating, or an ‘enrichment’ of genes in the set amongst differentially expressed genes is left up to the researcher’s interest and expertise.</p>
 
 <h3 id="two-sided-tests">Two-Sided tests</h3>
-<p>We have not yet considered the possibility that DEGs may contain fewer members of the gene set than would be expected if genes were sampled randomly, that is, DEGs are depleted for ‘IN Translation Initiation’. The two-sided Fisher’s Exact Test accounts for both enrichment and depletion. Although there are several flavours of the test (Rivals 2006), we demonstrate an approach whereby the tables with probabilities smaller than our observed data (<script type="math/tex">p=0.0005469</script>) are summed</p>
+<p>We have not yet considered the possibility that differentially expressed genes may contain fewer members of the gene set than would be expected if genes were sampled randomly, that is, differentially expressed genes are depleted for ‘IN Translation Initiation’. The two-sided Fisher’s Exact Test accounts for both enrichment and depletion. Although there are several flavours of the test (Rivals 2006), we demonstrate an approach whereby the tables with probabilities smaller than our observed data (<script type="math/tex">p=0.0005469</script>) are summed</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{equation*}
@@ -364,7 +368,7 @@
 <p>This result is just under double the one-sided p-value, resulting from an ‘uneven’ distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.</p>
 
 <h2 id="iv-caveats"><a href="#caveats" name="caveats">IV. Caveats</a></h2>
-<p>There has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow up on.</p>
+<p>There has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow.</p>
 
 <hr />
 
@@ -393,8 +397,8 @@
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
     var disqus_config = function () {
-    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test";  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "/primers/statistics/fishers_exact_test"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/fishers_exact_test/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/statistics/fishers_exact_test/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

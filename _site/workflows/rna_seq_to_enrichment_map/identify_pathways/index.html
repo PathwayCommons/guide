@@ -63,7 +63,7 @@
             <div class="linkout clearfix">
               <ul class="list-inline pull-right">
               <li>
-  <a href="http://twitter.com/intent/tweet?text=Identify enriched pathways using Gene Set Enrichment Analysis+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=Identify enriched pathways using Gene Set Enrichment Analysis+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/index&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -71,7 +71,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/index"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -114,7 +114,7 @@
 
 <p><br /></p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_overview.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_idpathways_overview.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can alterations in sets of related genes (e.g. pathways) be inferred from the underlying changes in gene expression? The GSEA we will apply requires a list where each gene is assigned a unique rank from differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
 </div>
@@ -129,14 +129,14 @@
 
 <p>Concretely, let us consider the <a href="http://www.netpath.org/pathways?path_id=NetPath_17" target="_blank">IL-5 Signaling Pathway</a> curated by as part of the NetPath database (Figure 2).</p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_il5_netpath_diagram.png" alt="image" class="img-responsive short" /></p>
+<p><img src="figure_idpathways_il5_netpath_diagram.png" alt="image" class="img-responsive short" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Diagram of the IL5 Signaling Pathway.</strong> IL-5 is a glycoprotein which belongs to the cytokine superfamily and plays an important role in the proliferation and differentiation of eosinophils. IL-5 is produced by eosinophils, mast cells, Th2 cells, Tc2 cells and gamma delta T cells. The signaling pathway has been implicated in the pathogenesis of asthma, hypereosinophilic syndromes and eosinophil-dependent inflammatory diseases. <em>Adapted from resources available at <a href="http://www.netpath.org/netslim/IL_5_pathway.html" target="_blank">NetSlim</a> </em>.
 </div>
 
 <p>The pathway depicted in Figure 2 has a corresponding entry in NetPath that contains a listing of the genes and a brief description (Figure 3).</p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_il5_netpath_list.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_il5_netpath_list.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. NetPath entry corresponding to IL-5 Signaling Pathway.</strong> <em>NetPath Accession number: NetPath_17</em>.
 </div>
@@ -147,11 +147,11 @@
 
 <p>To make life easier, GSEA has standardized the acceptable formats for defining gene set candidates and these are collectively known as <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats" target="_blank">‘gene set databases’</a>. These are simple tab-delimited files with the extensions that include <code class="highlighter-rouge">.gmx</code>, <code class="highlighter-rouge">gmt</code> and <code class="highlighter-rouge">.grp</code>. Concretely, let us consider a sample gene set database file developed by <a href="http://www.baderlab.org/" target="_blank">Gary Bader’s laboratory</a> that defines human gene sets gathered from several sources including <a href="http://software.broadinstitute.org/gsea/msigdb/index.jsp" target="_blank">MSigDB</a>; <a href="http://geneontology.org/" target="_blank">Gene Ontology</a>; <a href="http://www.reactome.org/" target="_blank">Reactome</a>; <a href="http://www.pantherdb.org/" target="_blank">Panther</a>; <a href="http://www.netpath.org/" target="_blank">NetPath</a>; <a href="http://www.ndexbio.org/#/user/nci-pid" target="_blank">NCI</a>; and <a href="http://humancyc.org/" target="_blank">HumanCyc</a>. This database file defines a table, one gene set per row: The first column holds the gene set name, the second is a description and the subsequent fields are the names of genes in the set. Figure 4 shows an exceprt of the database, which has an entry for the NetPath IL-5 pathway.</p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_gmt.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_gmt.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Gene set database excerpt</strong>. Gene sets are defined in rows where the first column is the name, the second is a description and gene names within the set occupy the remaining row entries. Highlighted in blue is the NetPath IL-5 signal transduction pathway that includes 59 gene names.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_gmt.png" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="figure_idpathways_gmt.png" target="_blank">Open in new window</a>
   </div>
 </div>
 
@@ -242,7 +242,7 @@
   </tbody>
 </table>
 
-<p><a href="/guide/">Previously</a>, we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each ‘phenotype’:</p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/">Previously</a>, we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each ‘phenotype’:</p>
 
 <ol>
   <li>Report for BrCa enrichment - Pathways that are enriched in BrCa relative to HD</li>
@@ -264,12 +264,12 @@
 
 <p>Launch the GSEA application. You will see the GSEA logo splash then the application itself (Figure 5).</p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_gsea_start.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_gsea_start.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. <code>Steps in GSEA analysis</code>) provides quick access to the most common actions. The main window displays the <code>Home</code> tab by default. Each control panel action typically opens a new tab in the main window.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_gsea_start.png" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="figure_idpathways_gsea_start.png" target="_blank">Open in new window</a>
   </div>
 </div>
 
@@ -279,13 +279,13 @@
 
 <p>This is the output from the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">previous step</a>.</p>
 
-<p><a href="/guide/media/workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></p>
+<p><a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></p>
 
 <h4 id="gene-set-database">Gene set database</h4>
 
 <p>This is the human gene set database culled from various sources, generated by the Bader lab (<code class="highlighter-rouge">Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt</code>).</p>
 
-<p><a href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a></p>
+<p><a href="Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a></p>
 
 <hr />
 
@@ -312,7 +312,7 @@
   <li><code class="highlighter-rouge">Browse for files...</code> then <code class="highlighter-rouge">Choose</code> the gene set database file</li>
 </ol>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_load.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_load.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the <code>Load data</code> button in the control panel <code>Steps in GSEA analysis</code>.
@@ -345,7 +345,7 @@
   </li>
 </ul>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_settings.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_settings.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run GSEA on a Pre-Ranked gene list</code> tab.
@@ -397,7 +397,7 @@
 
 <p>When the GSEA software has completed its analysis, the <code class="highlighter-rouge">Status</code> inside the  <code class="highlighter-rouge">GSEA reports</code> panel will update to <code class="highlighter-rouge">Success ...</code> (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the <code class="highlighter-rouge">index.html</code> file located in the GSEA results directory in a browser.</p>
 
-<p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_index.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_idpathways_index.png" alt="image" class="img-responsive" /></p>
 
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the <code>na_pos</code> phenotype corresponds to the BrCa class and <code>na_neg</code> refers to the HD class.
@@ -411,18 +411,18 @@
 
 <h5 id="enrichment-in-phenotype">Enrichment in phenotype</h5>
 
-<p>There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">Process Data</a> we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the <code class="highlighter-rouge">na_pos</code> phenotype corresponds to the BrCa class and <code class="highlighter-rouge">na_neg</code> refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.</p>
+<p>There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/index">Process Data</a> we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the <code class="highlighter-rouge">na_pos</code> phenotype corresponds to the BrCa class and <code class="highlighter-rouge">na_neg</code> refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.</p>
 
 <ul>
   <li>
     <p><strong>Snapshot of the enrichment results.</strong> Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see <code class="highlighter-rouge">pos_snapshot.html</code> and <code class="highlighter-rouge">neg_snapshot.html</code>. For the <code class="highlighter-rouge">na_pos</code> case, click on the link for <code class="highlighter-rouge">Snapshot of enrichment results</code> to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).</p>
 
-    <p><img src="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_nesplot_il5netpath.png" alt="image" class="img-responsive ht-400" /></p>
+    <p><img src="figure_idpathways_nesplot_il5netpath.png" alt="image" class="img-responsive ht-400" /></p>
 
     <div class="figure-legend well well-lg text-justify">
   <strong>Figure 9. Enrichment plot for NetPath IL-5 signalling pathway.</strong> Shown is a the running sum plot for the IL-5 signal transduction pathway described earlier.
   <div class="text-left">
-    <a type="button" class="btn btn-info" href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/figure_idpathways_nesplot_il5netpath.png" target="_blank">Open in new window</a>
+    <a type="button" class="btn btn-info" href="figure_idpathways_nesplot_il5netpath.png" target="_blank">Open in new window</a>
   </div>
 </div>
   </li>
@@ -514,11 +514,11 @@
 <ol>
   <li>
     <p>Enrichment report for BrCa
-  <a href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_brca.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
+  <a href="gsea_report_for_brca.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
   </li>
   <li>
     <p>Enrichment report for HD
-  <a href="/guide/media/workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_hd.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
+  <a href="gsea_report_for_hd.xls" type="button" class="btn btn-success btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
   </li>
 </ol>
 
@@ -539,8 +539,8 @@
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
     var disqus_config = function () {
-    this.page.url = "http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways";  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "/workflows/rna_seq_to_enrichment_map/identify_pathways"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/rna_seq_to_enrichment_map/identify_pathways/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

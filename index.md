@@ -13,7 +13,7 @@ figures:
 
   - **[Workflows]({{ site.baseurl }}/workflows/archive/)** for step-by-step instruction to pathway analysis of data
   - **[Primers]({{ site.baseurl }}/primers/archive/)** for deep-dives into concepts
-  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** describe real-world use of methods and resources
+  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** describe real-world examples
   {: .lead }
 
 <hr/>

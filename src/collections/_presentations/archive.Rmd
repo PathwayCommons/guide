@@ -3,6 +3,7 @@ title: Presentations
 subtitle: Presentations, Posters, and Media
 layout: panelista
 icon: icons/folder.png
+permalink: /:collection/:path/
 categories:
   - slides
   - posters

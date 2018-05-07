@@ -133,8 +133,6 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
-          <span class="text-danger">-- Development Version</span>
-        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -180,6 +178,11 @@
 
       <!-- we can only handle 1 nesting -->
       
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
         
           <li class="active">Gene Set Enrichment Analysis</li>
         
@@ -199,7 +202,7 @@
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
       <li>
-  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea/&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea/index&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -207,7 +210,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea/"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea/index"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -220,7 +223,7 @@
         <li>
   <a data-toggle="tooltip"
     title="Download PDF"
-    href="/guide/media/primers/functional_analysis/gsea/gsea_subramanian_pnas_v102_43_2005.pdf">
+    href="gsea_subramanian_pnas_v102_43_2005.pdf">
     <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
   </a>
 </li>
@@ -296,7 +299,7 @@
 
 <p>In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a ‘rank metric’. Previously, we described how to obtain and process RNA-seq datasets into a single list of genes ordered according to a function of each gene’s p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 1).</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_local.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_gsea_local.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> A pairwise comparison of gene expression for m total samples is depicted. RNA levels for each of n genes is determined. Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic denoted the GSEA rank metric (s). A gene list (L) is ordered according to rank.
 </div>
@@ -315,7 +318,7 @@
 
 <p>Let’s pick up the process following Figure 1 where we have a list of ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway (Figure 2).</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_global.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_gsea_global.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the maximum value of the sum at any point in the list. Although not shown, the running sum may deviate in the negative direction, hence, S is actually the largest absolute value of the running sum.
 </div>
@@ -385,7 +388,7 @@
 
 <p>Rather than plotting a single running sum (Figure 2) we can plot its constituent <script type="math/tex">\hat{F}_n^{G_k}(x)</script> and <script type="math/tex">\hat{F}_n^{\bar{G}_k}(x)</script> on the same axes, such as in Figure 3.</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_ks.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_gsea_ks.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Empirical cumulative distribution functions.</strong> (Above) A hypothetical ordered gene list where each line represents a gene in the gene set (red) or not (blue). (Below) Empirical cumulative distribution functions for the genes in the gene set (red) and those outside the gene set (blue). The maximum deviation between ecdfs is the dotted green line.
 </div>
@@ -503,7 +506,7 @@
 
 <p>GSEA employs ‘resampling’ or ‘bootstrap’ methods to derive an empirical sample of the null distribution for the enrichment scores of each gene set. The GSEA software provides a choice of two flavours of permutation methods that underlie the null distribution calculations (Figure 4).</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_null.jpg" alt="image" class="img-responsive" /></p>
+<p><img src="figure_gsea_null.jpg" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. GSEA uses permutation methods to generate null distributions for each gene set.</strong> For the sake of brevity, we depict a schematic of permutation methods for a single gene set. In GSEA, this process is repeated separately for each gene set. <strong>A. </strong>Phenotype permutation. <strong>B.</strong> Gene set permutation. <strong>C.</strong> Calculation of p-values.
 </div>
@@ -542,7 +545,7 @@
 
 <p>Note that throughout this discussion we have chosen to depict the GSEA global statistic as positive deviations of the running sum (Figure 2). Of course, there is no particular reason why the deviations could not be negative. Indeed a more accurate description of the results of permutation would see a bimodal distribution representing global statistics that lie above and below zero (Figure 5). Thus, it is more accurate to say that the p-values are calculated from the positive or negative region of the empirical null distribution.</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_bimodalnull.png" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_gsea_bimodalnull.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 5. Null distributions.</strong> Permutation methods will result in enrichment scores that lie both above and below zero resulting in a bimodal distribution. In practice, p-values for negative enrichment scores (green) and positive ones (red) are calculated using only the region of the null distribution less than and greater than zero, respectively.
 </div>
@@ -559,7 +562,7 @@
 
 <p>In general, given a specified threshold <script type="math/tex">T</script> of the global statistic, the FDR is the number of true null hypotheses larger than <script type="math/tex">T</script> divided by the sum of true and false null hypotheses larger than <script type="math/tex">T</script>. For GSEA, <script type="math/tex">T</script> would be some value of the enrichment score and a true null hypothesis would represent a gene set that is in fact not enriched. In practice, we won’t directly observe the latter so it is estimated from the values of the empirical null that exceed <script type="math/tex">T</script> (Figure 6).</p>
 
-<p><img src="/guide/media/primers/functional_analysis/gsea/figure_gsea_fdr.png" alt="image" class="img-responsive" /></p>
+<p><img src="figure_gsea_fdr.png" alt="image" class="img-responsive" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 6. Empirical false discovery rate.</strong>. <strong>A.</strong> The distribution of observed statistics and null distribution derived by permutation methods. T represents the threshold. <strong>B.</strong> Enlarged view of right-hand distribution tail in A. The number of null distribution values beyond the threshold is used to estimate the true null hypotheses. The fraction of erroneous rejections is estimated as the ratio of s_null (red) to s_obs (blue) and a correction is introduced when the number of data points are unequal.
 </div>
@@ -645,8 +648,8 @@
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
     var disqus_config = function () {
-    this.page.url = "http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea";  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "/primers/functional_analysis/gsea"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/functional_analysis/gsea/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/functional_analysis/gsea/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

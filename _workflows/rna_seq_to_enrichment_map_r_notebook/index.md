@@ -1,21 +1,15 @@
 ---
 title: "RNA-Seq to Enrichment Map - R Notebook"
 author: "jvwong"
-date: '2017-08-01'
-output:
-  html_document:
-    toc: true
-    toc_depth: 2
+date: 2017-08-01
 category: Pathway Enrichment Analysis
 layout: document
 cover: cover.png
-draft: FALSE
 download: rna_seq_to_enrichment_map_r_notebook.zip
 splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
 subtitle: Process platelet RNA-Seq data, identify altered pathways then visualize
   using Enrichment Map
 badges: R Notebook
-permalink: /:collection/:path./:output_ext
 ---
 
 
@@ -39,7 +33,7 @@ permalink: /:collection/:path./:output_ext
   <ul><li>Install software and package dependencies</li></ul>
 </div>
 
-This R Notebook documents a comparison mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA-Seq count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) then visualized as a [Cytoscape](http://www.cytoscape.org/) [Enrichment Map](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984).
+This R Notebook documents a comparison of mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA sequencing count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp) then visualized as a [Cytoscape](http://www.cytoscape.org/) [Enrichment Map](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984).
 
 
 ### Software requirements
@@ -187,7 +181,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
 
 {% highlight r %}
   library("SummarizedExperiment")
-  
+
   #' Merge a set of files representing RNA sequencing gene counts
   #'
   #' 1. Default parameter is do nothing (already matching gene set ids)
@@ -291,7 +285,7 @@ We offload the above work onto an R function `merge_data` and its helpers that p
       colClasses = c("character", "factor"),
       sep = "\t", header=TRUE)
 
-    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')    
+    if(!all.equal(colnames(meta), c("id", "class"))) stop('check column headers')
 
     return(meta)
   }
@@ -419,7 +413,7 @@ The result of the merge is a `SummarizedExperiment` object named `brca_hd_tep_se
 ## dim: 35554 10 
 ## metadata(0):
 ## assays(1): counts
-## rownames(35554): RNU4-59P SNORD114-2 ... RNA5SP406 RN7SL285P
+## rownames(35554): TSPAN6 TNMD ... OR8S21P OR6R2P
 ## rowData names(1): ensembl_gene_id
 ## colnames(10): MGH-BrCa-H-74_htsqct MGH-BrCa-H-68_htsqct ...
 ##   HD-2-1_htsqct HD-1_htsqct
@@ -460,14 +454,14 @@ Similarly, we can peek at an excerpt of the row metadata (i.e. [GenomicRanges](h
 
 
 
-|           |seqnames |     start|       end| width|strand |ensembl_gene_id |
-|:----------|:--------|---------:|---------:|-----:|:------|:---------------|
-|RNU4-59P   |chr1     |  92700819|  92700934|   116|-      |ENSG00000201317 |
-|SNORD114-2 |chr14    | 100951856| 100951933|    78|+      |ENSG00000200823 |
-|MIR1249    |chr22    |  45200954|  45201019|    66|-      |ENSG00000221598 |
-|RNA5SP48   |chr1     |  51973410|  51973535|   126|+      |ENSG00000200839 |
-|MIR1468    |chrX     |  63786002|  63786087|    86|-      |ENSG00000222532 |
-|RNU6-1019P |chr20    |   3360036|   3360142|   107|+      |ENSG00000201294 |
+|         |seqnames |     start|       end|  width|strand |ensembl_gene_id |
+|:--------|:--------|---------:|---------:|------:|:------|:---------------|
+|TSPAN6   |chrX     | 100627109| 100639991|  12883|-      |ENSG00000000003 |
+|TNMD     |chrX     | 100584802| 100599885|  15084|+      |ENSG00000000005 |
+|DPM1     |chr20    |  50934867|  50958555|  23689|-      |ENSG00000000419 |
+|SCYL3    |chr1     | 169849631| 169894267|  44637|-      |ENSG00000000457 |
+|C1orf112 |chr1     | 169662007| 169854080| 192074|+      |ENSG00000000460 |
+|FGR      |chr1     |  27612064|  27635277|  23214|-      |ENSG00000000938 |
 
 
 {% highlight r %}
@@ -491,14 +485,14 @@ Finally, we can peek at the assay data using the `SummarizedExperiment::assay` f
 
 
 
-|           | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| HD-5_htsqct| HD-4_htsqct|
-|:----------|--------------------:|--------------------:|-----------:|-----------:|
-|RNU4-59P   |                    0|                    0|           0|           0|
-|SNORD114-2 |                    0|                    0|           0|           0|
-|MIR1249    |                    0|                    0|           0|           0|
-|RNA5SP48   |                    0|                    0|           0|           0|
-|MIR1468    |                    0|                    0|           0|           0|
-|RNU6-1019P |                    0|                    0|           0|           0|
+|         | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| HD-5_htsqct| HD-4_htsqct|
+|:--------|--------------------:|--------------------:|-----------:|-----------:|
+|TSPAN6   |                    1|                    0|           0|           0|
+|TNMD     |                    0|                    0|           0|           0|
+|DPM1     |                    2|                   11|           2|          25|
+|SCYL3    |                    4|                    5|           4|          30|
+|C1orf112 |                   19|                    6|          23|           2|
+|FGR      |                   65|                   65|          26|          38|
 
 ## <a href="#differentialExpressionTesting" name="differentialExpressionTesting">D. Differential Expression Testing</a>
 
@@ -571,14 +565,14 @@ With this in mind, let's take a look at the 'counts' component.
 
 
 
-|        | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| MGH-BrCa-H-11_htsqct| HD-5_htsqct|
-|:-------|--------------------:|--------------------:|--------------------:|-----------:|
-|APPL2   |                   11|                   40|                   30|           3|
-|WASHC4  |                   70|                   79|                  101|          19|
-|FDPS    |                    8|                   16|                   19|          35|
-|SRSF9   |                   35|                   59|                  131|           6|
-|DNTTIP2 |                   20|                   21|                   29|          14|
-|ELOA    |                   12|                    8|                   13|           9|
+|         | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| MGH-BrCa-H-11_htsqct| HD-5_htsqct|
+|:--------|--------------------:|--------------------:|--------------------:|-----------:|
+|DPM1     |                    2|                   11|                   21|           2|
+|C1orf112 |                   19|                    6|                   38|          23|
+|FGR      |                   65|                   65|                   68|          26|
+|FUCA2    |                   35|                   26|                   33|          22|
+|NIPAL3   |                    8|                   13|                   32|          30|
+|LAS1L    |                    3|                    6|                   41|           1|
 
 Similarly, we can peek inside the 'samples' component.
 
@@ -667,14 +661,14 @@ We should have a file `brca_hd_tep_tmm_normalized_expression.txt` containing the
 
 
 
-|NAME    |DESCRIPTION | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| HD-5_htsqct| HD-4_htsqct|
-|:-------|:-----------|--------------------:|--------------------:|-----------:|-----------:|
-|APPL2   |APPL2       |            12.825676|             29.89930|    3.809848|    10.20086|
-|WASHC4  |WASHC4      |            81.617939|             59.05112|   24.129036|   110.16931|
-|FDPS    |FDPS        |             9.327765|             11.95972|   44.448224|    24.48207|
-|SRSF9   |SRSF9       |            40.808970|             44.10147|    7.619695|     0.00000|
-|DNTTIP2 |DNTTIP2     |            23.319411|             15.69713|   17.779290|    14.28121|
-|ELOA    |ELOA        |            13.991647|              5.97986|   11.429543|     0.00000|
+|NAME     |DESCRIPTION | MGH-BrCa-H-74_htsqct| MGH-BrCa-H-68_htsqct| HD-5_htsqct| HD-4_htsqct|
+|:--------|:-----------|--------------------:|--------------------:|-----------:|-----------:|
+|DPM1     |DPM1        |             2.331941|             8.222307|    2.539899|   25.502155|
+|C1orf112 |C1orf112    |            22.153441|             4.484895|   29.208833|    2.040172|
+|FGR      |FGR         |            75.788087|            48.586361|   33.018681|   38.763276|
+|FUCA2    |FUCA2       |            40.808970|            19.434544|   27.938883|   14.281207|
+|NIPAL3   |NIPAL3      |             9.327765|             9.717272|   38.098478|    6.120517|
+|LAS1L    |LAS1L       |             3.497912|             4.484895|    1.269949|    9.180776|
 
 ### Differential expression testing
 
@@ -988,9 +982,9 @@ We're ready to declare our options for the Enrichment Map Cytoscape app.
                     sep=" ")
   current_network_suid <- 0
   if( isTRUE ( doEnrichment) ){
-    current_network_suid <- r2cytoscape::commandRun(em_command)    
+    current_network_suid <- r2cytoscape::commandRun(em_command)
     response <- r2cytoscape::renameNetwork(em_network_name, network = current_network_suid)
-  }  
+  }
 {% endhighlight %}
 
 Let's take a peek at the Enrichment Map.
@@ -1000,7 +994,7 @@ Let's take a peek at the Enrichment Map.
   em_fname <- "em_output.png"
   em_output <- file.path(output_dir, em_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  
+
   ### Pause for Cytoscape to render
   if( isTRUE ( doEnrichment) ){
     response <- httr::GET(url=url_png)
@@ -1009,17 +1003,17 @@ Let's take a peek at the Enrichment Map.
 {% endhighlight %}
 ![Enrichment Map](output/em_output.png)
 
-Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets. 
+Often times, the complexity of an Enrichment Map can be reduced even further: Clusters of gene sets can be collapsed and annotated with a representative label gleaned from the characteristics of the individual gene sets.
 
 
 {% highlight r %}
   ### Auto-Annotate the Enrichment Map
   aa_command = paste("autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network=", em_network_name, sep=" ")
-  
+
   ### Enrichment Map command will return the suid of newly created network.
   if( isTRUE ( doEnrichment) ){
     response <- r2cytoscape::commandRun(aa_command)
-  }  
+  }
 {% endhighlight %}
 
 Finally, let's get a view of our annotated Enrichment Map.
@@ -1029,7 +1023,7 @@ Finally, let's get a view of our annotated Enrichment Map.
   em_aa_fname <- "em_output_aa.png"
   em_output_aa <- file.path(output_dir, em_aa_fname)
   url_png <- paste(base.url, "networks", current_network_suid, "views/first.png", sep="/")
-  
+
   ### Pause for Cytoscape to render
   if( isTRUE ( doEnrichment) ){
     Sys.sleep(30)

@@ -133,8 +133,6 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
-          <span class="text-danger">-- Development Version</span>
-        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -180,6 +178,11 @@
 
       <!-- we can only handle 1 nesting -->
       
+    
+      
+
+      <!-- we can only handle 1 nesting -->
+      
         
           <li class="active">Multiple Testing</li>
         
@@ -199,7 +202,7 @@
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
       <li>
-  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -207,7 +210,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -261,9 +264,9 @@
 
 <p>Let us pause to more deeply consider our hypothesis testing strategy. We have no notion of how many heads an unfair coin might generate. Thus, rather than trying to ascertain the unknown distribution of heads for some unfair nickel, we stick to what we do know: The <a href="/guide/primers/statistics/definitions/#distributionFunction">probability distribution</a> under the null hypothesis for a fair nickel. We then take our experimental results and compare them to this null hypothesis distribution and look for discrepancies.</p>
 
-<p>Conveniently, we can use the <a href="/guide/primers/statistics/distributions/">binomial distribution</a> to model the exact probability of observing any possible number of heads (0 to 20) in a single test where 20 fair nickels are flipped (Figure 1).</p>
+<p>Conveniently, we can use the <a href="/guide/primers/statistics/distributions/#binomial">binomial distribution</a> to model the exact probability of observing any possible number of heads (0 to 20) in a single test where 20 fair nickels are flipped (Figure 1).</p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" height="500" style="display: block; margin: auto;" /></p>
+<p><img src="/guide/public/R/primers/statistics/multiple_testing/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" height="500" style="display: block; margin: auto;" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
 </div>
@@ -288,7 +291,7 @@
 
 <p>Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.</p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" /></p>
+<p><img src="/guide/public/R/primers/statistics/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
 </div>
@@ -298,15 +301,9 @@
 
 <h3 id="example-2-pathway-analyses">Example 2: Pathway analyses</h3>
 
-<blockquote>
-  <p>This section could be better and include more direct examples from biology. For example, binding site motifs as described by William Noble 2009 v27 No.12 Nature Biotechnology pp1135.</p>
-</blockquote>
+<p>Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we provide a <a href="/guide/primers/functional_analysis/gsea/">primer on Gene Set Enrichment Analysis</a>.</p>
 
-<p>Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we detail the use of <a href="/guide/tools/archive/g-profiler">g:Profiler</a> and <a href="/guide/tools/archive/gene-set-enrichment-analysis">Gene Set Enrichment Analysis</a>.</p>
-
-<p>In <a href="http://biit.cs.ut.ee/gprofiler/">g:Profiler</a>, the g:GOSt tool uses <a href="/guide/primers/statistics/fishers_exact_test/">Fisher’s exact test</a> as the p-value measuring the randomness of the occurred intersection between an input gene list of interest and a previously defined set of related genes, for example, those associated with a <a href="http://geneontology.org/">Gene Ontology</a> term. Every analysis of a gene list in g:GOSt involves a series of comparisons, as the intersection and corresponding p-value is calculated for a large number of terms from GO, KEGG, TRANSFAC, and other data sources. g:GOSt uses multiple algorithms (see Bonferroni correction and Benjamini-Hochberg False Discovery rate below) for adjusting significance.</p>
-
-<p>Likewise, <a href="http://software.broadinstitute.org/gsea/">Gene Set Enrichment Analysis</a> derives p-values associated with an <a href="//TODO">enrichment score</a> which reflects the degree to which a gene set is overrepresented at the top or bottom of a ranked list of genes. The nominal p-value estimates the statistical significance of the enrichment score for a single gene set. However, evaluating multiple gene sets requires correction for gene set size and multiple testing. Significance levels are adjusted using a similar algorithm available in g:Profiler (see Benjamini-Hochberg False Discovery rate below).</p>
+<p><a href="http://software.broadinstitute.org/gsea/">Gene Set Enrichment Analysis</a> derives p-values associated with an enrichment score which reflects the degree to which a gene set is overrepresented at the top or bottom of a ranked list of genes. The nominal p-value estimates the statistical significance of the enrichment score for a single gene set. However, evaluating multiple gene sets requires correction for gene set size and multiple testing.</p>
 
 <h3 id="when-does-multiple-testing-apply">When does multiple testing apply?</h3>
 
@@ -367,7 +364,7 @@
 
 <p><strong>Table 1. Multiple hypothesis testing summary</strong></p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/table_1.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="table_1.jpg" alt="image" class="img-responsive slim" /></p>
 
 <p>Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant (<script type="math/tex">V</script>). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.</p>
 
@@ -428,7 +425,7 @@
 
 <p>Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant (<script type="math/tex">R</script>) with the true (<script type="math/tex">m_0</script>) and false (<script type="math/tex">m_1=m-m_0</script>) null hypotheses.</p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/figure_3.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_3.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and false (m1=m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
 </div>
@@ -614,7 +611,7 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
 
 <p><strong>Table 2. Example BH calculations</strong></p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/table_2.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="table_2.jpg" alt="image" class="img-responsive slim" /></p>
 
 <p>In this case, we examine the final column for the largest case in which <script type="math/tex">p_i \leq \frac{i}{100}\cdot0.05</script> which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our <script type="math/tex">q=0.05</script> we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.</p>
 
@@ -857,7 +854,7 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
 
 <p>The next part of the proof relies on a description of p-values and indices but is often described in a very compact fashion. Keeping track of everything can outstrip intuition, so we pause to reflect on a schematic of the ordered false null hypothesis p-values and relevant indices (Figure 4).</p>
 
-<p><img src="/guide/media/primers/statistics/multiple_testing/figure_bh_indices.jpg" alt="image" class="img-responsive slim" /></p>
+<p><img src="figure_bh_indices.jpg" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
   <strong>Figure 4. Schematic of p-values and indices.</strong> Shown are the p-values ordered in ascending value from left to right corresponding to the false null hypotheses (z). Indices j0 and m1 for true null hypotheses are as described in main text. Blue segment represents region where z' can lie. Green demarcates regions larger than z' where p-values corresponding to hypotheses (true or false) that will not be rejected lie.
 </div>
@@ -978,8 +975,8 @@ m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
     var disqus_config = function () {
-    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing";  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "/primers/statistics/multiple_testing"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/statistics/multiple_testing/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

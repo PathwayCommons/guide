@@ -133,8 +133,6 @@
       <small>
         <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
         
-          <span class="text-danger">-- Development Version</span>
-        
       </small>
       <span class="pull-right">
         <small class="contact">
@@ -199,7 +197,7 @@
     <div class="linkout clearfix">
       <ul class="list-inline pull-right">
       <li>
-  <a href="http://twitter.com/intent/tweet?text=Process platelet RNA-Seq data, identify altered pathways then visualize ...+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map_r_notebook/index.html&via=pathwaycommons"
+  <a href="http://twitter.com/intent/tweet?text=Process platelet RNA-Seq data, identify altered pathways then visualize ...+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map_r_notebook/index&via=pathwaycommons"
   data-toggle="tooltip"
   title="Tweet this page"
   target="_blank" >
@@ -207,7 +205,7 @@
   </a>
 </li>
 <li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map_r_notebook/index.html"
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map_r_notebook/index"
   data-toggle="tooltip"
   title="Share on Google+"
   target="_blank" >
@@ -220,7 +218,7 @@
         <li>
   <a data-toggle="tooltip"
     title="Download"
-    href="/guide/media/workflows/rna_seq_to_enrichment_map_r_notebook/index/rna_seq_to_enrichment_map_r_notebook.zip">
+    href="rna_seq_to_enrichment_map_r_notebook.zip">
     <i class="fa fa-download fa-2x" aria-hidden="true"></i>
   </a>
 </li>
@@ -251,7 +249,7 @@
   <ul><li>Install software and package dependencies</li></ul>
 </div>
 
-<p>This R Notebook documents a comparison mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA-Seq count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using <a href="http://software.broadinstitute.org/gsea/index.jsp">Gene Set Enrichment Analysis (GSEA)</a> then visualized as a <a href="http://www.cytoscape.org/">Cytoscape</a> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Enrichment Map</a>.</p>
+<p>This R Notebook documents a comparison of mRNA levels between two conditions and uses this information to identify and then visualize pathway-level differences. In particular, you will use convert RNA sequencing count data into a single ranked list where genes are ordered according to their differential expression. Enriched pathways from this list are distilled using <a href="http://software.broadinstitute.org/gsea/index.jsp">Gene Set Enrichment Analysis (GSEA)</a> then visualized as a <a href="http://www.cytoscape.org/">Cytoscape</a> <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0013984">Enrichment Map</a>.</p>
 
 <h3 id="software-requirements">Software requirements</h3>
 
@@ -461,7 +459,7 @@
 <p>We offload the above work onto an R function <code class="highlighter-rouge">merge_data</code> and its helpers that perform the required ID-mapping and data merging and returns a single <code class="highlighter-rouge">SummarizedExperiment</code> instance.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">library</span><span class="p">(</span><span class="s2">"SummarizedExperiment"</span><span class="p">)</span><span class="w">
-  
+
   </span><span class="cd">#' Merge a set of files representing RNA sequencing gene counts</span><span class="w">
   </span><span class="cd">#'</span><span class="w">
   </span><span class="cd">#' 1. Default parameter is do nothing (already matching gene set ids)</span><span class="w">
@@ -565,7 +563,7 @@
       </span><span class="n">colClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"factor"</span><span class="p">),</span><span class="w">
       </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 
-    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span><span class="w">    
+    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">all.equal</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">meta</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)))</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s1">'check column headers'</span><span class="p">)</span><span class="w">
 
     </span><span class="nf">return</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -684,7 +682,7 @@
 ## dim: 35554 10 
 ## metadata(0):
 ## assays(1): counts
-## rownames(35554): RNU4-59P SNORD114-2 ... RNA5SP406 RN7SL285P
+## rownames(35554): TSPAN6 TNMD ... OR8S21P OR6R2P
 ## rowData names(1): ensembl_gene_id
 ## colnames(10): MGH-BrCa-H-74_htsqct MGH-BrCa-H-68_htsqct ...
 ##   HD-2-1_htsqct HD-1_htsqct
@@ -766,58 +764,58 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">RNU4-59P</td>
-      <td style="text-align: left">chr1</td>
-      <td style="text-align: right">92700819</td>
-      <td style="text-align: right">92700934</td>
-      <td style="text-align: right">116</td>
-      <td style="text-align: left">-</td>
-      <td style="text-align: left">ENSG00000201317</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SNORD114-2</td>
-      <td style="text-align: left">chr14</td>
-      <td style="text-align: right">100951856</td>
-      <td style="text-align: right">100951933</td>
-      <td style="text-align: right">78</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000200823</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR1249</td>
-      <td style="text-align: left">chr22</td>
-      <td style="text-align: right">45200954</td>
-      <td style="text-align: right">45201019</td>
-      <td style="text-align: right">66</td>
-      <td style="text-align: left">-</td>
-      <td style="text-align: left">ENSG00000221598</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNA5SP48</td>
-      <td style="text-align: left">chr1</td>
-      <td style="text-align: right">51973410</td>
-      <td style="text-align: right">51973535</td>
-      <td style="text-align: right">126</td>
-      <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000200839</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">MIR1468</td>
+      <td style="text-align: left">TSPAN6</td>
       <td style="text-align: left">chrX</td>
-      <td style="text-align: right">63786002</td>
-      <td style="text-align: right">63786087</td>
-      <td style="text-align: right">86</td>
+      <td style="text-align: right">100627109</td>
+      <td style="text-align: right">100639991</td>
+      <td style="text-align: right">12883</td>
       <td style="text-align: left">-</td>
-      <td style="text-align: left">ENSG00000222532</td>
+      <td style="text-align: left">ENSG00000000003</td>
     </tr>
     <tr>
-      <td style="text-align: left">RNU6-1019P</td>
-      <td style="text-align: left">chr20</td>
-      <td style="text-align: right">3360036</td>
-      <td style="text-align: right">3360142</td>
-      <td style="text-align: right">107</td>
+      <td style="text-align: left">TNMD</td>
+      <td style="text-align: left">chrX</td>
+      <td style="text-align: right">100584802</td>
+      <td style="text-align: right">100599885</td>
+      <td style="text-align: right">15084</td>
       <td style="text-align: left">+</td>
-      <td style="text-align: left">ENSG00000201294</td>
+      <td style="text-align: left">ENSG00000000005</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DPM1</td>
+      <td style="text-align: left">chr20</td>
+      <td style="text-align: right">50934867</td>
+      <td style="text-align: right">50958555</td>
+      <td style="text-align: right">23689</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left">ENSG00000000419</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SCYL3</td>
+      <td style="text-align: left">chr1</td>
+      <td style="text-align: right">169849631</td>
+      <td style="text-align: right">169894267</td>
+      <td style="text-align: right">44637</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left">ENSG00000000457</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">C1orf112</td>
+      <td style="text-align: left">chr1</td>
+      <td style="text-align: right">169662007</td>
+      <td style="text-align: right">169854080</td>
+      <td style="text-align: right">192074</td>
+      <td style="text-align: left">+</td>
+      <td style="text-align: left">ENSG00000000460</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FGR</td>
+      <td style="text-align: left">chr1</td>
+      <td style="text-align: right">27612064</td>
+      <td style="text-align: right">27635277</td>
+      <td style="text-align: right">23214</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left">ENSG00000000938</td>
     </tr>
   </tbody>
 </table>
@@ -844,46 +842,46 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">RNU4-59P</td>
+      <td style="text-align: left">TSPAN6</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TNMD</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
     </tr>
     <tr>
-      <td style="text-align: left">SNORD114-2</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
+      <td style="text-align: left">DPM1</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">11</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">25</td>
     </tr>
     <tr>
-      <td style="text-align: left">MIR1249</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
+      <td style="text-align: left">SCYL3</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">30</td>
     </tr>
     <tr>
-      <td style="text-align: left">RNA5SP48</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
+      <td style="text-align: left">C1orf112</td>
+      <td style="text-align: right">19</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">23</td>
+      <td style="text-align: right">2</td>
     </tr>
     <tr>
-      <td style="text-align: left">MIR1468</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">RNU6-1019P</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
+      <td style="text-align: left">FGR</td>
+      <td style="text-align: right">65</td>
+      <td style="text-align: right">65</td>
+      <td style="text-align: right">26</td>
+      <td style="text-align: right">38</td>
     </tr>
   </tbody>
 </table>
@@ -964,46 +962,46 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">APPL2</td>
+      <td style="text-align: left">DPM1</td>
+      <td style="text-align: right">2</td>
       <td style="text-align: right">11</td>
-      <td style="text-align: right">40</td>
-      <td style="text-align: right">30</td>
-      <td style="text-align: right">3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">WASHC4</td>
-      <td style="text-align: right">70</td>
-      <td style="text-align: right">79</td>
-      <td style="text-align: right">101</td>
-      <td style="text-align: right">19</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">FDPS</td>
-      <td style="text-align: right">8</td>
-      <td style="text-align: right">16</td>
-      <td style="text-align: right">19</td>
-      <td style="text-align: right">35</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SRSF9</td>
-      <td style="text-align: right">35</td>
-      <td style="text-align: right">59</td>
-      <td style="text-align: right">131</td>
-      <td style="text-align: right">6</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">DNTTIP2</td>
-      <td style="text-align: right">20</td>
       <td style="text-align: right">21</td>
-      <td style="text-align: right">29</td>
-      <td style="text-align: right">14</td>
+      <td style="text-align: right">2</td>
     </tr>
     <tr>
-      <td style="text-align: left">ELOA</td>
-      <td style="text-align: right">12</td>
+      <td style="text-align: left">C1orf112</td>
+      <td style="text-align: right">19</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">38</td>
+      <td style="text-align: right">23</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FGR</td>
+      <td style="text-align: right">65</td>
+      <td style="text-align: right">65</td>
+      <td style="text-align: right">68</td>
+      <td style="text-align: right">26</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FUCA2</td>
+      <td style="text-align: right">35</td>
+      <td style="text-align: right">26</td>
+      <td style="text-align: right">33</td>
+      <td style="text-align: right">22</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">NIPAL3</td>
       <td style="text-align: right">8</td>
       <td style="text-align: right">13</td>
-      <td style="text-align: right">9</td>
+      <td style="text-align: right">32</td>
+      <td style="text-align: right">30</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LAS1L</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">41</td>
+      <td style="text-align: right">1</td>
     </tr>
   </tbody>
 </table>
@@ -1210,52 +1208,52 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">APPL2</td>
-      <td style="text-align: left">APPL2</td>
-      <td style="text-align: right">12.825676</td>
-      <td style="text-align: right">29.89930</td>
-      <td style="text-align: right">3.809848</td>
-      <td style="text-align: right">10.20086</td>
+      <td style="text-align: left">DPM1</td>
+      <td style="text-align: left">DPM1</td>
+      <td style="text-align: right">2.331941</td>
+      <td style="text-align: right">8.222307</td>
+      <td style="text-align: right">2.539899</td>
+      <td style="text-align: right">25.502155</td>
     </tr>
     <tr>
-      <td style="text-align: left">WASHC4</td>
-      <td style="text-align: left">WASHC4</td>
-      <td style="text-align: right">81.617939</td>
-      <td style="text-align: right">59.05112</td>
-      <td style="text-align: right">24.129036</td>
-      <td style="text-align: right">110.16931</td>
+      <td style="text-align: left">C1orf112</td>
+      <td style="text-align: left">C1orf112</td>
+      <td style="text-align: right">22.153441</td>
+      <td style="text-align: right">4.484895</td>
+      <td style="text-align: right">29.208833</td>
+      <td style="text-align: right">2.040172</td>
     </tr>
     <tr>
-      <td style="text-align: left">FDPS</td>
-      <td style="text-align: left">FDPS</td>
-      <td style="text-align: right">9.327765</td>
-      <td style="text-align: right">11.95972</td>
-      <td style="text-align: right">44.448224</td>
-      <td style="text-align: right">24.48207</td>
+      <td style="text-align: left">FGR</td>
+      <td style="text-align: left">FGR</td>
+      <td style="text-align: right">75.788087</td>
+      <td style="text-align: right">48.586361</td>
+      <td style="text-align: right">33.018681</td>
+      <td style="text-align: right">38.763276</td>
     </tr>
     <tr>
-      <td style="text-align: left">SRSF9</td>
-      <td style="text-align: left">SRSF9</td>
+      <td style="text-align: left">FUCA2</td>
+      <td style="text-align: left">FUCA2</td>
       <td style="text-align: right">40.808970</td>
-      <td style="text-align: right">44.10147</td>
-      <td style="text-align: right">7.619695</td>
-      <td style="text-align: right">0.00000</td>
+      <td style="text-align: right">19.434544</td>
+      <td style="text-align: right">27.938883</td>
+      <td style="text-align: right">14.281207</td>
     </tr>
     <tr>
-      <td style="text-align: left">DNTTIP2</td>
-      <td style="text-align: left">DNTTIP2</td>
-      <td style="text-align: right">23.319411</td>
-      <td style="text-align: right">15.69713</td>
-      <td style="text-align: right">17.779290</td>
-      <td style="text-align: right">14.28121</td>
+      <td style="text-align: left">NIPAL3</td>
+      <td style="text-align: left">NIPAL3</td>
+      <td style="text-align: right">9.327765</td>
+      <td style="text-align: right">9.717272</td>
+      <td style="text-align: right">38.098478</td>
+      <td style="text-align: right">6.120517</td>
     </tr>
     <tr>
-      <td style="text-align: left">ELOA</td>
-      <td style="text-align: left">ELOA</td>
-      <td style="text-align: right">13.991647</td>
-      <td style="text-align: right">5.97986</td>
-      <td style="text-align: right">11.429543</td>
-      <td style="text-align: right">0.00000</td>
+      <td style="text-align: left">LAS1L</td>
+      <td style="text-align: left">LAS1L</td>
+      <td style="text-align: right">3.497912</td>
+      <td style="text-align: right">4.484895</td>
+      <td style="text-align: right">1.269949</td>
+      <td style="text-align: right">9.180776</td>
     </tr>
   </tbody>
 </table>
@@ -1660,16 +1658,16 @@
                     </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
   </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
-    </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">    
+    </span><span class="n">current_network_suid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">em_command</span><span class="p">)</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">renameNetwork</span><span class="p">(</span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">)</span><span class="w">
-  </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
+  </span><span class="p">}</span></code></pre></figure>
 
 <p>Let’s take a peek at the Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output.png"</span><span class="w">
   </span><span class="n">em_output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
-  
+
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_png</span><span class="p">)</span><span class="w">
@@ -1682,18 +1680,18 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="c1">### Auto-Annotate the Enrichment Map</span><span class="w">
   </span><span class="n">aa_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"autoannotate annotate-clusterBoosted clusterAlgorithm=MCL maxWords=3 network="</span><span class="p">,</span><span class="w"> </span><span class="n">em_network_name</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
-  
+
   </span><span class="c1">### Enrichment Map command will return the suid of newly created network.</span><span class="w">
   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="m">2</span><span class="n">cytoscape</span><span class="o">::</span><span class="n">commandRun</span><span class="p">(</span><span class="n">aa_command</span><span class="p">)</span><span class="w">
-  </span><span class="p">}</span><span class="w">  </span></code></pre></figure>
+  </span><span class="p">}</span></code></pre></figure>
 
 <p>Finally, let’s get a view of our annotated Enrichment Map.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="w">  </span><span class="n">em_aa_fname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"em_output_aa.png"</span><span class="w">
   </span><span class="n">em_output_aa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="w"> </span><span class="n">em_aa_fname</span><span class="p">)</span><span class="w">
   </span><span class="n">url_png</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">base.url</span><span class="p">,</span><span class="w"> </span><span class="s2">"networks"</span><span class="p">,</span><span class="w"> </span><span class="n">current_network_suid</span><span class="p">,</span><span class="w"> </span><span class="s2">"views/first.png"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w">
-  
+
   </span><span class="c1">### Pause for Cytoscape to render</span><span class="w">
   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">isTRUE</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">doEnrichment</span><span class="p">)</span><span class="w"> </span><span class="p">){</span><span class="w">
     </span><span class="n">Sys.sleep</span><span class="p">(</span><span class="m">30</span><span class="p">)</span><span class="w">

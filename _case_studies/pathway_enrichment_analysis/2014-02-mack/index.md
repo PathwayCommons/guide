@@ -1,0 +1,69 @@
+---
+title: Dark Matter
+subtitle: In brain tumors, pathway analysis links epigenetic alterations to pathways targeted by chemotherapy in  hematopoietic malignancies
+reference: Mack <em>et al.</em> Nature (2014)
+figure: mack_figure.jpg
+badge: pathway enrichment
+cover: cover.jpg
+pdf:
+date: 2014-02-27
+layout: document
+category: Pathway_Enrichment_Analysis
+reflist:
+  - 13172380
+  - 23539594
+  - 21840481
+  - 24553142
+  - 16630818
+  - 18443585
+---
+
+## Quick Summary
+* Ependymoma brain cancers have poor outcome and are refractory to chemotherapy
+* Authors identified patterns of elevated promoter methylation in an ependymoma subtype
+* Pathway analysis linked methylation targets to Polycomb complex (PRC) pathways
+* Chemotherapy targeting PRC represents rational approach to treatment of ependymomas
+
+## Author Profile
+SC Mack and MD Taylor are in the Division of Neurosurgery at the University of Toronto. H Witt is in the Department of Pediatric Oncology, Hematology and Immunology at the University of Heidelberg, Germany.
+
+## Context
+Epidemiological studies in the 1950s fed speculation that cancer was a product of a handful of cellular alterations that accumulated over one’s lifetime (Armitage 1954). Recent technological advances have enabled the comprehensive characterization of genomes. A major roadblock in tumor genome characterization is broad heterogeneity but hope remains that cancers share some set of core requirements. Attempts to categorize results of sequencing efforts has led to the notion of cancer ‘driver’ genes, which are recurrent mutations causal towards cancer (Vogelstein 2013).Recently, ‘Epi-drivers’ have been proposed to accommodate the importance of persistent DNA modifications that alter gene expression.
+
+## Question
+What mechanisms underlie brain tumors for which no recurrent gene mutations exist?
+
+## Goals
+Ependymomas represent about 10% of pediatric tumors of the central nervous system and nearly 2% of childhood cancers overall. Most ependymomas occur within the brain itself and two-thirds are within an area termed the posterior fossa (PF) containing the brain stem and cerebellum. Expression profiling analysis supported the existence of at three classes with different clinical, anatomical, and demographic profiles: Supratentorial (ST), posterior fossa group A  (PFA) and group B (PFB) (Witt 2011).
+
+In general, prognosis for pediatric ependymomas is poor, with a only 50% surviving to 5 years. Standard of care is surgery and radiation and recurrent ependymoma treatment with radiation is effectively palliative. PFA ependymomas have a particularly poor outcome with respect to reoccurrence and morbidity compared to PFB, underscoring the rapid need for development of adjuvant therapies.
+
+Mack et al. (Mack 2014) use genome-wide screens of patient-derived tumor tissue with pathway analysis to uncover epigenetic regulatory pathways that underlie ependymoma transformation.
+
+## Approach
+To gain an appreciation of the genomic landscape of ependymomas, exome sequencing was performed on 42 tumors divided amongst PFA and PFB subtypes and 5 of these had their entire genome sequenced. Surprisingly, Mack et al. were unable to recover any recurrent single nucleotide variants in either group. Moreover, whereas PFB harbored recurrent gross chromosomal abnormalities, PFA had none.
+
+To explore the involvement of epigenetic mechanisms, a ChIP-on-Chip procedure was employed to identify methylated CpG islands in promoters on a cohort of ependymomas. These ependymoma methylomes could be grouped by ST, PFB and PFA - similar to the patterns established through gene expression profiling - and this information could stratify patients by age and prognosis. Of particular, PFA tumors possessed 4-fold more methylated promoters and silenced genes those PFB tumors, leading Mack et al. to associate PFA with a ‘CpG island methylator’ or ‘CIMP’ positive phenotype.
+
+> “Mack et al. turned to pathway analysis to gain insight into the wider meaning of elevated gene promoter methylation.”
+
+Mack et al. turned to pathway analysis to gain insight into the wider meaning of elevated gene promoter methylation. Pathway analysis represents an approach to simplify and power the interpretation of differences observed amongst genes, such as the epigenetic markings in ependymomas. One one hand, it aids in reasoning about potentially long lists of individual genes by grouping them according to their collective function or ‘pathway’. On the other hand, it provides greater power to detect alterations in these related collections of genes, despite the fact that any single gene might not reach statistical significant.
+
+The analysis by Mack et al. (Fig. 1) required a collection of pathways/gene sets, retrieved from curated source databases (MSigDB) and the list of CIMP-positive genes with elevated promoter methylation. Finally, a statistical test determined which gene sets were significantly enriched in CIMP-positive tumors. A striking observation was that a large fraction of methylated genes were targets by the Polycomb repressive complex 2 (PRC2). This makes intuitive sense in light of knowledge that PRC complexes have well-studied roles in model organism development and silence genes via histone methylation.
+
+> “An equally important aspect of the analysis highlighted in this study is that pathways/gene sets themselves can lead to a wider biological perspective and direct the generation of new hypotheses.”
+
+An equally important aspect of the analysis highlighted in this study is that pathways/gene sets themselves can lead to a wider biological perspective and direct the generation of new hypotheses. Specifically, the PRC2 pathway gene sets originated from two groups who demonstrated that PRC2-mediated silencing in embryonic stem (ES) cells maintains ‘stemness’ (Lee 2006, Ben-Porath 2008). Follow-up observations by Mack et al. showed a significant overlap between ES and PFA cells in contrast to PFB, supporting a fundamental connection between ependymomas, pluripotency and transformation.
+
+Pathway analysis was also critical because it rationalizes therapeutic targeting of PRC2. Despite the lack of suitable models for ependymomas, the authors show that DNA-demethylating agents could slow the growth and survival of cells from an ex vivo culture of CIMP-positive metastases. One of these effective demethylating agents denoted debcitabine (DAC) is FDA-approved for the treatment of leukemia, suggesting a rapid route to repurpose it for molecularly subtyped ependymomas.
+<br/>
+
+  ![image]({{ page.figure }}){: height="100px".img-responsive }
+
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Pathway analysis of genes with elevated methylation in ependymomas. </strong> Tissue from tumors of the posterior fossa (PFA) were collected and immunoprecipitated (IP) for the MBD2 protein. Bound DNA was interrogated on microarray with probes covering CpG islands of human gene promoters. Genes (promoters) with elevated methylation represents the ‘methylome’ and were subjected to pathway analysis. PFA methylomes were enriched in targets of Polycomb group proteins.
+</div>
+<br/><br/>
+
+## Summary
+Pathway analysis provided a valuable context for the patterns of epigenetic alterations observed in brain tumors lacking gene mutations. This approach linked the methylation patterns in ependymomas to genes involved in pluripotency and provided actionable knowledge specific enough to inform rational development of chemotherapy.
