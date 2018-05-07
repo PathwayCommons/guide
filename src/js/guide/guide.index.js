@@ -1,5 +1,6 @@
 'use strict';
 
+var cytoscape = require('cytoscape');
 module.exports = (function(){
 
   var
@@ -182,7 +183,7 @@ module.exports = (function(){
         name: 'preset',
         padding: 5
       }
-    });  
+    });
   };
 
   setJqueryMap = function( $container ){

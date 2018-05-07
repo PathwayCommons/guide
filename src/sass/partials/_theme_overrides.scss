@@ -75,31 +75,6 @@ p {
   margin-right: auto;
 }
 
-/*
-* Embedded_wrapper layout
-*/
-@media (min-width: 1400px) {
-  .embedded_wrapper.container {
-    margin-left: 30%;
-  }
-}
-/*
-* Embedded layout
-*/
-.container.embedded {
-  margin-top: 2rem;
-  margin-right: 0;
-  margin-left: 0;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  max-width: 100%;
-}
-@media (min-width: 768px){
-  .container.embedded {
-      max-width: $container-max-width;
-      margin:auto auto;
-    }
-}
 
 img {
   display: block;

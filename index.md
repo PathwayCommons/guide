@@ -2,8 +2,6 @@
 layout: default
 title: Home
 footer: true
-figures:
-  figure_1: index/figure_index_workflow_gdc.png
 ---
 
 {% assign enrichment_workflows = site.workflows | where: 'category' , 'Pathway Enrichment Analysis' %}

@@ -6,7 +6,7 @@ date: '2017-05-23'
 figures:
   figure_1: figure_processdata_em_overview.jpg
 tables:
-layout: embedded
+layout: page
 group: rna_seq_to_enrichment_map
 reflist:
   - 26525104

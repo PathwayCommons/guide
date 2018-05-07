@@ -11,7 +11,7 @@ figures:
   figure_5: figure_processdata_best_figure_s2c.png
 tables:
   table_1: figure_processdata_best_table_1.png
-layout: embedded
+layout: page
 data:
   input_htseq: htseq_hd_brca_best_cancell_2015.zip
   input_meta: tep_phenotypes.zip

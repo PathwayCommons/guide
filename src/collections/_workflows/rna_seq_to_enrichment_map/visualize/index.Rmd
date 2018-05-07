@@ -21,7 +21,7 @@ figures:
   figure_15: figure_visualize_em_coag.png
   figure_16: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
-layout: embedded
+layout: page
 group: rna_seq_to_enrichment_map
 dockerhub:
 reflist:

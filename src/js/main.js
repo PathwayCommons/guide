@@ -1,6 +1,8 @@
 'use strict';
 var guide = require('./guide/guide.js');
+var ga = require('./vendor/ga.js');
 
-jQuery(document).ready(function(){
+$(document).ready(function(){
+  ga.initModule();
   guide.initModule();
 });

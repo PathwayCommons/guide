@@ -1,0 +1,19 @@
+{% for doc in docs %}
+{% unless doc.status == 'draft' %}
+{% if doc.url | split: '/' | last == 'index' %}
+  {% assign url = doc.url | remove: 'index' %}
+  <div class="media">
+    <div class="media-left">
+      <span class="badge label-primary">Step {{ doc.order }}</span>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="{{ site.baseurl }}{{ url }}">
+        <h2 class="media-heading">{{ doc.title }}</h2>
+      </a>
+      <p>{{ doc.subtitle }}</p>
+    </div>
+  </div>
+{% endif %}
+{% endunless %}
+{% endfor %}
+

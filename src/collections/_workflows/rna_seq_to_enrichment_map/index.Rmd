@@ -15,4 +15,4 @@ badges:
 
 {% assign docs = site.workflows | where: 'group','rna_seq_to_enrichment_map' | sort: 'order' %}
 
-{% include progress_tracker.html %}
+{% include workflow_steps.html %}

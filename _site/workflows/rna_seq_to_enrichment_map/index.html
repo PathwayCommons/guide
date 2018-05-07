@@ -27,18 +27,15 @@
   <!-- CSS -->
   
   <!-- Third-party CSS -->
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/guide/public/css/main.css">
 
   <!-- Javascript -->
   <!-- Third-party javascript -->
-  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/guide/public/bower_components/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
@@ -149,37 +146,36 @@
           
   
     
-
     
     
     <ol class="breadcrumb">
     
       
-
-      <!-- we can only handle 1 nesting -->
       
-        <li><a href="/guide/">Guide</a></li>
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">guide</a></li>
       
     
       
-
-      <!-- we can only handle 1 nesting -->
       
-        <li><a href="/guide/workflows/archive/">Workflows</a></li>
+
+      <!-- If its a collection it is an index page  -->
+        <li><a href="/guide/workflows/archive/">workflows</a></li>
       
     
       
+      
 
-      <!-- we can only handle 1 nesting -->
+      <!-- If its the second last path  -->
+       <li class="active">RNA-Seq to Enrichment Map</li>
       
     
       
-
-      <!-- we can only handle 1 nesting -->
       
-        
-          <li class="active">RNA-Seq to Enrichment Map</li>
-        
+
+      <!-- If its the last its an /index  -->
+
       
     
     </ol>
@@ -191,103 +187,58 @@
   <p>Perform a pair-wise comparison of gene expression data then visualize the list of altered pathways. You will use RNA sequencing data that arises from two conditions (sample data is provided). This raw data will be converted into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified and displayed as an visual map which organizes pathways by overarching themes.</p>
 </blockquote>
 
-<div class="progress-tracker-wrapper">
-  <ul class="progress-tracker progress-tracker--vertical">
-    
-    
-    
-      
-      <li class="progress-step">
-        <a class="progress-tracker-link" href="/guide/workflows/rna_seq_to_enrichment_map/preview/">
-          <span class="progress-marker">0</span>
-          <span class="progress-text">
-            <div class="progress-shadow progress-target"><p style="visibility:hidden" class="progress-subtitle">Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.</p></div>
-            <h4 class="progress-title">Preview</h4>
-            <p class="progress-subtitle">Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.</p>
-          </span>
-        </a>
-      </li>
-    
-    
-    
-    
-    
-      
-      <li class="progress-step">
-        <a class="progress-tracker-link" href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">
-          <span class="progress-marker">1</span>
-          <span class="progress-text">
-            <div class="progress-shadow progress-target"><p style="visibility:hidden" class="progress-subtitle">Derive a list of differentially expressed genes from RNA sequencing data</p></div>
-            <h4 class="progress-title">Process Data</h4>
-            <p class="progress-subtitle">Derive a list of differentially expressed genes from RNA sequencing data</p>
-          </span>
-        </a>
-      </li>
-    
-    
-    
-    
-    
-      
-      <li class="progress-step">
-        <a class="progress-tracker-link" href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">
-          <span class="progress-marker">2</span>
-          <span class="progress-text">
-            <div class="progress-shadow progress-target"><p style="visibility:hidden" class="progress-subtitle">Identify enriched pathways using Gene Set Enrichment Analysis</p></div>
-            <h4 class="progress-title">Identify Pathways</h4>
-            <p class="progress-subtitle">Identify enriched pathways using Gene Set Enrichment Analysis</p>
-          </span>
-        </a>
-      </li>
-    
-    
-    
-    
-    
-      
-      <li class="progress-step">
-        <a class="progress-tracker-link" href="/guide/workflows/rna_seq_to_enrichment_map/visualize/">
-          <span class="progress-marker">3</span>
-          <span class="progress-text">
-            <div class="progress-shadow progress-target"><p style="visibility:hidden" class="progress-subtitle">Create an Enrichment Map displaying the landscape of pathways</p></div>
-            <h4 class="progress-title">Visualize</h4>
-            <p class="progress-subtitle">Create an Enrichment Map displaying the landscape of pathways</p>
-          </span>
-        </a>
-      </li>
-    
-    
-    
-  </ul>
-  <div class="progress-tracker-content"></div>
-</div>
+<div class="media">
+    <div class="media-left">
+      <span class="badge label-primary">Step 0</span>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/preview/">
+        <h2 class="media-heading">Preview</h2>
+      </a>
+      <p>Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <span class="badge label-primary">Step 1</span>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">
+        <h2 class="media-heading">Process Data</h2>
+      </a>
+      <p>Derive a list of differentially expressed genes from RNA sequencing data</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <span class="badge label-primary">Step 2</span>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">
+        <h2 class="media-heading">Identify Pathways</h2>
+      </a>
+      <p>Identify enriched pathways using Gene Set Enrichment Analysis</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <span class="badge label-primary">Step 3</span>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/visualize/">
+        <h2 class="media-heading">Visualize</h2>
+      </a>
+      <p>Create an Enrichment Map displaying the landscape of pathways</p>
+    </div>
+  </div>
 
 
       </div>
     </div>
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-43341809-8', 'auto');
-  ga('send', 'pageview');
-
-  $(document).ready(function() {
-    // Link
-    $('a').click(function() {
-      var id = $(this).attr("href");
-
-      var label = "link";
-      var action = id;
-      ga('send', 'event', label, action);
-      // console.log(label + " " + action);
-    });
-  });
-</script>
-
   </body>
 </html>

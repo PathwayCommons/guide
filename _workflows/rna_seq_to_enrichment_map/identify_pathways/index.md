@@ -13,7 +13,7 @@ figures:
   figure_7: figure_idpathways_settings.png
   figure_8: figure_idpathways_index.png
   figure_9: figure_idpathways_nesplot_il5netpath.png
-layout: embedded
+layout: page
 data:
   gene_set_database: Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip
   report_brca: gsea_report_for_brca.xls

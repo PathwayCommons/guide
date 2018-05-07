@@ -27,18 +27,15 @@
   <!-- CSS -->
   
   <!-- Third-party CSS -->
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/progress-tracker/app/styles/progress-tracker.css" />
-  <link rel="stylesheet" type="text/css" href="/guide/public/bower_components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/guide/public/css/main.css">
 
   <!-- Javascript -->
   <!-- Third-party javascript -->
-  <script type="text/javascript" src="/guide/public/bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/guide/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/guide/public/bower_components/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script type="text/javascript" src="/guide/public/js/deps.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
@@ -50,39 +47,153 @@
 
 
   <body class="theme-base-01">
-    <div id="embedded">
+    <a name="top"></a>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-item">
+      Guide: v0.1.0
+    </div>
+    <a class="sidebar-nav-item" href="/guide/">Home</a>
+
+    
+
+    
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/case_studies/archive/">Case studies
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/presentations/archive/">Presentations
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/primers/archive/">Primers
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item active"
+          href="/guide/workflows/archive/">Workflows
+          </a>
+
+        
+      
+    
+  </nav>
+</div>
+
+
     <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-           content to avoid any CSS collisions with our real content. -->
-      <div class="wrap">
-        <div class="container content embedded">
-          <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h3 class="masthead-title">
+      <a href="/guide/" title="Home">Guide</a>
+      <small>
+        <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
+        
+      </small>
+      <span class="pull-right">
+        <small class="contact">
+          <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">Contact Us</a>
+        </small>
+      </span>
+    </h3>
+  </div>
+</div>
 
-            <h1 class="page-title">Identify Pathways</h1>
-            <div class="subtitle">Identify enriched pathways using Gene Set Enrichment Analysis</div>
-            <hr/>
-            <div class="linkout clearfix">
-              <ul class="list-inline pull-right">
-              <li>
-  <a href="http://twitter.com/intent/tweet?text=Identify enriched pathways using Gene Set Enrichment Analysis+http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/index&via=pathwaycommons"
-  data-toggle="tooltip"
-  title="Tweet this page"
-  target="_blank" >
-    <i class="fa fa-twitter-square fa-2x"></i>
-  </a>
-</li>
-<li>
-  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/index"
-  data-toggle="tooltip"
-  title="Share on Google+"
-  target="_blank" >
-    <i class="fa fa-google-plus fa-2x"></i>
-  </a>
-</li>
 
-              </ul>
-            </div>
-            <hr/>
-            
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        <li><a href="/guide/workflows/archive/">workflows</a></li>
+      
+    
+      
+      
+
+      
+        <li><a href="/guide/workflows/rna_seq_to_enrichment_map/">rna seq to enrichment map</a></li>
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+       <li class="active">Identify Pathways</li>
+      
+    
+      
+      
+
+      <!-- If its the last its an /index  -->
+
+      
+    
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">Identify Pathways</h1>
+  
 <ul>
   <li class="list-unstyled">Table of Contents
     <ul>
@@ -522,15 +633,14 @@
   </li>
 </ol>
 
-        </div>
-        
+  
   <hr/>
   <h2>References</h2>
   
   <div class="reference_group" data-reflist="[26525104]"></div>
 
 
-        
+  
   <br/>
   <hr/>
   <div id="disqus_thread"></div>
@@ -553,31 +663,15 @@
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
+</div>
+
       </div>
     </div>
 
-    <script id="dsq-count-scr" src="//pathway-commons.disqus.com/count.js" async></script>
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
 
-  ga('create', 'UA-43341809-8', 'auto');
-  ga('send', 'pageview');
+    <label for="sidebar-checkbox" class="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Toggle sidebar"></label>
 
-  $(document).ready(function() {
-    // Link
-    $('a').click(function() {
-      var id = $(this).attr("href");
-
-      var label = "link";
-      var action = id;
-      ga('send', 'event', label, action);
-      // console.log(label + " " + action);
-    });
-  });
-</script>
 
   </body>
 </html>

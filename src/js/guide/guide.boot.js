@@ -1,5 +1,4 @@
 'use strict';
-
 //Show and hide the spinner for all ajax requests.
 module.exports = (function(){
 
@@ -13,7 +12,7 @@ module.exports = (function(){
       })
       .ajaxStop(function(){
           $("#ajax-spinner").hide();
-      });    
+      });
   };
 
   return { initModule     : initModule };

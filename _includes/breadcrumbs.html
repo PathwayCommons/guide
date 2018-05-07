@@ -1,22 +1,23 @@
   {% assign query = (site.collections | where: 'label' , page.collection ) %}
   {% if query.size == 1 %}
     {% assign c = query.first %}
-
     {% assign parts = (page.url | split: '/') %}
     {% assign url = site.baseurl %}
     <ol class="breadcrumb">
     {% for path in parts %}
+      {% assign limit = forloop.length | minus: 1 %}
       {% assign url = (url | append: path | append: '/') %}
 
-      <!-- we can only handle 1 nesting -->
-      {% if forloop.first %}
-        <li><a href="{{url}}">{{site.title}}</a></li>
-      {% elsif path == c.label %}
-        <li><a href="{{site.baseurl}}{{c.index}}">{{ c.label | replace: '_', ' ' | capitalize }}</a></li>
-      {% elsif forloop.last %}
-        {% if path != 'archive' %}
-          <li class="active">{{ page.title }}</li>
-        {% endif %}
+      {% if forloop.first %}<!-- 1st part is the root  -->
+        <li><a href="{{ url }}">{{ site.baseurl | remove: '/' }}</a></li>
+      {% elsif forloop.last %}<!-- If its the last its an /index  -->
+
+      {% elsif path == c.label %}<!-- If its a collection it is an index page  -->
+        <li><a href="{{ site.baseurl }}{{ c.index }}">{{ c.label | replace: '_', ' ' }}</a></li>
+      {% elsif forloop.index == limit %}<!-- If its the second last path  -->
+       <li class="active">{{ page.title }}</li>
+      {% else %}
+        <li><a href="{{ url }}">{{ path | replace: '_', ' '  }}</a></li>
       {% endif %}
     {% endfor %}
     </ol>
