@@ -5,14 +5,11 @@ layout: panelista
 icon: icons/document.png
 permalink: /:collection/:path/
 categories:
-  - functional_analysis
+  - data_analysis
   - statistics
 ---
 
 {% for category in page.categories %}
   {% assign docs = site.primers | where: 'category' , category %}
-
-  <h2 class="page-category">{{ category | capitalize | replace: "_", " " }}</h2>
-  <hr/>
   {% include archive_list.html %}
 {% endfor %}

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Gene Set Enrichment Analysis &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/guide/media/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/media/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/guide/media/favicons/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-item">
+      Guide: v0.1.0
+    </div>
+    <a class="sidebar-nav-item" href="/guide/">Home</a>
+
+    
+
+    
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/case_studies/archive/">Case studies
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/presentations/archive/">Presentations
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item active"
+          href="/guide/primers/archive/">Primers
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/workflows/archive/">Workflows
+          </a>
+
+        
+      
+    
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h3 class="masthead-title">
+      <a href="/guide/" title="Home">Guide</a>
+      <small>
+        <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
+        
+      </small>
+      <span class="pull-right">
+        <small class="contact">
+          <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">Contact Us</a>
+        </small>
+      </span>
+    </h3>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        <li><a href="/guide/primers/archive/">primers</a></li>
+      
+    
+      
+      
+
+      
+        <li><a href="/guide/primers/data_analysis/">data analysis</a></li>
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+       <li class="active">Gene Set Enrichment Analysis</li>
+      
+    
+      
+      
+
+      <!-- If its the last its an /index  -->
+
+      
+    
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">Gene Set Enrichment Analysis</h1>
+  <div class="collection">
+  <div class="document">
+    <div class="subtitle"></div>
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      <li>
+  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/data_analysis/gsea/index&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/data_analysis/gsea/index"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+      <li></li>
+      
+        <li>
+  <a data-toggle="tooltip"
+    title="Download PDF"
+    href="gsea_subramanian_pnas_v102_43_2005.pdf">
+    <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+  </a>
+</li>
+
+      
+      </ul>
+    </div>
+    <hr/>
+    <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#background">II. Background</a></li>
+      <li class="list-unstyled"><a href="#safe">III. Significance Analysis of Function and Expression</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>In this section we discuss the use of <a href="http://software.broadinstitute.org/gsea/index.jsp" target="_blank">Gene Set Enrichment Analysis (GSEA)</a> to identify pathways enriched in ranked gene lists, with a particular emphasis on ordering based on a measure of differential gene expression. We aim to convey how the approach works from an intuitive standpoint before dividing into a full discussion of the statistical underpinnings. By then end of this discussion you should:</p>
+
+<ol>
+  <li>Understand what you can get out of GSEA</li>
+  <li>Be aware of the advantages over previous methods</li>
+  <li>Be aware of the statistical basis of the approach</li>
+</ol>
+
+<h2 id="ii-background"><a href="#background" name="background">II. Background</a></h2>
+
+<p>High-throughput approaches for gene expression measurement can generate a tremendous volume of data but can be unwieldy and easily outstrip intuition. The noisy nature of biological processes compounds the difficulty in interpreting outputs of large-scale experiments. Clearly, there is a need for robust approaches that place data in a wider context that is more biologically meaningful to the scientific question at hand.</p>
+
+<p>To this end, approaches collectively termed ‘Overrepresentation Analyses’ (ORA) were developed to take large lists of genes emerging from experimental results and determine whether there was evidence of enrichment for gene sets grouped on the basis of some shared theme (Khatri 2005, Khatri 2012). In simple terms, ORA approaches aim to distill which pathways are present within a list of genes. A popular source of sets is the <a href="http://geneontology.org/" target="_blank">Gene Ontology (GO)</a> which groups of genes according to various biological processes and molecular functions.</p>
+
+<h3 id="the-safe-framework">The ‘SAFE’ framework</h3>
+
+<p>While tremendously useful for interpreting differential expression output, ORA approaches have three major limitations. First, the inclusion criteria for input gene lists are rather arbitrary and typically involves selecting genes that exceed some user-defined statistical cutoff. This risks excluding potentially important genes that for whatever reason fail to reach statistical significance. Second, ORA approaches use gene names but not any of the rich quantitative information associated with gene expression experiments. In this way, equal importance is assigned to each an every gene. Third, many of the ORA procedures uses statistical procedures that assume independence among genes: Changes in any gene do not affect or are not influenced by any others. Clearly, this is unrealistic for biological systems and has the effect of making ORA procedures more prone to erroneous discoveries or false-positives.</p>
+
+<p>Gene Set Enrichment Analysis (GSEA) is a tool that belongs to a class of second-generation pathway analysis approaches referred to as <em>significance analysis of function and expression (SAFE)</em> (Barry 2005). These methods are distinguished from their forerunners in that they make use of entire data sets including quantitive data gene expression values or their proxies.</p>
+
+<p>Methods that fall under the SAFE framework use a four-step approach to map gene lists onto pathways</p>
+
+<ol>
+  <li>Calculate a local (gene-level) statistic</li>
+  <li>Calculate a global (gene set or pathway-level) statistic</li>
+  <li>Determine significance of the global statistic</li>
+  <li>Adjust for <a href="/guide/primers/statistics/multiple_testing/" target="_blank">multiple testing</a></li>
+</ol>
+
+<h3 id="origins-of-gsea">Origins of GSEA</h3>
+
+<p>GSEA was first described by Mootha <em>et al.</em> (Mootha 2003) in an attempt to shed light on the mechanistic basis of Type 2 diabetes mellitus. They reasoned that alterations in gene expression associated with a disease can manifest at the level of biological pathways or co-regulated gene sets, rather than individual genes. The lack of power to detect true signals at the gene level may be a consequence of high-throughput expression measurements which involve heterogeneous samples, modest sample sizes and subtle but nevertheless meaningful alterations expression levels. Ultimately these confound attempts to derive reproducible associations with a biological state of interest.</p>
+
+<p>In their study, Mootha <em>et al.</em> employed microarrays to compare gene expression in mice with diabetes mellitus (DM2) to controls with normal glucose tolerance (NGT). On one hand, two statistical analysis approaches failed to identify a single differentially expressed gene between these two groups of mice. On the other hand, GSEA identified oxidative phosphorylation (OXPHOS) as the top scoring gene set down-regulated in DM2; The next four top-scoring gene sets largely overlapped with OXPHOS.</p>
+
+<p>Importantly, the prominence of OXPHOS genes provided the necessary clues for the authors to hypothesize that peroxisome proliferator-activated receptor <script type="math/tex">\gamma</script> coactivator 1<script type="math/tex">\alpha</script> (PGC-1<script type="math/tex">\alpha</script> encoded by <em>PPARGC1</em>) might play a role in DM2. Indeed, follow-up experiments demonstrated that <em>PPARGC1</em> expression was lower in DM2 and over-expression in mouse skeletal cells was sufficient to increase OXPHOS expression. Buoyed  by the success of GSEA in this case, the authors went on to suggest the particular niche that the approach might occupy.</p>
+
+<blockquote>
+  <p><em>Single-gene methods are powerful only when the individual gene effect is marked and the variance is small across individuals, which may not be the case in many disease states. Methods like GSEA are complementary to single-gene approaches and provide a framework with which to examine changes operating at a higher level of biological organization. This may be needed if common, complex disorders typically result from modest variation in the expression or activity of multiple members of a pathway. As gene sets are systematically assembled using functional and genomic approaches, methods such as GSEA will be valuable in detecting coordinated variation in gene function that contributes to common human diseases.</em></p>
+</blockquote>
+
+<p>Criticisms concerning the original methodology (Damian 2004) were considered in an updated version of GSEA described in detail by Subramanian <em>et al.</em> (Subramanian 2005). Below, we provide a description of the approach with particular emphasis on the protocol we recommend for analyzing gene lists ranked according to differential expression.</p>
+
+<h2 id="iii-significance-analysis-of-function-and-expression"><a href="#safe" name="safe">III. Significance Analysis of Function and Expression</a></h2>
+
+<h3 id="safe-step-1-local-statistic">SAFE Step 1. Local statistic</h3>
+
+<div class="alert alert-danger text-justify" role="alert">
+  <strong>Caution!</strong> Our procedure for GSEA diverges significantly from  Subramanian <em>et al.</em> (Subramanian 2005) with regards to calculation of local statistics.
+</div>
+
+<p>In this step, we describe a local or gene-level measure that is used to rank genes, in GSEA terminology, a ‘rank metric’. Previously, we described how to obtain and process RNA-seq datasets into a single list of genes ordered according to a function of each gene’s p-value calculated as part of differential expression testing. In this context, a p-value assigned to a gene can be interpreted as the probability of a difference in gene expression between groups at least as extreme as that observed given no inter-group difference. We simply declare this function of p-values the rank metric (Figure 1).</p>
+
+<p><img src="figure_gsea_local.png" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Deriving the GSEA local statistic: Rank metric.</strong> A pairwise comparison of gene expression for m total samples is depicted. RNA levels for each of n genes is determined. Differential expression testing assigns a p-value (P) to each gene and is used to derive the local statistic denoted the GSEA rank metric (s). A gene list (L) is ordered according to rank.
+</div>
+
+<p>An example of a rank metric is the product of the sign of the ‘direction’ in the expression change (i.e. ‘up-regulation’ is positive and ‘down-regulation’ is negative) and the p-value (<script type="math/tex">P</script>).</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    s_i=s(P_i) = sign(\text{fold change gene }i)\cdot -log_{10}(P_i)
+  \end{equation*}</script>
+
+<p>Under this rank metric, up-regulated genes with relatively small p-values appear at the top of the list and down-regulated genes with small p-values at the bottom.</p>
+
+<h3 id="safe-step-2-global-statistic">SAFE Step 2. Global statistic</h3>
+
+<p>The global statistic is at the very heart of GSEA and the rather simple algorithm used to calculate it belies a rather profound statistical method to judge each candidate gene set. We will set aside the technical details for a moment to see how GSEA calculates the enrichment score for a given pathway.</p>
+
+<p>Let’s pick up the process following Figure 1 where we have a list of ranked genes. For illustrative purposes, suppose we wish to test the list for enrichment of a cell cycle pathway (Figure 2).</p>
+
+<p><img src="figure_gsea_global.png" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Sample calculation of global statistic: The GSEA enrichment score.</strong> The process requires the ranked gene list (L) ordered according to the ranking metric along with a candidate gene set (G). In this case, the candidate is a mammalian cell cycle pathway. A running sum is calculated by starting at the top of the ranked list and considering each gene in succession: Add to the sum if the gene is present in gene set (red; +) and decrement the sum otherwise (-). The GSEA enrichment score (S) is the maximum value of the sum at any point in the list. Although not shown, the running sum may deviate in the negative direction, hence, S is actually the largest absolute value of the running sum.
+</div>
+
+<p>GSEA considers candidate gene sets one at a time. To calculate the enrichment score, GSEA starts at the top of the ranked gene list. If a gene is a member of the candidate gene set then it adds to a running sum, otherwise, it subtracts. This process is repeated for each gene in the ranked list and the enrichment score for that gene set is equal to the largest absolute value that the running sum achieved.</p>
+
+<p>One aspect of this algorithm we side-stepped is the value that gets added or subtracted. In the original version of GSEA (Mootha 2003) the values were chosen specifically such that the sum over all genes would be zero. In Figure 2, this would be equivalent to the running sum meeting the horizontal axis at the end of the list. In this case, the enrichment score is the Kolmogorov-Smirnov (K-S) statistic that is used to determines if the enrichment score is statistically significant. The updated procedure described by Subramanian <em>et al</em> (Subramanian 2005) uses a ‘weighted’ version of the procedure whereby the increments to the running sum are proportional to the rank metric for that gene. The reasons for these choices are rather technical and we reserve this for those more mathematically inclined in the following section.</p>
+
+<h4 id="the-enrichment-score">The enrichment score</h4>
+
+<p>Consider a single gene set <script type="math/tex">G_k</script> indexed by <script type="math/tex">k</script>. The gene set consists of a list of <script type="math/tex">n_k</script> genes (<script type="math/tex">g_{kj}</script>), that is <script type="math/tex">G_k=\{g_{kj}: j = 1, \ldots, n_k\}</script>. Note that each gene in the set must be a represented in the ranked list <script type="math/tex">L</script> as you will see shortly.</p>
+
+<p>Define the set of genes outside of the set as <script type="math/tex">\bar{G}_k = \{\bar{g}_{kj}: 1, \ldots, n-n_k\}</script>. We summarize the relevant notation up to this point</p>
+
+<ul>
+  <li class="list-unstyled"><strong>Notation</strong>
+    <ul>
+      <li class="list-unstyled">Number of genes: <script type="math/tex">n</script></li>
+      <li class="list-unstyled">Gene rank metric: <script type="math/tex">s</script></li>
+      <li class="list-unstyled">Ranked gene list: <script type="math/tex">L</script></li>
+      <li class="list-unstyled">Gene set: <script type="math/tex">G_k</script> where <script type="math/tex">k=1,\ldots,K</script></li>
+      <li class="list-unstyled">Genes in gene set: <script type="math/tex">G_k=\{g_{kj}: j=1,\ldots,n_k\}</script></li>
+      <li class="list-unstyled">Genes not in gene set: <script type="math/tex">\bar{G}_k=\{\bar{g}_{kj}: j=1,\ldots,n-n_k\}</script></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Define the enrichment score for a given gene set as <script type="math/tex">S^{GSEA}_k</script> which is the (weighted) Kolmogorov-Smirnov (K-S) statistic.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:1}
+    S^{GSEA}_k = \sup_{1 \leq i \leq n} (F^{G_k}_i-F^{\bar{G}_k}_i)
+\end{equation}</script>
+
+<p>Where <script type="math/tex">sup</script> is the supremum and the indices <script type="math/tex">i</script> represents the position or rank in <script type="math/tex">L</script>. The <script type="math/tex">S^{GSEA}_k</script> is the largest difference in <script type="math/tex">F</script> which are the (weighted) empirical cumulative distribution functions.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:2}
+    F^{G_k}_i = \frac{\sum\limits_{t=1}^i |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}{\sum\limits_{t=1}^n |s_t|^\alpha \cdot \mathbb{1}_{\{gene_t \in G_k\}}}
+\end{equation}</script>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:3}
+    F^{\bar{G}_k}_i = \frac{\sum\limits_{t=1}^i \mathbb{1}_{\{gene_t \in \bar{G}_k\}}}{n-n_k}
+\end{equation}</script>
+
+<p>Where <script type="math/tex">\mathbb{1}</script> is the indicator function for membership in the specified gene set. We will note here that the enrichment score is a function of the gene set size, which will come into play when we discuss significance testing below. To get a better feel for what these equations mean, let’s see what happens when we vary the exponent <script type="math/tex">\alpha</script>.</p>
+
+<h4 id="equal-weights-the-classic-kolmogorov-smirnov-statistic">Equal weights: The ‘classic’ Kolmogorov-Smirnov statistic</h4>
+
+<p>Consider the simple case when <script type="math/tex">\alpha=0</script>. Then all contributions from genes in the gene set do not take into account the rank metric <script type="math/tex">s</script> in \eqref{eq:2}. In effect, this gives all genes equal weight.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:4}
+    F^{G_k}_i = \frac{1}{n_k} \sum\limits_{t=1}^i \mathbb{1}_{\{gene_t \in G_k\}}
+\end{equation}</script>
+
+<p>Under these circumstances, the <script type="math/tex">S^{GSEA}_k</script> calculated using \eqref{eq:4} is the ‘classic’ version of the Kolmogorov-Smirnov (K-S) statistic. It is more common to represent <script type="math/tex">F</script> as an empirical cumulative distribution function (ecdf) of an order statistic (<script type="math/tex">X_{(\cdot)}</script>). Without loss of generality, define the order statistic as the rank or index of each gene in <script type="math/tex">L</script> that is, <script type="math/tex">X_{(1)}=1, X_{(2)}=2, \cdots, X_{(i)}=i, \cdots, X_{(n)}=n</script>. For ease of notation, we drop the subscript brackets.</p>
+
+<p>Using the order statistic notation, equation \eqref{eq:4} describing the contribution of genes within the gene set can be expressed as</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:5}
+    \hat{F}_{n}^{G_k}(x) = \frac{1}{n_k} \sum\limits_{t=1}^n \mathbb{1}_{\{X_t \leq x\}} \cdot \mathbb{1}_{\{gene_t \in G_k\}}
+\end{equation}</script>
+
+<p>In the same way, we can express equation \eqref{eq:3} for the genes outside the gene set as</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:6}
+    \hat{F}_{n}^{\bar{G}_k}(x) = \frac{1}{n-n_k} \sum\limits_{t=1}^n \mathbb{1}_{\{X_t \leq x\}} \cdot \mathbb{1}_{\{gene_t \in \bar{G}_k\}}
+\end{equation}</script>
+
+<p>Rather than plotting a single running sum (Figure 2) we can plot its constituent <script type="math/tex">\hat{F}_n^{G_k}(x)</script> and <script type="math/tex">\hat{F}_n^{\bar{G}_k}(x)</script> on the same axes, such as in Figure 3.</p>
+
+<p><img src="figure_gsea_ks.png" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Empirical cumulative distribution functions.</strong> (Above) A hypothetical ordered gene list where each line represents a gene in the gene set (red) or not (blue). (Below) Empirical cumulative distribution functions for the genes in the gene set (red) and those outside the gene set (blue). The maximum deviation between ecdfs is the dotted green line.
+</div>
+
+<p>Upon close inspection, it is simple to relate the running sum (bottom Figure 2) with the ecdfs (Figure 3): Increases in the running sum correspond to increments in the ecdf of genes within the gene set (Figure 3, red) and likewise, decreases in the running sum correspond to increments in the ecdf for genes outside (blue). Then, the enrichment score - the largest deviation in the running sum - corresponds to the largest vertical distance between ecdf plots (dotted green).</p>
+
+<p>We are now ready to handle the most important question that gets to the very validity of GSEA: <em>When is the <script type="math/tex">S^{GSEA}_k</script> ‘significant’?</em>.</p>
+
+<h4 id="the-kolmogorov-smirnov-goodness-of-fit-test">The Kolmogorov-Smirnov goodness-of-fit test</h4>
+
+<p>We have learned that the <script type="math/tex">S^{GSEA}</script> can be represented as the biggest distance between component ecdfs. To ask whether a given <script type="math/tex">S^{GSEA}</script> is significant is equivalent to asking whether the component ecdfs represent different ‘samples’ of the same cdf and whether their differences are attributable to minor sampling errors. For didactic purposes, we’ll first present a simpler case, where we set up a K-S goodness-of-fit test between a single empirical cdf derived from a sample and a theoretical ‘specified’ cdf. We will also define concepts mentioned already in a more rigorous fashion.</p>
+
+<h4 id="one-sample-k-s-goodness-of-fit-test">One sample K-S goodness-of-fit test</h4>
+
+<p>Suppose we have an independent and identically distributed sample <script type="math/tex">X_{1}, \ldots, X_{n}</script> with some unknown cdf <script type="math/tex">\mathbb{P}</script> and we wish to test whether it is equal to a specified cdf <script type="math/tex">\mathbb{P_0}</script>. The null hypothesis is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  H_0 :  \mathbb{P} = \mathbb{P_0}
+\end{equation*}</script>
+
+<p>Concretely, define the empirical cumulative distribution function (ecdf) that is generated from the data.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:7}
+  \hat{F}_n(x) = \sum\limits_{t=1}^{n} \mathbb{1}_{\{X_t \leq x\}}
+\end{equation}</script>
+
+<p>Then the K-S goodness-of-fit test proceeds by assuming that the ecdf in equation \eqref{eq:7} is an estimate of a specified cdf <script type="math/tex">F(x)</script>.</p>
+
+<p><strong>Definition</strong> The <strong>Kolmogorov-Smirnov statistic <script type="math/tex">D_n</script></strong> is the distance between two functions.</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:8}
+  D_n = \sup_{x} \left|\hat{F}_n(x)-F(x)\right|
+\end{equation}</script>
+
+<p>So given the null hypothesis that the ecdf is a sample from the specified cdf, we want to know how the <script type="math/tex">D_n</script> behaves. In other words, if we calculate a value of <script type="math/tex">D_n</script> then we wish to know if it is a discrepancy that is worthy of further investigation. It turns out that there is an analytic solution to this question, that is, there is an equation for the probability distribution of <script type="math/tex">D_n</script> so that we can derive a p-value under our null hypothesis. To get to this point, we’ll need a few theorems, which we present without proof.</p>
+
+<p><strong>Theorem 1</strong> The <strong>Glivenko-Cantelli</strong> theorem:</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:9}
+  D_n \xrightarrow[]{a.s.} 0 \text{ as }  n \rightarrow \infty
+\end{equation}</script>
+
+<p>The significance of this theorem is subtle: The sample points we use to construct our ecdf along with <em>all those points in between</em> are sure to be within a specified distance of the target cdf when <script type="math/tex">n > N</script>. This is also termed ‘uniform convergence’.</p>
+
+<p><strong>Theorem 2</strong> The <strong>distribution-free property</strong> states that the distribution of <script type="math/tex">D_n</script> is the same for all continuous underlying distribution functions <script type="math/tex">F</script>.</p>
+
+<p>The distribution-free property is a key aspect of the K-S test and pretty powerful result. It says that regardless of whether the <script type="math/tex">F</script> is normal, uniform, gamma or even some completely unknown distribution, they all have the same <script type="math/tex">D_n</script> distribution. This is particularly useful because we won’t have any idea what the distribution of the ecdfs used to construct our GSEA running sum will be.</p>
+
+<p>The Glivenko-Cantelli and the distribution-free properties are nice, but not very useful in practice. Knowing that an ecdf will converge regardless of the form of the distribution is just the start. What we really want to know is <em>how</em> the convergence happens, that is, how <script type="math/tex">D_n</script> is distributed. This leads us right into the next theorem.</p>
+
+<p><strong>Theorem 3</strong> Define <script type="math/tex">K(x)</script> as the Kolmogorov-Smirnov distribution then,</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:10}
+  P(\sqrt{n} D_n \leq x) \rightarrow K(x) = \sum\limits_{k=-\infty}^{\infty} (-1)^{k}\exp(-2k^2x^2)
+\end{equation}</script>
+
+<p>Theorem 3 is the culmination of an extensive body of knowledge surrounding empirical process theory that, in simple terms, describes the distribution of random walks between two fixed endpoints and bounds (i.e. the interval <script type="math/tex">[0,1]</script> as these are the cdf bounds) otherwise known as a ‘Brownian Bridge’.</p>
+
+<p>The practical outcome of these theorems is that it gives us an equation from which we can calculate the exact probability of our maximum ecdf deviation from a specified cdf. In the K-S hypothesis testing framework, we set an <em>a priori</em> significance level <script type="math/tex">\alpha</script> and calculate the probability of our observed <script type="math/tex">D_n</script> or anything more extreme, denoting this the p-value <script type="math/tex">P</script>. If <script type="math/tex">P \lt \alpha</script> then this would suggest a discrepancy between the data and the specified cdf causing us to doubt the validity of <script type="math/tex">H_0</script>.</p>
+
+<p>Recall that by definition, the enrichment score for any given candidate gene set depends upon its size. In this case, the scores are not identically distributed and must be normalized prior to calculating the p-values. We reserve this discussion for the next section we when broach the topic of null distributions.</p>
+
+<h4 id="two-sample-k-s-goodness-of-fit-test">Two sample K-S goodness-of-fit test</h4>
+
+<p>We are now ready to describe the setup that occurs in GSEA where we compare ecdfs representing the distribution of genes within and outside the gene set. Suppose we have a sample <script type="math/tex">X_1,\ldots,X_{a}</script> with cdf <script type="math/tex">F^{G_k}(x)</script> and a second sample <script type="math/tex">Y_1,\ldots,Y_{b}</script> with cdf <script type="math/tex">F^{\bar{G}_k}(x)</script>. GSEA is effectively a test of the null hypothesis</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  H_0 :  F^{G_k} = F^{\bar{G}_k}
+\end{equation*}</script>
+
+<p>The corresponding ecdfs are <script type="math/tex">\hat{F}_a^{G_k}</script> and <script type="math/tex">\hat{F}_b^{\bar{G}_k}</script>as before and the K-S statistic is</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:11}
+  D_{ab} = \left(\frac{ab}{a+b}\right)^{1/2}
+    \sup_{x} \left|\hat{F}^{G_k}_a(x)-\hat{F}^{\bar{G}_k}_b(x)\right|
+\end{equation}</script>
+
+<p>and the rest is the same.</p>
+
+<h4 id="unequal-weights-boosting-sensitivity">Unequal weights: Boosting sensitivity</h4>
+
+<p>Consider the case when <script type="math/tex">\alpha=1</script> which is the recommended setting in GSEA. Then the global statistic is weighted by the value of the rank metric <script type="math/tex">s</script> in \eqref{eq:2}. Effectively, this renders the enrichment score more sensitive to genes at the top and bottom of the gene list <script type="math/tex">L</script> compared to the classic K-S case.</p>
+
+<p>The choice to depart from the classic K-S statistic was two-fold. First, Subramanian <em>et al.</em> noticed an unwanted sensitivity of the enrichment score to genes in the middle of the list.</p>
+
+<blockquote>
+  <p><em>In the original implementation, the running sum statistic used equal weights at every stop, which yielded high scores for the sets clustered near the middle of the ranked list…These sets do not represent biologically relevant correlation with the phenotype.</em></p>
+</blockquote>
+
+<p>Second, the authors were unsatisfied with the observation that the unweighted method failed to identify well-known gene expression responses, in particular, the p53 transcriptional program in wild-type cells.</p>
+
+<blockquote>
+  <p><em>In the examples described in the text, and in many other examples not reported, we found that p = 1 (weighting by the correlation) is a very reasonable choice that allows significant genes with less than perfect coherence, i.e. only a subset of genes in the set are coordinately expressed, to score well.</em></p>
+</blockquote>
+
+<p>While weighting the enrichment score calculation with the rank metric can increase the power of the approach to detect valid gene sets, it does have several consequences that must be kept in mind.</p>
+
+<p>Recall that the enrichment score is a function of the size of the gene set <script type="math/tex">n_k</script>. This means that enrichment scores must be normalized for gene set size. In the unweighted case, an analytic expression for the normalization factor can be estimate but when terms are weighted, this is no longer the case and once again, we defer to bootstrap measures to derive it.</p>
+
+<p>Another trade-off incurred by departing from the classic K-S statistic is that we no longer have an analytic expression for the null distribution of the enrichment scores as described by equation \eqref{eq:10}. This motivates the empirical bootstrap procedure for deriving the null distribution discussed in the following section concerning significance testing.</p>
+
+<p>The above discussion motivates the next section on how GSEA generates null distributions for candidate gene set enrichment scores.</p>
+
+<h3 id="safe-step-3-significance-testing">SAFE Step 3. Significance testing</h3>
+
+<div class="alert alert-danger text-justify" role="alert">
+  <strong>Caution!</strong> The procedure for deriving null distributions described here is not the same as that described by Subramanian <em>et al.</em> (Subramanian 2005).
+</div>
+
+<p>To recap, GSEA uses the set of rank metrics for a gene list to calculate a set of  enrichment scores for candidate gene sets. The primary issue at this point is which scores are indicative of enrichment? In hypothesis testing jargon, we wish to determine the statistical significance of each global statistic. We accomplish this by deriving a p-value <script type="math/tex">P</script> representing the probability of observing a given enrichment score or anything more extreme. To do this, we require some understanding of how statistics are distributed.</p>
+
+<h4 id="null-distributions">Null distributions</h4>
+
+<p>From our discussion of the global statistic, using a weighted enrichment score leaves us without an analytic description of their null distribution. That is, weighting the enrichment score <script type="math/tex">S_k^{GSEA}</script> with the local statistic deviates from the classic Kolmogorov-Smirnov statistic which would typically follow a K-S-like distribution.</p>
+
+<p>GSEA employs ‘resampling’ or ‘bootstrap’ methods to derive an empirical sample of the null distribution for the enrichment scores of each gene set. The GSEA software provides a choice of two flavours of permutation methods that underlie the null distribution calculations (Figure 4).</p>
+
+<p><img src="figure_gsea_null.jpg" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. GSEA uses permutation methods to generate null distributions for each gene set.</strong> For the sake of brevity, we depict a schematic of permutation methods for a single gene set. In GSEA, this process is repeated separately for each gene set. <strong>A. </strong>Phenotype permutation. <strong>B.</strong> Gene set permutation. <strong>C.</strong> Calculation of p-values.
+</div>
+
+<h4 id="phenotype-permutation">Phenotype permutation</h4>
+
+<p>The SAFE and GSEA publications describe ‘phenotype’ permutation approach to sample the null distribution (Figure 4A). For a given gene set <script type="math/tex">G_k</script>, this amounts to randomly swapping sample labels and recalculating a permutation enrichment score <script type="math/tex">S^{GSEA}_{k,{\pi_p}}</script>. This process is repeated <script type="math/tex">N_k</script> times to generate <script type="math/tex">S^{GSEA}_{k,{\boldsymbol{\pi(k)}}} = \{S^{GSEA}_{k,{\pi_p}}: p=1,\ldots,N_k\}</script> which is a vector of points sufficient to depict the underlying distribution.</p>
+
+<p>From an intuitive standpoint, this generates a sample of the enrichment score distribution under the assumption of no particular association between gene rank and phenotype. In other words, we get a sense of how widely enrichment scores vary and how often when the two groups are effectively the same.</p>
+
+<p>From a statistical standpoint, the authors claim that this provides a more accurate description of the null model.</p>
+
+<blockquote>
+  <p><em>Importantly, the permutation of class labels preserves gene-gene correlations and, thus, provides a more biologically reasonable assessment of significance than would be obtained by permuting genes.</em></p>
+</blockquote>
+
+<p>Indeed, variations on GSEA that purport to simply the methodology rely on an assumption of gene-gene independence (Irizarry 2009). However, empirical comparisons suggest that ignoring these correlations leads to variance inflation - a wider and flatter null distribution - resulting in a much higher risk of false discovery for gene sets (Tamayo 2016).</p>
+
+<h4 id="gene-set-permutation">Gene set permutation</h4>
+
+<p>The workflow we recommend uses as input a ‘pre-ranked’ list of genes are ordered by a function of the p-value for differential expression. In GSEA software this is called ‘GSEAPreranked’ and precludes phenotype permutation.</p>
+
+<p>Rather, a gene set permutation approach is used to generate the null distribution (Figure 4B). For each gene set <script type="math/tex">G_k</script> of size <script type="math/tex">n_k</script>, the same number genes are randomly selected from the ranked list <script type="math/tex">L</script> and the corresponding enrichment score <script type="math/tex">S^{GSEA}_{k,{\pi_p}}</script> is calculated. This process is repeated <script type="math/tex">N_k</script> times to generate the sample null distribution consisting of the vector <script type="math/tex">S^{GSEA}_{k,{\boldsymbol{\pi(k)}}}</script>.</p>
+
+<p>The GSEA team recommends using phenotype permutation whenever possible. This preserves the correlation structure between the genes in the dataset. Gene set permutation creates random gene sets and so disrupts the gene-gene correlations in the data. Thus, gene set permutation provides a relatively weaker (less stringent) assessment of significance.</p>
+
+<h4 id="p-value-calculation">P-value calculation</h4>
+
+<p>Once an empirical null distribution of values is in hand using either of the permutation methods described above, it is straightforward to calculate the p-value <script type="math/tex">P</script> for an enrichment score (Figure 4C). By definition, <script type="math/tex">P</script> is the probability of observing a statistic or anything more extreme under the null hypothesis. In practice, we derive an empirical p-value <script type="math/tex">P_k</script> by calculating the fraction of null values <script type="math/tex">S^{GSEA}_{k,{\pi_p}}</script> greater than or equal to our observed value <script type="math/tex">S^{GSEA}_{k}</script>.</p>
+
+<script type="math/tex; mode=display">\begin{equation}\label{eq:12}
+  P_k = \frac{1}{N_k}\sum\limits_{p=1}^{N_k} I\{S^{GSEA}_{k,{\pi_p}} \geq S^{GSEA}_{k}\}
+\end{equation}</script>
+
+<h4 id="on-last-thing">On last thing…</h4>
+
+<p>Note that throughout this discussion we have chosen to depict the GSEA global statistic as positive deviations of the running sum (Figure 2). Of course, there is no particular reason why the deviations could not be negative. Indeed a more accurate description of the results of permutation would see a bimodal distribution representing global statistics that lie above and below zero (Figure 5). Thus, it is more accurate to say that the p-values are calculated from the positive or negative region of the empirical null distribution.</p>
+
+<p><img src="figure_gsea_bimodalnull.png" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 5. Null distributions.</strong> Permutation methods will result in enrichment scores that lie both above and below zero resulting in a bimodal distribution. In practice, p-values for negative enrichment scores (green) and positive ones (red) are calculated using only the region of the null distribution less than and greater than zero, respectively.
+</div>
+
+<h3 id="safe-step-4-multiple-testing-correction">SAFE Step 4. Multiple testing correction</h3>
+
+<div class="alert alert-warning text-justify" role="alert">
+  You may wish to review our primer on <a target="_blank" href="/guide/primers/statistics/multiple_testing/">multiple  testing</a>, in particular the section on <a target="_blank" href="/guide/primers/statistics/multiple_testing/#controllingFDR">false discovery rates</a>.
+</div>
+
+<p>When we test a family of hypotheses, the chance of observing a statistic with a small p-value increases. When smaller than the significance level, they can be erroneously classified as discoveries or Type I errors. Multiple testing procedures attempt to quantify and control for these.</p>
+
+<p>In GSEA, the collection of gene sets interrogated against the observed data are a family of hypotheses. The recommended procedure for quantifying Type I errors is the false discovery rate (FDR). The FDR is defined as the expected value of the fraction of rejected null hypotheses that are in fact true. In practice, GSEA establishes this proportion empirically.</p>
+
+<p>In general, given a specified threshold <script type="math/tex">T</script> of the global statistic, the FDR is the number of true null hypotheses larger than <script type="math/tex">T</script> divided by the sum of true and false null hypotheses larger than <script type="math/tex">T</script>. For GSEA, <script type="math/tex">T</script> would be some value of the enrichment score and a true null hypothesis would represent a gene set that is in fact not enriched. In practice, we won’t directly observe the latter so it is estimated from the values of the empirical null that exceed <script type="math/tex">T</script> (Figure 6).</p>
+
+<p><img src="figure_gsea_fdr.png" alt="image" class="img-responsive" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 6. Empirical false discovery rate.</strong>. <strong>A.</strong> The distribution of observed statistics and null distribution derived by permutation methods. T represents the threshold. <strong>B.</strong> Enlarged view of right-hand distribution tail in A. The number of null distribution values beyond the threshold is used to estimate the true null hypotheses. The fraction of erroneous rejections is estimated as the ratio of s_null (red) to s_obs (blue) and a correction is introduced when the number of data points are unequal.
+</div>
+
+<p>Suppose there are <script type="math/tex">n_{obs}</script> observed and <script type="math/tex">n_{null}</script> empirical null distribution data points. If the number of observed and null statistics beyond the threshold <script type="math/tex">T</script> are <script type="math/tex">s_{obs}</script> and <script type="math/tex">s_{null}</script>, respectively, then the empirical false discovery rate is</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:13}
+  \hat{FDR} = \frac{s_{null}}{s_{obs}} \cdot \frac{n_{obs}}{n_{null}}
+\end{equation}</script>
+
+<blockquote>
+  <p>For a nice primer on empirical methods for FDR estimation, we refer the reader to a well written piece by William S. Noble entitled <em>‘How does multiple testing correction work?’</em> (Noble 2009).</p>
+</blockquote>
+
+<p>At first glance, this appears to be quite a straightforward exercise: We retrieve our sets of null distributions <script type="math/tex">S_{k,\boldsymbol{\pi(k)}}^{GSEA}</script> and observed enrichment statistics <script type="math/tex">S_k^{GSEA}</script> and calculate the ratio for a given enrichment score threshold. However, there is one glaring problem: The enrichment statistic depends on gene set size which precludes comparison across gene sets.</p>
+
+<h4 id="normalized-enrichment-score-accounting-for-gene-set-size">Normalized enrichment score: Accounting for gene set size</h4>
+
+<p>That the enrichment score depends on gene set size can be seen from the definition in equations \eqref{eq:1} - \eqref{eq:3}. Consequently, unless we are in an unlikely scenario where all the gene sets we test are of equal size, the enrichment scores will not be identically distributed and hence cannot be directly compared. This precludes the calculation of an empirical false discovery rate.</p>
+
+<p>GSEA solves this problem by applying a transformation to calculated enrichment scores such that they lie on a comparable scale. In particular, this normalized enrichment score (NES) is the enrichment score divided by the expected value (i.e. average) of the corresponding null distribution. Concretely, for each gene set we derive an enrichment score <script type="math/tex">S_k^{GSEA}</script> and a corresponding null distribution <script type="math/tex">S_{k,\boldsymbol{\pi(k)}}^{GSEA}</script> via gene set permutation.</p>
+
+<p>The normalized enrichment score <script type="math/tex">\zeta_k^{GSEA}</script> is the score divided by the expected value of the corresponding null</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq:14}
+  \zeta_k^{GSEA} = \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA}]}
+\end{equation}</script>
+
+<p>In practice, we will partition the null into positive and negative values and use the average of these to normalize the positive and negative enrichment scores, respectively.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \zeta_k^{GSEA} =
+    \begin{cases}
+      \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \geq 0]} & \text{for } S_{k}^{GSEA} \geq 0\\
+      \frac{S_k^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \lt 0]} & \text{for } S_{k}^{GSEA} \lt 0\\
+    \end{cases}
+\end{equation*} %]]></script>
+
+<p>Remember that, in addition to the gene set enrichment scores (Figure 6, blue), we will also need a normalized null distribution <script type="math/tex">\zeta_{k, \boldsymbol{\pi(k)}}^{GSEA}</script> for every gene set (Figure 6, red). Each element of a given null distribution will be determined in a similar fashion</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \zeta_{k,\pi_p}^{GSEA} =
+    \begin{cases}
+      \frac{S_{k,\pi_p}^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \geq 0]} & \text{for } S_{k,\pi_p}^{GSEA} \geq 0\\
+      \frac{S_{k,\pi_p}^{GSEA}}{E[S_{k,\boldsymbol{\pi(k)}}^{GSEA} \mid S_{k,\boldsymbol{\pi(k)}}^{GSEA} \lt 0]} & \text{for } S_{k,\pi_p}^{GSEA} \lt 0\\
+    \end{cases}
+\end{equation*} %]]></script>
+
+<p>We can now restate the null hypothesis</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    H_0^{GSEA} &: \zeta_{k}^{GSEA}, \ldots, \zeta_{k}^{GSEA}, \ldots, \zeta_{K}^{GSEA} \text{ are identically distributed and } \\
+    \zeta_{k}^{GSEA} &\sim F_0^{permutation}\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>where <script type="math/tex">F_0^{permutation}</script> is derived empirically through <script type="math/tex">\zeta_{k,\boldsymbol{\pi(k)}}^{GSEA}</script> over all gene sets.</p>
+
+<hr />
+
+<p>Given the observed and null normalized enrichment scores, the FDR can be calculated using an approach similar to that described in the previous section (equation \eqref{eq:13}).</p>
+
+  </div>
+</div>
+
+  
+  <hr/>
+  <h2>References</h2>
+  
+  <div class="reference_group" data-reflist="[19192285 15647293 15226741 20048385 15994189 22383865 12808457 20010596 16199517 23070592 26125594]"></div>
+
+
+  
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/data_analysis/gsea/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/data_analysis/gsea/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+      </div>
+    </div>
+
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Toggle sidebar"></label>
+
+
+  </body>
+</html>

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Multiple Testing &middot; Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/guide/media/favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/guide/media/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/media/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/guide/media/favicons/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-item">
+      Guide: v0.1.0
+    </div>
+    <a class="sidebar-nav-item" href="/guide/">Home</a>
+
+    
+
+    
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/case_studies/archive/">Case studies
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/presentations/archive/">Presentations
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item active"
+          href="/guide/primers/archive/">Primers
+          </a>
+
+        
+      
+    
+      <!-- List items with a valid title and page layout -->
+      
+        
+
+          
+          <a class="sidebar-nav-item"
+          href="/guide/workflows/archive/">Workflows
+          </a>
+
+        
+      
+    
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h3 class="masthead-title">
+      <a href="/guide/" title="Home">Guide</a>
+      <small>
+        <a href="http://www.pathwaycommons.org/">&middot; Pathway Commons</a>
+        
+      </small>
+      <span class="pull-right">
+        <small class="contact">
+          <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">Contact Us</a>
+        </small>
+      </span>
+    </h3>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        <li><a href="/guide/primers/archive/">primers</a></li>
+      
+    
+      
+      
+
+      
+        <li><a href="/guide/primers/statistics/">statistics</a></li>
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+       <li class="active">Multiple Testing</li>
+      
+    
+      
+      
+
+      <!-- If its the last its an /index  -->
+
+      
+    
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">Multiple Testing</h1>
+  <div class="collection">
+  <div class="document">
+    <div class="subtitle"></div>
+    <hr/>
+    <div class="linkout clearfix">
+      <ul class="list-inline pull-right">
+      <li>
+  <a href="http://twitter.com/intent/tweet?text=+http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index&via=pathwaycommons"
+  data-toggle="tooltip"
+  title="Tweet this page"
+  target="_blank" >
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+</li>
+<li>
+  <a href="https://plus.google.com/share?url=http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index"
+  data-toggle="tooltip"
+  title="Share on Google+"
+  target="_blank" >
+    <i class="fa fa-google-plus fa-2x"></i>
+  </a>
+</li>
+
+      <li></li>
+      
+      </ul>
+    </div>
+    <hr/>
+    <ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#hypothesisTestingErrors">II. Hypothesis testing errors</a></li>
+      <li class="list-unstyled"><a href="#multipleTestingControl">III. Multiple testing control</a></li>
+      <li class="list-unstyled"><a href="#controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a></li>
+      <li class="list-unstyled"><a href="#controllingFDR">V. Controlling the False Discovery Rate (FDR)</a></li>
+      <li class="list-unstyled"><a href="#appendixA">Appendix A. Proof of Lemma 1</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.</p>
+
+<p>The broad reach of these approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a <em><a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing">hypothesis test</a></em> and performing many tests simultaneously is referred to as <em>multiple testing</em> or <em>multiple comparison</em>. Multiple testing arises enrichment analyses, which draw upon databases of annotated sets of genes with shared themes and determine if there is ‘enrichment’ or ‘depletion’ in the experimentally derived gene list following perturbation entails performing tests across many gene sets increases the chance of mistaking noise as true signals.</p>
+
+<p>This goal of this section is to introduce concepts related to quantifying and controlling errors in multiple testing. By the end of this section you should:</p>
+
+<ol>
+  <li>Be familiar with the conditions in which multiple testing can arise</li>
+  <li>Understand what a Type I error and false discovery are</li>
+  <li>Be familiar with multiple control procedures</li>
+  <li>Be familiar with the Bonferroni control of family-wise error rate</li>
+  <li>Be familiar with Benjamini-Hochberg control of false discovery rates</li>
+</ol>
+
+<h2 id="ii-hypothesis-testing-errors"><a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a></h2>
+
+<p>For better or worse, hypothesis testing as it is known today represents a gatekeeper for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in <a href="#multipleTestingControl">section III</a>.</p>
+
+<h3 id="example-1-a-coin-flip">Example 1: A coin flip</h3>
+
+<p>To illustrate errors incurred in hypothesis testing, suppose we wish to assess whether a five cent coin is fair. Fairness here is defined as an equal probability of heads and tails after a toss. Our hypothesis test involves an experiment (i.e. trial) whereby 20 identically minted nickels are tossed and the number of heads counted. We take the <em>a priori</em> position corresponding to the <em>null hypothesis</em>: The nickels are fair. The null hypothesis would be put into doubt if we observed trials where the number of heads was larger (or smaller) than some predefined threshold that we considered reasonable.</p>
+
+<p>Let us pause to more deeply consider our hypothesis testing strategy. We have no notion of how many heads an unfair coin might generate. Thus, rather than trying to ascertain the unknown distribution of heads for some unfair nickel, we stick to what we do know: The <a href="/guide/primers/statistics/definitions/#distributionFunction">probability distribution</a> under the null hypothesis for a fair nickel. We then take our experimental results and compare them to this null hypothesis distribution and look for discrepancies.</p>
+
+<p>Conveniently, we can use the <a href="/guide/primers/statistics/distributions/#binomial">binomial distribution</a> to model the exact probability of observing any possible number of heads (0 to 20) in a single test where 20 fair nickels are flipped (Figure 1).</p>
+
+<p><img src="/guide/public/R/primers/statistics/multiple_testing/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" height="500" style="display: block; margin: auto;" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
+</div>
+
+<p>In an attempt to standardize our decision making, we arbitrarily set a threshold of doubt: Observing 14 or more heads in a test will cause us to label that test as ‘significant’ and worthy of further consideration. In modern hypothesis testing terms, we would ‘reject’ the null hypothesis beyond this threshold in favour of some alternative, which in this case would be that the coin was unfair. Note that in principle we should set a lower threshold in the case that the coin is unfairly weighted towards tails but omit this for simplicity.</p>
+
+<p>Recall that the calculations underlying the distribution in Figure 1 assumes an equal probability of heads and tails. Thus, if we flipped 20 coins we should observe 14 or more heads with a probability equal to the area of the bars to the right of the threshold in Figure 1. In other words, our decision threshold enables us to calculate <em>a priori</em> the probability of an erroneous rejection. In statistical terms, the probability bounded by our <em>a priori</em> decision threshold is denoted <em><script type="math/tex">\alpha</script></em> or the <em>significance level</em> and is the probability of making an error of <em>type I</em>. The probability of observing a given experimental result or anything more extreme is denoted the <em>p-value</em>. It is worth emphasizing that the significance level is chosen prior to the experiment whereas the p-value is obtained after an experiment, calculated from the experimental data.</p>
+
+<blockquote>
+  <p>Multiple testing correction methods attempt to control or at least quantify the flood of type I errors that arise when multiple hypothesis are performed simultaneously</p>
+</blockquote>
+
+<p><strong>Definition</strong> The <strong>p-value</strong> is the probability of observing a result more extreme than that observed given the null hypothesis is true.</p>
+
+<p><strong>Definition</strong> The <strong>significance level (<script type="math/tex">\alpha</script>)</strong> is the maximum fraction of replications of an experiment that will yield a p-value smaller than <script type="math/tex">\alpha</script> when the null hypothesis is true.</p>
+
+<p><strong>Definition</strong> A <strong>type I error</strong> is the incorrect rejection of a true null hypothesis.</p>
+
+<p><strong>Definition</strong> A <strong>type II error</strong> is the incorrect failure to reject a false null hypothesis.</p>
+
+<p>Typically, type I errors are considered more harmful than type II errors where one fails to reject a false null hypothesis. This is because type I errors are associated with discoveries that are scientifically more interesting and worthy of further time and consideration. In hypothesis tests, researchers bound the probability of making a type I error by <script type="math/tex">\alpha</script>, which represents an acceptable but nevertheless arbitrary level of risk. Problems arise however, when researchers perform not one but many hypothesis tests.</p>
+
+<p>Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.</p>
+
+<p><img src="/guide/public/R/primers/statistics/multiple_testing/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="400" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
+</div>
+<p><br /></p>
+
+<p>Figure 2 should show that with increasing number of tests we see trials with 14 or more heads. This makes intuitive sense: Performing more tests boosts the chances that we are going to see rare events, purely by chance. Technically speaking, buying more lottery tickets does in fact increase the chances of a win (however slightly). This means that the errors start to pile up.</p>
+
+<h3 id="example-2-pathway-analyses">Example 2: Pathway analyses</h3>
+
+<p>Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we provide a <a href="/guide/primers/functional_analysis/gsea/">primer on Gene Set Enrichment Analysis</a>.</p>
+
+<p><a href="http://software.broadinstitute.org/gsea/">Gene Set Enrichment Analysis</a> derives p-values associated with an enrichment score which reflects the degree to which a gene set is overrepresented at the top or bottom of a ranked list of genes. The nominal p-value estimates the statistical significance of the enrichment score for a single gene set. However, evaluating multiple gene sets requires correction for gene set size and multiple testing.</p>
+
+<h3 id="when-does-multiple-testing-apply">When does multiple testing apply?</h3>
+
+<h4 id="defining-the-family-of-hypotheses">Defining the family of hypotheses</h4>
+
+<p>In general, sources of multiplicity arise in cases where one considers using the same data to assess more than one:</p>
+
+<ul>
+  <li>Outcome</li>
+  <li>Treatment</li>
+  <li>Time point</li>
+  <li>Group</li>
+</ul>
+
+<p>There are cases where the applicability of multiple testing may be less clear:</p>
+
+<ul>
+  <li>Multiple research groups work on the same problem and only those successful ones publish</li>
+  <li>One researcher tests differential expression of 1 000 genes while a thousand different researchers each test 1 of a possible 1 000 genes</li>
+  <li>One researcher performs 20 tests versus another performing 20 tests then an additional 80 tests for a total of 100</li>
+</ul>
+
+<p>In these cases identical data sets are achieved in more than one way but the particular statistical procedure used could result in different claims regarding significance. A convention that has been proposed is that the collection or <em>family</em> of hypotheses that should be considered for correction are those tested in support of a finding in a single publication (Goeman 2014). For a family of hypotheses, it is meaningful to take into account some combined measure of error.</p>
+
+<h4 id="the-severity-of-errors">The severity of errors</h4>
+
+<p>The use of microarrays, enrichment analyses or other large-scale approaches are most often performed under the auspices of exploratory investigations. In such cases, the results are typically used as a first step upon which to justify more detailed investigations to corroborate or validate any significant results. The penalty for being wrong in such multiple testing scenarios is minor assuming the time and effort required to dismiss it is minimal or if claims that extend directly from such a result are conservative.</p>
+
+<p>On the other hand, there are numerous examples were errors can have profound negative consequences. Consider a clinical test applied to determine the presence of HIV infection or any other life-threatening affliction that might require immediate and potentially injurious medical intervention. Control for any errors in testing is important for those patients tested.</p>
+
+<p>The take home message is that there is no substitute for considered and careful thought on the part of researchers who must interpret experimental results in the context of their wider understanding of the field.</p>
+
+<blockquote>
+  <p><em>The concept that the scientific worker can regard himself as an inert item in a vast co-operative concern working according to accepted rules, is encouraged by directing attention away from his duty to form correct scientific conclusions, to summarize them and to communicate them to his scientific colleagues, and by stressing his supposed duty mechanically to make a succession of automatic ‘decisions’…The idea that this responsibility can be delegated to a giant computer programmed with Decision Functions belongs to a phantasy of circles rather remote from scientific research.</em></p>
+  <footnote class="pull-right">-R. A. Fisher (Goodman 1998)</footnote>
+</blockquote>
+
+<h2 id="iii-multiple-testing-control"><a href="#multipleTestingControl" name="multipleTestingControl">III. Multiple testing control</a></h2>
+
+<p>The introductory section provides an intuitive feel for the errors associated with multiple testing. In this section our goal is to put those concepts on more rigorous footing and examine some perspectives on error control.</p>
+
+<h3 id="type-i-errors-increase-with-the-number-of-tests">Type I errors increase with the number of tests</h3>
+<p>Consider a family of <script type="math/tex">m</script> independent hypothesis tests. Recall that the significance level <script type="math/tex">\alpha</script> represents the probability of making a type I error in a single test. What is the probability of <strong>at least</strong> one error in <script type="math/tex">m</script> tests?</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    P(\text{error})& = \alpha\\
+    P(\text{no error})& = 1 - \alpha\\
+    P(\text{no error in m independent tests})& = (1 - \alpha)^m\\
+    P(\text{error in m independent tests})& = 1 - (1 - \alpha)^m
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Note that in the last equation as <script type="math/tex">m</script> grows the term <script type="math/tex">(1-\alpha)^m</script> decreases and so the probability of making at least one error increases. This represents the mathematical basis for the increase probability of type I errors in multiple comparison procedures.</p>
+
+<p>A common way to summarize the possible outcomes of multiple hypothesis tests is in table form (Table 1): The total number of hypothesis tests is <script type="math/tex">m</script>; Rows enumerate the number of true (<script type="math/tex">m_0</script>) and false (<script type="math/tex">m-m_0</script>) null hypotheses; Columns enumerate those decisions on the part of the researcher to reject the null hypothesis and thereby declare it significant (<script type="math/tex">R</script>) or declare non-significant (<script type="math/tex">m-R</script>).</p>
+
+<p><strong>Table 1. Multiple hypothesis testing summary</strong></p>
+
+<p><img src="table_1.jpg" alt="image" class="img-responsive slim" /></p>
+
+<p>Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant (<script type="math/tex">V</script>). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.</p>
+
+<h2 id="iv-controlling-the-family-wise-error-rate-fwer"><a href="#controllingFWER" name="controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a></h2>
+
+<p><strong>Definition</strong> The <strong>family-wise error rate (FWER)</strong> is the probability of at least one (1 or more) type I error</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  P(V \geq 1)
+ \end{equation*}</script>
+
+<h3 id="the-bonferroni-correction">The Bonferroni Correction</h3>
+<p>The most intuitive way to control for the FWER is to make the significance level lower as the number of tests increase. Ensuring that the FWER is maintained at <script type="math/tex">\alpha</script> across <script type="math/tex">m</script> independent tests</p>
+
+<script type="math/tex; mode=display">P(V \gt 0) \leq \alpha</script>
+
+<p>is achieved by setting the significance level to <script type="math/tex">\frac{\alpha}{m}</script>.</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Fix the significance level at <script type="math/tex">\frac{\alpha}{m}</script>. Suppose that each independent test generates a p-value <script type="math/tex">p_i</script> and define <script type="math/tex">I=\{i: 1 \leq i \leq m\}</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+     P(\text{error})& = P(p_i\lt\frac{\alpha}{m} \text{ for some }i \in I)\\
+     & \leq \sum\limits_{i \in I}P(p_i\lt\frac{\alpha}{m})\text{  by Boole's Inequality}\\
+     & = \sum\limits_{i \in I}\frac{\alpha}{m}\text{  since } p_i \sim Unif(0,1) \text{ for } i \in I\\
+     & = \frac{\alpha \mid I \mid}{m}\\
+     & = \alpha
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="caveats-concerns-and-objections">Caveats, concerns, and objections</h3>
+<p>The Bonferroni correction is a very strict form of type I error control in the sense that it controls for the probability of even a single erroneous rejection of the null hypothesis (i.e. <script type="math/tex">P(V\gt0)</script>). One practical argument against this form of correction is that it is overly conservative and impinges upon statistical power (Whitley 2002b).</p>
+
+<p><strong>Definition</strong> The <strong>statistical power</strong> of a test is the probability of rejecting a null hypothesis when the alternative is true</p>
+
+<script type="math/tex; mode=display">\text{Power}=P(\text{reject null hypothesis} \mid \text{ alternative hypothesis is true})</script>
+
+<p>Indeed our discussion above would indicate that large-scale experiments are exploratory in nature and that we should be assured that testing errors are of minor consequence. We could accept more potential errors as a reasonable trade-off for identifying more significant genes. There are many other arguments made over the past few decades against using such control procedures, some of which border on the philosophical (Goodman 1998, Savitz 1995). Some even have gone as far as to call for the abandonment of correction procedures altogether (Rothman 1990). At least two arguments are relevant to the context of multiple testing involving large-scale experimental data.</p>
+
+<h4 id="1-the-composite-universal-null-hypothesis-is-irrelevant">1. The composite “universal” null hypothesis is irrelevant</h4>
+
+<p>The origin of the Bonferroni correction is predicated on the universal hypothesis that only purely random processes govern all the variability of all the observations in hand. The omnibus alternative hypothesis is that some associations are present in the data. Rejection of the null hypothesis amounts to a statement merely that at least one of the assumptions underlying the null hypothesis is invalid, however, it does not specify exactly what aspect.</p>
+
+<p>Concretely, testing a multitude of genes for differential expression in treatment and control cells on a microarray could be grounds for Bonferroni correction. However, rejecting the composite null hypothesis that purely random processes governs expression of all genes represented on the array is not very interesting. Rather, researchers are more interested in which genes or subsets demonstrate these non-random expression patterns following treatment.</p>
+
+<h4 id="2-penalty-for-peeking-and-p-hacking">2. Penalty for peeking and ‘p hacking’</h4>
+
+<p>This argument boils down to the argument: Why should one independent test result impact the outcome of another?</p>
+
+<p>Imagine a situation in which 20 tests are performed using the Bonferroni correction with <script type="math/tex">\frac{\alpha}{m}=0.0025</script> and each one is deemed ‘significant’ with each having <script type="math/tex">\text{p=0.001}</script>. For fun, we perform 80 more tests with the same p-value, but now none are significant since now our <script type="math/tex">\frac{\alpha}{m}=0.0005</script>. This disturbing result is referred to as the ‘penalty for peeking’.</p>
+
+<p>Alternatively, ‘p-hacking’ is the process of creatively organizing data sets in such a fashion such that the p-values remain below the significance threshold. For example, imagine we perform 100 tests and each results in a <script type="math/tex">p=0.001</script>. A Bonferroni-adjusted significance level is <script type="math/tex">0.0005</script> meaning none of the latter results are deemed significant. Suppose that we break these 100 tests into 5 groups of 20 and publish each group separately. In this case the significance level is <script type="math/tex">0.0025</script> and in all cases the tests are significant.</p>
+
+<h2 id="v-controlling-the-false-discovery-rate-fdr"><a href="#controllingFDR" name="controllingFDR">V. Controlling the false discovery rate (FDR)</a></h2>
+
+<p>Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant (<script type="math/tex">R</script>) with the true (<script type="math/tex">m_0</script>) and false (<script type="math/tex">m_1=m-m_0</script>) null hypotheses.</p>
+
+<p><img src="figure_3.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and false (m1=m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
+</div>
+
+<p>In an exploratory analysis, we are happy to sacrifice are strict control on type I errors for a wider net of discovery. This is the underlying rationale behind the second control procedure.</p>
+
+<h3 id="benjamini-hochberg-control">Benjamini-Hochberg control</h3>
+<p>A landmark paper by Yoav Benjamini and Yosef Hochberg (Benjamini 1995) rationalized an alternative view of the errors associated with multiple testing:</p>
+
+<blockquote>
+  <p><em>In this work we suggest a new point of view on the problem of multiplicity. In many multiplicity problems the number of erroneous rejections should be taken into account and not only the question of whether any error was made. Yet, at the same time, the seriousness of the loss incurred by erroneous rejections is inversely related to the number of hypotheses rejected. From this point of view, a desirable error rate to control may be the expected proportion of errors among the rejected hypotheses, which we term the false discovery rate (FDR).</em></p>
+</blockquote>
+
+<p><strong>Definition</strong> The <strong>false discovery proportion</strong> (<script type="math/tex">Q</script>) is the proportion of false discoveries among the rejected null hypotheses.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+      Q&=\frac{V}{V+S}\\
+       &=\frac{V}{R}
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>By convention, if <script type="math/tex">R</script> is zero then so is <script type="math/tex">Q</script>. We will only be able to observe <script type="math/tex">R</script> - the number of rejected hypotheses - and will have no direct knowledge of random variables <script type="math/tex">V</script> and <script type="math/tex">S</script>. This subtlety motivates the attempt to control the expected value of <script type="math/tex">Q</script>.</p>
+
+<p><strong>Definition</strong> The <strong>false discovery rate (FDR)</strong> <script type="math/tex">Q_e</script> is the expected value of the false discovery proportion.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    Q_e&=E \left[Q\right]\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="the-benjamini-hochberg-procedure">The Benjamini-Hochberg procedure</h3>
+
+<p>In practice, deriving a set of rejected hypotheses is rather simple. Consider testing <script type="math/tex">m</script> independent hypotheses <script type="math/tex">H_1, H_2, \ldots, H_m</script> from the associated p-values <script type="math/tex">P_1, P_2, \ldots, P_m</script>.</p>
+
+<ol>
+  <li>Sort the <script type="math/tex">m</script> p-values in ascending order.</li>
+</ol>
+
+<script type="math/tex; mode=display">P_{(1)} \leq P_{(2)} \leq \ldots \leq P_{(i)} \leq \ldots \leq P_{(m)}</script>
+
+<ul>
+  <li class="list-unstyled">Here the notation <script type="math/tex">P_{(i)}</script> indicates the <script type="math/tex">i^{th}</script> order statistic. In this case, the ordered p-values correspond to the ordered null hypotheses</li>
+</ul>
+
+<script type="math/tex; mode=display">H_{(1)}, H_{(2)}, \ldots, H_{(i)}, \ldots, H_{(m)}</script>
+
+<ol>
+  <li>
+    <p>Set <script type="math/tex">k</script> as the largest index <script type="math/tex">i</script> for which <script type="math/tex">P_{(i)}\leq\frac{i}{m} \cdot q^∗</script></p>
+  </li>
+  <li>
+    <p>Then reject the significant hypotheses <script type="math/tex">H_{(1)}, H_{(2)}, \ldots, H_{(k)}</script></p>
+  </li>
+</ol>
+
+<ul>
+  <li class="aside">
+    <h4 id="a-sketchy-proof">A sketch(y) proof</h4>
+
+    <p>Here, we provide an intuitive explanation for the choice of the BH procedure bound.</p>
+
+    <p>Consider testing <script type="math/tex">m</script> independent null hypotheses <script type="math/tex">H_i</script> from the associated p-values <script type="math/tex">P_i</script> where <script type="math/tex">i=1, 2, \ldots, m</script>. Let <script type="math/tex">X_i</script> be the p-values corresponding to the <script type="math/tex">m_0</script> true null hypotheses indexed by the set <script type="math/tex">I_0=\{i: 1 \leq i \leq m_0 \}</script>.</p>
+
+    <p>Then the overall goal is to determine the largest cut-off <script type="math/tex">T_q</script> so that the expected value of <script type="math/tex">Q</script> is bound by <script type="math/tex">q^∗</script></p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+    \begin{split}
+      E\left[Q \right] &\leq q^∗\\
+      E\left[\frac{V}{R} \right] &\leq q^∗\\
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\leq q^∗
+    \end{split}
+  \end{equation*} %]]></script>
+
+    <p>For large <script type="math/tex">m</script>, suppose that the number of false discoveries <script type="math/tex">V=m_0 \cdot T_q</script></p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+    \begin{split}
+      E\left[ \frac{ \sum_{i \in I_0} \mathbb{1}_{P_i \leq T_q} }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }\right] &\approx
+      \frac{ m_0 \cdot T_q }{ \sum_{i=1}^{m} \mathbb{1}_{P_i \leq T_q} }
+    \end{split}
+  \end{equation*} %]]></script>
+
+    <p>The largest cut-off <script type="math/tex">T_q</script> will actually be one of our p-values. In this case the number of rejections will simply be its corresponding index <script type="math/tex">i</script></p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+    \begin{split}
+       \frac{m_0 \cdot p_i}{i} &\leq q^∗
+    \end{split}
+  \end{equation*} %]]></script>
+
+    <p>Since <script type="math/tex">m_0</script> will not be known, choose the larger option <script type="math/tex">m</script> and find the largest index <script type="math/tex">i</script> so that</p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+    \begin{split}
+       \frac{m \cdot p_i}{i} &\leq q^∗\\
+       p_i &\leq \frac{i}{m} \cdot q^∗
+    \end{split}
+  \end{equation*} %]]></script>
+  </li>
+</ul>
+
+<h3 id="proof">Proof</h3>
+
+<p><strong>Theorem 1</strong> The Benjamini-Hochberg (BH) procedure controls the FDR at <script type="math/tex">q^∗</script> for independent test statistics and any distribution of false null hypothesis.</p>
+
+<p><strong>Proof of Theorem 1</strong> The theorem follows from Lemma 1 whose proof is added as  <a href="#appendixA">Appendix A</a> at the conclusion of this section.</p>
+
+<hr />
+
+<p><strong>Lemma 1</strong> Suppose there are <script type="math/tex">0 \ge m_0 \ge m</script> independent p-values corresponding to the true null hypotheses and <script type="math/tex">Z_1, \ldots, Z_{m_1}</script> are the <script type="math/tex">m_1 = m - m_0</script> p-values (as random variables) corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values <script type="math/tex">Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}</script>. Then the BH multiple testing procedure described above satisfies the inequality</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^∗ \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p><strong>Proof of Lemma 1.</strong> This is provided as <a href="#appendixA">Appendix A</a>.</p>
+
+<hr />
+
+<p>From Lemma 1, if we integrate the inequality we can state</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  E[Q] = \frac{m_0}{m}q^∗ \leq q^∗
+\end{equation*}</script>
+
+<p>and the FDR is thus bounded.</p>
+
+<h3 id="two-properties-of-fdr">Two properties of FDR</h3>
+
+<p>Let us note two important properties of FDR in relation to FWER.
+First, consider the case where all the null hypotheses are true. Then <script type="math/tex">m=m_0</script>, <script type="math/tex">s=0</script> and <script type="math/tex">v=r</script> which means that any discovery is a false discovery. By convention, if <script type="math/tex">v=0</script> then we set <script type="math/tex">Q=0</script> otherwise <script type="math/tex">Q=1</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    FDR&=E \left[Q\right]\\
+       &=\sum\limits_{\text{all q}} P(q) \cdot q\\
+       &= P(q=0)\cdot0 + P(q=1)\cdot1\\
+       &= P(q=1)\\
+       &= P(V\geq1)
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>This last term is precisely the expression for FWER. This means that when all null hypotheses are true, FDR implies control of FWER. You will often see this referred to as control in the <em>weak sense</em> which is another way of referring to the case only when all null hypotheses are true.</p>
+
+<p>Second, consider the case where only a fraction of the null hypotheses are true. Then <script type="math/tex">% <![CDATA[
+m_0 < m %]]></script> and if <script type="math/tex">v > 0</script> then <script type="math/tex">Q =\frac{v}{r} \leq 1</script>. The indicator function that takes the value 1 if there is at least one false rejection, <script type="math/tex">\mathbb{1}_{V \geq 1}</script> will never be less than Q, that is <script type="math/tex">\mathbb{1}_{V \geq 1} \geq Q</script>. Now, take expectations</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    \mathbb{1}_{V \geq 1} &\geq Q\\
+    E\left[ \mathbb{1}_{V \geq 1} \right] &\geq E[Q] = \text{FDR}
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>The key here is to note that the expected value of an indicator function is the probability of the event in the indicator</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E\left[ \mathbb{1}_{V \geq 1} \right] &= P(V \geq 1)
+      &= \text{FWER}
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>This implies that <script type="math/tex">\text{FWER} \geq \text{FDR}</script> and so FWER provides an upper bound to the FDR. When these error rates are quite different as in the case where <script type="math/tex">S</script> is large, the stringency is lower and a gain in power can be expected.</p>
+
+<h4 id="example-of-bh-procedure">Example of BH procedure</h4>
+
+<p>To illustrate the BH procedure we adapt a trivial example presented by Glickman <em>et al.</em> (Glickman 2014). Suppose a researcher performs an experiments examining differential expression of 10 genes in response to treatment relative to control. Ten corresponding p-values result, one for each test: <script type="math/tex">0.52, 0.07, 0.013, 0.0001, 0.26, 0.04, 0.01, 0.15, 0.03 \text{ and } 0.002</script>. The researcher decides to bound the FDR at 5% (<script type="math/tex">q=0.05</script>). Table 2 summarizes the ordered p-values and corresponding BH procedure calculations.</p>
+
+<p><strong>Table 2. Example BH calculations</strong></p>
+
+<p><img src="table_2.jpg" alt="image" class="img-responsive slim" /></p>
+
+<p>In this case, we examine the final column for the largest case in which <script type="math/tex">p_i \leq \frac{i}{100}\cdot0.05</script> which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our <script type="math/tex">q=0.05</script> we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.</p>
+
+<h3 id="practical-implications-of-bh-compared-to-bonferroni-correction">Practical implications of BH compared to Bonferroni correction</h3>
+
+<p>The BH procedure overcomes some of the caveats associated with FWER control procedures.</p>
+
+<p><em>The “universal” null hypothesis</em>. Control of FWER was predicated upon testing the universal null hypothesis that purely random processes accounts for the data variation. In contrast, the BH approach focuses on those individual tests that are to be declared significant among the set of discoveries <script type="math/tex">R</script>.</p>
+
+<p><em>Penalty for peeking</em> The BH procedure can accommodate the so-called “penalty for peeking” where variations in the number of tests performed alters the number of significant hypotheses. Consider an example where 20 tests are performed with <script type="math/tex">p=0.001</script>; The same p-value is derived in an additional 80 tests. In a Bonferroni correction the significance levels are <script type="math/tex">0.0025</script> and <script type="math/tex">0.0005</script> for 20 and 100 tests, respectively, rendering the latter insignificant. In contrast, the BH procedure is “scalable” as a function of varying numbers of tests: In the case where <script type="math/tex">m=100</script> we require largest <script type="math/tex">i</script> such that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    p_i &\leq \frac{i}{m}\cdot q^∗\\
+    p_i &\leq \frac{i}{100}\cdot 0.05
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>All hypotheses will be significant if we can find such a relation to hold for <script type="math/tex">p_{100}</script>. This is true for <script type="math/tex">k=100</script> such that <script type="math/tex">p_m=0.001 \leq \frac{100}{100} \cdot 0.05=0.05</script>.</p>
+
+<h3 id="caveats-and-limitations">Caveats and limitations</h3>
+
+<p>Since the original publication of the BH procedure in 1995, there have been a number of discussion regarding the conditions and limitations surrounding the use of the method for genomics data. In particular, the assumption of independence between tests is unlikely to hold in large-scale genomic measurements. We leave it to the reader to explore more deeply the various discussions surrounding the use of BH or its variants (Goeman 2014).</p>
+
+<h2 id="appendix-a-proof-of-lemma-1"><a href="#appendixA" name="appendixA">Appendix A: Proof of Lemma 1</a></h2>
+
+<p>We intend on proving Lemma 1 that underlies the BH procedure for control of the FDR. The proof is adapted from the original publication by Benjamini and Hochberg (Benjamini 1995) with variant notation and diagrams for clarification purposes. We provide some notation and restate the lemma followed by the proof.</p>
+
+<h3 id="notation">Notation</h3>
+
+<ul>
+  <li>Null hypotheses: <script type="math/tex">H_1, \ldots, H_m</script></li>
+  <li>Ordered null hypotheses: <script type="math/tex">H_{(1)}, H_{(2)}, \ldots, H_{(i)},  \ldots, H_{(m)}</script>.</li>
+  <li>P-values corresponding to null hypotheses: <script type="math/tex">P_1, \ldots, P_{m}</script>.</li>
+  <li>Ordered P-values corresponding to null hypotheses: <script type="math/tex">P_{(1)}, P_{(2)}, \ldots, P_{(i)},  \ldots, P_{(m)}</script>.</li>
+  <li>Ordered P-values corresponding to true null hypotheses: <script type="math/tex">X_1 \leq X_2 \leq \ldots \leq X_i \leq \ldots \leq X_{m_0}</script></li>
+  <li>Ordered P-values corresponding to false null hypotheses: <script type="math/tex">Z_1 \leq Z_2 \leq \ldots \leq Z_j \leq \ldots \leq Z_{m_1}</script></li>
+</ul>
+
+<h3 id="the-lemma">The lemma</h3>
+
+<p><strong>Lemma 1</strong> Suppose there are <script type="math/tex">0 \ge m_0 \ge m</script> independent p-values corresponding to the true null hypotheses and <script type="math/tex">Z_1, \ldots, Z_{m_1}</script> are the <script type="math/tex">m_1 = m - m_0</script> p-values (as random variables) corresponding to the false null hypotheses. Suppose that the p-values for the false null hypotheses take on the realized values <script type="math/tex">Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}</script>. Then the BH multiple testing procedure satisfies the inequality</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &\leq \frac{m_0}{m}q^∗ \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<hr />
+
+<p>We proceed using proof by induction. First we provide a proof for the base case <script type="math/tex">m=1</script>. Second, we assume Lemma 1 holds for <script type="math/tex">m \leq k</script> and go on to show that this holds for <script type="math/tex">m=k+1</script>.</p>
+
+<ul>
+  <li class="aside">
+    <h4 id="asides">Asides</h4>
+
+    <p>There are a few not so obvious details that we will need along the way. We present these as a set of numbered ‘asides’ that we will refer back to.</p>
+
+    <h4 id="1-distribution-of-true-null-hypothesis-p-values">1. Distribution of true null hypothesis p-values</h4>
+
+    <p>The true null hypotheses are associated with p-values <script type="math/tex">X_1, \dots, X_{m_0}</script> that are distributed according to a standard uniform distribution, that is, <script type="math/tex">X\sim U(0,1)</script>. The proof of this follows.</p>
+
+    <p>Let <script type="math/tex">P</script> be a p-value that is a random variable with realization <script type="math/tex">p</script>. Likewise let <script type="math/tex">T</script> be a test statistic with realization <script type="math/tex">t</script>. As before, our null hypothesis is <script type="math/tex">H_0</script>. The formal definition of a p-value is the probability of obtaining a test statistic at least as extreme as the one observed assuming the null hypothesis is true.</p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    p &= P(T \geq t \mid H_0)\\
+  \end{split}
+\end{equation*} %]]></script>
+
+    <p>Let’s rearrange this.</p>
+
+    <script type="math/tex; mode=display">p = 1 - P(T \lt t \mid H_0)</script>
+
+    <p>The last term on the right is just the definition of the <a href="/guide/primers/statistics/definitions/#distributionFunction">cumulative distribution function</a> (cdf) <script type="math/tex">F_0(t)</script> where the subscript denotes the null hypothesis <script type="math/tex">H_0</script>.</p>
+
+    <script type="math/tex; mode=display">p = 1 - F_0(t)</script>
+
+    <p>If the cdf is monotonic increasing then</p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    P(T \geq t \mid H_0) &= P(F_0(T) \geq F_0(t))\\
+                         &= 1 - P(F_0(T) \lt F_0(t))\\
+  \end{split}
+\end{equation*} %]]></script>
+
+    <p>The last two results allow us to say that</p>
+
+    <script type="math/tex; mode=display">p = 1 - F_0(t) = 1 - P(F_0(T) \lt F_0(t))</script>
+
+    <p>This means that <script type="math/tex">P(F_0(T) \lt F_0(t)) = F_0(t)</script> which happens when <script type="math/tex">F_0(t) \sim U(0,1)</script>.</p>
+
+    <h4 id="2-distribution-of-the-largest-order-statistic">2. Distribution of the largest order statistic</h4>
+
+    <p>Suppose that <script type="math/tex">Y_1,\ldots, Y_n</script> are <script type="math/tex">n</script> independent variates, each with cdf <script type="math/tex">F(y)</script>. Let <script type="math/tex">F_{(i)}(y)</script> for <script type="math/tex">i=1,\ldots,n</script> denote the cdf of the <script type="math/tex">i^{th}</script> order statistic <script type="math/tex">Y_{(i)}</script>. Then the cdf of the largest order statistic <script type="math/tex">Y_{(n)}</script> is given by</p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    F_{(n)}(y) &= P(Y_{(n)} \leq y)\\
+             &= P(\text{all }Y_i \leq y) = F^n(Y)\\
+  \end{split}
+\end{equation*} %]]></script>
+
+    <p>Thus the corresponding <a href="/guide/primers/statistics/definitions/#probabilityFunction">probability mass function</a> <script type="math/tex">f_n(y)</script> is</p>
+
+    <script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    f_{(n)}(y) &= \frac{d}{dy}F_{(n)}(y)\\
+             &= nF^{n-1}(y)\\
+  \end{split}
+\end{equation*} %]]></script>
+
+    <p>In the particular case that the cdf is for a standard uniform distribution <script type="math/tex">Y\sim U(0,1)</script> then this simplifies to</p>
+
+    <script type="math/tex; mode=display">f_{(n)}(y) = ny^{n-1}</script>
+  </li>
+</ul>
+
+<h3 id="base-case">Base case</h3>
+
+<p>Suppose that there is a single null hypothesis <script type="math/tex">m=1</script>.</p>
+
+<p><strong>Case 1: <script type="math/tex">m_0=0</script>.</strong></p>
+
+<p>Since <script type="math/tex">m_0=0</script> then there are no true null hypotheses and so no opportunity for false rejections <script type="math/tex">V=0</script>, thus <script type="math/tex">Q=V/R=0</script>. So Lemma 1 holds for any sensible <script type="math/tex">q^∗</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1] &= 0 \leq \frac{m_0}{m}q^∗ = 0  &\text{ since }m_0=0 \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p><strong>Case 2: <script type="math/tex">m_0=1</script>.</strong></p>
+
+<p>Since <script type="math/tex">m_0=1</script> then there is a single true null hypothesis (<script type="math/tex">X_1</script>). This could be accepted <script type="math/tex">V=R=Q=0</script> or rejected <script type="math/tex">V=R=Q=1</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1] &= 0 \cdot P(Q=0) + 1 \cdot P(Q=1)\\
+                      &= P(X_{(1)} \leq \frac{1}{1}q^∗) &\text{ According to the BH procedure }\\
+                      &= F_X(q^∗)= q^∗ &\text{ Aside 1: } X\sim U(0,1)\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="induction">Induction</h3>
+
+<p>Assume Lemma 1 holds for <script type="math/tex">m \leq k</script> and go on to show that this holds for <script type="math/tex">m=k+1</script>.</p>
+
+<p><strong>Case 1: <script type="math/tex">m_0=0</script>.</strong></p>
+
+<p>Since <script type="math/tex">m_0=0</script> then there are no true null hypotheses and so no opportunity for false rejections <script type="math/tex">V=0</script>, thus <script type="math/tex">Q=V/R=0</script>. So Lemma 1 holds for any sensible <script type="math/tex">q^∗</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Q \mid Z_1=z_1, \ldots, Z_m=z_m] &= 0 \leq \frac{m_0}{k+1}q^∗ \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p><strong>Case 2: <script type="math/tex">m_0\gt0</script>.</strong></p>
+
+<p>Define <script type="math/tex">j_0</script> as the largest index <script type="math/tex">0 \leq j \leq m_1</script> for the p-values corresponding to the false null hypotheses satisfying</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \begin{split}
+    z_j \leq \frac{m_0+j}{k+1}q^∗\\
+  \end{split}
+\end{equation*}</script>
+
+<p>Define <script type="math/tex">z^\prime</script> as the value on the right side of the inequality at <script type="math/tex">j=j_0</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    z^\prime &= \frac{m_0+j_0}{k+1}q^∗\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Moving forward, we will condition the Lemma 1 inequality on the largest p-value for the true null hypotheses <script type="math/tex">X_{m_0}=p</script> by integrating over all possible values <script type="math/tex">p\in[0,1]</script>. Note that we’ve omitted the parentheses for order statistics with the true and false null hypothesis p-values. We’ll break the integral into two using <script type="math/tex">z^\prime</script> as the division point. The first integral <script type="math/tex">p\in[0,z^\prime]</script> will be straightforward while the second <script type="math/tex">p\in[z^\prime,1]</script> will require a little more nuance. The sum of the two sub-integrals will support Lemma 1 as valid for <script type="math/tex">m=k+1</script>.</p>
+
+<p>Condition on the largest p-value for the true null hypotheses <script type="math/tex">X_{m_0}=p</script> and split the integral on <script type="math/tex">z^\prime</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+     E[Q \mid Q_1=q_1, \ldots, Q_{m_1}=q_{m_1}]
+        &= \int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &+ \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p><strong>The first integral</strong></p>
+
+<p>In the case of the first integral <script type="math/tex">X_{m_0}=p \in [0,z^\prime]</script>. It is obvious that all p-values corresponding to the true null hypotheses are less than <script type="math/tex">z^\prime</script>, that is <script type="math/tex">p \leq z^\prime</script>. By the BH-procedure this means that all <script type="math/tex">m_0</script> true null hypotheses are rejected regardless of order. Also, we know that from the definition of <script type="math/tex">z^\prime</script>, there will be <script type="math/tex">m_0+j_0</script> total hypotheses that are rejected (i.e. the numerator). We can express these statements mathematically.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+     E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] &= \frac{m_0}{m_0+j_0}\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Substitute this back into the first integral.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+        &\int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} f_{X_{m_0}}(p) dp\\
+        &=\int_{0}^{z^\prime} \frac{m_0}{m_0+j_0} m_0p^{m_0-1} dp \quad \text{  Aside 2 }\\
+        &=\frac{m_0}{m_0+j_0} (z^{\prime})^{m_0} \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Finally let’s extract a <script type="math/tex">z^\prime</script> and substitute it with its definition.</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+  \frac{m_0}{m_0+j_0} z^{\prime}(z^{\prime})^{m_0-1} \leq \frac{m_0}{m_0+j_0}\frac{m_0+j_0}{k+1}q^∗ (z^{\prime})^{m_0-1} = \frac{m_0}{k+1}q^∗ (z^{\prime})^{m_0-1}
+\end{equation}</script>
+
+<p><strong>The second integral</strong></p>
+
+<p>Let us remind ourselves what we wish to evaluate.</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \begin{split}
+      \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+  \end{split}
+\end{equation*}</script>
+
+<p>The next part of the proof relies on a description of p-values and indices but is often described in a very compact fashion. Keeping track of everything can outstrip intuition, so we pause to reflect on a schematic of the ordered false null hypothesis p-values and relevant indices (Figure 4).</p>
+
+<p><img src="figure_bh_indices.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 4. Schematic of p-values and indices.</strong> Shown are the p-values ordered in ascending value from left to right corresponding to the false null hypotheses (z). Indices j0 and m1 for true null hypotheses are as described in main text. Blue segment represents region where z' can lie. Green demarcates regions larger than z' where p-values corresponding to hypotheses (true or false) that will not be rejected lie.
+</div>
+
+<p>Let us define the set of p-values that may be subject to rejection, that is, smaller than <script type="math/tex">z^\prime</script>. Another way to look at this is to define the set of p-values that will not be rejected, that is, larger than <script type="math/tex">z^\prime</script>.</p>
+
+<p>Consider the set of possible values for <script type="math/tex">X_{m_0}</script> defined by the criteria <script type="math/tex">z_{j_0} \lt z_t \leq X_{m_0}=p \lt z_{t+1}</script> where <script type="math/tex">t \in [j_0+1, m_1-1]</script>. In Figure 4 this would correspond to the half-open set of intervals to the right of <script type="math/tex">z_{j_0+1}</script>. If we set <script type="math/tex">j=j_0</script>, then this same region includes the set of false null hypothesis p-values with indices <script type="math/tex">j+1, \ldots, m_1</script>. We need to consider one more region defined by <script type="math/tex">z_{j_0} \leq z^\prime \lt X_{m_0}=p \lt z_{j_0+1}</script>. In Figure 4 this is the green segment to the right of <script type="math/tex">z^\prime</script>.</p>
+
+<p>Let us discuss the regions we just described that are larger than <script type="math/tex">z^\prime</script>. By the BH procedure, these bound p-values for true and false null hypotheses that will not be rejected. Thus, we will not reject neither the true null hypothesis corresponding to <script type="math/tex">X_{m_0}=p</script> nor any of the false null hypotheses corresponding to <script type="math/tex">z_{j+1}, \ldots, z_{m_1}</script>.</p>
+
+<p>So what is left over in terms of null hypotheses? First we have the set of true null hypotheses <script type="math/tex">m_0</script> less the largest <script type="math/tex">X_{m_0}</script> giving a total of <script type="math/tex">m_0-1</script>. Second we have the set of false null hypotheses excluding the ones we just described, that is, <script type="math/tex">z_1, \ldots, z_j</script> for a total of <script type="math/tex">j</script>. This means that there are <script type="math/tex">m_0+j-1</script> null hypotheses subject to rejection. Let us provide some updated notation to describe this subset.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+      m_0^\prime &= m_0 - 1 \\
+      m_1^\prime &= j\\
+      m^\prime &= m_0 + j - 1 \text{ subject to  } m^\prime \lt k+1=m\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>If we combine and order just this subset of null hypotheses, then according to the BH procedure any given null hypothesis <script type="math/tex">H_{(i)}</script> will be rejected if there is a <script type="math/tex">t</script> such that <script type="math/tex">i \leq t \leq m_0+j-1</script> for which</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \begin{split}
+      P_{(t)} \leq \frac{t}{k+1}q^∗
+  \end{split}
+\end{equation*}</script>
+
+<p>Now comes some massaging of the notation which may seem complicated but has a purpose: We wish to use the induction assumption on the expectation <script type="math/tex">E[Q \mid X_{m_0}=p, Z_1=z_1 \ldots,  Z_{m_1}=z_{m_1}]</script> inside the second integral but we will need to somehow rid ourselves of the pesky <script type="math/tex">X_{m_0}=p</script> term. This motivates the definition of transformed variables for the true and false null hypotheses.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+      X_i^\prime &= \frac{X_i}{p},\qquad &i=1,2,\ldots,m_0-1 \\
+      Z_i^\prime &= \frac{Z_i}{p},\qquad &i=1,2,\ldots,j \\
+      q^{∗\prime} &= \frac{m_0+j-1}{(k+1)p}q^∗\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Convince yourself that the <script type="math/tex">X_i^\prime</script> are ordered statistics of a set of <script type="math/tex">m_0-1</script> independent <script type="math/tex">U(0,1)</script> random variables while <script type="math/tex">Z_i^\prime</script> correspond to the <script type="math/tex">j</script> false null hypotheses subject to <script type="math/tex">0 \leq Z_i^\prime \leq 1</script>. Also convince yourself that for <script type="math/tex">Y=\{X, Z\}</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+      Y_i^\prime &\leq \frac{i}{m^\prime}q^{∗\prime} \Longleftrightarrow  Y_i &\leq \frac{i}{m}q^∗\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>In other words, the false discovery proportion of <script type="math/tex">X_1,\ldots,X_{m_0},Z_1,\ldots,Z_{m_1}</script> at level <script type="math/tex">q^∗</script> is equivalent to testing <script type="math/tex">X_1^\prime,\ldots,X_{m_0-1}^\prime,Z_1^\prime,\ldots,Z_{j}^\prime</script> at <script type="math/tex">q^{∗\prime}=\frac{m_0+j-1}{(k+1)p}q^∗</script>.</p>
+
+<p>Now we are ready to tackle the expectation inside the integral.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+      &E[Q \mid X_{m_0} =p, Z_1=z_1 \ldots,  Z_{m_1}=z_{m_1}]\\
+      &=E\left[Q \mid Z_1^\prime=\frac{z_1}{p} \ldots,  Z_{j}^\prime=\frac{z_j}{p}\right]\\
+      &=\frac{m_0^\prime}{m^\prime}q^{∗\prime} \qquad \text{Using the induction hypothesis}\\
+      &=\frac{m_0-1}{m_0+j-1}\frac{m_0+j-1}{(k+1)p}q^∗\\
+      &=\frac{m_0-1}{(k+1)p}q^∗\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Let us now place this result inside the original integral.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}
+  \begin{split}
+      &\int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^∗ \cdot f_{X_{m_0}}(p) dp\\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{(k+1)p}q^∗ \cdot m_0p^{m_0-1} dp \quad \text{ Aside 2 } \\
+      &=\int_{z^\prime}^{1} \frac{m_0-1}{k+1}q^∗ \cdot m_0p^{m_0-2} dp \\
+      &= \frac{m_0}{k+1}q^∗ \{1-(p^{\prime})^{m_0-1}\}\\
+  \end{split}
+\end{equation} %]]></script>
+
+<p>Let’s now add the results of the two half integrals <script type="math/tex">(1)</script> and <script type="math/tex">(2)</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+     E[Q \mid Q_1=q_1, \ldots, Q_{m_1}=q_{m_1}]
+        &= \int_{0}^{z^\prime} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &+ \int_{z^\prime}^{1} E[ Q \mid X_{m_0}=p, Z_1=z_1, \ldots, Z_{m_1}=z_{m_1}] \cdot f_{X_{m_0}}(p) dp\\
+        &= \frac{m_0}{k+1}q^∗ (z^{\prime})^{m_0-1} + \frac{m_0}{k+1}q^∗ \{1-(z^{\prime})^{m_0-1}\}\\
+        &= \frac{m_0}{k+1}q^∗ = \frac{m_0}{m}q^∗
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Thus, Lemma 1 holds for the base case <script type="math/tex">m=1</script> and by the induction hypothesis all <script type="math/tex">m \leq k</script>. Since we have shown that Lemma 1 holds for <script type="math/tex">m=k+1</script>, by induction we claim that Lemma 1 holds for all positive integers <script type="math/tex">k</script> and the proof is complete.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Benjamini Y and Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Roy. Stat. Soc., v57(1) pp289-300, 1995.</li>
+  <li>Glickman ME <em>et al.</em> False Discovery rate control is a recommended alternative to Bonferroni-type adjustments in health studies. Journal of Clinical Epidemiology, v67, pp850-857, 2014.</li>
+  <li>Goeman JJ and Solari A. Multiple hypothesis testing in genomics. Stat. Med., 33(11) pp1946-1978, 2014.</li>
+  <li>Goodman SN. Multiple Comparisons, Explained. Amer. J. Epid., v147(9) pp807-812, 1998.</li>
+  <li>Rothman KJ. No Adjustments Are Needed for Multiple Comparisons. Epidemiology, v1(1) pp. 43-46, 1990.</li>
+  <li>Savitz DA and Oshlan AF. Multiple Comparisons and Related Issues in the Interpretation of Epidemiologic Data. Amer. J. Epid., v142(9) pp904 -908, 1995.</li>
+  <li>Whitley E and Ball J. Statistics review 3: Hypothesis testing and P values. Critical Care, v6(3) pp. 222-225, 2002a.</li>
+  <li>Whitley E and Ball J. Statistics review 4: Sample size calculations. Critical Care, v6(4) pp. 335-341, 2002b.</li>
+</ul>
+
+  </div>
+</div>
+
+  
+
+  
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/multiple_testing/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/statistics/multiple_testing/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+      </div>
+    </div>
+
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Toggle sidebar"></label>
+
+
+  </body>
+</html>

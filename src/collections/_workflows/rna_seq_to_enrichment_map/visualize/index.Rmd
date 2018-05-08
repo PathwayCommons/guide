@@ -35,7 +35,6 @@ comments: yes
 {% assign process_data = workflow | where: 'title' , 'Process Data' | first %}
 {% assign identify_pathways = workflow | where: 'title' , 'Identify Pathways' | first %}
 {% assign visualize = workflow | where: 'title' , 'Visualize' | first %}
-{% assign bad_blood = site.case_studies | where: 'title' , 'Bad Blood' | first %}
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
@@ -389,8 +388,6 @@ Cytoscape affords the user a great deal of control over [styles](http://manual.c
 ## <a href="#interpretation" name="interpretation">IV. Interpretation</a>
 
 So what now? Below, we list some helpful tips to aid you in extracting value from an enrichment analysis.
-
-> Check out a [case study]({{site.baseurl}}{{ bad_blood.url | remove: 'index' }}){: target="_blank"} to see how an Enrichment Map workflow was used to provide the basis for experimentally verifiable, mechanistic insights into cell function
 
 ### 1. Build trust
 
