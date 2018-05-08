@@ -1,6 +1,7 @@
 ---
 title: Data Analysis
-subtitle: Learn how to perform end-to-end data analyses
+subtitle: Learn how to analyze your experimental data
+splash: Introductions to common experimental data analysis procedures explained in-depth. <ul><li>Gene Set Enrichment Analysis</li><li>RNA sequencing</li></ul>
 layout: panelista
 category: data_analysis
 cover: cover.png

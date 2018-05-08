@@ -34,7 +34,7 @@ class PanelGroup extends React.Component {
         }),
         index: index,
         category: category
-      })
+      });
     });
 
     // function qNext
@@ -44,11 +44,11 @@ class PanelGroup extends React.Component {
 
       if( o ){
         o.deferred
-          .fail(function( xml, textStatus, jqXHR ){
+          .fail(function( xml, textStatus ){
             qNext();
           });
         o.deferred
-          .done(function( xml, textStatus, jqXHR ){
+          .done(function( xml, textStatus ){
             recombined.push({
               xml:      xml,
               category: o.category,

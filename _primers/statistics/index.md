@@ -1,6 +1,7 @@
 ---
 title: Statistics
 subtitle: Basic concepts illustrated with examples
+splash: Reviews of basic concepts in probability along with concepts relevant to many data analysis procedures. <ul><li>Fisher's Exact Test</li><li>Multiple testing</li></ul>
 layout: panelista
 category: statistics
 cover: cover.png
