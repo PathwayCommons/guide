@@ -3,7 +3,6 @@ title: Primers
 subtitle: Theory and principles in depth
 layout: panelista
 icon: icons/document.png
-permalink: /:collection/:path/
 categories:
   - data_analysis
   - statistics

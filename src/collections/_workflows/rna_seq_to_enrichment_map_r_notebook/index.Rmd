@@ -647,7 +647,7 @@ The matrix `brca_hd_tep_cls` has the following format, assuming N samples:
 
 ### Gene set database
 
-A [gene set database](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats) is a text file that describes names of gene sets and one of more gene IDs that are in that gene set. We will be using the [Gene Matric Transposed (GMT)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29) format.
+A [gene set database](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats) is a text file that describes names of gene sets and one of more gene IDs that are in that gene set. We will be using the [Gene Matrix Transposed (GMT)](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29) format.
 
 For your convenience, gene set database (GMT) files for [human, mouse and rat are curated by the Bader lab](http://download.baderlab.org/EM_Genesets/) on a regular basis from various sources. In this instance we provide [`Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt`](http://download.baderlab.org/EM_Genesets/August_01_2017/Human/symbol/Human_GOBP_AllPathways_no_GO_iea_August_01_2017_symbol.gmt) which is a database of human gene sets that does not include terms inferred from electronic annotations (iea).
 

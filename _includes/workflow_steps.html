@@ -1,7 +1,7 @@
 {% for doc in docs %}
 {% unless doc.status == 'draft' %}
-{% if doc.url | split: '/' | last == 'index' %}
-  {% assign url = doc.url | remove: 'index' %}
+{% if doc.url | split: '/' | last == 'index.html' %}
+  {% assign url = doc.url | remove: 'index.html' %}
   <div class="media">
     <div class="media-left">
       <span class="badge label-primary">Step {{ doc.order }}</span>

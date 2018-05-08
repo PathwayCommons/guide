@@ -209,7 +209,7 @@
 
 <h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
 
-<p><a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">Previously</a>, we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?</p>
+<p><a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/.html">Previously</a>, we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?</p>
 
 <p>In this workflow step, we describe Enrichment Map (EM), a visual tool that simplifies the display of a list of gene sets with a large degree of redundancy. By then end of this discussion you should:</p>
 
@@ -229,7 +229,7 @@
 
 <p><img src="figure_visualize_gsea_report.png" alt="image" class="img-responsive slim" /></p>
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong> An excerpt of the report taken from the results of <a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">Identify Pathways</a>.
+  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong> An excerpt of the report taken from the results of <a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/.html">Identify Pathways</a>.
 </div>
 
 <p><strong>Table 1. Enrichment report for BrCa (na_pos phenotype)</strong></p>
@@ -344,18 +344,18 @@
 <ul>
   <li class="list-unstyled"><strong>View underlying gene expression</strong>
     <ul>
-      <li>This data originates from the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/#output" target="_blank">expression file</a> provided in workflow step 1: Process Data</li>
-      <li>The ‘leading edge’ genes are those that played a prominent role in the GSEA signal and can be viewed alongside the heatmap when the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/#output" target="_blank">rank file</a> is available. We will load this file but won’t discuss it further.</li>
+      <li>This data originates from the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/.html#output" target="_blank">expression file</a> provided in workflow step 1: Process Data</li>
+      <li>The ‘leading edge’ genes are those that played a prominent role in the GSEA signal and can be viewed alongside the heatmap when the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/.html#output" target="_blank">rank file</a> is available. We will load this file but won’t discuss it further.</li>
     </ul>
   </li>
   <li class="list-unstyled"><strong>Group similar gene sets</strong>
     <ul>
-      <li>This data originates from the <a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/#output" target="_blank">enrichment reports</a> generated in workflow step 2: Identify Pathways</li>
+      <li>This data originates from the <a href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/.html#output" target="_blank">enrichment reports</a> generated in workflow step 2: Identify Pathways</li>
     </ul>
   </li>
   <li class="list-unstyled"><strong>Color classes/phenotypes</strong>
     <ul>
-      <li>These assignments originate from the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/#output" target="_blank">phenotype file</a> provided in workflow step 1: Process Data</li>
+      <li>These assignments originate from the <a href="/guide/workflows/rna_seq_to_enrichment_map/process_data/.html#output" target="_blank">phenotype file</a> provided in workflow step 1: Process Data</li>
     </ul>
   </li>
 </ul>
@@ -421,25 +421,25 @@
 
 <h4 id="gmt-file">GMT File</h4>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/.htmlHuman_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt.zip" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a></p>
 
 <h4 id="expression">Expression</h4>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_expression.txt" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/.htmlbrca_hd_tep_expression.txt" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a></p>
 
 <h4 id="enrichments">Enrichments</h4>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_brca.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/.htmlgsea_report_for_brca.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a></p>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_hd.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/.htmlgsea_report_for_hd.xls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a></p>
 
 <h4 id="ranks">Ranks</h4>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_ranks.rnk" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/.htmlbrca_hd_tep_ranks.rnk" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a></p>
 
 <h4 id="classes">Classes</h4>
 
-<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_phenotype.cls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/.htmlbrca_hd_tep_phenotype.cls" type="button" class="btn btn-info btn-lg btn-block" download=""><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a></p>
 
 <h3 id="analysis">Analysis</h3>
 

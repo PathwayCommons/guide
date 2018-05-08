@@ -2,8 +2,8 @@
 
   {% for doc in docs %}
   {% unless doc.url contains 'archive' or doc.draft %}
-  {% if doc.url | split: '/' | last == 'index' %}
-    {% assign url = doc.url | remove: 'index' %}
+  {% if doc.url | split: '/' | last == 'index.html' %}
+    {% assign url = doc.url | remove: 'index.html' %}
     <div class="archive list-group-item">
       <a href="{{ site.baseurl }}{{ url }}">
         <div class="list-group-item-text">
