@@ -1,7 +1,6 @@
 ---
 title: "Preview"
 subtitle: Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.
-order: 0
 date: '2017-05-23'
 figures:
   figure_1: figure_processdata_em_overview.jpg

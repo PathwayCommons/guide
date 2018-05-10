@@ -46,7 +46,7 @@ comments: yes
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-[Previously]({{site.baseurl}}{{ identify_pathways.url | remove:'index' }}), we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?
+[Previously]({{site.baseurl}}{{ identify_pathways.url | remove:'index.html' }}), we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?
 
 In this workflow step, we describe Enrichment Map (EM), a visual tool that simplifies the display of a list of gene sets with a large degree of redundancy. By then end of this discussion you should:
 
@@ -64,7 +64,7 @@ We used GSEA to distill gene sets enriched in the underlying differences in RNA 
 
 ![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong> An excerpt of the report taken from the results of <a href="{{site.baseurl}}{{identify_pathways.url | remove:'index' }}">Identify Pathways</a>.
+  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong> An excerpt of the report taken from the results of <a href="{{site.baseurl}}{{identify_pathways.url | remove:'index.html' }}">Identify Pathways</a>.
 </div>
 
 **Table 1. Enrichment report for BrCa (na_pos phenotype)**
@@ -118,15 +118,15 @@ It should be immediately apparent from Figure 3 that the Enrichment Map app prov
 
   - {:.list-unstyled} **View underlying gene expression**
     - This data originates from the [expression file]({{site.baseurl}}{{ process_data.url | remove
-    : 'index' }}#output){:target="_blank"} provided in workflow step 1: Process Data
+    : 'index.html' }}#output){:target="_blank"} provided in workflow step 1: Process Data
     - The 'leading edge' genes are those that played a prominent role in the GSEA signal and can be viewed alongside the heatmap when the [rank file]({{site.baseurl}}{{process_data.url | remove
-    : 'index' }}#output){:target="_blank"} is available. We will load this file but won't discuss it further.
+    : 'index.html' }}#output){:target="_blank"} is available. We will load this file but won't discuss it further.
   - {:.list-unstyled} **Group similar gene sets**
     - This data originates from the [enrichment reports]({{site.baseurl}}{{identify_pathways.url | remove
-    : 'index' }}#output){:target="_blank"} generated in workflow step 2: Identify Pathways
+    : 'index.html' }}#output){:target="_blank"} generated in workflow step 2: Identify Pathways
   - {:.list-unstyled} **Color classes/phenotypes**
     - These assignments originate from the [phenotype file]({{site.baseurl}}{{process_data.url | remove
-    : 'index' }}#output){:target="_blank"} provided in workflow step 1: Process Data
+    : 'index.html' }}#output){:target="_blank"} provided in workflow step 1: Process Data
 
 <div class="alert alert-info text-justify" role="alert">
   Take a moment to reflect on how the previous workflow step outputs are dependencies for the Enrichment Map. In particular, review your understanding of what the rank file, phenotype file, enrichment reports and rank file contain and how they were obtained. This will ease the process of creating and understanding what the Enrichment Map results mean.
@@ -183,30 +183,30 @@ Below we provide the dependencies that will be loaded into the Enrichment Map ap
 #### GMT File
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index' }}{{ identify_pathways.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
+    : 'index.html' }}{{ identify_pathways.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
 
 #### Expression
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index' }}{{ process_data.data.expression }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
+    : 'index.html' }}{{ process_data.data.expression }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
 
 #### Enrichments
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index'  }}{{ identify_pathways.data.report_brca }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_brca }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a>
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index'  }}{{ identify_pathways.data.report_hd }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_hd }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a>
 
 #### Ranks
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+    : 'index.html' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
 
 #### Classes
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index' }}{{ process_data.data.phenotype }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
+    : 'index.html' }}{{ process_data.data.phenotype }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
 
 ### Analysis
 

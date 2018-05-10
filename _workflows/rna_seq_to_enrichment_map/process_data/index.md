@@ -34,8 +34,6 @@ reflist:
 comments: yes
 ---
 
-{% assign rna_sequencing_analysis = site.primers | where: 'title' , 'RNA Sequencing Analysis' | first %}
-
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)
@@ -227,7 +225,7 @@ We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains
 
 With our RNA-Seq count files and metadata in-hand, the true work involved at this stage is assigning a rank to each RNA species that based on some measure of differential RNA expression. Rather than provide a detailed discussion of the concerns surrounding differential expression testing, we provide a thumbnail sketch of the tasks involved in achieving this goal.
 
-> We refer the reader to our primer on [RNA sequencing analysis]({{ site.baseurl }}{{ rna_sequencing_analysis.url | remove: 'index' }}){:target="_blank"} for a detailed description of the theory underlying the processing steps described here.
+> We refer the reader to our primer on RNA sequencing analysis for a detailed description of the theory underlying the processing steps described here.
 
 #### 1. Data wrangling
 

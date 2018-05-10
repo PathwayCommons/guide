@@ -40,11 +40,11 @@ comments: yes
 <hr/>
 
 ## <a href="#goals" name="goals">I. Goals</a>
-[Previously]({{ site.baseurl }}{% link _workflows/rna_seq_to_enrichment_map/process_data/index.md %}), we introduced a study by Best *et al.* (Best 2015) that examined the feasibility of using platelet transcriptomes to distinguish individuals diagnosed with breast cancer (BrCa) from healthy donors (HD). The workflow step took in RNA-Seq counts and metadata describing the samples (i.e. HD or  BrCa) and analyzed the data for gene-wise differential expression (DE). One of the outputs from that step is a list of each RNA species and a respective rank, calculated from the DE test. In brief, the magnitude of rank is proportional to the 'rareness' of a  difference in RNA counts at least as large as that observed, *assuming no association between sample class assignment and RNA count*.
+Previously, we introduced a study by Best *et al.* (Best 2015) that examined the feasibility of using platelet transcriptomes to distinguish individuals diagnosed with breast cancer (BrCa) from healthy donors (HD). The workflow step took in RNA-Seq counts and metadata describing the samples (i.e. HD or  BrCa) and analyzed the data for gene-wise differential expression (DE). One of the outputs from that step is a list of each RNA species and a respective rank, calculated from the DE test. In brief, the magnitude of rank is proportional to the 'rareness' of a  difference in RNA counts at least as large as that observed, *assuming no association between sample class assignment and RNA count*.
 
 > Note: For the purposes of this discussion, we will use the terms 'pathway' and 'gene set' interchangeably. It is more appropriate to use the term 'pathway' to refer to gene set components that enact a change or product (e.g. signal transduction, metabolism).
 
-In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to sift out pathways from the underlying alterations in gene expression (Figure 1). The pathways that emerge from this analysis will be passed on to [workflow step 3 (Visualize)]({{ site.baseurl }}/{{ visualize.url | remove: 'index' }}){: target="_blank"} where we attempt to simplify their interpretation using the Enrichment Map visualization tool.
+In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to sift out pathways from the underlying alterations in gene expression (Figure 1). The pathways that emerge from this analysis will be passed on to the next workflow step where we attempt to simplify their interpretation using the Enrichment Map visualization tool.
 
 By then end of this discussion you should:
 
@@ -61,7 +61,7 @@ By then end of this discussion you should:
 
 ## <a href="#background" name="background">II. Background</a>
 
-A detailed description of GSEA is beyond the scope of this section. For a more technical explanation please refer to our [GSEA primer]({{site.baseurl}}{{ gsea.url | remove: 'index' }}){: target="_blank"}. Recall that, in addition to a rank file, GSEA requires a set of candidate gene sets in the form of a gene set database file (Figure 1). Below we describe a typical gene set database and provide an extremely brief overview for how GSEA operates.
+A detailed description of GSEA is beyond the scope of this discussion. Recall that, in addition to a rank file, GSEA requires a set of candidate gene sets in the form of a gene set database file (Figure 1). Below we describe a typical gene set database and provide an extremely brief overview for how GSEA operates.
 
 ### Is there a difference between 'gene sets' and 'pathways'?
 
@@ -152,12 +152,12 @@ In this workflow step, we will use GSEA to generate two files that report enrich
 |EUKARYOTIC TRANSLATION ELONGATION | ... | 82 | -0.9144994 | -3.0786333 | 0 | 0 | 0 |
 |... | ... | ... | ... | ... | ... | ... | ... |
 
-[Previously]({{ site.baseurl }}/{{ process_data.url | remove: 'index' }}), we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each 'phenotype':
+Previously, we compared RNA counts in BrCa relative to HD. Accordingly, GSEA will provide one report for each class, or in GSEA terminology, each 'phenotype':
 
 1. Report for BrCa enrichment - Pathways that are enriched in BrCa relative to HD
 2. Report for HD enrichment - Pathways that are enriched in HD relative to BrCa
 
-These reports are the dependencies for the next [workflow step 'Visualize']({{site.baseurl}}/{{ visualize.url | remove: 'index' }}) where we use software to view and interact with these enriched pathways in a manner that is far more interpretable than a list of output.
+These reports are the dependencies for the next workflow step where we use software to view and interact with these enriched pathways in a manner that is far more interpretable than a list of output.
 
 #### Software requirements
 
@@ -183,9 +183,9 @@ Launch the GSEA application. You will see the GSEA logo splash then the applicat
 
 #### Ranked gene list
 
-This is the output from the [previous step]({{site.baseurl}}{{process_data.url | remove: 'index' }}).
+This is the output from the previous step.
 
-<a href="{{ site.baseurl }}{{ process_data.url | remove: 'index' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+<a href="{{ site.baseurl }}{{ process_data.url | remove: 'index.html' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
 
 
 #### Gene set database
