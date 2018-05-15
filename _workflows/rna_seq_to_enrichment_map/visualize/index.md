@@ -402,11 +402,11 @@ Perhaps we've noticed an interesting pathway not previously reported in our cont
 
 > Recall that our p-values for differential gene expression do not provide any information about the magnitude of the expression differences.
 
-One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES). This leading edge can be easily seen in the `Table Panel`, `Heat Map` tab by selecting `GSEA ranking` from the `Sorting` drop-down (Figure 16).
+One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES) (Figure 16).
 
  ![image]({{ page.figures.figure_16 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 16. Leading edge analysis for IL-5 signal transduction pathway.</strong> Select the <code>GSEA Ranking</code> option from the <code>Sorting</code> drop-down. Genes of the gene set that contribute most to the enrichment score - the 'leading edge' - are highlighted in yellow.
+  <strong>Figure 16. Leading edge analysis for IL-5 signal transduction pathway.</strong> Genes of the gene set that contribute most to the enrichment score - the 'leading edge' - are highlighted in yellow.
   <div class="text-left">
     <a type="button" class="btn btn-info" href="{{ page.figures.figure_16 }}" target="_blank">Open in new window</a>
   </div>
