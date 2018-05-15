@@ -74,6 +74,20 @@ img.left {
   display: none;
 }
 
+.numberCircle {
+  border-radius: 50%;
+  width: 2.3em;
+  height: 2.3em;
+  padding: 0.3em;
+  background: #fff;
+  border: 2px solid $brand-primary;
+  color: $brand-primary;
+  text-align: center;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: bold;
+}
+
 
 /*
  * Modified Bootstrap views
@@ -124,7 +138,7 @@ img.left {
       }
 
       .list-group-item-reference {
-        font-size: 0.8rem;          
+        font-size: 0.8rem;
       }
 
       p {
@@ -151,9 +165,9 @@ img.left {
           font-size: 1.25rem;
           margin-bottom: 1.375rem;
 
-        }        
+        }
         .list-group-item-reference {
-          font-size: 0.9rem;          
+          font-size: 0.9rem;
         }
         p {
           text-align: left;

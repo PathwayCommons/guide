@@ -15,9 +15,6 @@ reflist:
 comments: yes
 ---
 
-{% assign bad_blood = site.case_studies | where: 'title' , 'Bad Blood' | first %}
-{% assign dark_matter = site.case_studies | where: 'title' , 'Dark Matter' | first %}
-
 ## Why think in terms of pathways?
 
 There is great interest in providing mechanistic explanations for biological behaviours and phenotypes. While the nature of genes and the products they encode may be ultimately responsible for phenomena, it is often helpful to consider the coordination of genes and macromolecules.
@@ -38,13 +35,7 @@ However, there are some potential caveats to the approach just described. First,
 
 Pathway enrichment analyses are a complementary approach that aim to infer differences at the *pathway-level* using information contained at the *gene-level*. From an intuitive standpoint, enrichment approaches aim to identify unusually large 'overlaps' between the signals associated with an experimental measurement (i.e. expression levels) and those of candidate pathways. Abstracting from genes to pathways integrates lower-level information and shifts the focus to concepts that have a more intuitive relationship to higher-level cell function.
 
-Pathway enrichment analysis helps to address some of the limitations of a per-gene analysis described above. For example, the pathway analysis approach developed by Mootha *et al.* demonstrated that subtle yet coordinated alterations in the expression of genes that constitute pathways occur in diabetes despite the fact that none of the genes would be classified as differentially-expressed using a traditional statistical criteria (Mootha 2004). By integrating genes into pathways, there is a greater power to detect differences subtle differences and a concomitant increase in interpretability (). In other words, the statement that "a gene is differentially expressed between two phenotypes" has, from a biological point of view, less explanatory power compared to the statement "a pathway is differentially expressed between two phenotypes" (Emmert-Streib 2011).
-
-## When can pathway enrichment be used?
-
-- Read a [case study]({{site.baseurl}}{{ bad_blood.url }}){: target="_blank"} to see how a pathway enrichment analysis helped point researchers to the rational application of DNA-demethylating agents for the treatment of childhood brain tumours.
-
-- Read a [case study]({{site.baseurl}}{{ dark_matter.url }}){: target="_blank"} to see how a pathway enrichment analysis helped to provide experimentally verifiable, mechanistic insights into immune cell function.
+Pathway enrichment analysis helps to address some of the limitations of a per-gene analysis described above. For example, the pathway analysis approach developed by Mootha *et al.* demonstrated that subtle yet coordinated alterations in the expression of genes that constitute pathways occur in diabetes despite the fact that none of the genes would be classified as differentially-expressed using a traditional statistical criteria (Mootha 2004). By integrating genes into pathways, there is a greater power to detect differences subtle differences and a concomitant increase in interpretability. In other words, the statement that "a gene is differentially expressed between two phenotypes" has, from a biological point of view, less explanatory power compared to the statement "a pathway is differentially expressed between two phenotypes" (Emmert-Streib 2011).
 
 ## About this workflow
 

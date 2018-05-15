@@ -42,7 +42,7 @@ comments: yes
 ## <a href="#goals" name="goals">I. Goals</a>
 Previously, we introduced a study by Best *et al.* (Best 2015) that examined the feasibility of using platelet transcriptomes to distinguish individuals diagnosed with breast cancer (BrCa) from healthy donors (HD). The workflow step took in RNA-Seq counts and metadata describing the samples (i.e. HD or  BrCa) and analyzed the data for gene-wise differential expression (DE). One of the outputs from that step is a list of each RNA species and a respective rank, calculated from the DE test. In brief, the magnitude of rank is proportional to the 'rareness' of a  difference in RNA counts at least as large as that observed, *assuming no association between sample class assignment and RNA count*.
 
-> Note: For the purposes of this discussion, we will use the terms 'pathway' and 'gene set' interchangeably. It is more appropriate to use the term 'pathway' to refer to gene set components that enact a change or product (e.g. signal transduction, metabolism).
+> Note: For the sake of simplicity, we will use the terms 'pathway' and 'gene set' interchangeably. Typically, a 'pathway' refers to gene set components that enact a change or product (e.g. signal transduction, metabolism).
 
 In this section we discuss the use of [Gene Set Enrichment Analysis (GSEA)](http://software.broadinstitute.org/gsea/index.jsp){:target="_blank"} to sift out pathways from the underlying alterations in gene expression (Figure 1). The pathways that emerge from this analysis will be passed on to the next workflow step where we attempt to simplify their interpretation using the Enrichment Map visualization tool.
 
@@ -56,7 +56,7 @@ By then end of this discussion you should:
 
 ![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can alterations in sets of related genes (e.g. pathways) be inferred from the underlying changes in gene expression? The GSEA we will apply requires a list where each gene is assigned a unique rank from differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
+  <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can we summarize changes in gene expression as a list of altered pathways? Here we provide GSEA with a list where each gene is assigned a rank based upon differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -65,13 +65,13 @@ A detailed description of GSEA is beyond the scope of this discussion. Recall th
 
 ### Is there a difference between 'gene sets' and 'pathways'?
 
-GSEA searches through candidate gene sets to identify those that are enriched within our ranked gene list. 'Gene sets' are a set of genes grouped together based upon some known relationship. For example, a gene set could consist of  loci assigned to a particular chromosomal band. Alternatively, pathways - those genes whose coordinated activity lead to change or produce a product - can also be represented as a gene set. For example, a gene set for a pathway could be represented by genes involved in DNA damage cell cycle checkpoint.
+GSEA searches through candidate gene sets to identify those that are enriched within our ranked gene list. A gene set is a list of genes that share some attribute. For example, a gene set could consist of loci assigned to a particular chromosomal band. Alternatively, pathways - those genes whose coordinated activity lead to change or produce a product - can also be represented as a gene set. For example, a gene set for a pathway could be represented by genes involved in DNA damage cell cycle checkpoint.
 
-Concretely, let us consider the [IL-5 Signaling Pathway](http://www.netpath.org/pathways?path_id=NetPath_17){: target="_blank"} curated by as part of the NetPath database (Figure 2).
+Concretely, let us consider the 'IL-5 Signaling Pathway' curated by as part of the NetPath database (Figure 2).
 
 ![image]({{ page.figures.figure_2 }}){: .img-responsive.short }
 <div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Diagram of the IL5 Signaling Pathway.</strong> IL-5 is a glycoprotein which belongs to the cytokine superfamily and plays an important role in the proliferation and differentiation of eosinophils. IL-5 is produced by eosinophils, mast cells, Th2 cells, Tc2 cells and gamma delta T cells. The signaling pathway has been implicated in the pathogenesis of asthma, hypereosinophilic syndromes and eosinophil-dependent inflammatory diseases. <em>Adapted from resources available at <a href="http://www.netpath.org/netslim/IL_5_pathway.html" target="_blank">NetSlim</a> </em>.
+  <strong>Figure 2. Diagram of the IL5 Signaling Pathway.</strong> IL-5 is a glycoprotein which belongs to the cytokine superfamily and plays an important role in the proliferation and differentiation of eosinophils. IL-5 is produced by eosinophils, mast cells, Th2 cells, Tc2 cells and gamma delta T cells. The signaling pathway has been implicated in the pathogenesis of asthma, hypereosinophilic syndromes and eosinophil-dependent inflammatory diseases. <em>Adapted from resources at NetPath (http://www.netpath.org/)</em>.
 </div>
 
 The pathway depicted in Figure 2 has a corresponding entry in NetPath that contains a listing of the genes and a brief description (Figure 3).
@@ -85,7 +85,7 @@ The pathway depicted in Figure 2 has a corresponding entry in NetPath that conta
 
 The group of candidate gene sets under consideration for a given GSEA run can be individually selected to reflect the interest and focus of the study at hand. More often, GSEA is used in an exploratory fashion and so candidate gene sets curated by others are often employed, which typically cover a wide swath.
 
-To make life easier, GSEA has standardized the acceptable formats for defining gene set candidates and these are collectively known as ['gene set databases'](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats){: target="_blank"}. These are simple tab-delimited files with the extensions that include `.gmx`, `gmt` and `.grp`. Concretely, let us consider a sample gene set database file developed by [Gary Bader's laboratory](http://www.baderlab.org/){: target="_blank"} that defines human gene sets gathered from several sources including [MSigDB](http://software.broadinstitute.org/gsea/msigdb/index.jsp){: target="_blank"}; [Gene Ontology](http://geneontology.org/){:target="_blank"}; [Reactome](http://www.reactome.org/){:target="_blank"}; [Panther](http://www.pantherdb.org/){:target="_blank"}; [NetPath](http://www.netpath.org/){:target="_blank"}; [NCI](http://www.ndexbio.org/#/user/nci-pid){:target="_blank"}; and [HumanCyc](http://humancyc.org/){:target="_blank"}. This database file defines a table, one gene set per row: The first column holds the gene set name, the second is a description and the subsequent fields are the names of genes in the set. Figure 4 shows an exceprt of the database, which has an entry for the NetPath IL-5 pathway.
+To make life easier, GSEA has standardized the acceptable formats for defining gene set candidates and these are collectively known as [gene set databases](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats){: target="_blank"}. These are simple tab-delimited files with the extensions that include `.gmx`, `gmt` and `.grp`. Concretely, let us consider a sample gene set database file developed by [Gary Bader's laboratory](http://www.baderlab.org/){: target="_blank"} that defines human gene sets gathered from several sources including [MSigDB](http://software.broadinstitute.org/gsea/msigdb/index.jsp){: target="_blank"}; [Gene Ontology](http://geneontology.org/){:target="_blank"}; [Reactome](http://www.reactome.org/){:target="_blank"}; [Panther](http://www.pantherdb.org/){:target="_blank"}; [NetPath](http://www.netpath.org/){:target="_blank"}; [NCI](http://www.ndexbio.org/#/user/nci-pid){:target="_blank"}; and [HumanCyc](http://humancyc.org/){:target="_blank"}. This database file defines a table, one gene set per row: The first column holds the gene set name, the second is a description and the subsequent fields are the names of genes in the set. Figure 4 shows an exceprt of the database, which has an entry for the NetPath IL-5 pathway.
 
 ![image]({{ page.figures.figure_4 }}){: .img-responsive }
 <div class="figure-legend well well-lg text-justify">
@@ -228,7 +228,7 @@ In this part we get our inputs into GSEA. In the `Steps in GSEA analysis` panel 
 
 #### 2.  Settings
 
-We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting `Tools -> GseaPreranked` from the toolbar and fill in the details for the `Required` and `Basic` fields (Figure 7).
+We now tell GSEA what these files actually represent and tailor the GSEA run accordingly. Bring up the GSEA pre-ranked tab by selecting `GseaPreranked` from the `Tools` panel and fill in the details for the `Required` and `Basic` fields (Figure 7).
 
 - `Required fields`
   - `Gene sets database`: Click the ellipsis and wait a few moments for a dialog to pop up. Navigate to `Gene matrix (local gmx/gmt)` (click arrow along top). Select the gene set database that you obtained above (`.gmt` file)
@@ -268,7 +268,7 @@ Take a look at the directory you set for `Save results in this folder`. The defa
     |
     |--- output
         |
-        |--- feb06
+        |--- monthDay
             |
             |--- tep_brca_vs_hd.GseaPreranked.XXXXXXXXXXXXX
                 |
@@ -298,7 +298,7 @@ Below we will briefly highlight a few aspects to take special note of.
 
 ##### Enrichment in phenotype
 
-There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that in the step [Process Data]({{ site.baseurl }}{{ process_data.url }}) we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the `na_pos` phenotype corresponds to the BrCa class and `na_neg` refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.
+There are two sections by this name which refers to those gene sets with positive and negative enrichment scores, respectively (Figure 8). Recall that we assessed gene expression in the BrCa class relative to the HD class. Consequently, in our case, the `na_pos` phenotype corresponds to the BrCa class and `na_neg` refers to the HD class. We briefly discuss the meaning of two of the entries in this section below.
 
 - **Snapshot of the enrichment results.** Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see `pos_snapshot.html` and `neg_snapshot.html`. For the `na_pos` case, click on the link for `Snapshot of enrichment results` to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).
 

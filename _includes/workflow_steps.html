@@ -4,7 +4,13 @@
   {% assign url = doc.url | remove: 'index.html' %}
   <div class="media">
     <div class="media-left">
-      <span class="badge">{% if doc.order %}Step {{ doc.order }}{% endif %}</span>
+      <a target="_blank" href="{{ site.baseurl }}{{ url }}">
+        {% if doc.order %}
+          <span class="numberCircle">{{ doc.order }}</span>
+        {% else %}
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        {% endif %}
+      </a>
     </div>
     <div class="media-body">
       <a target="_blank" href="{{ site.baseurl }}{{ url }}">

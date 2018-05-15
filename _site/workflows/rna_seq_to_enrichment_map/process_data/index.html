@@ -346,7 +346,7 @@
   <li>
     <h4 id="rank-file">Rank file</h4>
     <ul>
-      <li>This file will be required for next workflow step ‘Identify Pathways’ where pathways are distilled from changes in gene expression (Figure 1; Step 2)</li>
+      <li>This file will be required for a workflow step ‘Identify Pathways’ where changes in gene expression are summarized as pathways  (Figure 1; Step 2)</li>
       <li>This file is a  <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29" target="_blank">RNK</a> table where each row contains a gene name followed by its ‘rank’ which is inversely correlated with the value of the differential expression testing p-value.</li>
     </ul>
   </li>
@@ -370,7 +370,7 @@
 
 <h4 id="rna-seq-files-and-metadata">RNA-Seq files and metadata</h4>
 
-<p>In this workflow, we will be focusing on a subset of 16 BrCa and 16 HD samples. Table 2 shows an excerpt of RNA-Seq output for one biological sample: The first column indicates the gene symbol (Ensembl) and the second column indicates the mapped sequence read count for that RNA species.</p>
+<p>In this workflow, we will be focusing on a subset of 16 BrCa and 16 HD samples. Table 2 shows an excerpt of RNA-Seq output for one biological sample: The first column indicates the gene identifier (Ensembl) and the second column indicates the mapped sequence read count for that RNA species.</p>
 
 <p><strong>Table 2. Sample high-throughput RNA sequencing counts</strong></p>
 
@@ -456,7 +456,7 @@
 
 <p>First, we must integrate or ‘merge’ the 32 RNA-Seq files together into a single table. The reason for this is that data in table format is a form that is more easily loaded into RNA-Seq analysis software packages. Typically, sequencing facilities often provide individual files for each RNA-Seq sample similar to that in Table 2, but mileage may vary depending on your particular facility.</p>
 
-<p>Second, we must perform gene ‘ID mapping’. This entails translating the names of genes/RNA species provided within the raw RNA-Seq files into a desired namespace. This is necessary because the ‘enrichment’ software that distills pathways from gene expression must be able to match RNA counts for a gene with the genes that constitute candidate pathways.</p>
+<p>Second, we must perform gene identifier mapping. This entails translating the names of genes provided within the raw RNA-Seq files into a desired namespace. This is necessary because the enrichment software that distills pathways from gene expression must be able to match RNA counts for a gene with those in candidate pathways.</p>
 
 <p>Third, our metadata file is sufficient to generate our phenotype file (Table 4), which declares the number of samples and classes (row 1), names the classes (row 2) and then declares the class to which each sample belongs (row 3). Since our metadata contains the name (id) of the sample and the class, this is a simple task.</p>
 
@@ -558,7 +558,7 @@
 
 <h4 id="4-differential-expression-testing">4. Differential expression testing</h4>
 
-<p>In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a ‘hypothesis-testing’ technique that entails the following:</p>
+<p>In this stage we perform a pair-wise comparison of RNA species counts in BrCa samples relative HD samples. The framework used to determine differential RNA expression is a hypothesis-testing technique that entails the following:</p>
 
 <ol>
   <li>Declare the null hypothesis of no difference in RNA counts for each gene</li>
