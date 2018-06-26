@@ -19,7 +19,7 @@ local({
 
  # Set the plot output
   knitr::opts_chunk$set(
-    fig.path = plot_path
+   fig.path = plot_path
   )
 
 

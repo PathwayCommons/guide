@@ -24,7 +24,7 @@ group: statistics
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a>
 
 ### Physical setup
-Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
+Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories. Denote the categories:
 
 1. Success ($$S$$)
 2. Failure ($$F$$)

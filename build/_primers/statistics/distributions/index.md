@@ -24,7 +24,7 @@ group: statistics
 ## <a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a>
 
 ### Physical setup
-Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories or two types. Denote the categories:
+Suppose we have a collection of $$N$$ objects which can be classified into two distinct categories. Denote the categories:
 
 1. Success ($$S$$)
 2. Failure ($$F$$)
@@ -92,7 +92,7 @@ ggplot(data, aes(x=factor(x), y=y)) +
   labs(x = "Number of Aces", y = "Probability")
 {% endhighlight %}
 
-<img src="/guide/build/public/R/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" />
+<img src="/guide/public/R/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" />
 
 ## <a href="#binomial" name="binomial">II. Binomial distribution</a>
 
@@ -201,7 +201,7 @@ ggplot(data, aes(x=factor(x), y=y)) +
   labs(x = "Number of Sixes", y = "Probability")
 {% endhighlight %}
 
-<img src="/guide/build/public/R/primers/statistics/distributions/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto auto auto 0;" />
+<img src="/guide/public/R/primers/statistics/distributions/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto auto auto 0;" />
 
 
 ## <a href="#Poisson" name="Poisson">III. Poisson distribution</a>
