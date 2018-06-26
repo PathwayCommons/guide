@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      RNA-Seq to Enrichment Map &middot; Pathway Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/public/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/public/media/favicons/favicon-16x16.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h1 class="masthead-title">
+      <a href="/guide/" title="Home">Pathway Guide</a>
+    </h1>
+    <a class="masthead-author" href="http://www.pathwaycommons.org/">
+        Pathway Commons
+    </a>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">Guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        
+          <li><a href="/guide/workflows/archive/">Workflows</a></li>
+        
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+        <li class="active">RNA-Seq to Enrichment Map</li>
+        
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">RNA-Seq to Enrichment Map</h1>
+  <blockquote>
+  <p>Perform a pair-wise comparison of gene expression data then visualize the list of altered pathways. You will use RNA sequencing data that arises from two conditions (sample data is provided). This raw data will be converted into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified and displayed as an visual map which organizes pathways by overarching themes.</p>
+</blockquote>
+
+<div class="media">
+    <div class="media-left">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/preview/">
+        
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        
+      </a>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/preview/">
+        <h2 class="media-heading">Preview</h2>
+      </a>
+      <p>Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">
+        
+          <span class="numberCircle">1</span>
+        
+      </a>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/process_data/">
+        <h2 class="media-heading">Process Data</h2>
+      </a>
+      <p>Derive a list of differentially expressed genes from RNA sequencing data</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">
+        
+          <span class="numberCircle">2</span>
+        
+      </a>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/identify_pathways/">
+        <h2 class="media-heading">Identify Pathways</h2>
+      </a>
+      <p>Identify enriched pathways using Gene Set Enrichment Analysis</p>
+    </div>
+  </div>
+
+<div class="media">
+    <div class="media-left">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/visualize/">
+        
+          <span class="numberCircle">3</span>
+        
+      </a>
+    </div>
+    <div class="media-body">
+      <a target="_blank" href="/guide/workflows/rna_seq_to_enrichment_map/visualize/">
+        <h2 class="media-heading">Visualize</h2>
+      </a>
+      <p>Create an Enrichment Map displaying the landscape of pathways</p>
+    </div>
+  </div>
+
+
+  
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

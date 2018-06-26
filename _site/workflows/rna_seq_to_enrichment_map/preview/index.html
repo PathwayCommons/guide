@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Preview &middot; Pathway Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/public/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/public/media/favicons/favicon-16x16.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h1 class="masthead-title">
+      <a href="/guide/" title="Home">Pathway Guide</a>
+    </h1>
+    <a class="masthead-author" href="http://www.pathwaycommons.org/">
+        Pathway Commons
+    </a>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">Guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        
+          <li><a href="/guide/workflows/archive/">Workflows</a></li>
+        
+      
+    
+      
+      
+
+      
+        <li><a href="/guide/workflows/rna_seq_to_enrichment_map/">Rna seq to enrichment map</a></li>
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+        <li class="active">Preview</li>
+        
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">Preview</h1>
+  <hr />
+
+<h2 id="why-think-in-terms-of-pathways">Why think in terms of pathways?</h2>
+
+<p>There is great interest in providing mechanistic explanations for biological behaviours and phenotypes. While the nature of genes and the products they encode may be ultimately responsible for phenomena, it is often helpful to consider the coordination of genes and macromolecules.</p>
+
+<p>A ‘pathway’ can be defined as a collection of molecules that lead to a change or a produce a product. Thinking about biological behaviours in terms of pathways is intuitively appealing for several reasons. First, genes rarely act in isolation but rather as parts of systems. Moreover, the influence of a single gene is generally difficult to divine from its molecular properties. Second, pathways are, by construction, groups of gene products that contribute to some higher-level function in the cell. Third, multiple pathways are implicated in most cell behaviours. In summary, ‘pathway thinking’ is a useful  abstraction that connects molecular-level entities with macroscopic behaviour.</p>
+
+<blockquote>
+  <p>“… the ultimate goal of pathway-based approaches is to connect a molecular level (phenomena) with a phenotype of an organism causally or at least associatively. In this case of a disease-related phenotype, this could mean that certain molecular processes are responsible for the manifestation or development of a disease.”</p>
+
+  <p>- Emmert-Streib (2011)</p>
+</blockquote>
+
+<h2 id="why-pathway-enrichment-analysis-why-is-it-useful">Why pathway enrichment analysis? Why is it useful?</h2>
+
+<p>Counting the entire RNA complement of a cell is now routine. While providing an astonishing amount quantitative detail, it is often not clear how to interpret this information. What does it all <em>mean</em>?</p>
+
+<p>Consider a common scenario in which a researcher wishes to provide some explanation for the cellular response to treatment. Typically, a pairwise comparison is made between control and treated: A measurement of their transcriptomes may provide a subset of genes deemed ‘differentially-expressed’ according to a statistical criteria (e.g. 2-fold change relative to control). In rare cases a researcher may be able forge an interesting connection between a gene and the cellular response of interest.</p>
+
+<p>However, there are some potential caveats to the approach just described. First, the cutoff for ‘differentially-expressed’ (i.e. 2-fold change) is arbitrary. Second, it may be difficult if not impossible to directly associate a gene with a cellular response. Finally, a differential-expression analysis may generate a large number of genes, whose sheer mass might outstrip our ability to consider and reason over.</p>
+
+<p>Pathway enrichment analyses are a complementary approach that aim to infer differences at the <em>pathway-level</em> using information contained at the <em>gene-level</em>. From an intuitive standpoint, enrichment approaches aim to identify unusually large ‘overlaps’ between the signals associated with an experimental measurement (i.e. expression levels) and those of candidate pathways. Abstracting from genes to pathways integrates lower-level information and shifts the focus to concepts that have a more intuitive relationship to higher-level cell function.</p>
+
+<p>Pathway enrichment analysis helps to address some of the limitations of a per-gene analysis described above. For example, the pathway analysis approach developed by Mootha <em>et al.</em> demonstrated that subtle yet coordinated alterations in the expression of genes that constitute pathways occur in diabetes despite the fact that none of the genes would be classified as differentially-expressed using a traditional statistical criteria (Mootha 2004). By integrating genes into pathways, there is a greater power to detect differences subtle differences and a concomitant increase in interpretability. In other words, the statement that “a gene is differentially expressed between two phenotypes” has, from a biological point of view, less explanatory power compared to the statement “a pathway is differentially expressed between two phenotypes” (Emmert-Streib 2011).</p>
+
+<h2 id="about-this-workflow">About this workflow</h2>
+
+<p>The pathway enrichment workflow presented herein provides researchers with a walkthrough of the analysis steps. <strong>The overarching purpose of this workflow is to identify alterations in pathways from the underlying differences in gene expression and visualize the resulting pathways</strong> (Figure 1).</p>
+
+<p><img src="figure_processdata_em_overview.jpg" alt="image" class="img-responsive slim" /></p>
+<div class="figure-legend well well-lg text-justify">
+  <strong>Figure 1. Preview of workflow.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two classes. The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
+</div>
+
+<p>In order illustrate this analysis in a concrete manner, we use data from a single published study that compares transcriptomes of platelets from healthy donors and cancer patients (Best 2015). Our focus is on describing the process of generating pathway-level alterations. To this end, we provide gene expression data in a format that can be used immediately rather than describing details surrounding RNA-sequencing data analysis.</p>
+
+  
+  <hr/>
+  <h2>References</h2>
+  
+  <div class="reference_group" data-reflist="[26525104 21637797 21414478 12808457]"></div>
+
+
+  
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/workflows/rna_seq_to_enrichment_map/preview/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/workflows/rna_seq_to_enrichment_map/preview/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

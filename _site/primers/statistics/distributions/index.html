@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Distributions &middot; Pathway Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/public/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/public/media/favicons/favicon-16x16.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- CSS -->
+  
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <h1 class="masthead-title">
+      <a href="/guide/" title="Home">Pathway Guide</a>
+    </h1>
+    <a class="masthead-author" href="http://www.pathwaycommons.org/">
+        Pathway Commons
+    </a>
+  </div>
+</div>
+
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/media/spinner.gif"/></div>
+        <div class="page">
+    
+
+  
+    
+    
+    
+    <ol class="breadcrumb">
+    
+      
+      
+
+      <!-- 1st part is the root  -->
+        <li><a href="/guide/">Guide</a></li>
+      
+    
+      
+      
+
+      <!-- If its a collection it is an index page  -->
+        
+          <li><a href="/guide/primers/archive/">Primers</a></li>
+        
+      
+    
+      
+      
+
+      
+        <li><a href="/guide/primers/statistics/">Statistics</a></li>
+      
+    
+      
+      
+
+      <!-- If its the second last path  -->
+        <li class="active">Distributions</li>
+        
+    </ol>
+  
+
+
+  
+
+  <h1 class="page-title">Distributions</h1>
+  <hr />
+
+<ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#hypergeometric">I. Hypergeometric distribution</a></li>
+      <li class="list-unstyled"><a href="#binomial">II. Binomial distribution</a></li>
+      <li class="list-unstyled"><a href="#Poisson">III. Poisson distribution</a></li>
+      <li class="list-unstyled"><a href="#gamma">IV. Gamma distribution </a></li>
+      <li class="list-unstyled"><a href="#negativeBinomial">IV. Negative binomial distribution</a></li>
+    </ul>
+  </li>
+</ul>
+<hr />
+
+<h2 id="i-hypergeometric-distribution"><a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a></h2>
+
+<h3 id="physical-setup">Physical setup</h3>
+<p>Suppose we have a collection of <script type="math/tex">N</script> objects which can be classified into two distinct categories or two types. Denote the categories:</p>
+
+<ol>
+  <li>Success (<script type="math/tex">S</script>)</li>
+  <li>Failure (<script type="math/tex">F</script>)</li>
+</ol>
+
+<p>Suppose that within these <script type="math/tex">N</script> objects there exist <script type="math/tex">r</script> of type <script type="math/tex">S</script> and therefore
+<script type="math/tex">N-r</script> of type <script type="math/tex">F</script>. We choose <script type="math/tex">n</script> objects <em>without replacement</em>, that is, we
+remove items in succession from the original set of <script type="math/tex">N</script>. Let <script type="math/tex">X</script> be a random
+variable representing the number of successes obtained. Then <script type="math/tex">X</script> has a
+<strong>hypergeometric distribution</strong>.</p>
+
+<h3 id="probability-function">Probability function</h3>
+<p>We require three values. Refer to the primer on <a href="/guide/primers/statistics/permutations_combinations/">combinations</a> for a discussion on
+counting rules and notation.</p>
+
+<p>First, we require the total possible number of ways that <script type="math/tex">n</script> distinct items can
+be chosen from <script type="math/tex">N</script> without replacement and where order does not matter. This is
+‘<script type="math/tex">N</script> Choose <script type="math/tex">n</script>’</p>
+
+<script type="math/tex; mode=display">\binom{N}{n}</script>
+
+<p>Second, we wish to know the number of ways that <script type="math/tex">x</script> successes can be drawn from
+a total of <script type="math/tex">r</script></p>
+
+<script type="math/tex; mode=display">\binom{r}{x}</script>
+
+<p>Third, we are left to select <script type="math/tex">n-x</script> failures from a total of <script type="math/tex">N-r</script></p>
+
+<script type="math/tex; mode=display">\binom{N-r}{n-x}</script>
+
+<p>Then the probability of selecting <script type="math/tex">x</script> successes is</p>
+
+<script type="math/tex; mode=display">f(x; N,n,r) = \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}}  \text{  for }x=0,1,\cdots,r</script>
+
+<h3 id="examples">Examples</h3>
+
+<h4 id="a-deck-of-cards">A Deck of cards</h4>
+<p>A deck of playing cards contains 4 suits (hearts, spade, diamonds,clubs) for each of 13 types {Ace, 2, 3,…, 10, King, Queen, Jack}. Deal 5 cards from the deck. The probability of selecting up to four Aces from the deck follows a hypergeometric distribution</p>
+
+<script type="math/tex; mode=display">f(x) = \frac{\binom{4}{x}\cdot\binom{52-4}{5-x}}{\binom{52}{5}}</script>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of selecting Aces from a standard deck of cards</span><span class="w">
+
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">nAces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Available aces</span><span class="w">
+</span><span class="n">nOther</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="c1"># Available non-aces</span><span class="w">
+</span><span class="n">nDeal</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c1"># Number of cards dealt</span><span class="w">
+</span><span class="n">aces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="w"> </span><span class="c1"># The vector declaring the number of aces</span><span class="w">
+
+</span><span class="c1"># Use the dhyper built-in function for hypergeometric probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dhyper</span><span class="p">(</span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">nAces</span><span class="p">,</span><span class="w"> </span><span class="n">nOther</span><span class="p">,</span><span class="w"> </span><span class="n">nDeal</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Bar plot</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w">
+        </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="s2">"#2c3e50"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of Aces"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/build/public/R/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" /></p>
+
+<h2 id="ii-binomial-distribution"><a href="#binomial" name="binomial">II. Binomial distribution</a></h2>
+
+<h3 id="physical-setup-1">Physical setup</h3>
+<p>Consider an experiment in which we have two distinct types of outcomes that can be categorized as</p>
+
+<ol>
+  <li>Success (<script type="math/tex">S</script>)</li>
+  <li>Failure (<script type="math/tex">F</script>)</li>
+</ol>
+
+<p>Suppose the probability of success is <script type="math/tex">p</script> and failure is <script type="math/tex">(1-p)</script>. Repeat the experiment <script type="math/tex">n</script> independent times. If <script type="math/tex">X</script> is the number of successes then it has a <strong>binomal distribution</strong> denoted <script type="math/tex">X\sim Bi(n, p)</script>.</p>
+
+<h3 id="probability-function-1">Probability function</h3>
+<p>We require three values. Refer to the primer on <a href="/guide/primers/statistics/permutations_combinations/">combinations</a> for a discussion on
+counting rules and notation.</p>
+
+<p>First, we require the total possible number of ways that <script type="math/tex">x</script> successes can be arranged within <script type="math/tex">n</script> experiments which is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    \frac{n!}{x!(n-x!)} &= \binom{n}{x}
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Then the probability of each arrangement is <script type="math/tex">p</script> multiplied <script type="math/tex">x</script> times for successes and likewise for failures</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \begin{split}
+    p^x(1-p)^{n-x}
+  \end{split}
+\end{equation*}</script>
+
+<p>Therefore,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    f(x; n,p) &=  \binom{n}{x} p^x(1-p)^{n-x} \text{  for }x=0,1,\cdots,n\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="moments">Moments</h3>
+<p>The mean of a binomial distribution of sample size <script type="math/tex">n</script> and probability <script type="math/tex">p</script> is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    E[X] = np
+\end{equation*}</script>
+
+<p>The variance is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  Var(X) = np(1-p)
+\end{equation*}</script>
+
+<h3 id="comparison-of-hypergeometric-and-binomial">Comparison of hypergeometric and binomial</h3>
+
+<p>The key difference between the hypergeometric and the binomial distribution is that the hypergeometric involves the probability of an event when selection is made <strong>without replacement</strong>. In other words, the hypergeometric setup assumes some dependence amongst the selection of successes and failures. For example, choosing an ace from a deck and removing it reduces the probability of selecting a remaining ace. In contrast, the binomial distribution assumes independence and can be viewed as appropriate when event selection is made <strong>with replacement</strong>.</p>
+
+<p>There are limiting cases where the hypergeometric can be approximated by the binomial. Consider the hypergeometric case where the total number of possible successes and failures <script type="math/tex">N</script> is large compared to the number of selections <script type="math/tex">n</script>. Then the probability of success <script type="math/tex">p=r/N</script> does not appreciably upon selection without replacement. That is, for <script type="math/tex">N>>n</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}} &\approx \binom{n}{x}
+     \left(\frac{r}{N}\right)^x \left(1 - \frac{r}{N}\right)^{(n-x)}
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="examples-1">Examples</h3>
+
+<h4 id="a-fair-die">A fair die</h4>
+<p>Toss a fair die 10 times and let <script type="math/tex">X</script> be the number of sixes then <script type="math/tex">X\sim Bi(10,1/6)</script>.</p>
+
+<script type="math/tex; mode=display">f(x) = \binom{10}{x} (1/6)^x(1-(1/6))^{10-x}</script>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of sixes in 10 tosses of a fair die</span><span class="w">
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">trials</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="n">sixes</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="c1"># The vector declaring the number of successes</span><span class="w">
+</span><span class="n">p</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="w">  </span><span class="c1"># The probability of a given face</span><span class="w">
+
+</span><span class="c1"># Use the dbinom built-in function for binomial probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dbinom</span><span class="p">(</span><span class="n">sixes</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="n">p</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sixes</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Bar plot</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w">
+        </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="s2">"#2c3e50"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of Sixes"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/build/public/R/primers/statistics/distributions/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="500" style="display: block; margin: auto auto auto 0;" /></p>
+
+<h2 id="iii-poisson-distribution"><a href="#Poisson" name="Poisson">III. Poisson distribution</a></h2>
+
+<h3 id="physical-setup-2">Physical setup</h3>
+<p>Consider a limiting case of the binomial distribution as <script type="math/tex">n\rightarrow\infty</script> and <script type="math/tex">p\rightarrow 0</script> but <script type="math/tex">np=\mu</script> is fixed. This means that the event of interest is relatively rare. Then <script type="math/tex">X</script> has a <strong>Poisson distribution</strong> <script type="math/tex">P \sim Poisson(\mu)</script>.</p>
+
+<h3 id="probability-function-2">Probability function</h3>
+
+<p>Since <script type="math/tex">np=\mu</script> then <script type="math/tex">p=\frac{\mu}{n}</script> and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    f(x; n,p) &= \binom{n}{x} p^x(1-p)^{n-x} \\
+    f(x; n,\mu) &= \frac{n!}{x!(n-x)!} \left(\frac{\mu}{n}\right)^x \left(1-\frac{\mu}{n}\right)^{(n-x)} \\
+         &= \frac{\mu^x}{x!} \frac{n(n-1)(n-2)\cdots(n-x+1)}{(n)(n)(n)\cdots(n)}  \left(1-\frac{\mu}{n}\right)^{(n-x)} \\
+         &= \frac{\mu^x}{x!}
+            \left(\frac{n}{n}\right) \left(\frac{n-1}{n}\right) \left(\frac{n-2}{n}\right) \cdots
+            \left(\frac{n-x+1}{n}\right)
+            \left(1-\frac{\mu}{n}\right)^n \left(1-\frac{\mu}{n}\right)^{-x}\\
+  \lim_{n\to\infty} f(x; n,\mu)  &= \frac{\mu^x}{x!}
+           (1)(1)(1) \cdots (1)
+           e^{-\mu} (1)^{-x}\\
+   f(x; \mu)  &= \frac{\mu^x}{x!}e^{-\mu} \text{ for }x=1,2,\cdots\\
+
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="moments-1">Moments</h3>
+<p>The mean of a Poisson distribution with some sampling size <script type="math/tex">n</script> and probability <script type="math/tex">p</script> is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    E[X] = np
+\end{equation*}</script>
+
+<p>The variance is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  Var(X) = E[X]
+\end{equation*}</script>
+
+<h3 id="examples-2">Examples</h3>
+
+<h4 id="the-birthday-game">The birthday game</h4>
+<p>Suppose that 200 people are at a party. What is the probability that 2 of them were born on December 25th? In this case <script type="math/tex">n=200</script> and assuming birthdays are independent then <script type="math/tex">p=1/365</script> and the mean <script type="math/tex">\mu=np</script></p>
+
+<script type="math/tex; mode=display">f(x) = \frac{ \left(\frac{200}{365}\right)^x}{x!} e^{-\left(\frac{200}{365}\right)}</script>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of two people born on December 25th</span><span class="w">
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">n</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">200</span><span class="w">   </span><span class="c1"># The number of people</span><span class="w">
+</span><span class="n">p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">365</span><span class="w"> </span><span class="c1"># The probability of a birthday on Dec. 25</span><span class="w">
+</span><span class="n">mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="w">   </span><span class="c1"># The mean</span><span class="w">
+
+</span><span class="c1"># Use the dpois built-in function for Poisson probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dpois</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">probability</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 0.086791</code></pre></figure>
+
+<h2 id="iv-gamma-distribution"><a href="#gamma" name="gamma">IV. Gamma distribution</a></h2>
+
+<h3 id="gamma-function">Gamma function</h3>
+
+<p><strong>Definition</strong> The <strong>gamma function</strong> os <script type="math/tex">\alpha</script> is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \Gamma(\alpha) = \int_{0}^{\infty} x^{\alpha-1}e^{-x}dx
+\end{equation*}</script>
+
+<p>There are two nice properties of the gamma function that we will use.</p>
+
+<ol>
+  <li>
+    <script type="math/tex; mode=display">\Gamma(\alpha) = (\alpha - 1)\Gamma(\alpha - 1) \text{ for } \alpha>1</script>
+  </li>
+  <li>
+    <script type="math/tex; mode=display">\Gamma(\alpha) = (\alpha - 1)! \text{ if } \alpha \text{ is a positive integer}</script>
+  </li>
+</ol>
+
+<h3 id="gamma-distribution">Gamma distribution</h3>
+<p>Let <script type="math/tex">X</script> be a non-negative continuous random variable. Then if the probability function is of the form</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  f(x; \alpha, \beta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}
+\end{equation*}</script>
+
+<p>then <script type="math/tex">X</script> has a <strong>gamma distribution</strong> <script type="math/tex">X\sim Gamma(x; \alpha,\beta)</script>. Typically, <script type="math/tex">\alpha</script> is called the  ‘shape’ parameter and <script type="math/tex">\beta</script> the ‘scale’ or ‘rate’.</p>
+
+<h2 id="v-negative-binomial-distribution"><a href="#negativeBinomial" name="negativeBinomial">V. Negative binomial distribution</a></h2>
+
+<h3 id="physical-setup-3">Physical setup</h3>
+<p>The setup is very similar to the binomial. Consider an experiment in which we have two distinct types of outcomes that can be categorized as</p>
+
+<ol>
+  <li>Success (<script type="math/tex">S</script>)</li>
+  <li>Failure (<script type="math/tex">F</script>)</li>
+</ol>
+
+<p>Suppose the probability of success is <script type="math/tex">p</script> and failure is <script type="math/tex">(1-p)</script>. Repeat an experiment until a pre-specified number of failures <script type="math/tex">r</script> have been obtained. Let <script type="math/tex">X</script> be the number of successes before the <script type="math/tex">r^{th}</script> failure. Then <script type="math/tex">X</script> has a <strong>negative binomial distribution</strong> denoted <script type="math/tex">X\sim NB(r, p)</script>.</p>
+
+<h3 id="probability-function-3">Probability function</h3>
+
+<p>There will be <script type="math/tex">x+r</script> total trials but the last event is a failure so we really care about the first <script type="math/tex">x+r-1</script> trials. There will be <script type="math/tex">x</script> successes and <script type="math/tex">(r-1)</script> failures in any order. Each order has a probability identical to a binomial trial <script type="math/tex">p^x(1-p)^r</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    f(x; r,p) &=  \binom{x+r-1}{x} p^x(1-p)^r \text{  for }x=0,1,2,\cdots\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="moments-2">Moments</h3>
+<p>The mean of a negative binomial distribution is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    E[X] = \frac{pr}{1-p}
+\end{equation*}</script>
+
+<p>The variance is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  Var(X) = \frac{pr}{(1-p)^2}
+\end{equation*}</script>
+
+<h3 id="the-poisson-gamma-mixture">The Poisson-gamma mixture</h3>
+
+<p>Count data such as RNA sequencing mapped reads is often modeled with a Poisson distribution where the mean and variance are equal to <script type="math/tex">\mu</script>. However, there are cases where the variance exceeds that specified by the mean. To account for this ‘overdispersed’ data, the negative binomial distribution can be utilized. As we will show below, the negative binomial arises as a Poisson distribution where the Poisson parameter is itself a random variable distributed according to a Gamma distribution.</p>
+
+<p>Let us state this in a more precise fashion. Suppose that we have distribution of counts <script type="math/tex">X</script> that follows a Poisson distribution indexed by the parameter <script type="math/tex">\Theta</script>. Now suppose that <script type="math/tex">\Theta</script> is itself some function of another random variable <script type="math/tex">\Theta = \mu\epsilon</script> where <script type="math/tex">\epsilon \sim Gamma(x;\alpha,\beta)</script>. Then the conditional distribution of the random variable of counts is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  P(X=x | \Theta = \mu\epsilon) = \frac{(\mu\epsilon)^x}{x!}e^{- (\mu\epsilon)} \text{  for } x=0,1,2,\cdots
+\end{equation*}</script>
+
+<p>Let <script type="math/tex">\epsilon</script> follow a gamma distribution with shape <script type="math/tex">\alpha</script> and scale <script type="math/tex">\beta</script>.</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    g(\epsilon) = \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}
+\end{equation*}</script>
+
+<p>The joint density of <script type="math/tex">N</script> and <script type="math/tex">\Theta</script> is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    P(X=x | \Theta = \mu\epsilon) \cdot g(\epsilon) &= \frac{(\mu\epsilon)^x}{x!}e^{- \mu\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon}\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Derive the marginal distribution of <script type="math/tex">X</script> by integrating over the values of <script type="math/tex">epsilon</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    P(X=x) &= \int_{0}^\infty \frac{(\mu\epsilon)^x}{x!}e^{- \mu\epsilon} \cdot \frac{\beta^\alpha}{\Gamma(\alpha)}\epsilon^{\alpha-1}e^{-\beta \epsilon} d\epsilon\\
+
+    &= \frac{\mu^x\beta^\alpha}{x! \Gamma(\alpha)} \int_{0}^\infty \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>The key here is to transform the integrand into a gamma distribution with shape parameter <script type="math/tex">x+\alpha</script> and scale <script type="math/tex">\beta+\mu</script> and noting that the integral over all values is unity.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+
+    P(X=x) &= \frac{\mu^x \beta^\alpha}{x! \Gamma(\alpha)} \frac{\Gamma(x+\alpha)}{(\beta + \mu)^{x + \alpha}} \int_{0}^\infty \frac{(\beta + \mu)^{x + \alpha}}{\Gamma(x+\alpha)} \epsilon^{x+\alpha-1}  e^{-(\beta + \mu)\epsilon} d\epsilon \\
+
+          &= \frac{\Gamma(x+\alpha)}{x! \Gamma(\alpha)} \frac{\mu^x  \beta^\alpha}{(\beta + \mu)^{x + \alpha}} \\
+
+          &= \frac{(x+\alpha-1)!}{x! (\alpha - 1)!} \frac{\mu^x}{(\beta + \mu)^x} \frac{\beta^\alpha}{(\beta + \mu)^{\alpha}} \\
+
+          &= \binom{x+\alpha-1}{x} \left(\frac{\mu}{\beta + \mu }\right)^x \left(\frac{\beta}{\beta + \mu}\right)^\alpha  \text{ for }x=0,1,\cdots
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>It is simple to see that this result is the negative binomial with <script type="math/tex">r=\alpha</script> and <script type="math/tex">p=\mu/(\beta+\mu)</script>. In this case the moments can be stated using these new variables.</p>
+
+<p>From the moments of the negative binomial stated above, the mean is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[X] &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right) \alpha\\
+         &= \frac{\alpha}{\beta} \mu\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>The variance is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    Var(X) &= \left(\frac{\mu}{\beta + \mu}\right) \left(\frac{\beta + \mu}{\beta}\right)^2 \alpha\\
+         &= \frac{\alpha \mu}{\beta} \left(1 + \frac{\mu}{\beta} \right)\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h4 id="alternative-poisson-gamma-notation">Alternative Poisson-gamma notation</h4>
+
+<p>This mixture model will be important in our discussion of RNA sequencing data <a href="/guide/primers/functional_analysis/rna_sequencing_analysis/#differentialExpression">differential expression testing</a>. In this case the notation is altered where <script type="math/tex">r=\alpha=\beta=\phi^{-1}</script> and <script type="math/tex">\phi</script> is the ‘dispersion’ parameter for some counts of an RNA species <script type="math/tex">Y</script>. Also the gamma function is used to replace the binomial coefficients.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    Y &\sim NB(\mu, \phi^{-1})\\
+    f(y; \mu,\phi^{-1}) &=  \frac{\Gamma(y+\phi^{-1})}{\Gamma(y+1)\Gamma(\phi^{-1})} \left(\frac{\mu}{\phi^{-1} + \mu} \right)^y
+     \left(\frac{\phi^{-1}}{\phi^{-1} + \mu} \right)^{\phi^{-1}} \\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>From the above discussion, we can restate the mean and variance.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    E[Y] &= \mu\\
+    Var(Y) &= \mu + \phi\mu^2\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Note that as the dispersion parameter <script type="math/tex">\phi</script> approaches zero the negative binomial variance approaches the mean. Thus the dispersion parameter accounts for the extra variability over and above that expected with a Poisson.</p>
+
+  
+
+  
+  <br/>
+  <hr/>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    var disqus_config = function () {
+    this.page.url = "http://pathwaycommons.github.io/guide/primers/statistics/distributions/index";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "/primers/statistics/distributions/index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//pathway-commons.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
