@@ -1,10 +1,12 @@
 ---
 title: Definitions
-layout: document
+layout: page
 group: statistics
 comments: true
 cover: cover.jpg
 ---
+
+<hr/>
 
 ## <a href="#probability" name="probability">Probability</a>
 

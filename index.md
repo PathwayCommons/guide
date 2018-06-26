@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Home
-footer: true
 ---
 
 {% assign enrichment_workflows = site.workflows | where: 'category' , 'Pathway Enrichment Analysis' %}
@@ -11,7 +10,6 @@ footer: true
 
   - **[Workflows]({{ site.baseurl }}/workflows/archive/)** for step-by-step instruction to pathway analysis of data
   - **[Primers]({{ site.baseurl }}/primers/archive/)** for deep-dives into concepts
-  - **[Case studies]({{ site.baseurl }}/case_studies/archive/)** describe real-world examples
   {: .lead }
 
 <hr/>

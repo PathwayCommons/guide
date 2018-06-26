@@ -84,69 +84,6 @@ img {
 }
 
 /*
- * Masthead
- *
- * Super small header above the content for site name and short description.
- */
-
-.masthead {
-  .masthead-title {
-    a {
-      text-decoration: none;
-    }
-  }
-}
-
-
-/*
- * Sidebar
- *
- */
-/* Style and "hide" the sidebar */
-.sidebar-toggle {
-  z-index: 1000;
-  opacity: 0.75;
-}
-.sidebar {
-  font-family: $font-family-base;
-  font-size: 1rem;
-  left: -$side-bar-width;
-  width: $side-bar-width;
-
-  .sidebar-item {
-    font-size: 0.90rem;
-  }
-
-  a.sidebar-nav-item {
-    font-weight: lighter;
-    color: $clouds;
-  }
-}
-/* Style the `label` that we use to target the `.sidebar-checkbox` */
-
-@media (min-width: 30em) {
-  .sidebar {
-    font-size: 1.5rem;
-  }
-
-  .sidebar-tip {
-    // position: absolute;
-    // top:  1.9rem;
-    // left: 3.5rem;
-  }
-}
-
-#sidebar-checkbox:checked ~ .sidebar,
-#sidebar-checkbox:checked ~ .tooltip,
-#sidebar-checkbox:checked ~ .wrap,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
-  -webkit-transform: translateX($side-bar-width);
-      -ms-transform: translateX($side-bar-width);
-          transform: translateX($side-bar-width);
-}
-
-/* Misc */
-/*
  * Posts and pages
  *
  * Each post is wrapped in `.post` and is used on default and post layouts. Each
@@ -186,25 +123,17 @@ blockquote {
   */
 
  /* FLAT-UI */
- .theme-base-01 .sidebar,
- .theme-base-01 .sidebar-toggle:active,
- .theme-base-01 #sidebar-checkbox:checked ~ .sidebar-toggle {
-   background-color: $text-color;
- }
  .theme-base-01 .container a,
- .theme-base-01 .sidebar-toggle,
  .theme-base-01 .related-posts li a:hover {
    text-decoration: underline;
    color: $text-color;
  }
  .theme-base-01{
    .container {
-     .masthead-title a,
      .post-title a,
      .page-title a {
        text-decoration: none;
      }
-     .masthead-title a:hover,
      .post-title a:hover,
      .page-title a:hover {
        text-decoration: underline;

@@ -2,7 +2,7 @@
 title: RNAi Gene Enrichment Ranking
 date: 2018-02-07
 pdf: riger_luo_pnas_v105_51_2008.pdf
-layout: document
+layout: page
 figures:
   figure_1: figure_figure2_mello_Nature_2004.png
   figure_2: figure_RNAi_overview.png
@@ -26,6 +26,8 @@ group: data_analysis
 
 {% assign functional_analysis_primers = site.primers | where: 'category' , 'functional_analysis' %}
 {% assign gsea_primer = functional_analysis_primers | where: 'title' , 'Gene Set Enrichment Analysis' | first %}
+
+<hr/>
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)

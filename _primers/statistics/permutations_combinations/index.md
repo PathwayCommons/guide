@@ -1,10 +1,12 @@
 ---
 title: Permutations & Combinations
-layout: document
+layout: page
 comments: true
 cover: cover.jpg
 group: statistics
 ---
+
+<hr/>
 
 ## <a href="#permutations" name="permutations">Permutations</a>
 

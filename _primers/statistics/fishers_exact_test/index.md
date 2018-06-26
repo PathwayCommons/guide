@@ -5,7 +5,7 @@ date: June 29, 2016
 output:
   html_document:
     mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-layout: document
+layout: page
 figures:
   table_1: table_1.png
   table_2: table_2.png
@@ -17,6 +17,7 @@ cover: cover.jpg
 group: statistics
 ---
 
+<hr/>
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)

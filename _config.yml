@@ -1,18 +1,14 @@
 #**************** Set site global variables ****************
 # Setup
-title:               Guide
-tagline:
-  text: Pathway Commons
-  link: http://www.pathwaycommons.org/
-description:         'Guide'
+title:               Pathway Guide
+description:         'An online textbook for pathway understanding'
 baseurl:             /guide
 domain:              'http://pathwaycommons.github.io'
 
 # About/contact
 author:
   name:              Pathway Commons
-  url:               https://twitter.com/PathwayCommons
-  email:             https://groups.google.com/forum/#!forum/pathway-commons-help
+  url:               http://www.pathwaycommons.org/
 
 # Custom vars
 version:             0.1.0
@@ -44,20 +40,16 @@ kramdown:
 collections:
   case_studies:
     output: true
-    index: /case_studies/archive/
     description: Case Studies
 
   presentations:
     output: true
-    index: /presentations/archive/
     description: Presentations
 
   primers:
     output: true
-    index: /primers/archive/
     description: Primers
 
   workflows:
     output: true
-    index: /workflows/archive/
     description: Workflows

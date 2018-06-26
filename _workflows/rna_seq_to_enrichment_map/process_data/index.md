@@ -34,6 +34,8 @@ reflist:
 comments: yes
 ---
 
+<hr/>
+
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Background](#background)

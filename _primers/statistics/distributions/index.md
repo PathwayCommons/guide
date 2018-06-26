@@ -6,12 +6,13 @@ output:
   html_document:
     mathjax:
       "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-layout: document
+layout: page
 comments: true
 cover: cover.jpg
 group: statistics
 ---
 
+<hr/>
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Hypergeometric distribution](#hypergeometric)
   - {:.list-unstyled} [II. Binomial distribution](#binomial)

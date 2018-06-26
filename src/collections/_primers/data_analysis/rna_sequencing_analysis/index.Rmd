@@ -2,7 +2,7 @@
 title: RNA Sequencing Analysis
 subtitle:
 date: September 15, 2016
-layout: document
+layout: page
 videos:
   video_1: https://www.youtube.com/embed/HMyCqWhwB8E
   video_2: https://www.youtube.com/embed/pfZp5Vgsbw0
@@ -36,6 +36,8 @@ reflist:
 cover: cover.jpg
 group: data_analysis
 ---
+
+<hr/>
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)

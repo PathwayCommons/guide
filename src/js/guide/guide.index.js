@@ -195,13 +195,6 @@ module.exports = (function(){
     configMap.baseurl = $container.data( 'baseurl' );
     setJqueryMap( $container );
     render( jQueryMap.$container );
-    $(document).ready(function(){
-      var width = $( window ).width();
-      $('.sidebar-toggle').tooltip('show');
-      if( width >= 768 ){
-        $('#sidebar-checkbox').prop('checked', true);
-      }
-    });
   };
 
   return {

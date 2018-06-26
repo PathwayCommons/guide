@@ -3,7 +3,7 @@ title: "RNA-Seq to Enrichment Map - R Notebook"
 author: "jvwong"
 date: 2017-08-01
 category: Pathway Enrichment Analysis
-layout: document
+layout: page
 cover: cover.png
 download: rna_seq_to_enrichment_map_r_notebook.zip
 splash: "An R Notebook companion to 'RNA-Seq to Enrichment Map' workflow<p class=\"hidden-xs\">Audience<em>&#58;\tAdvanced</em></p>"
@@ -15,6 +15,9 @@ badges: R Notebook
 ```{r setGlobals, include=FALSE}
   knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
 ```
+
+<hr/>
+
 <div class="alert alert-info">
   This is an <a href="http://rmarkdown.rstudio.com/r_notebooks.html" target="_blank">R Notebook</a> companion to the pathway enrichment analysis workflow 'RNA-Seq to Enrichment Map'. This notebook and file dependencies are available for downloaded via the <i class="fa fa-download" aria-hidden="true"></i> link (top, right).
 </div>

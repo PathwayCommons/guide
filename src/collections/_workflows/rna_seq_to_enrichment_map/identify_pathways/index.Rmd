@@ -26,6 +26,7 @@ reflist:
 comments: yes
 ---
 
+<hr/>
 {% assign workflow = site.workflows | where: 'group' , 'rna_seq_to_enrichment_map' %}
 {% assign process_data = workflow | where: 'title' , 'Process Data' | first %}
 {% assign identify_pathways = workflow | where: 'title' , 'Identify Pathways' | first %}

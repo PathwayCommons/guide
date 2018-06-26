@@ -1,0 +1,34 @@
+.masthead {
+  .container {
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .masthead-title {
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .masthead-author {
+      color: $concrete;
+      font-size: 1.2em;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .masthead {
+    .container {
+      text-align: center;
+      .masthead-author {
+        font-size: 1em;
+      }
+    }
+  }
+}

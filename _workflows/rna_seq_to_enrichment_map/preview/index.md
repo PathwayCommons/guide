@@ -15,6 +15,7 @@ reflist:
 comments: yes
 ---
 
+<hr/>
 ## Why think in terms of pathways?
 
 There is great interest in providing mechanistic explanations for biological behaviours and phenotypes. While the nature of genes and the products they encode may be ultimately responsible for phenomena, it is often helpful to consider the coordination of genes and macromolecules.

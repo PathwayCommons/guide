@@ -1,18 +1,10 @@
 <div class="masthead">
   <div class="container">
-    <h3 class="masthead-title">
+    <h1 class="masthead-title">
       <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
-      <small>
-        <a href="{{ site.tagline.link }}">&middot; {{ site.tagline.text }}</a>
-        {% if jekyll.environment == "development" %}
-          <span class="text-danger">-- Development Version</span>
-        {% endif %}
-      </small>
-      <span class="pull-right">
-        <small class="contact">
-          <a href="https://groups.google.com/forum/#!forum/pathway-commons-help" target="_blank">Contact Us</a>
-        </small>
-      </span>
-    </h3>
+    </h1>
+    <a class="masthead-author" href="{{ site.author.url }}">
+        {{ site.author.name }}
+    </a>
   </div>
 </div>

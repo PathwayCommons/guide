@@ -24,18 +24,13 @@
 @import "vendor/theme/poole";
 @import "vendor/theme/lanyon";
 
-// @import "modules/variables";
-@import "modules/fonts";
-@import "modules/colors";
-@import "modules/theme_variables";
+@import "fonts";
+@import "colors";
+@import "theme_variables";
+@import "theme_overrides";
+@import "base";
 
-/*
- Partials
-*/
-@import "partials/theme_overrides";
-@import "partials/base";
-
-/*
- Elements
-*/
+@import "includes/archive_list";
+@import "includes/workflow_steps";
+@import "includes/masthead";
 @import "guide-index";

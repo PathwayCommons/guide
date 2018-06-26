@@ -1,0 +1,154 @@
+/*
+*
+* ___      _   _                       ___
+* | _ \__ _| |_| |___ __ ____ _ _  _   / __|___ _ __  _ __  ___ _ _  ___
+* |  _/ _` |  _| ' \ V  V / _` | || | | (__/ _ \ '  \| '  \/ _ \ ' \(_-<
+* |_| \__,_|\__|_||_\_/\_/\__,_|\_, |  \___\___/_|_|_|_|_|_\___/_||_/__/
+*                               |__/
+* https://github.com/PathwayCommons/
+*
+* Guide customization
+*/
+a.btn.btn-block {
+  font-weight: 200;
+  text-decoration: none;
+  color: $inverse;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* images */
+img {
+  margin: auto auto;
+}
+img.slim {
+  max-width: 100%;
+}
+img.super-slim {
+  max-width: 80%;
+}
+img.short {
+  max-height: 700px;
+}
+img.ht-600 {
+  max-height: 600px;
+}
+img.ht-500 {
+  max-height: 500px;
+}
+img.ht-400 {
+  max-height: 400px;
+}
+img.ht-300 {
+  max-height: 300px;
+}
+img.left {
+  margin-left: 0;
+}
+@media (min-width: 768px) {
+  img.slim {
+    max-width: 70%;
+  }
+  img.super-slim {
+    max-width: 50%;
+  }
+
+  .modal-lg {
+    width: 100%;
+  }
+}
+
+
+/* Spinner */
+#ajax-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 7em;
+  width: 7em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+
+
+/*
+ * figures and legends
+ */
+
+ .figure-legend.well{
+   font-size: $figure-legend;
+   a.btn {
+     background-color: $midnight-blue;
+     color: $clouds;
+     text-decoration: none;
+     margin-top: 0.5rem;
+   }
+ }
+
+/*
+ * Aside box
+ */
+ .box {
+   padding-bottom: 0.5em;
+   background-color: rgba(90, 49, 13, 0.20);
+
+   .box-title{
+     padding: 0.5rem;
+     font-weight: bold;
+     font-size: 1.1rem;
+     background-color: rgba(90, 49, 13, 0.30);
+     color: #000000;
+   }
+
+   .box-terms {
+     margin-left: 0.5rem;
+     margin-right: 0.5rem;
+     margin-top: 1rem;
+   }
+
+   blockquote {
+     font-style: italic;
+     border-left-color: rgba(90, 49, 13, 0.20);
+   }
+ }
+
+ @media (min-width: 768px) {
+   .box {
+     .box-terms {
+       margin: 2rem;
+       dt{
+          margin-top: 1.5rem;
+       }
+     }
+
+     .dl-horizontal.box-terms {
+       dd, dt{
+          margin-top: 0rem;
+       }
+     }
+   }
+ }
+
+ /*
+ * Aside box
+ */
+ li.aside {
+    list-style: none;
+    padding: 0.5em;
+    background-color: $clouds;
+  }
+
+  li.aside.terms {
+    background-color: rgba(90, 49, 13, 0.20);
+  }
+
+ @media (min-width: 768px) {
+  li.aside {
+    padding: 2em;
+  }
+ }

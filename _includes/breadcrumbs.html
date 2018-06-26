@@ -1,4 +1,5 @@
   {% assign query = (site.collections | where: 'label' , page.collection ) %}
+
   {% if query.size == 1 %}
     {% assign c = query.first %}
     {% assign parts = (page.url | split: '/') %}
@@ -9,15 +10,19 @@
       {% assign url = (url | append: path | append: '/') %}
 
       {% if forloop.first %}<!-- 1st part is the root  -->
-        <li><a href="{{ url }}">{{ site.baseurl | remove: '/' }}</a></li>
-      {% elsif forloop.last %}<!-- If its the last its an /index  -->
-
-      {% elsif path == c.label %}<!-- If its a collection it is an index page  -->
-        <li><a href="{{ site.baseurl }}{{ c.index }}">{{ c.label | replace: '_', ' ' }}</a></li>
+        <li><a href="{{ url }}">{{ site.baseurl | remove: '/' | capitalize }}</a></li>
       {% elsif forloop.index == limit %}<!-- If its the second last path  -->
-       <li class="active">{{ page.title }}</li>
+        <li class="active">{{ page.title }}</li>
+        {% break %}
+      {% elsif path == c.label %}<!-- If its a collection it is an index page  -->
+        {% if parts[forloop.index] == "archive" %}
+          <li class="active">{{ page.title }}</li>
+          {% break %}
+        {% else %}
+          <li><a href="{{ site.baseurl }}/{{ path }}/archive/">{{ c.label | replace: '_', ' ' | capitalize }}</a></li>
+        {% endif %}
       {% else %}
-        <li><a href="{{ url }}">{{ path | replace: '_', ' '  }}</a></li>
+        <li><a href="{{ url }}">{{ path | replace: '_', ' ' | capitalize }}</a></li>
       {% endif %}
     {% endfor %}
     </ol>

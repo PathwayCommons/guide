@@ -2,7 +2,7 @@
 title: Gene Set Enrichment Analysis
 date: 2016-04-20
 pdf: gsea_subramanian_pnas_v102_43_2005.pdf
-layout: document
+layout: page
 figures:
   figure_1: figure_gsea_local.png
   figure_2: figure_gsea_global.png
@@ -26,6 +26,8 @@ reflist:
 cover: cover.jpg
 group: data_analysis
 ---
+
+<hr/>
 
 - {:.list-unstyled} Table of Contents
   - {:.list-unstyled} [I. Goals](#goals)
