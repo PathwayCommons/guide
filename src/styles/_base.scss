@@ -6,58 +6,66 @@
 * |_| \__,_|\__|_||_\_/\_/\__,_|\_, |  \___\___/_|_|_|_|_|_\___/_||_/__/
 *                               |__/
 * https://github.com/PathwayCommons/
-*
-* Guide customization
 */
-a.btn.btn-block {
-  font-weight: 200;
+
+$font-family-base:          "Lato", Helvetica, Arial, sans-serif !default;
+
+html, body {
+  font-family: $font-family-base;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: $text-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base;
+  font-weight: 600;
+  color: $text-color;
+  letter-spacing: -.5px;
+  margin-top: 2.875rem;
+  margin-bottom: 0.6875rem;
+
+  a {
+    color: $text-color;
+    text-decoration: underline;
+    text-decoration-color: $text-color;
+  }
+}
+
+h3, h4, h5, h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.6875rem;
+}
+
+a {
+  color: $text-color;
+  text-decoration: underline;
+  text-decoration-color: $text-color;
+}
+
+a.btn {
   text-decoration: none;
-  color: $inverse;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
 }
 
-/* images */
+.container {
+  max-width: 50rem;
+  min-width: 18rem;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
 img {
-  margin: auto auto;
-}
-img.slim {
+  display: block;
   max-width: 100%;
-}
-img.super-slim {
-  max-width: 80%;
-}
-img.short {
-  max-height: 700px;
-}
-img.ht-600 {
-  max-height: 600px;
-}
-img.ht-500 {
-  max-height: 500px;
-}
-img.ht-400 {
-  max-height: 400px;
-}
-img.ht-300 {
-  max-height: 300px;
-}
-img.left {
-  margin-left: 0;
-}
-@media (min-width: 768px) {
-  img.slim {
-    max-width: 70%;
-  }
-  img.super-slim {
-    max-width: 50%;
-  }
-
-  .modal-lg {
-    width: 100%;
-  }
+  max-height: 650px;
+  margin: auto auto;
+  border-radius: 0px;
 }
 
+img.tall {
+  max-height: 850px;
+}
 
 /* Spinner */
 #ajax-spinner {
@@ -74,81 +82,11 @@ img.left {
   display: none;
 }
 
-
-
 /*
- * figures and legends
+ * Bootstrap
  */
 
- .figure-legend.well{
-   font-size: $figure-legend;
-   a.btn {
-     background-color: $midnight-blue;
-     color: $clouds;
-     text-decoration: none;
-     margin-top: 0.5rem;
-   }
- }
-
-/*
- * Aside box
- */
- .box {
-   padding-bottom: 0.5em;
-   background-color: rgba(90, 49, 13, 0.20);
-
-   .box-title{
-     padding: 0.5rem;
-     font-weight: bold;
-     font-size: 1.1rem;
-     background-color: rgba(90, 49, 13, 0.30);
-     color: #000000;
-   }
-
-   .box-terms {
-     margin-left: 0.5rem;
-     margin-right: 0.5rem;
-     margin-top: 1rem;
-   }
-
-   blockquote {
-     font-style: italic;
-     border-left-color: rgba(90, 49, 13, 0.20);
-   }
- }
-
- @media (min-width: 768px) {
-   .box {
-     .box-terms {
-       margin: 2rem;
-       dt{
-          margin-top: 1.5rem;
-       }
-     }
-
-     .dl-horizontal.box-terms {
-       dd, dt{
-          margin-top: 0rem;
-       }
-     }
-   }
- }
-
- /*
- * Aside box
- */
- li.aside {
-    list-style: none;
-    padding: 0.5em;
-    background-color: $clouds;
-  }
-
-  li.aside.terms {
-    background-color: rgba(90, 49, 13, 0.20);
-  }
-
- @media (min-width: 768px) {
-  li.aside {
-    padding: 2em;
-  }
- }
+/* Cards */
+.card {
+  margin-bottom: 1em;
+}

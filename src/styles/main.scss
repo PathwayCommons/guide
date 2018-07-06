@@ -24,13 +24,9 @@
 @import "vendor/theme/poole";
 @import "vendor/theme/lanyon";
 
-@import "fonts";
 @import "colors";
-@import "theme_variables";
-@import "theme_overrides";
 @import "base";
 
 @import "includes/archive_list";
-@import "includes/workflow_steps";
+@import "includes/workflow_stepper";
 @import "includes/masthead";
-@import "guide-index";

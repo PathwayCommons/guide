@@ -1,7 +1,7 @@
 ---
 title: Process Data
 subtitle: Derive a list of differentially expressed genes from RNA sequencing data
-order: 1
+step: 1
 date: '2014-02-27'
 figures:
   figure_1: figure_processdata_overview.jpg
@@ -18,7 +18,7 @@ data:
   rank: brca_hd_tep_ranks.rnk
   expression: brca_hd_tep_expression.txt
   phenotype: brca_hd_tep_phenotype.cls
-group: rna_seq_to_enrichment_map
+label: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 26525104
@@ -59,9 +59,13 @@ By then end of this discussion you should (Figure 1):
 
 <br/>
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive.short }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Goals.</strong> To illustrate construction of an Enrichment Map, we follow the work done by Best et al. (Best 2015) comparing RNA-Seq profiles of platelets from healthy donors (HD) to those with breast cancer (BrCa) with the goal of defining blood-based diagnostic signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-Seq profiles from platelet samples. In this workflow step, we use the RNA-Seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are files which are the dependencies for subsequent workflow steps. Besides downloading these files and understanding what they contain, there is no further action to be taken in the workflow.
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Goals.</strong> To illustrate construction of an Enrichment Map, we follow the work done by Best et al. (Best 2015) comparing RNA-Seq profiles of platelets from healthy donors (HD) to those with breast cancer (BrCa) with the goal of defining blood-based diagnostic signatures. We will provide a brief overview of the study and describe the methods used to generate RNA-Seq profiles from platelet samples. In this workflow step, we use the RNA-Seq data and sample class metadata as inputs and perform a differential expression analysis for each gene. The output of this step are files which are the dependencies for subsequent workflow steps. Besides downloading these files and understanding what they contain, there is no further action to be taken in the workflow.
+    </p>
+  </div>
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -72,9 +76,13 @@ This workflow is framed using sample data from a study by Best *et al.* who deve
 
 Cancer surveillance would be greatly aided by practical, low-cost alternatives to support early-detection, diagnosis, and treatment decisions. Ideally these tools would be non-invasive yet retain the sensitivity and accuracy needed to reliably differentiate between normal and pathological states. Blood-based biomarkers have been aggressively pursued as a means to diagnose malignancies. The components of blood that have been examined include both cell-free molecules (e.g. DNA, RNA, proteins) along with immune cells (monocytes, platelets) (Figure 2).
 
-![image]({{ page.figures.figure_2 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Blood-based cancer biopsies.</strong> Blood can be separated into different fractions in order to enrich for tumor-associated biomarkers. From the mononuclear cell fraction, circulating tumor cells (CTCs) may provide genomic, transcriptomic, and proteomic information on the tumor. From plasma or serum, cell-free nucleotides and exosomes can be further used to interrogate cancer-secreted bioparticles. <em>Adapted from Joose et al. (Joose 2015), Figure 1</em>.
+![image]({{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Blood-based cancer biopsies.</strong> Blood can be separated into different fractions in order to enrich for tumor-associated biomarkers. From the mononuclear cell fraction, circulating tumor cells (CTCs) may provide genomic, transcriptomic, and proteomic information on the tumor. From plasma or serum, cell-free nucleotides and exosomes can be further used to interrogate cancer-secreted bioparticles. <em>Adapted from Joose et al. (Joose 2015), Figure 1</em>.
+    </p>
+  </div>
 </div>
 
 ### A platelet primer
@@ -92,8 +100,12 @@ The pathogenesis of cancer requires the cooperation of a host of stromal and imm
 Platelets have been implicated in aiding and abetting the metastatic potential of cancer cells through a variety of routes (Gay 2011) (Figure 3). First, they aggregate in order to shield cancer cells that have entered the vasculature from immune cell recognition. Second, they facilitate their extravasation by enabling cancer cell to arrest and adhesion at points in the vasculature. Third, platelets secrete variety of molecules that support cancer cell survival and promote endothelial permeability, further promoting their extravasation.
 
 ![image]({{ page.figures.figure_3 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Molecular coordination between platelets and tumour cells supports metastasis from the bloodstream.</strong> As platelets become activated, they undergo a shape change, increase their adhesiveness, release granules and microparticles, and perpetuate the cohesion of heteroaggregates containing tumour cells, platelets and leukocytes. Platelet granules contain growth factors, chemokines and proteases. During cohesion, circulating tumour cells can interact with activated platelets and leukocytes, and form heteroaggregates that support attachment to the endothelium and thereby contribute to metastasis. During adhesion, initial, transient adhesion is followed by firm attachment that is mediated by integrins and intercellular cell adhesion molecules. During immune evasion, multivalent plasma proteins form intercellular bridges, and activated platelets and fibrinogen protect tumour cells from natural killer cell lysis during haematogenous metastasis. GP, glycoprotein; icAM, intercellular adhesion molecule; PAr, protease-activated receptor; PsGL1, P-selectin- glycoprotein ligand 1; sLea, sialyl Lewis a antigen; sLex, sialyl Lewis x antigen; vcAM vascular cell adhesion molecule; vWF, von Willebrand factor. <em>Adapted from Gay et al. (Gay 2011), Figure 2</em>.
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. Molecular coordination between platelets and tumour cells supports metastasis from the bloodstream.</strong> As platelets become activated, they undergo a shape change, increase their adhesiveness, release granules and microparticles, and perpetuate the cohesion of heteroaggregates containing tumour cells, platelets and leukocytes. Platelet granules contain growth factors, chemokines and proteases. During cohesion, circulating tumour cells can interact with activated platelets and leukocytes, and form heteroaggregates that support attachment to the endothelium and thereby contribute to metastasis. During adhesion, initial, transient adhesion is followed by firm attachment that is mediated by integrins and intercellular cell adhesion molecules. During immune evasion, multivalent plasma proteins form intercellular bridges, and activated platelets and fibrinogen protect tumour cells from natural killer cell lysis during haematogenous metastasis. GP, glycoprotein; icAM, intercellular adhesion molecule; PAr, protease-activated receptor; PsGL1, P-selectin- glycoprotein ligand 1; sLea, sialyl Lewis a antigen; sLex, sialyl Lewis x antigen; vcAM vascular cell adhesion molecule; vWF, von Willebrand factor. <em>Adapted from Gay et al. (Gay 2011), Figure 2</em>.
+     </p>
+  </div>
 </div>
 
 The close contact between cancer cells and platelets results in their 'education'. For example, tumour-associated RNA (e.g. EGFRvIII in brain and  PCA3 in prostate) could be detected in platelets (Nilsson 2011) and is consistent with observations that tumor exomes could be taken up by platelets.
@@ -114,9 +126,13 @@ Best *et al.* prospectively collected blood platelets from 55 healthy donors (HD
 
 Figure 4 depicts the sample collection and processing scheme. For each patient, approximately 100-500 picograms of total platelet RNA  - the equivalent content in less than a drop of blood - was extracted for sequencing.
 
-![image]({{ page.figures.figure_4 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated platelets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
+![image]({{ page.figures.figure_4 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 4. Sample collection and RNA sequencing.</strong> (A) Schematic overview of tumor-educated platelets (TEPs) as biosource for liquid biopsies. (B) Number of platelet samples of healthy donors and patients with different types of cancer. (C) TEP mRNA sequencing (mRNA-seq) workflow, as starting from 6 ml EDTA-coated tubes, to platelet isolation, mRNA amplification, and sequencing. (D) Correlation plot of mRNAs detected in healthy donor (HD) platelets and cancer patients’ TEPs, including highlighted increased (red) and decreased (blue) TEP mRNAs. (E) Heatmap of unsupervised clustering of platelet mRNA profiles of healthy donors (red) and patients with cancer (gray).<em>Adapted from Best et al. (Best 2015), Figure 1</em>.
+    </p>
+  </div>
 </div>
 
 Since Best *et al.* were interested in the discriminatory capacity of transcriptomes, they initially filtered RNA species for those that were intron-spanning and had sufficiently high expression counts (>5) to reduce the amount of noise.
@@ -127,9 +143,13 @@ A reduced set of 5 003 protein and non-coding RNAs (excluding Y chromosome and m
 
 Is the information in platelets sufficiently informative to discriminate between healthy donors and those with breast cancer? To determine this, the authors first performed a clustering analysis to extract a subset of RNA species (n = 192) with discriminatory power then fed these genes into a machine learning algorithm trained to assign the correct category for each sample. In this case, the authors reported a 100% test accuracy in discriminating platelets derived from normal versus breast cancer patients (Figure 5).
 
-![image]({{ page.figures.figure_5 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Sample classification accuracy and sensitivity.</strong> Cross table of Support Vector Machine algorithm diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. <em>Adapted from Best et al. (Best 2015), Figure S2C</em>.
+![image]({{ page.figures.figure_5 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 5. Sample classification accuracy and sensitivity.</strong> Cross table of Support Vector Machine algorithm diagnostics with healthy donor subjects and BrCa. Unique tumor-specific gene lists were determined and used to train the different algorithms. For the BrCa-classifying algorithm, only female healthy donors were included. Indicated are sample numbers and detection rates in percentages. Accuracy performance for each algorithm is indicated below the cross table. <em>Adapted from Best et al. (Best 2015), Figure S2C</em>.
+    </p>
+  </div>
 </div>
 
 ### Zooming out: Pathway analysis
@@ -146,37 +166,7 @@ While a list of genes expression differences with exquisite discriminatory power
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
 
-<div class="box">
-  <div class="box-title">Box 2. Workflow Terminology</div>
-
-  <dl class="dl-horizontal box-terms">
-
-    <dt>Workflow</dt>
-    <dd>
-      A set of <em>steps</em> that transform data into a useful form.
-    </dd>
-
-    <dt>Input</dt>
-    <dd>
-      Each step takes in data, files and configuration settings that represent dependencies.
-    </dd>
-
-    <dt>Analysis</dt>
-    <dd>
-      Step dependencies are transformed into their useful form.
-    </dd>
-
-    <dt>Output</dt>
-    <dd>
-      The results of the analysis of dependencies.
-    </dd>
-  </dl>
-
-</div>
-
-<br/>
-
-In this workflow step (Box 2), we will walk through the transformation of RNA sequencing data counts generated by Best *et al.* for platelets from 16 HD and 16 BrCa patients into three output files that are dependencies for later steps:
+In this workflow step, we will walk through the transformation of RNA sequencing data counts generated by Best *et al.* for platelets from 16 HD and 16 BrCa patients into three output files that are dependencies for later steps:
 
   - #### Rank file
     - This file will be required for a workflow step 'Identify Pathways' where changes in gene expression are summarized as pathways  (Figure 1; Step 2)
@@ -197,14 +187,14 @@ In this workflow, we will be focusing on a subset of 16 BrCa and 16 HD samples. 
 
 **Table 2. Sample high-throughput RNA sequencing counts**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table .table-sm }
 | ENSG00000000003|0|
 | ENSG00000000005|0|
 | ENSG00000000419|100|
 | ... | ... |
 |ENSG00000273493|0|
 
-<a href="{{ page.data.input_htseq }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Raw RNA-Seq (.zip)</a>
+<a class="btn btn-secondary btn-lg btn-block" href="{{ page.data.input_htseq }}" role="button" download>Raw RNA-Seq (.zip)</a>
 
 We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains the name (id) of each RNA-Seq file and its corresponding class (Table 3).
 
@@ -212,7 +202,7 @@ We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains
 
 **Table 3. Contents of metadata file**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table .table-sm }
 |id|class|
 |-----|-----|
 | MGH-BrCa-H92-TR472_htsqct.txt | BrCa |
@@ -221,7 +211,7 @@ We also provide a tab-delimited metadata file (tep_phenotypes.txt) that contains
 | ... | ... |
 | HD-18-2_htsqct.txt | HD |
 
-<a href="{{ page.data.input_meta }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Metadata (.zip)</a>
+<a href="{{ page.data.input_meta }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Metadata (.zip)</a>
 
 ### Analysis
 
@@ -241,7 +231,7 @@ Third, our metadata file is sufficient to generate our phenotype file (Table 4),
 
 **Table 4. Phenotype output (.cls file)**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table .table-sm }
 |:------:|:------:|:------:|:------:|:------:|
 | 30 | 2 | 1 | |...| |
 | #| HD| BrCa| |...| |
@@ -264,7 +254,7 @@ At this stage, we can generate an expression file of normalized RNA counts where
 
 **Table 5. Expression output (counts per million mapped reads)**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table .table-sm }
 | NAME | DESCRIPTION | MGH-BrCa-H92-TR472_htsqct |...|Breast-60_htsqct|
 |:------:|:------:|:------:|:------:|:------:|
 | PPP1R2 | PPP1R2 | 20.0960199625179 | ...| 21.2351177118648|
@@ -285,7 +275,7 @@ At this stage, we can generate a rank file where row names are gene symbols and 
 
 **Table 6. Rank output**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table .table-sm }
 | gene | rank |
 |-----|:-----:|
 | ARHGAP45 | 58.1795999084575 |
@@ -303,12 +293,12 @@ Listed below are the outputs of this step that will be required as input depende
 #### Dependencies for GSEA (Workflow Step 2: Identify Pathways)
   1. Ranks
   - Genes ranked as a function of p-value from differential expression.
-  <a href="{{ page.data.rank }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+  <a href="{{ page.data.rank }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Ranks (.rnk)</a>
 
 #### Enrichment Map dependencies (Workflow Step 3: Visualize)
 
   1. Expression
   -  Normalized counts for RNA species in for each sample.
-  <a href="{{ page.data.expression }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
+  <a href="{{ page.data.expression }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Expression (.txt)</a>
   2. Phenotype
-  - Declaration of classes and sample assignment. <a href="{{ page.data.phenotype }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
+  - Declaration of classes and sample assignment. <a href="{{ page.data.phenotype }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Phenotype (.cls)</a>

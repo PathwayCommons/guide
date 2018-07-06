@@ -1,10 +1,17 @@
 <div class="masthead">
   <div class="container">
-    <h1 class="masthead-title">
-      <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
-    </h1>
-    <a class="masthead-author" href="{{ site.author.url }}">
-        {{ site.author.name }}
-    </a>
+    <div class="media">
+      <a class="masthead-brand" href="{{ site.author.url }}">
+        <img class="mr-3" src="{{ site.baseurl }}/{{ site.static_root }}/{{ site.media_root }}/icons/pc_logo_dark.svg" alt="Pathway Commons">
+      </a>
+      <div class="media-body">
+        <h1 class="masthead-title">
+          <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+        </h1>
+        <a class="masthead-author" href="{{ site.author.url }}">
+            {{ site.author.name }}
+        </a>
+      </div>
+    </div>
   </div>
 </div>

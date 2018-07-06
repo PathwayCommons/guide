@@ -34,7 +34,7 @@ reflist:
   - 20196867
   - 19015660
 cover: cover.jpg
-group: data_analysis
+label: data_analysis
 ---
 
 <hr/>
@@ -99,8 +99,12 @@ This section includes a very brief review of RNA-seq concepts and terminology th
 Figure 1 shows a typical RNA-seq experimental workflow in which an mRNA sample is converted into a set of corresponding read counts mapped to a reference.
 
 ![image]( {{ page.figures.figure_1 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. A typical RNA-seq experiment.</strong> mRNAs are converted into a library of cDNA fragments typically following RNA fragmentation. Sequencing adaptors (blue) are subsequently added to each cDNA fragment and a short sequence is obtained from each cDNA using high-throughput sequencing technology. The resulting sequence reads are aligned with the reference genome or transcriptome, and classified as three types: exonic reads, junction reads and poly(A) end-reads. These three types are used to generate a base-resolution expression profile for each gene (bottom). <em>Adapted from Wang et al. (2009)</em>
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. A typical RNA-seq experiment.</strong> mRNAs are converted into a library of cDNA fragments typically following RNA fragmentation. Sequencing adaptors (blue) are subsequently added to each cDNA fragment and a short sequence is obtained from each cDNA using high-throughput sequencing technology. The resulting sequence reads are aligned with the reference genome or transcriptome, and classified as three types: exonic reads, junction reads and poly(A) end-reads. These three types are used to generate a base-resolution expression profile for each gene (bottom). <em>Adapted from Wang et al. (2009)</em>
+    </p>
+  </div>
 </div>
 
 For those more curious about the process by which the short sequence reads are generated, Illumina has made available a summary of their 'Sequencing by Synthesis' (SBS) technology.
@@ -118,9 +122,13 @@ The workflow described in Figure 1 shows a single sequencing experiment whereby 
 
 > Note: *We will use the term 'sample' and 'case' interchangeably to refer to an a distinct source of biological material from which RNA-seq counts are derived. In each case a cDNA library is created, and so you will often see this concept referred to as a 'library'.*
 
-![image]( {{ page.figures.figure_2 }}){: .img-responsive.super-slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Typical sequencing flow cell apparatus.</strong> Several samples can be loaded onto the eight-lane flow cell for simultaneous analysis on an Illumina Sequencing System. <em>Adapted from <a href="http://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf"> Illumina Tech Spotlight on Sequencing</a></em>
+![image]( {{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Typical sequencing flow cell apparatus.</strong> Several samples can be loaded onto the eight-lane flow cell for simultaneous analysis on an Illumina Sequencing System. <em>Adapted from <a href="http://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf"> Illumina Tech Spotlight on Sequencing</a></em>
+    </p>
+  </div>
 </div>
 
 <div class="embed-responsive embed-responsive-16by9">
@@ -146,9 +154,13 @@ The overall goal for RNA-seq normalization is to provide a basis upon which an f
 
 **Definition** A **technical replicate** of a set of experiments is performed using the same biological material.
 
-![image]( {{ page.figures.figure_3 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (A and B) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. There are n_A samples of Type A and n_B of Type B. A cDNA library for each sample is created and sequenced. The total number of mapped sequence reads from each sample (N) are usually non-identical; Total mapped sequence reads for each gene is also indicated along right margin (Z).
+![image]( {{ page.figures.figure_3 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. Layout of RNA-seq read counts for differential expression.</strong> Hypothetical counts of RNA species for two biological types (A and B) whose gene expression are being contrasted. Samples (J total) are arranged in columns and genes (I total) in rows. There are n_A samples of Type A and n_B of Type B. A cDNA library for each sample is created and sequenced. The total number of mapped sequence reads from each sample (N) are usually non-identical; Total mapped sequence reads for each gene is also indicated along right margin (Z).
+    </p>
+  </div>
 </div>
 
 ### Notation
@@ -171,9 +183,13 @@ To make our discussion more precise we will use mathematical notation in the fol
 
 We wish to make fair comparisons between RNA sequencing experiments. Such data could arise from sequencing RNA from distinct types (e.g. males and females), the same type (e.g. males; a biological replicate) and perhaps even sequencing the same sample multiple times (e.g. same male; a technical replicate). Here we describe global normalization whereby a correction factor is applied to an entire set of mapped sequence reads (Figure 4).
 
-![image]( {{ page.figures.figure_4 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Global normalization.</strong> (Above) Hypothetical mapped read counts for samples of two types. Mapped sequence reads for each sample arise from a corresponding cDNA library and sequencing run. (Middle) For each sample (j) a correction factor (Cj) is calculated. In this case, the normalization factor is the ratio of total mapped sequence reads relative to the first of each type (samples 1 and 4). (Below) The normalized data results from dividing mapped sequence reads for each gene by the respective sample correction factor.
+![image]( {{ page.figures.figure_4 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 4. Global normalization.</strong> (Above) Hypothetical mapped read counts for samples of two types. Mapped sequence reads for each sample arise from a corresponding cDNA library and sequencing run. (Middle) For each sample (j) a correction factor (Cj) is calculated. In this case, the normalization factor is the ratio of total mapped sequence reads relative to the first of each type (samples 1 and 4). (Below) The normalized data results from dividing mapped sequence reads for each gene by the respective sample correction factor.
+    </p>
+  </div>
 </div>
 
 Several different normalization schemes have been suggested but which is 'best' is an ongoing debate. Here we discuss those relevant to differential expression analysis and available as part of the  [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) Bioconductor package.
@@ -206,9 +222,13 @@ Let us consider the rationale underlying total count correction. Strictly speaki
 
 Of course, there are situations in which these assumptions are violated and total count normalization can skew the desired correction. Consider a scenario where samples express relatively large amounts of an RNA species absent in others (Figure 5). Likewise, consider a situation where a small number of genes in a sample may generate a large proportion of the reads.
 
-![image]( {{ page.figures.figure_5 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Total count normalization is limited when RNA composition is important.</strong> Applying total count normalization to RNA sequencing samples can obscure the true mapped sequence reads for genes in cases where RNA composition is important. Samples 1 and 2 differ only in total mapped sequence reads and are valid under total count normalization. Sample 3 illustrates the case where a sample highly expresses gene 5 that is not otherwise represented. Sample 4 illustrates a case where one gene 4 is highly expressed. Note that in both cases, the result is that genes in samples 3 and 4 are over-corrected.
+![image]( {{ page.figures.figure_5 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 5. Total count normalization is limited when RNA composition is important.</strong> Applying total count normalization to RNA sequencing samples can obscure the true mapped sequence reads for genes in cases where RNA composition is important. Samples 1 and 2 differ only in total mapped sequence reads and are valid under total count normalization. Sample 3 illustrates the case where a sample highly expresses gene 5 that is not otherwise represented. Sample 4 illustrates a case where one gene 4 is highly expressed. Note that in both cases, the result is that genes in samples 3 and 4 are over-corrected.
+    </p>
+  </div>
 </div>
 
 A more realistic assumption is that the relative expression of *most* genes in every sample is similar and that any particular RNA species represents a small proportion of total read counts. Robinson and Oshlack (Robinson 2010) formalized this potential discrepancy and proposed that the number of reads assigned to any particular gene will depend on the composition of the RNA population being sampled. More generally, the proportion of reads attributed to a gene in a sample depends on the expression properties of the whole sample rather than merely the gene of interest. In both cases considered in Figure 5, the presence of a highly expressed gene underlies an elevated total RNA output that reduces the sequencing 'real estate' for genes that are otherwise not differentially expressed.
@@ -276,9 +296,13 @@ $$
 
 Towards our goal of a robust estimate of total RNA outputs, we remove genes with extreme expression differences beyond a threshold that would skew our estimates. Oshlack and Robinson trim off the upper and lower 30% of $$M$$ and the outer 5% of $$A$$ values. Implicit in the calculation of $$M$$ and $$A$$ is the removal of genes with zero counts.
 
-![image]( {{ page.figures.figure_6 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Trimming.</strong> Hypothetical RNA sequencing data where per-gene log fold-difference (M) is plotted against absolute expression (A). Thin box (dashed) restricts the data along the vertical axis omitting the outer 30% of values; Large (dashed-dot) box restricts the data along the horizontal axis omitting the outer 5%. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+![image]( {{ page.figures.figure_6 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 6. Trimming.</strong> Hypothetical RNA sequencing data where per-gene log fold-difference (M) is plotted against absolute expression (A). Thin box (dashed) restricts the data along the vertical axis omitting the outer 30% of values; Large (dashed-dot) box restricts the data along the horizontal axis omitting the outer 5%. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+    </p>
+  </div>
 </div>
 
 #### Step 2. Calculate per-gene weights
@@ -445,7 +469,7 @@ What we wish to do is determine the feasibility of this null hypothesis given ou
 
 **Table 1. Summary of RNA-seq count data**
 
-![image]( {{ page.figures.table_1 }}){: .img-responsive.slim }
+![image]( {{ page.figures.table_1 }}){: .w-75 }
 
 **Definition** A **test statistic** is a standardized value that is calculated from sample data during a hypothesis test.
 
@@ -488,13 +512,13 @@ We will reuse an example originally intended to illustrate [Fisher's Exact Test]
 
 **Table 2. Table of observed RNA-seq count data**
 
-![image]( {{ page.figures.table_2 }}){: .img-responsive.slim }
+![image]( {{ page.figures.table_2 }}){: .w-75 }
 
 **Set marginal totals**. Note the marginal read total for the gene is $$15$$. Given this, our next goal is to enumerate all possible combinations (Table 3).
 
 **Table 3. Possible tables given fixed marginal total**
 
-![image]( {{ page.figures.table_3 }}){: .img-responsive.slim }
+![image]( {{ page.figures.table_3 }}){: .w-75 }
 
 **Sum probabilities of contingency tables**. If the counts for gene $$i$$ over all samples of each subtype are $$Z_{iM}$$ and $$Z_{iR}$$, respectively, we desire those table probabilities $$p(a_i,b_i)$$ that are less than or equal to that observed, $$p(Z_{iM},Z_{iR}$$). From Table 2 the observed probability is calculated using $$a_i=12$$ and $$b_i=3$$ giving $$p(12,3)$$. Tables highlighted in red include those (unobserved) counts where the gene differential is more extreme than the observed table and consequently will have probabilities lower than the observed. Likewise, tables highlighted in orange will have probabilities lower than that observed. The sum of these two sets of table probabilities will equal $$P_i$$.
 
@@ -557,10 +581,14 @@ Accordingly, the mean and variance of mapped read counts is a random variable $$
 
  A nice aspect of the Poisson distribution is the equality between mean and variance. Figure 7 displays a plot of simulated RNA-seq data where mean and variance for genes is measured across technical replicates.
 
- ![image]( {{ page.figures.figure_7 }}){: .img-responsive.super-slim }
- <div class="figure-legend well well-lg text-justify">
-   <strong>Figure 7. Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for technical replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
- </div>
+ ![image]( {{ page.figures.figure_7 }})
+ <div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 7. Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for technical replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+    </p>
+  </div>
+</div>
 
 ### Biological variability
 
@@ -570,9 +598,13 @@ Consider the RNA-seq experiments we presented in Figure 3: RNA is sourced from t
 
 Consider a case where the technical variability in measured counts for a given case/cDNA library is well accounted for by a Poisson distribution indexed by its mean $$\mu$$. If we now made our measurements across different cases we would expect additional variability owing to the 'uniqueness' of individuals that includes (but not limited to) genetic, physiological and their environmental factors. Figure 8 displays a plot of simulated RNA-seq data where mean and variance for genes is measured across biological replicates.
 
-![image]( {{ page.figures.figure_8 }}){: .img-responsive.super-slim }
-<div class="figure-legend well well-lg text-justify">
- <strong>Figure 8. Overdispersed Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for biological replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+![image]( {{ page.figures.figure_8 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 8. Overdispersed Poisson distributed data.</strong> Simulated data showing the relation between mean and variance for biological replicates. The red line shows the variance implied by a Poisson distribution. <em>Adapted from Ignacio Gonzalez's tutorial on 'Statistical analysis of RNA-Seq data' (Toulouse 2014)</em>
+    </p>
+  </div>
 </div>
 
 The overdispersed count data observed with biological replicates manifests as an elevated variance relative to the mean. Thus, some 'fudge factor' is desired to account for this additional variability. The [negative binomial]({{ site.baseurl }}/primers/statistics/distributions/#negativeBinomial) arises from a Gamma-Poisson mixture in which a Poisson parameter $$\Theta$$ is itself a random variable $$\Theta=\mu\epsilon$$ and $$\epsilon \sim Gamma(\alpha,\beta)$$.
@@ -831,9 +863,13 @@ $$
 
 It is the pseudodata that is applied to the CML estimate for common dispersion (Figure 9B). In effect, the algorithm adjusts counts upwards for samples having total mapped sequence counts below the geometric mean and *vice versa*.
 
-![image]( {{ page.figures.figure_9 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
- <strong>Figure 9. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.
+![image]( {{ page.figures.figure_9 }}){: .tall}
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 9. Quantile adjusted conditional maximum likelihood (qCML). </strong><strong>A.</strong> (Above) Method to map hypothetical counts in two samples to their respective quantiles. In sample 1, there are 16 total mapped sequence reads and so a gene with 4 counts represents the 25th percentile. Likewise, the same gene maps to the 25th percentile for sample 2 that has 25 total counts. (Below) Mapping the 25 percentile in a hypothetical sample with total counts equal to the geometric mean (20) results in equal pseudodata for sample 1 and 2 of 5 counts. <strong>B.</strong> The qCML algorithm is iterative and uses the pseudodata to calculate the CML over all gene, samples, and sample conditions as described in main text.
+    </p>
+  </div>
 </div>
 
 

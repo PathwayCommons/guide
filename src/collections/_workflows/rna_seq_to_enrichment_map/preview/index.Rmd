@@ -1,12 +1,12 @@
 ---
 title: "Preview"
-subtitle: Turn a pairwise comparison of RNA sequencing data into a visual landscape of altered pathways.
+subtitle: Perform a pair-wise comparison of gene expression data then visualize the list of altered pathways. You will use RNA sequencing data that arises from two conditions (sample data is provided). This raw data will be converted into a single gene list where genes are assigned a rank according to differential expression. Pathways enriched in this list are identified and displayed as an visual map which organizes pathways by overarching themes.
 date: '2017-05-23'
 figures:
   figure_1: figure_processdata_em_overview.jpg
 tables:
 layout: page
-group: rna_seq_to_enrichment_map
+label: rna_seq_to_enrichment_map
 reflist:
   - 26525104
   - 21637797
@@ -40,11 +40,15 @@ Pathway enrichment analysis helps to address some of the limitations of a per-ge
 
 ## About this workflow
 
-The pathway enrichment workflow presented herein provides researchers with a walkthrough of the analysis steps. **The overarching purpose of this workflow is to identify alterations in pathways from the underlying differences in gene expression and visualize the resulting pathways** (Figure 1).
+The pathway enrichment workflow presented herein provides researchers with a walkthrough of the analysis steps. The overarching purpose of this workflow is to identify alterations in pathways from the underlying differences in gene expression and visualize the resulting pathways (Figure 1).
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Preview of workflow.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two classes. The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Preview of workflow.</strong> This workflow uses a pair-wise comparison of the underlying gene expression to infer differences in pathways between two classes. The three main steps involve (1) Processing RNA sequencing data to determine differential expression, (2) Identifying pathways from the differentially expressed genes and (3) Visualizing a simplified version of enriched pathways by grouping redundant pathways.
+    </p>
+  </div>
 </div>
 
 In order illustrate this analysis in a concrete manner, we use data from a single published study that compares transcriptomes of platelets from healthy donors and cancer patients (Best 2015). Our focus is on describing the process of generating pathway-level alterations. To this end, we provide gene expression data in a format that can be used immediately rather than describing details surrounding RNA-sequencing data analysis.

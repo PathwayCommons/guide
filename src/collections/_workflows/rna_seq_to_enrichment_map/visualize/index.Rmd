@@ -1,7 +1,7 @@
 ---
 title: Visualize
 subtitle: Create an Enrichment Map displaying the landscape of pathways
-order: 3
+step: 3
 date: '2014-02-27'
 figures:
   figure_1: figure_visualize_gsea_report.png
@@ -24,7 +24,7 @@ figures:
   figure_16: figure_visualize_em_interpret_leadingedge_il5.png
 tables:
 layout: page
-group: rna_seq_to_enrichment_map
+label: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 10802651
@@ -66,14 +66,18 @@ EM was originally described by Merico *et al.* (Merico 2010) as an aid in the in
 
 We used GSEA to distill gene sets enriched in the underlying differences in RNA abundance between platelets from healthy donors (HD) and individuals diagnosed with breast cancer (BrCa). Our rationale for applying enrichment analysis was that we would much rather reason at the pathway-level than the gene-level. Figure 1 shows a section of the GSEA report and Table 1 shows an excerpt of the actual enrichment report for BrCa.
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong>
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. GSEA report for BrCa and HD phenotypes.</strong>
+    </p>
+  </div>
 </div>
 
 **Table 1. Enrichment report for BrCa (na_pos phenotype)**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table }
 |  NAME  | SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
 |:-----|:-----:|:------:|:-----:|:-----:|:---------:|:---------:|:----------:|
 | PID_FAK_PATHWAY | 48 | 0.8144367 | 2.2033582 | 0.0 | 0.0 | 0.0 |
@@ -99,10 +103,15 @@ EM is a visualization analysis tool that organizes gene sets into an information
 
 Gene sets are represented as nodes whose radius is proportional to the number of genes. Edges indicate nodes with shared genes, where the thickness of the line is proportional to the degree of overlap. Finally, EM can use node color to represent other dimensions of the data, for example, gene sets enriched in different classes.
 
-![image]({{ page.figures.figure_2 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Rationale of the Enrichment Map.</strong> Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching label.
+![image]({{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Rationale of the Enrichment Map.</strong> Genes within gene sets or pathways can overlap and often describe nearly identical biological concepts. An Enrichment Map reduces the redundancy in gene sets by creating a graph where nodes are gene sets, node size correlates with gene set size, and edge widths indicate the number of shared genes. Note that gene set 'd' does not share any genes with the others. Highly similar gene sets can be labelled with a single, over-arching label.
+    </p>
+  </div>
 </div>
+
 
 The approach is modular in that it is compatible with any statistical test or gene set source. Enrichment Map shines when dealing with a collection of gene sets with a large degree of redundancy.
 
@@ -110,13 +119,15 @@ The approach is modular in that it is compatible with any statistical test or ge
 
 Figure 3 provides a tour of the [EM app](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"} in the [Cytoscape](http://www.cytoscape.org/){:target="_blank"} software.
 
-![img]({{ page.figures.figure_3 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene sets (circles) and their similarity (edges). Gene set size is proportional to node radius and overlap is indicated by edge thickness. Gene sets associated with BrCa and HD classes are shaded red and blue, respectively. (B) A <code>Control Panel</code> is where settings for Cytoscape and each app appear. (C) The <code>Table Panel</code> displays data for each node and edge along with expression heatmaps.
-  <div class="text-left">
-    <a type="button" class="btn btn-default" href="{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
+![img]({{ page.figures.figure_3 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. Tour of the Enrichment Map app.</strong> The Enrichment Map app is accessed through Cytoscape. (A) The main window displays the gene sets (circles) and their similarity (edges). Gene set size is proportional to node radius and overlap is indicated by edge thickness. Gene sets associated with BrCa and HD classes are shaded red and blue, respectively. (B) A <code>Control Panel</code> is where settings for Cytoscape and each app appear. (C) The <code>Table Panel</code> displays data for each node and edge along with expression heatmaps. <a href="{{ page.figures.figure_3 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
 </div>
+
 
 It should be immediately apparent from Figure 3 that the Enrichment Map app provides several helpful features including viewing underlying gene expression, grouping similar gene sets and classes/phenotypes differentiated by color.
 
@@ -141,11 +152,12 @@ The base Cytoscape installation will use a collection of apps to generate the En
 
 From the Cytoscape menu bar, select `'Apps' --> 'App Manager'` to bring up an app search panel (Figure 4).
 
-![image]({{ page.figures.figure_4 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Cytoscape App Manager screen.</strong> Search for the app of choice using the <code>Install Apps</code> tab. Beware that the App Manager search engine will respect spaces in entered text (e.g. 'EnrichmentMap' will be found but not 'Enrichment Map').
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_4 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 4. Cytoscape App Manager screen.</strong> Search for the app of choice using the <code>Install Apps</code> tab. <a href="{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
 </div>
 
@@ -155,13 +167,14 @@ Search for the app, highlight the correct search result and click `Install`. If 
 
 Launch the Enrichment Map app by selecting from the menu bar `Apps --> EnrichmentMap` (Figure 5). This will launch the `Create Enrichment Map` dialog where files common to many Enrichment Maps can be loaded or the user can load files on a case-by-case basis (Figure 5, below).
 
-![image]({{ page.figures.figure_5 }}){: .img-responsive }
+![image]({{ page.figures.figure_5 }})
 <br/>
-![image]({{ page.figures.figure_5b }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. Enrichment Map screen.</strong> (Above) The <code>Create Enrichment Map</code> dialog is where we will load our data files and adjust the Enrichment Map settings. (Below) Clicking the '+' button (red box) will enable the panel on the right to 'Load data set from files' for individual Enrichment Maps.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_5b }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 5. Enrichment Map screen.</strong> (Above) The <code>Create Enrichment Map</code> dialog is where we will load our data files and adjust the Enrichment Map settings. (Below) Clicking the '+' button (red box) will enable the panel on the right to 'Load data set from files' for individual Enrichment Maps. <a href="{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
 </div>
 
@@ -173,30 +186,30 @@ Below we provide the dependencies that will be loaded into the Enrichment Map ap
 #### GMT File
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index.html' }}{{ identify_pathways.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
+    : 'index.html' }}{{ identify_pathways.data.gene_set_database }}" role="button" class="btn btn-secondary btn-lg btn-block" download> Gene Set Database (.gmt)</a>
 
 #### Expression
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index.html' }}{{ process_data.data.expression }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Expression (.txt)</a>
+    : 'index.html' }}{{ process_data.data.expression }}" role="button" class="btn btn-secondary btn-lg btn-block" download> Expression (.txt)</a>
 
 #### Enrichments
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index.html'  }}{{ identify_pathways.data.report_brca }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_brca }}" role="button" class="btn btn-secondary btn-lg btn-block" download> BrCa report (.xls)</a>
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index.html'  }}{{ identify_pathways.data.report_hd }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_hd }}" role="button" class="btn btn-secondary btn-lg btn-block" download> HD report (.xls)</a>
 
 #### Ranks
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index.html' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+    : 'index.html' }}{{ process_data.data.rank }}" role="button" class="btn btn-secondary btn-lg btn-block" download> Ranks (.rnk)</a>
 
 #### Classes
 
 <a href="{{ site.baseurl }}/{{ process_data.url | remove
-    : 'index.html' }}{{ process_data.data.phenotype }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Phenotype (.cls)</a>
+    : 'index.html' }}{{ process_data.data.phenotype }}" role="button" class="btn btn-secondary btn-lg btn-block" download> Phenotype (.cls)</a>
 
 ### Analysis
 
@@ -204,10 +217,13 @@ Below we provide the dependencies that will be loaded into the Enrichment Map ap
 
 Having obtained the six (6) file dependencies you may now load these into the `Create Enrichment Map` dialog (Figure 6).
 
-![image]({{ page.figures.figure_6 }}){: .img-responsive}
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Enrichment Map file load.</strong> Shown is the <code>Create Enrichment Map</code> dialog. Load in the file dependencies for <code>Enrichments Pos/Neg</code>, <code>GMT</code>, <code>Ranks</code>, <code>Expression</code> and <code>Classes</code>.
+![image]({{ page.figures.figure_6 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 6. Enrichment Map file load.</strong> Shown is the <code>Create Enrichment Map</code> dialog. Load in the file dependencies for <code>Enrichments Pos/Neg</code>, <code>GMT</code>, <code>Ranks</code>, <code>Expression</code> and <code>Classes</code>.
+    </p>
+  </div>
 </div>
 
 #### 2. Configure
@@ -225,11 +241,12 @@ In the `Create Enrichment Map` dialog (Figure 6), make the following adjustments
 
 Click `Build` to generate the EM displayed in Figure 7.
 
-![image]({{ page.figures.figure_7 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. Enrichment Map for gene sets enriched in BrCa versus HD.</strong>  Nodes coloured red are gene sets enriched in BrCa whereas blue shaded are gene sets enriched in HD.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_7 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_7 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 7. Enrichment Map for gene sets enriched in BrCa versus HD.</strong>  Nodes coloured red are gene sets enriched in BrCa whereas blue shaded are gene sets enriched in HD. <a href="{{ page.figures.figure_7 }}" target="_blank">Open in new window</a>.
+    </p>
   </div>
 </div>
 
@@ -253,14 +270,15 @@ The `Control Panel` tab for `Enrichment Map` shows our currently selected parame
 - {:.list-unstyled}**Table Panel**
   - If you activate the `Heat Map` tab as in Figure 7, you will see a depiction of the normalized gene expression values and the samples colored by class. If you click on the `Node Table` (Figure 8) it should display the information summarized in the graph but displayed in tabular form. Note that if a node in the graph is selected or if there is a search match, only those results will be shown. Click anywhere on the map outside of a node to see the full results.
 
-> You can search the Enrichment Map by keyword using the input text box located at the top-right. For example, searching for 'IL5%NETPATH%IL5' higlights the corresponding node in yellow and selects it so you can immediately view data in the `Table Panel`.
+> You can search the Enrichment Map by keyword using the input text box located at the top-right. For example, searching for 'IL5%NETPATH%IL5' highlights the corresponding node in yellow and selects it so you can immediately view data in the `Table Panel`.
 
 
-![image]({{ page.figures.figure_8 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets. Highlighted is the IL-5 signal transduction pathway from NetPath.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_8 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_8 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 8. Table Panel.</strong> This panel displays tabular information for gene sets. Highlighted is the IL-5 signal transduction pathway from NetPath. <a href="{{ page.figures.figure_8 }}" target="_blank">Open in new window</a>.
+    </p>
   </div>
 </div>
 
@@ -269,10 +287,15 @@ The `Control Panel` tab for `Enrichment Map` shows our currently selected parame
 
 It is very easy to get overwhelmed by the amount of options, settings and visual information in an Enrichment Map (Figure 7) so now is a good time to pause to reflect back upon our goal: To reduce the complexity in our long list of enriched gene sets from GSEA while maintaining as much useful information. To this end, note the presence of gene set 'clusters' as indicated by a very dense group of edges connecting nodes (e.g. Figure 7, top-left in blue). These are gene sets with many shared genes that likely represent very similar processes. Our aim will be to display such clusters as a single node and annotate it with one label that reflects the overarching theme of its constituents (Figure 9).
 
-![image]({{ page.figures.figure_9 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 9. Preview of Enrichment Map clustering and annotation.</strong> On the left, a schematic of an Enrichment Map shows gene sets enriched in two phenotypes (red and blue). Clusters of gene sets will be identified by the Cytoscape app 'Autoannotate' which in turn, will use the 'WordCloud' app to derive a descriptive label for the cluster ('Theme One' and 'Theme Two'). The labels are extracted from the individual metadata associated with the gene sets. Finally, the clusters will be collapsed into single nodes to simplify the view.
+![image]({{ page.figures.figure_9 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 9. Preview of Enrichment Map clustering and annotation.</strong> On the left, a schematic of an Enrichment Map shows gene sets enriched in two phenotypes (red and blue). Clusters of gene sets will be identified by the Cytoscape app 'Autoannotate' which in turn, will use the 'WordCloud' app to derive a descriptive label for the cluster ('Theme One' and 'Theme Two'). The labels are extracted from the individual metadata associated with the gene sets. Finally, the clusters will be collapsed into single nodes to simplify the view.
+    </p>
+  </div>
 </div>
+
 
 
 #### Label clusters of similar gene sets
@@ -294,11 +317,12 @@ Clusters within the Enrichment Map represent similar biological processes and th
 
   Figure 10 shows the selected nodes in yellow representing the gene sets enriched in BrCa. Drag the entire group to the right of the unselected gene sets.
 
-  ![image]({{ page.figures.figure_10 }}){: .img-responsive }
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 10. Separating gene sets enriched in each class.</strong> The enriched gene sets in the BrCa class was selected by creating a column filter in the <code>Control Panel</code> tab <code>Select</code> for NES above 0.
-    <div class="text-left">
-      <a type="button" class="btn btn-info" href="{{ page.figures.figure_10 }}" target="_blank">Open in new window</a>
+  ![image]({{ page.figures.figure_10 }})
+  <div class="card bg-light">
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Figure 10. Separating gene sets enriched in each class.</strong> The enriched gene sets in the BrCa class was selected by creating a column filter in the <code>Control Panel</code> tab <code>Select</code> for NES above 0. <a href="{{ page.figures.figure_10 }}" target="_blank">Open in new window</a>.
+      </p>
     </div>
   </div>
 
@@ -308,14 +332,15 @@ AutoAnnotate first clusters the network and then uses WordCloud to calculate the
 
 In the `Quick Start` tab, click `Create Annotations` to start the annotation process. You should see clusters forming and being annotated in the main window (Figure 11).
 
-![image]({{ page.figures.figure_11 }}){: .img-responsive }
+![image]({{ page.figures.figure_11 }})
 
-![image]({{ page.figures.figure_11b }}){: .img-responsive }
+![image]({{ page.figures.figure_11b }})
 
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 11. AutoAnnotate network.</strong>  <strong>(Above) Sample results using Quick Start</strong>. <strong>(Below) Advanced tab.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by AutoAnnotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>
+<div class="card bg-light">
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Figure 11. AutoAnnotate network.</strong>  <strong>(Above) Sample results using Quick Start</strong>. <strong>(Below) Advanced tab.</strong> <em>Cluster algorithm:</em> Choose from the list of possible clustering algorithms supported by AutoAnnotate including Affinity Propagation, Cluster fuzzifier, Community clustering, Connected Components Clustering, MCL, and SCPS. By default this is set to MCL. <em>Edge weight column:</em> Any numeric edge attribute column can be used as weights in the clustering algorithm. By default this is set to EM_similarity_coeffecient which is a measure of how many genes two nodes have in common. The more genes two nodes have in common the higher the value and therefore the more likely they are to be found in the same cluster. <strong>Label Options</strong> <em>Label column:</em> Select the column you would like to use to compute the labels for each cluster. By default this is set to the Enrichement Map gene set description column (EM_GS_DESCR) but any string or list of strings can be used to annotate the clusters. <a href="{{ page.figures.figure_11 }}" target="_blank">Open in new window</a>.
+      </p>
   </div>
 </div>
 
@@ -327,11 +352,12 @@ Figure 11 shows a pretty busy picture; It is natural to gravitate towards large 
   -  Click the menu drop-down (button with 3 lines)
     - Select `Collapse All`
 
-![image]({{ page.figures.figure_12 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 12. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels and dragged our clusters together.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_12 }})
+<div class="card bg-light">
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Figure 12. Results of collapsing AutoAnnotate.</strong> Note that we have changed the <a href="http://manual.cytoscape.org/en/stable/Styles.html" target="_blank">styling</a> to increase the clarity of the text labels and dragged our clusters together. <a href="{{ page.figures.figure_12 }}" target="_blank">Open in new window</a>.
+      </p>
   </div>
 </div>
 
@@ -344,11 +370,12 @@ Let's reverse the process selectively and drill down into a particular group. Re
   -  Right click the highlighted cluster
     - Select `Expand`
 
-![image]({{ page.figures.figure_13 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 13. Selectively expanding the network for a single cluster.</strong>
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_13 }})
+<div class="card bg-light">
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Figure 13. Selectively expanding the network for a single cluster.</strong> <a href="{{ page.figures.figure_13 }}" target="_blank">Open in new window</a>.
+      </p>
   </div>
 </div>
 
@@ -359,11 +386,12 @@ Our expanded cluster shows the constituent pathways that include our IL-5 gene s
 - Table Panel
   - Select `Edge Table` tab
 
-![image]({{ page.figures.figure_14 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 14. Showing gene overlap in gene set cluster .</strong> The <code>Table Panel</code> tab for <code>Edge Table</code> shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes).
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_14 }})
+<div class="card bg-light">
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Figure 14. Showing gene overlap in gene set cluster .</strong> The <code>Table Panel</code> tab for <code>Edge Table</code> shows the pair-wise overlap in genes between different gene sets in the cluster  (EM1_Overlap_size, EM1_Overlap_genes). <a> href="{{ page.figures.figure_14 }}" target="_blank">Open in new window</a>.
+      </p>
   </div>
 </div>
 
@@ -386,10 +414,14 @@ As an example, direct your attention to the cluster annotated with the label *'b
 2. Blood coagulation [GO:0007596](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0007596){: target="_blank"}
 2. Platelet Activation [GO:0030168](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0030168){: target="_blank"}
 
-![image]({{ page.figures.figure_15 }}){: .img-responsive.slim }
+![image]({{ page.figures.figure_15 }})
 
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 15. Gene ontology relationship for gene set cluster 'blood coagulation platelet activation'.</strong> <em>Adapted from <a href="http://www.ebi.ac.uk/QuickGO/" target="_blank">QuickGO.</a></em>
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 15. Gene ontology relationship for gene set cluster 'blood coagulation platelet activation'.</strong> <em>Adapted from <a href="http://www.ebi.ac.uk/QuickGO/" target="_blank">QuickGO.</a></em>
+    </p>
+  </div>
 </div>
 
 ### 2. Identify novel/interesting groups
@@ -406,10 +438,11 @@ Perhaps we've noticed an interesting pathway not previously reported in our cont
 
 One approach to examine expression of a gene set is to focus on the 'leading edge' - the subset of genes that contribute to the enrichment analysis enrichment score (ES) (Figure 16).
 
- ![image]({{ page.figures.figure_16 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 16. Leading edge analysis for IL-5 signal transduction pathway.</strong> Genes of the gene set that contribute most to the enrichment score - the 'leading edge' - are highlighted in yellow.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_16 }}" target="_blank">Open in new window</a>
+ ![image]({{ page.figures.figure_16 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 16. Leading edge analysis for IL-5 signal transduction pathway.</strong> Genes of the gene set that contribute most to the enrichment score - the 'leading edge' - are highlighted in yellow. <a href="{{ page.figures.figure_16 }}" target="_blank">Open in new window</a>.
+    </p>
   </div>
 </div>

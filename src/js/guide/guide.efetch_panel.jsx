@@ -179,62 +179,61 @@ class Panel extends React.Component {
       return [ $( this ).attr('Label'), $( this ).text(), '<br/>' ].join('<br/>');
     }).get().join('');
 
-    // Mesh Heading badges
-    var meshes = $meshdescriptor.slice(0, 5).map(function(){
-      return ['<span class="badge">', $( this ).text(), '</span>'].join('');
-    }).get().join('');
-
     var styles = {
+      card: {
+        marginBottom: '0.1em',
+        cardBody: {
+          paddingTop: '0.2rem',
+          cardText: {
+            paddingBottom: '0'
+          }
+        }
+      },
       panel: {
         a: {
           textDecoration: 'none'
         },
-        panelHeading: {
+        heading: {
           div: {
             padding: '0.8em',
             background: '#34495e',
             color: '#ecf0f1'
           },
-          panelTitle: {
-            fontSize: '1.2rem'
+          title: {
+            margin: '0.1rem',
+            color: '#ecf0f1'
           },
-          panelMeta: {
+          meta: {
             color: '#95a5a6'
-          },
-          badge: {
-            fontWeight: '200'
           }
         }
       }
     };
 
     return (
-      <div className="panel">
-        <a style={styles.panel.a} className="panel-toggle" href={["#", this.props.id].join('')} role="button" data-toggle="collapse" data-parent="#accordion">
-          <div style={styles.panel.panelHeading.div} className="reading-list panel-heading" role="tab" id="headingOne">
-            <h2 style={styles.panel.panelHeading.panelTitle} className="panel-title">{$articleTitle.text()}</h2>
-            <span style={styles.panel.panelHeading.panelMeta} className="panel-meta author">
+      <div style={styles.card} className="card">
+        <a style={styles.panel.a} href={["#", this.props.id].join('')} role="button" data-toggle="collapse" data-parent="#accordion">
+          <div style={styles.panel.heading.div} role="tab" id="headingOne">
+            <p style={styles.panel.heading.title} className="title">{$articleTitle.text()}</p>
+            <span style={styles.panel.heading.meta} className="meta">
               {authorText}
             </span><br/>
-            <span style={styles.panel.panelHeading.panelMeta} className="panel-meta journal">{ articleJournal }</span>
-            <div style={styles.panel.panelHeading.badge} className="panel-meta reading-list badge-list" dangerouslySetInnerHTML={this.rawMarkup(meshes)} />
+            <span style={styles.panel.heading.meta} className="meta">{ articleJournal }</span>
           </div>
         </a>
-        <div id={this.props.id} className="panel-collapse collapse" role="tabpanel">
-          <div className="panel-body">
-            <p className="abstract-text" dangerouslySetInnerHTML={this.rawMarkup(abstract)} />
+        <div id={this.props.id} className="collapse">
+          <div style={styles.card.cardBody} className="card-body">
+            <span style={styles.card.cardBody.cardText} className="card-text" dangerouslySetInnerHTML={this.rawMarkup(abstract)} />
             {(function(){
               var record;
               if ($pmcID.text()) {
 
                 record = <a style={styles.panel.a} className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pmc/", $pmcID.text()].join('')}>
-                  <i className="fa fa-link fa-lg"></i>
                   {[" PubMed Central: ", $pmcID.text()].join('')}
                 </a>
 
               } else {
                 record = <a style={styles.panel.a} className="article-link" target="_blank" href={["http://www.ncbi.nlm.nih.gov/pubmed/", $pmid.text()].join('')}>
-                  <i className="fa fa-link fa-lg"></i>
                   {[" PubMed: ", $pmid.text()].join('')}
                 </a>
               }

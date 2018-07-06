@@ -21,10 +21,10 @@ reflist:
   - 16200065
   - 18239125
 cover: cover.jpg
-group: data_analysis
+label: data_analysis
+draft: true
 ---
 
-{% assign functional_analysis_primers = site.primers | where: 'category' , 'functional_analysis' %}
 {% assign gsea_primer = functional_analysis_primers | where: 'title' , 'Gene Set Enrichment Analysis' | first %}
 
 <hr/>
@@ -51,9 +51,13 @@ This primer will sketch the principles underlying the RNA interference Gene Enri
 
 RNA interference (RNAi) was discovered in 1998 by Craig Mello and colleagues as a mechanism by which *C. elegans* could defend itself against foreign or invading nucleic acid sequences (Mello 2004). The canonical trigger for RNAi are double-stranded RNA (dsRNA) precursors which are processed into shorter, small interfering RNA (siRNA) by the endoribonuclease Dicer. These siRNA represent the guide sequences for the RNA-induced silencing complex (RISC) which is implicated in sequence-specific gene silencing (Figure 1).
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Model depicting distinct roles for dsRNA in a network of interacting silencing pathways.</strong> In some cases dsRNA functions as the initial stimulus (or trigger), for example when foreign dsRNA is introduced experimentally. In other cases dsRNA acts as an intermediate, for example when ‘aberrant’ mRNAs are copied by cellular RdRP. Transcription can produce dsRNA by readthrough from adjacent transcripts, as may occur for repetitive gene families or high-copy arrays (blue dashed arrows). Alternatively, transcription may be triggered experimentally or developmentally, for example in the expression of short hairpin (shRNA) genes and endogenous hairpin (miRNA) genes. The small RNA products of the Dicer-mediated dsRNA processing reaction guide distinct protein complexes to their targets. These silencing complexes include the RNA-induced silencing complex (RISC), which is implicated in mRNA destruction and translational repression, and the RNA-induced transcriptional silencing complex (RITS), which is implicated in chromatin silencing. CH3, modified DNA or chromatin; 7mG, 7-methylguanine; AAAA, poly-adenosine tail; TGA, translation termination codon. <em>Adapted from Mello et al., Figure 2 (2004).</em>
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Model depicting distinct roles for dsRNA in a network of interacting silencing pathways.</strong> In some cases dsRNA functions as the initial stimulus (or trigger), for example when foreign dsRNA is introduced experimentally. In other cases dsRNA acts as an intermediate, for example when ‘aberrant’ mRNAs are copied by cellular RdRP. Transcription can produce dsRNA by readthrough from adjacent transcripts, as may occur for repetitive gene families or high-copy arrays (blue dashed arrows). Alternatively, transcription may be triggered experimentally or developmentally, for example in the expression of short hairpin (shRNA) genes and endogenous hairpin (miRNA) genes. The small RNA products of the Dicer-mediated dsRNA processing reaction guide distinct protein complexes to their targets. These silencing complexes include the RNA-induced silencing complex (RISC), which is implicated in mRNA destruction and translational repression, and the RNA-induced transcriptional silencing complex (RITS), which is implicated in chromatin silencing. CH3, modified DNA or chromatin; 7mG, 7-methylguanine; AAAA, poly-adenosine tail; TGA, translation termination codon. <em>Adapted from Mello et al., Figure 2 (2004).</em>
+    </p>
+  </div>
 </div>
 
 
@@ -63,9 +67,13 @@ The demonstration that sequence-specific RNAi could be triggered by stable expre
 
 This is commonly used in functional screens to identify genes associated with a particular phenotype: An shRNA expression library is introduced into cells such that any particular cell stably-expresses a single shRNA; transduced cells are subjected to experimental conditions; a phenotype of interest is scored and which is then easily linked to an underlying gene via the shRNA harbored within those cells. For instance, Brummelkamp and colleagues identified genes that potentiated the effects of the anti-cancer agent Nutlin-3, a small-molecule activator of the TP53 protein, by identifying shRNAs that disabled growth-arrest in nutlin-3-treated cells (Brummelkamp 2006). In a variation of this protocol, cell essential genes are identified by serially passaging transduced cells collectively, then quantifying, typically through deep-sequencing, temporal changes in the quantity of each particular shRNA template in the population (Figure 2; Silva 2008). In this case, a target gene with a positive effect on cell fitness will correspond to a shRNA with reduced representation as reducing expression of the target impedes growth.
 
-![image]({{ page.figures.figure_2 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2.</strong> Experimental approach for cell essential genes. shRNA plasmids are packaged into retroviruses and introduced into target cell populations at a low multiplicity of infection to achieve ~1 integrant per cell. Over a culture period, time points were collected early and late after selection. The shRNA are amplified from genomic DNA from screening pools and sequenced. Representation of shRNA in late time points are compared to earlier times to determine depletion <em>Adapted from Silva et al., Figure 1 (2008).</em>
+![image]({{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2.</strong> Experimental approach for cell essential genes. shRNA plasmids are packaged into retroviruses and introduced into target cell populations at a low multiplicity of infection to achieve ~1 integrant per cell. Over a culture period, time points were collected early and late after selection. The shRNA are amplified from genomic DNA from screening pools and sequenced. Representation of shRNA in late time points are compared to earlier times to determine depletion <em>Adapted from Silva et al., Figure 1 (2008).</em>
+    </p>
+  </div>
 </div>
 
 ### Methodological concerns
@@ -76,9 +84,13 @@ As is often the case, the initial euphoria surrounding the experimental and ther
 
 In order to minimize false-positives arising from off-target effects of RNAi, researchers have proposed rules of thumb to follow - the 'two Rs' (Figure 3) (Echeverri 2006).
 
-![image]({{ page.figures.figure_3 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3.</strong> Appropriate experimental controls to minimize risks of misinterpretation of RNAi data due to off-target effects (OTEs). shRNAs trigger detectable off-target effects in all major systems studied to date, from mammalian cells to <em>D. melanogaster</em> and <em>C. elegans</em>. Simple solutions are available to minimize the risk that an observed phenotype may arise from an off-target effect rather than the targeted gene’s loss of function. <em>Adapted from Eecheverri et al., Figure 1 (2006).</em>
+![image]({{ page.figures.figure_3 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3.</strong> Appropriate experimental controls to minimize risks of misinterpretation of RNAi data due to off-target effects (OTEs). shRNAs trigger detectable off-target effects in all major systems studied to date, from mammalian cells to <em>D. melanogaster</em> and <em>C. elegans</em>. Simple solutions are available to minimize the risk that an observed phenotype may arise from an off-target effect rather than the targeted gene’s loss of function. <em>Adapted from Eecheverri et al., Figure 1 (2006).</em>
+    </p>
+  </div>
 </div>
 
 One rule used to validate an shRNA is to 'rescue' the phenotype by either expressing the intended target gene to levels that might overcome the RNAi or expressing an orthogonal variant such that it is no longer recognized. Such approaches may not often be feasible and are technically challenging, as it may be difficult to express the gene appropriate levels to overcome the effects of an shRNA or identify orthogonal sequences for a gene. Moreover, rescue experiments are generally difficult to perform *en masse*, and may be more practical with a few candidates. It should also be kept in mind that successful rescue does not necessarily exclude the possibility of off-target effects.

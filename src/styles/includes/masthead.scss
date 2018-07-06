@@ -19,16 +19,24 @@
       color: $concrete;
       font-size: 1.2em;
     }
+
+    .masthead-brand {
+      height: 85px;
+      width: 85px;
+    }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px)  {
   .masthead {
     .container {
       text-align: center;
       .masthead-author {
         font-size: 1em;
       }
+    }
+    .masthead-brand {
+      display: none;
     }
   }
 }

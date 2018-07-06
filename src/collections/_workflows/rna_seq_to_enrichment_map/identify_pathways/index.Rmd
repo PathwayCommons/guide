@@ -1,7 +1,7 @@
 ---
 title: Identify Pathways
 subtitle: Identify enriched pathways using Gene Set Enrichment Analysis
-order: 2
+step: 2
 date: '2014-02-27'
 figures:
   figure_1: figure_idpathways_overview.jpg
@@ -19,7 +19,7 @@ data:
   report_brca: gsea_report_for_brca.xls
   report_hd: gsea_report_for_hd.xls
   rank: brca_hd_tep_ranks.rnk
-group: rna_seq_to_enrichment_map
+label: rna_seq_to_enrichment_map
 dockerhub:
 reflist:
   - 26525104
@@ -55,9 +55,13 @@ By then end of this discussion you should:
 
 <br/>
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can we summarize changes in gene expression as a list of altered pathways? Here we provide GSEA with a list where each gene is assigned a rank based upon differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Workflow step goals.</strong> Gene Set Enrichment Analysis (GSEA) attempts to answer the question: Can we summarize changes in gene expression as a list of altered pathways? Here we provide GSEA with a list where each gene is assigned a rank based upon differential expression testing along with a database of candidate gene sets to test. The goal of this workflow step will be to obtain two reports, each describing the gene sets up-regulated in either of the input sample classes.
+    </p>
+  </div>
 </div>
 
 ## <a href="#background" name="background">II. Background</a>
@@ -70,16 +74,24 @@ GSEA searches through candidate gene sets to identify those that are enriched wi
 
 Concretely, let us consider the 'IL-5 Signaling Pathway' curated by as part of the NetPath database (Figure 2).
 
-![image]({{ page.figures.figure_2 }}){: .img-responsive.short }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Diagram of the IL5 Signaling Pathway.</strong> IL-5 is a glycoprotein which belongs to the cytokine superfamily and plays an important role in the proliferation and differentiation of eosinophils. IL-5 is produced by eosinophils, mast cells, Th2 cells, Tc2 cells and gamma delta T cells. The signaling pathway has been implicated in the pathogenesis of asthma, hypereosinophilic syndromes and eosinophil-dependent inflammatory diseases. <em>Adapted from resources at NetPath (http://www.netpath.org/)</em>.
+![image]({{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Diagram of the IL5 Signaling Pathway.</strong> IL-5 is a glycoprotein which belongs to the cytokine superfamily and plays an important role in the proliferation and differentiation of eosinophils. IL-5 is produced by eosinophils, mast cells, Th2 cells, Tc2 cells and gamma delta T cells. The signaling pathway has been implicated in the pathogenesis of asthma, hypereosinophilic syndromes and eosinophil-dependent inflammatory diseases. <em>Adapted from resources at NetPath (http://www.netpath.org/)</em>.
+    </p>
+  </div>
 </div>
 
 The pathway depicted in Figure 2 has a corresponding entry in NetPath that contains a listing of the genes and a brief description (Figure 3).
 
-![image]({{ page.figures.figure_3 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. NetPath entry corresponding to IL-5 Signaling Pathway.</strong> <em>NetPath Accession number: NetPath_17</em>.
+![image]({{ page.figures.figure_3 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. NetPath entry corresponding to IL-5 Signaling Pathway.</strong> <em>NetPath Accession number: NetPath_17</em>.
+    </p>
+  </div>
 </div>
 
 ### What is a 'gene set database'?
@@ -88,11 +100,12 @@ The group of candidate gene sets under consideration for a given GSEA run can be
 
 To make life easier, GSEA has standardized the acceptable formats for defining gene set candidates and these are collectively known as [gene set databases](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Gene_Set_Database_Formats){: target="_blank"}. These are simple tab-delimited files with the extensions that include `.gmx`, `gmt` and `.grp`. Concretely, let us consider a sample gene set database file developed by [Gary Bader's laboratory](http://www.baderlab.org/){: target="_blank"} that defines human gene sets gathered from several sources including [MSigDB](http://software.broadinstitute.org/gsea/msigdb/index.jsp){: target="_blank"}; [Gene Ontology](http://geneontology.org/){:target="_blank"}; [Reactome](http://www.reactome.org/){:target="_blank"}; [Panther](http://www.pantherdb.org/){:target="_blank"}; [NetPath](http://www.netpath.org/){:target="_blank"}; [NCI](http://www.ndexbio.org/#/user/nci-pid){:target="_blank"}; and [HumanCyc](http://humancyc.org/){:target="_blank"}. This database file defines a table, one gene set per row: The first column holds the gene set name, the second is a description and the subsequent fields are the names of genes in the set. Figure 4 shows an exceprt of the database, which has an entry for the NetPath IL-5 pathway.
 
-![image]({{ page.figures.figure_4 }}){: .img-responsive }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Gene set database excerpt</strong>. Gene sets are defined in rows where the first column is the name, the second is a description and gene names within the set occupy the remaining row entries. Highlighted in blue is the NetPath IL-5 signal transduction pathway that includes 59 gene names.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_4 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 4. Gene set database excerpt</strong>. Gene sets are defined in rows where the first column is the name, the second is a description and gene names within the set occupy the remaining row entries. Highlighted in blue is the NetPath IL-5 signal transduction pathway that includes 59 gene names.  <a href="{{ page.figures.figure_4 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
 </div>
 
@@ -100,43 +113,45 @@ To make life easier, GSEA has standardized the acceptable formats for defining g
 
 Once we have gathered our candidate gene set database and the ranked gene list, we are ready to proceed. The details of GSEA are rather technical; Instead, we provide an overview of the algorithm (Box 1).
 
-<div class="box">
-  <div class="box-title">Box 1. GSEA steps</div>
-
-  <dl class="box-terms">
-
-    <ol>
-      <li>
-        Select one candidate gene set from the database
-      </li>
-      <li>
-        Calculate an enrichment score (ES) for selected candidate gene set
-        <blockquote>
-          An ES effectively tells us how many of the candidate set's genes are 'bunched up' at the top (positive rank value) or the bottom (negative rank value) of the ranked gene list. More 'bunching' at the top means that the candidate's genes are more likely to be truly upregulated and <em>vice versa</em>.
-        </blockquote>
-      </li>
-      <li>
-        Calculate an ES for many (1 000) gene sets composed of randomly chosen genes of the same size as the selected gene set
-      </li>
-      <li>
-        Calculate a p-value
-        <blockquote>
-          This is the fraction of the random gene set ESs that exceed the candidate ES. A smaller p-value corresponds to a increasingly rare observation.
-        </blockquote>
-      </li>
-      <li>
-        Repeat for each remaining candidate gene set
-      </li>
-      <li>
-        Correct for <a href="{{site.baseurl}}/primers/statistics/multiple_testing/"> multiple testing</a>
-        <blockquote>
-          The chance that a gene set will be significant increases with the number of gene sets tested. Thus, corrections must be made to take this into account.
-        </blockquote>
-      </li>
-    </ol>
-  </dl>
-
+<div class="card bg-light mb-3">
+  <div class="card-body">
+    <h3 class="card-title">Box 1. GSEA steps</h3>
+    <p class="card-text">
+      <ol>
+        <li>
+          Select one candidate gene set from the database
+        </li>
+        <li>
+          Calculate an enrichment score (ES) for selected candidate gene set
+          <blockquote>
+            An ES effectively tells us how many of the candidate set's genes are 'bunched up' at the top (positive rank value) or the bottom (negative rank value) of the ranked gene list. More 'bunching' at the top means that the candidate's genes are more likely to be truly upregulated and <em>vice versa</em>.
+          </blockquote>
+        </li>
+        <li>
+          Calculate an ES for many (1 000) gene sets composed of randomly chosen genes of the same size as the selected gene set
+        </li>
+        <li>
+          Calculate a p-value
+          <blockquote>
+            This is the fraction of the random gene set ESs that exceed the candidate ES. A smaller p-value corresponds to a increasingly rare observation.
+          </blockquote>
+        </li>
+        <li>
+          Repeat for each remaining candidate gene set
+        </li>
+        <li>
+          Correct for <a href="{{site.baseurl}}/primers/statistics/multiple_testing/"> multiple testing</a>
+          <blockquote>
+            The chance that a gene set will be significant increases with the number of gene sets tested. Thus, corrections must be made to take this into account.
+          </blockquote>
+        </li>
+      </ol>
+    </p>
+  </div>
 </div>
+
+
+
 
 
 ## <a href="#workflow_step" name="workflow_step">III. Workflow Step</a>
@@ -147,7 +162,7 @@ In this workflow step, we will use GSEA to generate two files that report enrich
 
 **Table 1. Sample enrichment report**
 
-{:.table .table-hover .table-condensed .table-responsive}
+{:.table }
 | NAME | ... |  SIZE | ES | NES | NOM p-val | FDR q-val | ... |
 |-------|-------|-------|-------|-------|-------|-------|-------|
 |EUKARYOTIC TRANSLATION ELONGATION | ... | 82 | -0.9144994 | -3.0786333 | 0 | 0 | 0 |
@@ -171,29 +186,28 @@ We are opting to use the desktop version of GSEA. There are some hoops to jump t
 
 Launch the GSEA application. You will see the GSEA logo splash then the application itself (Figure 5).
 
-![image]({{ page.figures.figure_5 }}){: .img-responsive }
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. <code>Steps in GSEA analysis</code>) provides quick access to the most common actions. The main window displays the <code>Home</code> tab by default. Each control panel action typically opens a new tab in the main window.
-  <div class="text-left">
-    <a type="button" class="btn btn-info" href="{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+![image]({{ page.figures.figure_5 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 5. The GSEA interface.</strong> The control panel on the left (e.g. <code>Steps in GSEA analysis</code>) provides quick access to the most common actions. The main window displays the <code>Home</code> tab by default. Each control panel action typically opens a new tab in the main window. <a href="{{ page.figures.figure_5 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
 </div>
-
 ### Input
 
 #### Ranked gene list
 
 This is the output from the previous step.
 
-<a href="{{ site.baseurl }}{{ process_data.url | remove: 'index.html' }}{{ process_data.data.rank }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Ranks (.rnk)</a>
+<a href="{{ site.baseurl }}{{ process_data.url | remove: 'index.html' }}{{ process_data.data.rank }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Ranks (.rnk)</a>
 
 
 #### Gene set database
 
 This is the human gene set database culled from various sources, generated by the Bader lab (`Human_GOBP_AllPathways_no_GO_iea_February_01_2017_symbol.gmt`).
 
-<a href="{{ page.data.gene_set_database }}" type="button" class="btn btn-info btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Gene Set Database (.gmt)</a>
+<a href="{{ page.data.gene_set_database }}" role="button" class="btn btn-secondary btn-lg btn-block" download>Gene Set Database (.gmt)</a>
 
 ___
 
@@ -219,12 +233,14 @@ In this part we get our inputs into GSEA. In the `Steps in GSEA analysis` panel 
 1. `Browse for files...` then `Choose` the ranked gene list
 2. `Browse for files...` then `Choose` the gene set database file
 
-![image]({{ page.figures.figure_6 }}){: .img-responsive }
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the <code>Load data</code> button in the control panel <code>Steps in GSEA analysis</code>.
+![image]({{ page.figures.figure_6 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 6. Load data tab.</strong> To bring up this tab, click the <code>Load data</code> button in the control panel <code>Steps in GSEA analysis</code>.
+    </p>
+  </div>
 </div>
-
 > Wait a few seconds for the files to load into memory. You will receive a pop-up dialog if the file was successfully loaded. You will also see the files in the <code>Object cache</code> panel of the <code>Load data</code> tab.
 
 #### 2.  Settings
@@ -239,10 +255,13 @@ We now tell GSEA what these files actually represent and tailor the GSEA run acc
   - `Analysis name`: Choose a name for this particular run of GSEA
   - `Save results in this folder`: Choose one
 
-![image]({{ page.figures.figure_7 }}){: .img-responsive }
-
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run GSEA on a Pre-Ranked gene list</code> tab.
+![image]({{ page.figures.figure_7 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 7. The GSEA Pre-ranked tab.</strong> Select <code>Tools</code> in the menu dropdown, then <code>GseaPreranked</code> to bring up the <code>Run GSEA on a Pre-Ranked gene list</code> tab.
+    </p>
+  </div>
 </div>
 
 
@@ -287,11 +306,16 @@ Take a look at the directory you set for `Save results in this folder`. The defa
 
 When the GSEA software has completed its analysis, the `Status` inside the  `GSEA reports` panel will update to `Success ...` (Figure 5, bottom left). You may click this link to view the HTML report inside a browser (Figure 8). Alternatively, open the `index.html` file located in the GSEA results directory in a browser.
 
-![image]({{ page.figures.figure_8 }}){: .img-responsive }
+![image]({{ page.figures.figure_8 }})
 
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the <code>na_pos</code> phenotype corresponds to the BrCa class and <code>na_neg</code> refers to the HD class.
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 8. The GSEA Report.</strong> Example of a GSEA report opened inside a browser. The links inside this report reference local files declared in the GSEA results folder. Note the two sections, one for each class: In our case the <code>na_pos</code> phenotype corresponds to the BrCa class and <code>na_neg</code> refers to the HD class.
+    </p>
+  </div>
 </div>
+
 
 > You can read the complete guide to [Interpreting GSEA Results](http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results){:target="_blank"} that includes a description of the GSEA report.
 
@@ -303,20 +327,20 @@ There are two sections by this name which refers to those gene sets with positiv
 
 - **Snapshot of the enrichment results.** Recall from Box 1, Step 2 that during GSEA, an enrichment score (ES) is calculated for each candidate gene set. The snapshots display the raw data that GSEA uses in its calculations: The ES is the peak vertical axis value of this plot. Roughly speaking, the magnitude of the ES is indicative of the chances that it will be deemed significant. If you look inside your GSEA home folder you will see `pos_snapshot.html` and `neg_snapshot.html`. For the `na_pos` case, click on the link for `Snapshot of enrichment results` to bring up a panel of enrichment score plots; There should be an entry for our old friend the IL-5 signal transduction pathway, which you can click to bring up the full report showing the summary, genes and the enrichment plot (Figure 9).
 
-  ![image]({{ page.figures.figure_9 }}){: .img-responsive.ht-400 }
-
-  <div class="figure-legend well well-lg text-justify">
-    <strong>Figure 9. Enrichment plot for NetPath IL-5 signalling pathway.</strong> Shown is a the running sum plot for the IL-5 signal transduction pathway described earlier.
-    <div class="text-left">
-      <a type="button" class="btn btn-info" href="{{ page.figures.figure_9 }}" target="_blank">Open in new window</a>
-    </div>
+  ![image]({{ page.figures.figure_9 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 9. Enrichment plot for NetPath IL-5 signalling pathway.</strong> Shown is a the running sum plot for the IL-5 signal transduction pathway described earlier. <a href="{{ page.figures.figure_9 }}" target="_blank">Open in new window</a>
+    </p>
   </div>
+</div>
 
 - **Detailed enrichment results.** These are the end-goal for our workflow step! These files provide a summary report of gene sets enriched in this phenotype. You can find these files inside your GSEA results folder named `gsea_report_for_na_pos_XXXXXXXXXXXXX.xls` and `gsea_report_for_na_neg_XXXXXXXXXXXXX.xls`. The rows of the report include information for each enriched gene set (Table 2).
 
-  **Table 2. Exceprt of enrichment report for BrCa class**
+  **Table 2. Excerpt of enrichment report for BrCa class**
 
-  {:.table .table-hover .table-condensed .table-responsive}
+  {:.table }
   |  NAME  | SIZE  |  ES   |  NES  | NOM p-val | FDR q-val | FWER p-val |
   |:-----|:-----:|:------:|:-----:|:-----:|:---------:|:---------:|:----------:|
   | PID_FAK_PATHWAY | 48 | 0.8144367 | 2.2033582 | 0.0 | 0.0 | 0.0 |
@@ -337,7 +361,7 @@ Listed below are the outputs of this step that will be required as input depende
 We have renamed the enrichment report files and provide them below.
 
   1. Enrichment report for BrCa
-  <a href="{{ page.data.report_brca }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> BrCa report (.xls)</a>
+  <a href="{{ page.data.report_brca }}" role="button" class="btn btn-secondary btn-lg btn-block" download>BrCa report (.xls)</a>
 
   2. Enrichment report for HD
-  <a href="{{ page.data.report_hd }}" type="button" class="btn btn-success btn-lg btn-block" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> HD report (.xls)</a>
+  <a href="{{ page.data.report_hd }}" role="button" class="btn btn-secondary btn-lg btn-block" download>HD report (.xls)</a>

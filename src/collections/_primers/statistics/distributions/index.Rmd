@@ -9,7 +9,7 @@ output:
 layout: page
 comments: true
 cover: cover.jpg
-group: statistics
+label: statistics
 ---
 
 <hr/>

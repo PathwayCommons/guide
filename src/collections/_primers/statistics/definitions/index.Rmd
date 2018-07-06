@@ -1,7 +1,7 @@
 ---
 title: Definitions
 layout: page
-group: statistics
+label: statistics
 comments: true
 cover: cover.jpg
 ---

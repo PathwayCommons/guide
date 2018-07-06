@@ -10,7 +10,7 @@ figures:
   figure_4: figure_bh_indices.jpg
 comments: true
 cover: cover.jpg
-group: statistics
+label: statistics
 ---
 
 <hr/>
@@ -82,8 +82,12 @@ ggplot(data1, aes(x=factor(x), y=y)) +
   geom_vline(aes(xintercept = threshold + 1), linetype = "dashed") +
   scale_x_discrete(breaks=seq(0, nNickels, 2))
 ```
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
+    </p>
+  </div>
 </div>
 
 In an attempt to standardize our decision making, we arbitrarily set a threshold of doubt: Observing 14 or more heads in a test will cause us to label that test as 'significant' and worthy of further consideration. In modern hypothesis testing terms, we would 'reject' the null hypothesis beyond this threshold in favour of some alternative, which in this case would be that the coin was unfair. Note that in principle we should set a lower threshold in the case that the coin is unfairly weighted towards tails but omit this for simplicity.
@@ -140,8 +144,13 @@ ggplot(data2, aes(x=x, y=y)) +
    geom_point(colour="#c0392b", size=5, pch=21) +
   labs(x = "Tests", y = "Tests with 14 or more Heads")
 ```
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
+
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Number of tests where more than 14 heads are observed.</strong> Simulations showing the number of times more than 14 heads were counted in an individual test when we performed 1, 2, 10, 100, and 250 simultaneous tests.
+    </p>
+  </div>
 </div>
 <br/>
 
@@ -149,7 +158,7 @@ Figure 2 should show that with increasing number of tests we see trials with 14 
 
 ### Example 2: Pathway analyses
 
-Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we provide a [primer on Gene Set Enrichment Analysis]({{ site.baseurl }}/primers/functional_analysis/gsea/).
+Multiple testing commonly arises in the statistical procedures underlying several pathway analysis software tools. In this guide, we provide a primer on Gene Set Enrichment Analysis.
 
 [Gene Set Enrichment Analysis](http://software.broadinstitute.org/gsea/) derives p-values associated with an enrichment score which reflects the degree to which a gene set is overrepresented at the top or bottom of a ranked list of genes. The nominal p-value estimates the statistical significance of the enrichment score for a single gene set. However, evaluating multiple gene sets requires correction for gene set size and multiple testing.
 
@@ -208,7 +217,7 @@ A common way to summarize the possible outcomes of multiple hypothesis tests is 
 
 **Table 1. Multiple hypothesis testing summary**
 
-![image]({{ page.figures.table_1 }}){: .img-responsive.slim }
+![image]({{ page.figures.table_1 }})
 
 Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant ($$V$$). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.
 
@@ -272,9 +281,14 @@ Alternatively, 'p-hacking' is the process of creatively organizing data sets in 
 
 Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m_1=m-m_0$$) null hypotheses.
 
-![image]({{ page.figures.figure_3 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and false (m1=m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
+![image]({{ page.figures.figure_3 }})
+
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. Depiction of false discoveries.</strong> Variable names are as in Table 1. The m hypotheses consist of true (m0) and false (m1=m-m0) null hypotheses. In multiple hypothesis testing procedures a fraction of these hypotheses are declared significant (R, shaded light grey) and are termed 'discoveries'. The subset of true null hypotheses are termed 'false discoveries' (V) in contrast to 'true discoveries' (S).
+    </p>
+  </div>
 </div>
 
 In an exploratory analysis, we are happy to sacrifice are strict control on type I errors for a wider net of discovery. This is the underlying rationale behind the second control procedure.
@@ -454,7 +468,7 @@ To illustrate the BH procedure we adapt a trivial example presented by Glickman 
 
 **Table 2. Example BH calculations**
 
-![image]({{ page.figures.table_2 }}){: .img-responsive.slim }
+![image]({{ page.figures.table_2 }})
 
 In this case, we examine the final column for the largest case in which $$p_i \leq \frac{i}{100}\cdot0.05$$ which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our $$q=0.05$$ we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.
 
@@ -512,7 +526,9 @@ $$
 We proceed using proof by induction. First we provide a proof for the base case $$m=1$$. Second, we assume Lemma 1 holds for $$m \leq k$$ and go on to show that this holds for $$m=k+1$$.
 
 
-  - {: .aside } #### Asides
+{: .card .bg-light }
+  - {: .card-title .list-unstyled } ### Asides
+  - {: .card-body .list-unstyled }
 
     There are a few not so obvious details that we will need along the way. We present these as a set of numbered 'asides' that we will refer back to.
 
@@ -544,7 +560,7 @@ We proceed using proof by induction. First we provide a proof for the base case 
     \begin{equation*}
       \begin{split}
         P(T \geq t \mid H_0) &= P(F_0(T) \geq F_0(t))\\
-                             &= 1 - P(F_0(T) \lt F_0(t))\\
+                            &= 1 - P(F_0(T) \lt F_0(t))\\
       \end{split}
     \end{equation*}
     $$
@@ -563,7 +579,7 @@ We proceed using proof by induction. First we provide a proof for the base case 
     \begin{equation*}
       \begin{split}
         F_{(n)}(y) &= P(Y_{(n)} \leq y)\\
-                 &= P(\text{all }Y_i \leq y) = F^n(Y)\\
+                &= P(\text{all }Y_i \leq y) = F^n(Y)\\
       \end{split}
     \end{equation*}
     $$
@@ -574,7 +590,7 @@ We proceed using proof by induction. First we provide a proof for the base case 
     \begin{equation*}
       \begin{split}
         f_{(n)}(y) &= \frac{d}{dy}F_{(n)}(y)\\
-                 &= nF^{n-1}(y)\\
+                &= nF^{n-1}(y)\\
       \end{split}
     \end{equation*}
     $$
@@ -713,9 +729,14 @@ $$
 
 The next part of the proof relies on a description of p-values and indices but is often described in a very compact fashion. Keeping track of everything can outstrip intuition, so we pause to reflect on a schematic of the ordered false null hypothesis p-values and relevant indices (Figure 4).
 
-![image]({{ page.figures.figure_4 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 4. Schematic of p-values and indices.</strong> Shown are the p-values ordered in ascending value from left to right corresponding to the false null hypotheses (z). Indices j0 and m1 for true null hypotheses are as described in main text. Blue segment represents region where z' can lie. Green demarcates regions larger than z' where p-values corresponding to hypotheses (true or false) that will not be rejected lie.
+![image]({{ page.figures.figure_4 }})
+
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 4. Schematic of p-values and indices.</strong> Shown are the p-values ordered in ascending value from left to right corresponding to the false null hypotheses (z). Indices j0 and m1 for true null hypotheses are as described in main text. Blue segment represents region where z' can lie. Green demarcates regions larger than z' where p-values corresponding to hypotheses (true or false) that will not be rejected lie.
+    </p>
+  </div>
 </div>
 
 Let us define the set of p-values that may be subject to rejection, that is, smaller than $$z^\prime$$. Another way to look at this is to define the set of p-values that will not be rejected, that is, larger than $$z^\prime$$.

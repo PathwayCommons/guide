@@ -3,12 +3,12 @@ title: Primers
 subtitle: Theory and principles in depth
 layout: panelista
 icon: icons/document.png
-categories:
+groups:
   - data_analysis
   - statistics
 ---
 
-{% for category in page.categories %}
-  {% assign docs = site.primers | where: 'category' , category %}
+{% for group in page.groups %}
+  {% assign docs = site.primers | where: 'group' , group %}
   {% include archive_list.html %}
 {% endfor %}

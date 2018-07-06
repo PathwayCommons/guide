@@ -12,9 +12,8 @@ figures:
   figure_1: figure_1.jpg
   figure_2: figure_2.jpg
   figure_3: figure_3.jpg
-comments: true
 cover: cover.jpg
-group: statistics
+label: statistics
 ---
 
 <hr/>
@@ -49,7 +48,7 @@ Data from experiments can often be classified in several ways, for example, by a
 Suppose we undertake a gene expression analysis comparing individuals with cancer to healthy individuals and derive a list of differentially expressed genes. For the purposes of this discussion let us restrict an enrichment analysis to a single gene set, specifically genes involved in the GO biological process ['translation initiation'](http://amigo.geneontology.org/amigo/term/GO:0006413). Table 1 depicts a contingency table corresponding to some hypothetical experimental results.
 
 **Table 1. Contingency table for gene expression data**
-![image]({{ page.figures.table_1 }}){: .img-responsive.slim.left }
+![image]({{ page.figures.table_1 }})
 
 In this case, the expression of 32 genes has been analyzed: 15 differentially expressed genes were identified and 15 genes were associated with the GO annotation 'translation initiation'. The totals for differential expression and gene set membership are the *marginal values*, as they lie on the periphery of our 2-by-2 table.
 
@@ -72,9 +71,13 @@ These assumptions constitute the 'null hypothesis' ($$H_0$$): We take the *a pri
 ### The possibilities are not endless
 Let us return to the cancer gene expression analysis example. Fisher's Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are **in relation to all possible ones that could have given those same marginal totals given no association between categories**. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).
 
-![image]({{ page.figures.figure_1 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing differentially expressed genes and those within the gene set.
+![image]({{ page.figures.figure_1 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Possible joint values of the contingency table.</strong> The 16 possible joint values with the condition that the row and column sums remain fixed. The labels and marginal totals are identical to Table 1 but left out for clarity. The tables are arranged by increasing value of the top left quadrant, representing differentially expressed genes and those within the gene set.
+    </p>
+  </div>
 </div>
 
 ### Let us count the ways
@@ -93,9 +96,13 @@ These three values are sufficient to calculate the probability of any particular
 
 Similarly, there are '17 Choose 14' or 680 ways that 14 differentially expressed genes can be selected from 17 'NOT IN Translation Initiation'. To see this, consider the 17 genes labeled 16 through 32 in the top right group of Figure 2. We can choose 14 genes by selecting those labelled 16 through 29. Alternatively, one can also select 16 through 28 then 30 or for that matter 16 through 28 then 31 and so on. The third number '32 Choose 15' is precisely 565 722 720.
 
-![image]({{ page.figures.figure_2 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing differentially expressed genes from each group: 1 differentially expressed gene from 'IN Translation Initiation'; 14 from 'NOT IN Translation Initiation'; and 15 differentially expressed genes from the 32 total genes.
+![image]({{ page.figures.figure_2 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing differentially expressed genes from each group: 1 differentially expressed gene from 'IN Translation Initiation'; 14 from 'NOT IN Translation Initiation'; and 15 differentially expressed genes from the 32 total genes.
+    </p>
+  </div>
 </div>
 
 The probability of observing this arrangement then is given by the quotient:
@@ -115,9 +122,13 @@ Some of you may recognize the expression on the left as the probability function
 
 At this point we have the basic building blocks to describe Fisher's Exact Test. Referring to our HGS-OvCa example, we have in hand the probability of our contingency table of observed joint values (Table 2). Fisher's Exact Test amounts to summing the probability of observing our table of observed joint values **in addition to those more extreme than our table**. The possible tables and their respective probabilities are displayed in red Figure 3.
 
-![image]({{ page.figures.figure_3 }}){: .img-responsive.slim }
-<div class="figure-legend well well-lg text-justify">
-  <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangments of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both differentially expressed and tagged with 'IN Translation Initiation'.
+![image]({{ page.figures.figure_3 }})
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 3. Probabilities of the various contingency table joint values.</strong> Shown are the 16 possible arrangements of joint values with the condition that the row and column sums remain fixed. Underneath each is the probability (p) calculated using the probability function of the hypergeometric distribution. The red tables represent those having joint values equal to or more extreme than 12 genes both differentially expressed and tagged with 'IN Translation Initiation'.
+    </p>
+  </div>
 </div>
 
 ### One-Sided tests

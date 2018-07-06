@@ -4,26 +4,28 @@
     {% assign c = query.first %}
     {% assign parts = (page.url | split: '/') %}
     {% assign url = site.baseurl %}
-    <ol class="breadcrumb">
-    {% for path in parts %}
-      {% assign limit = forloop.length | minus: 1 %}
-      {% assign url = (url | append: path | append: '/') %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+      {% for path in parts %}
+        {% assign limit = forloop.length | minus: 1 %}
+        {% assign url = (url | append: path | append: '/') %}
 
-      {% if forloop.first %}<!-- 1st part is the root  -->
-        <li><a href="{{ url }}">{{ site.baseurl | remove: '/' | capitalize }}</a></li>
-      {% elsif forloop.index == limit %}<!-- If its the second last path  -->
-        <li class="active">{{ page.title }}</li>
-        {% break %}
-      {% elsif path == c.label %}<!-- If its a collection it is an index page  -->
-        {% if parts[forloop.index] == "archive" %}
-          <li class="active">{{ page.title }}</li>
+        {% if forloop.first %}<!-- 1st part is the root  -->
+          <li class="breadcrumb-item"><a href="{{ url }}">{{ site.baseurl | remove: '/' | capitalize }}</a></li>
+        {% elsif forloop.index == limit %}<!-- If its the second last path  -->
+          <li class="breadcrumb-item active">{{ page.title }}</li>
           {% break %}
+        {% elsif path == c.label %}<!-- If its a collection it is an index page  -->
+          {% if parts[forloop.index] == "archive" %}
+            <li class="breadcrumb-item active">{{ page.title }}</li>
+            {% break %}
+          {% else %}
+            <li class="breadcrumb-item"><a href="{{ site.baseurl }}/{{ path }}/archive/">{{ c.label | replace: '_', ' ' | capitalize }}</a></li>
+          {% endif %}
         {% else %}
-          <li><a href="{{ site.baseurl }}/{{ path }}/archive/">{{ c.label | replace: '_', ' ' | capitalize }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ url }}">{{ path | replace: '_', ' ' | capitalize }}</a></li>
         {% endif %}
-      {% else %}
-        <li><a href="{{ url }}">{{ path | replace: '_', ' ' | capitalize }}</a></li>
-      {% endif %}
-    {% endfor %}
-    </ol>
+      {% endfor %}
+      </ol>
+    </nav>
   {% endif %}
