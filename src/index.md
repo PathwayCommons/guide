@@ -24,7 +24,7 @@ title: Home
           </p>
           <p class="card-text mt-3">
             <small class="text-muted">
-              Filed under <a class="do-decorate" href="{{ primers_archive.url }}">{{ primers_archive.title }}</a>
+              Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ primers_archive.url }}">{{ primers_archive.title }}</a>
             </small>
           </p>
         </div>
@@ -40,7 +40,7 @@ title: Home
           </p>
           <p class="card-text mt-3">
             <small class="text-muted">
-              Filed under <a class="do-decorate" href="{{ primers_archive.url }}">{{ multitest.label | capitalize }}</a>
+              Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ primers_archive.url }}">{{ multitest.label | capitalize }}</a>
             </small>
           </p>
         </div>
@@ -68,7 +68,7 @@ title: Home
         </p>
         <p class="card-text mt-3">
           <small class="text-muted">
-            Filed under <a class="do-decorate" href="{{ workflows_archive.url }}">{{ workflows_archive.title }}</a>
+            Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ workflows_archive.url }}">{{ workflows_archive.title }}</a>
           </small>
         </p>
       </div>
