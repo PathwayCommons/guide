@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Multiple Testing &middot; Pathway Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/public/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/public/media/favicons/favicon-16x16.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+  <!-- CSS -->
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <div class="media">
+      <a class="masthead-brand" href="http://www.pathwaycommons.org/">
+        <img class="mr-3" src="/guide/public/media/icons/pc_logo_dark.svg" alt="Pathway Commons">
+      </a>
+      <div class="media-body">
+        <h1 class="masthead-title">
+          <a href="/guide/" title="Home">Pathway Guide</a>
+        </h1>
+        <a class="masthead-author" href="http://www.pathwaycommons.org/">
+            Pathway Commons
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/public/media/spinner.gif"/></div>
+        <div class="page">
+    
+
+  
+    
+    
+    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+      
+        
+        
+
+        <!-- 1st part is the root  -->
+          <li class="breadcrumb-item"><a href="/guide/">Guide</a></li>
+        
+      
+        
+        
+
+        <!-- If its a collection it is an index page  -->
+          
+            <li class="breadcrumb-item"><a href="/guide/primers/archive/">Primers</a></li>
+          
+        
+      
+        
+        
+
+        
+          <li class="breadcrumb-item"><a href="/guide/primers/statistics/">Statistics</a></li>
+        
+      
+        
+        
+
+        <!-- If its the second last path  -->
+          <li class="breadcrumb-item active">Multiple Testing</li>
+          
+      </ol>
+    </nav>
+  
+
+
+  
+
+  <h1>Multiple Testing</h1>
+  <hr />
+
+<ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#goals">I. Goals</a></li>
+      <li class="list-unstyled"><a href="#hypothesisTestingErrors">II. Hypothesis testing errors</a></li>
+      <li class="list-unstyled"><a href="#multipleTestingControl">III. Multiple testing control</a></li>
+      <li class="list-unstyled"><a href="#controllingFWER">IV. Controlling the Family-Wise Error Rate (FWER)</a></li>
+      <li class="list-unstyled"><a href="#controllingFDR">V. Controlling the False Discovery Rate (FDR)</a></li>
+      <li class="list-unstyled"><a href="#appendixA">Appendix A. Proof of Lemma 1</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="i-goals"><a href="#goals" name="goals">I. Goals</a></h2>
+
+<p>Large-scale approaches have enabled routine tracking of the entire mRNA complement of a cell, genome-wide methylation patterns and the ability to enumerate DNA sequence alterations across the genome. Software tools have been developed whose to unearth recurrent themes within the data relevant to the biological context at hand. Invariably the power of these tools rests upon statistical procedures in order to filter through the data and sort the search results.</p>
+
+<p>The broad reach of these approaches presents challenges not previously encountered in the laboratory. In particular, errors associated with testing any particular observable aspect of biology will be amplified when many such tests are performed. In statistical terms, each testing procedure is referred to as a <em><a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing">hypothesis test</a></em> and performing many tests simultaneously is referred to as <em>multiple testing</em> or <em>multiple comparison</em>. Multiple testing arises enrichment analyses, which draw upon databases of annotated sets of genes with shared themes and determine if there is ‘enrichment’ or ‘depletion’ in the experimentally derived gene list following perturbation entails performing tests across many gene sets increases the chance of mistaking noise as true signals.</p>
+
+<p>This goal of this section is to introduce concepts related to quantifying and controlling errors in multiple testing. By the end of this section you should:</p>
+
+<ol>
+  <li>Be familiar with the conditions in which multiple testing can arise</li>
+  <li>Understand what a Type I error and false discovery are</li>
+  <li>Be familiar with multiple control procedures</li>
+  <li>Be familiar with the Bonferroni control of family-wise error rate</li>
+  <li>Be familiar with Benjamini-Hochberg control of false discovery rates</li>
+</ol>
+
+<h2 id="ii-hypothesis-testing-errors"><a href="#hypothesisTestingErrors" name="hypothesisTestingErrors">II. Hypothesis testing errors</a></h2>
+
+<p>For better or worse, hypothesis testing as it is known today represents a gatekeeper for much of the knowledge appearing in scientific publications. A considered review of hypothesis testing is beyond the scope of this primer and we refer the reader elsewhere (Whitley 2002a). Below we provide an intuitive example that introduces the various concepts we will need for a more rigorous description of error control in <a href="#multipleTestingControl">section III</a>.</p>
+
+<h3 id="example-1-a-coin-flip">Example 1: A coin flip</h3>
+
+<p>To illustrate errors incurred in hypothesis testing, suppose we wish to assess whether a five cent coin is fair. Fairness here is defined as an equal probability of heads and tails after a toss. Our hypothesis test involves an experiment (i.e. trial) whereby 20 identically minted nickels are tossed and the number of heads counted. We take the <em>a priori</em> position corresponding to the <em>null hypothesis</em>: The nickels are fair. The null hypothesis would be put into doubt if we observed trials where the number of heads was larger (or smaller) than some predefined threshold that we considered reasonable.</p>
+
+<p>Let us pause to more deeply consider our hypothesis testing strategy. We have no notion of how many heads an unfair coin might generate. Thus, rather than trying to ascertain the unknown distribution of heads for some unfair nickel, we stick to what we do know: The <a href="/guide/primers/statistics/definitions/#distributionFunction">probability distribution</a> under the null hypothesis for a fair nickel. We then take our experimental results and compare them to this null hypothesis distribution and look for discrepancies.</p>
+
+<p>Conveniently, we can use the <a href="/guide/primers/statistics/distributions/#binomial">binomial distribution</a> to model the exact probability of observing any possible number of heads (0 to 20) in a single test where 20 fair nickels are flipped (Figure 1).</p>
+
+<p><img src="/guide/public/R/primers/statistics/multiple_testing/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" height="500" style="display: block; margin: auto;" /></p>
+<div class="card bg-light">
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Figure 1. Probability distribution for the number of heads.</strong> The binomial probability distribution models the number of heads in a single test where 20 fair coins are tossed. Each coin has equal probability of being heads or tails. The vertical line demarcates our arbitrary decision threshold beyond which results would be labelled 'significant'.
+    </p>
+  </div>
+</div>
+
+<p>In an attempt to standardize our decision making, we arbitrarily set a threshold of doubt: Observing 14 or more heads in a test will cause us to label that test as ‘significant’ and worthy of further consideration. In modern hypothesis testing terms, we would ‘reject’ the null hypothesis beyond this threshold in favour of some alternative, which in this case would be that the coin was unfair. Note that in principle we should set a lower threshold in the case that the coin is unfairly weighted towards tails but omit this for simplicity.</p>
+
+<p>Recall that the calculations underlying the distribution in Figure 1 assumes an equal probability of heads and tails. Thus, if we flipped 20 coins we should observe 14 or more heads with a probability equal to the area of the bars to the right of the threshold in Figure 1. In other words, our decision threshold enables us to calculate <em>a priori</em> the probability of an erroneous rejection. In statistical terms, the probability bounded by our <em>a priori</em> decision threshold is denoted <em><script type="math/tex">\alpha</script></em> or the <em>significance level</em> and is the probability of making an error of <em>type I</em>. The probability of observing a given experimental result or anything more extreme is denoted the <em>p-value</em>. It is worth emphasizing that the significance level is chosen prior to the experiment whereas the p-value is obtained after an experiment, calculated from the experimental data.</p>
+
+<blockquote>
+  <p>Multiple testing correction methods attempt to control or at least quantify the flood of type I errors that arise when multiple hypothesis are performed simultaneously</p>
+</blockquote>
+
+<p><strong>Definition</strong> The <strong>p-value</strong> is the probability of observing a result more extreme than that observed given the null hypothesis is true.</p>
+
+<p><strong>Definition</strong> The <strong>significance level (<script type="math/tex">\alpha</script>)</strong> is the maximum fraction of replications of an experiment that will yield a p-value smaller than <script type="math/tex">\alpha</script> when the null hypothesis is true.</p>
+
+<p><strong>Definition</strong> A <strong>type I error</strong> is the incorrect rejection of a true null hypothesis.</p>
+
+<p><strong>Definition</strong> A <strong>type II error</strong> is the incorrect failure to reject a false null hypothesis.</p>
+
+<p>Typically, type I errors are considered more harmful than type II errors where one fails to reject a false null hypothesis. This is because type I errors are associated with discoveries that are scientifically more interesting and worthy of further time and consideration. In hypothesis tests, researchers bound the probability of making a type I error by <script type="math/tex">\alpha</script>, which represents an acceptable but nevertheless arbitrary level of risk. Problems arise however, when researchers perform not one but many hypothesis tests.</p>
+
+<p>Consider an extension of our nickel flipping protocol whereby multiple trials are performed and a hypothesis test is performed for each trial. In an alternative setup, we could have some of our friends each perform our nickel flipping trial once, each performing their own hypothesis test. How many type I errors would we encounter? Figure 2 shows a simulation where we repeatedly perform coin flip experiments as before.</p>
+
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

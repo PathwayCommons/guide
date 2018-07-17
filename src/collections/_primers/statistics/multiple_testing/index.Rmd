@@ -1,5 +1,6 @@
 ---
 title: Multiple Testing
+blurb: Deep-dive into the basis and multiple testing errors and popular correction methods
 author: Jeffrey V Wong
 date: July 7, 2016
 layout: page

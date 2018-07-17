@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Distributions &middot; Pathway Guide
+    
+  </title>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/guide/public/media/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/guide/public/media/favicons/favicon-16x16.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Third-party CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+  <!-- CSS -->
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/guide/public/css/main.css">
+
+  <!-- Javascript -->
+  <!-- Third-party javascript -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="/guide/public/js/deps.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "AMS" } } });
+  </script>
+  <!-- Custom javascript -->
+  <script type="text/javascript" src="/guide/public/js/babel-compiled.js" defer></script>
+  
+</head>
+
+
+  <body class="theme-base-01">
+    <a name="top"></a>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+    <div class="masthead">
+  <div class="container">
+    <div class="media">
+      <a class="masthead-brand" href="http://www.pathwaycommons.org/">
+        <img class="mr-3" src="/guide/public/media/icons/pc_logo_dark.svg" alt="Pathway Commons">
+      </a>
+      <div class="media-body">
+        <h1 class="masthead-title">
+          <a href="/guide/" title="Home">Pathway Guide</a>
+        </h1>
+        <a class="masthead-author" href="http://www.pathwaycommons.org/">
+            Pathway Commons
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="container content">
+        <div id='ajax-spinner'><img src="/guide/public/media/spinner.gif"/></div>
+        <div class="page">
+    
+
+  
+    
+    
+    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+      
+        
+        
+
+        <!-- 1st part is the root  -->
+          <li class="breadcrumb-item"><a href="/guide/">Guide</a></li>
+        
+      
+        
+        
+
+        <!-- If its a collection it is an index page  -->
+          
+            <li class="breadcrumb-item"><a href="/guide/primers/archive/">Primers</a></li>
+          
+        
+      
+        
+        
+
+        
+          <li class="breadcrumb-item"><a href="/guide/primers/statistics/">Statistics</a></li>
+        
+      
+        
+        
+
+        <!-- If its the second last path  -->
+          <li class="breadcrumb-item active">Distributions</li>
+          
+      </ol>
+    </nav>
+  
+
+
+  
+
+  <h1>Distributions</h1>
+  <hr />
+
+<ul>
+  <li class="list-unstyled">Table of Contents
+    <ul>
+      <li class="list-unstyled"><a href="#hypergeometric">I. Hypergeometric distribution</a></li>
+      <li class="list-unstyled"><a href="#binomial">II. Binomial distribution</a></li>
+      <li class="list-unstyled"><a href="#Poisson">III. Poisson distribution</a></li>
+      <li class="list-unstyled"><a href="#gamma">IV. Gamma distribution </a></li>
+      <li class="list-unstyled"><a href="#negativeBinomial">IV. Negative binomial distribution</a></li>
+    </ul>
+  </li>
+</ul>
+<hr />
+
+<h2 id="i-hypergeometric-distribution"><a href="#hypergeometric" name="hypergeometric">I. Hypergeometric distribution</a></h2>
+
+<h3 id="physical-setup">Physical setup</h3>
+<p>Suppose we have a collection of <script type="math/tex">N</script> objects which can be classified into two distinct categories. Denote the categories:</p>
+
+<ol>
+  <li>Success (<script type="math/tex">S</script>)</li>
+  <li>Failure (<script type="math/tex">F</script>)</li>
+</ol>
+
+<p>Suppose that within these <script type="math/tex">N</script> objects there exist <script type="math/tex">r</script> of type <script type="math/tex">S</script> and therefore
+<script type="math/tex">N-r</script> of type <script type="math/tex">F</script>. We choose <script type="math/tex">n</script> objects <em>without replacement</em>, that is, we
+remove items in succession from the original set of <script type="math/tex">N</script>. Let <script type="math/tex">X</script> be a random
+variable representing the number of successes obtained. Then <script type="math/tex">X</script> has a
+<strong>hypergeometric distribution</strong>.</p>
+
+<h3 id="probability-function">Probability function</h3>
+<p>We require three values. Refer to the primer on <a href="/guide/primers/statistics/permutations_combinations/">combinations</a> for a discussion on
+counting rules and notation.</p>
+
+<p>First, we require the total possible number of ways that <script type="math/tex">n</script> distinct items can
+be chosen from <script type="math/tex">N</script> without replacement and where order does not matter. This is
+‘<script type="math/tex">N</script> Choose <script type="math/tex">n</script>’</p>
+
+<script type="math/tex; mode=display">\binom{N}{n}</script>
+
+<p>Second, we wish to know the number of ways that <script type="math/tex">x</script> successes can be drawn from
+a total of <script type="math/tex">r</script></p>
+
+<script type="math/tex; mode=display">\binom{r}{x}</script>
+
+<p>Third, we are left to select <script type="math/tex">n-x</script> failures from a total of <script type="math/tex">N-r</script></p>
+
+<script type="math/tex; mode=display">\binom{N-r}{n-x}</script>
+
+<p>Then the probability of selecting <script type="math/tex">x</script> successes is</p>
+
+<script type="math/tex; mode=display">f(x; N,n,r) = \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}}  \text{  for }x=0,1,\cdots,r</script>
+
+<h3 id="examples">Examples</h3>
+
+<h4 id="a-deck-of-cards">A Deck of cards</h4>
+<p>A deck of playing cards contains 4 suits (hearts, spade, diamonds,clubs) for each of 13 types {Ace, 2, 3,…, 10, King, Queen, Jack}. Deal 5 cards from the deck. The probability of selecting up to four Aces from the deck follows a hypergeometric distribution</p>
+
+<script type="math/tex; mode=display">f(x) = \frac{\binom{4}{x}\cdot\binom{52-4}{5-x}}{\binom{52}{5}}</script>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Probability of selecting Aces from a standard deck of cards</span><span class="w">
+
+</span><span class="c1"># Initialize our relevant variables</span><span class="w">
+</span><span class="n">nAces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Available aces</span><span class="w">
+</span><span class="n">nOther</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="c1"># Available non-aces</span><span class="w">
+</span><span class="n">nDeal</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c1"># Number of cards dealt</span><span class="w">
+</span><span class="n">aces</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="w"> </span><span class="c1"># The vector declaring the number of aces</span><span class="w">
+
+</span><span class="c1"># Use the dhyper built-in function for hypergeometric probability</span><span class="w">
+</span><span class="n">probability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dhyper</span><span class="p">(</span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">nAces</span><span class="p">,</span><span class="w"> </span><span class="n">nOther</span><span class="p">,</span><span class="w"> </span><span class="n">nDeal</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aces</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Bar plot</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">18</span><span class="p">,</span><span class="n">face</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w">
+        </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="s2">"#2c3e50"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of Aces"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Probability"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/guide/public/R/primers/statistics/distributions/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="500" style="display: block; margin: auto auto auto 0;" /></p>
+
+<h2 id="ii-binomial-distribution"><a href="#binomial" name="binomial">II. Binomial distribution</a></h2>
+
+<h3 id="physical-setup-1">Physical setup</h3>
+<p>Consider an experiment in which we have two distinct types of outcomes that can be categorized as</p>
+
+<ol>
+  <li>Success (<script type="math/tex">S</script>)</li>
+  <li>Failure (<script type="math/tex">F</script>)</li>
+</ol>
+
+<p>Suppose the probability of success is <script type="math/tex">p</script> and failure is <script type="math/tex">(1-p)</script>. Repeat the experiment <script type="math/tex">n</script> independent times. If <script type="math/tex">X</script> is the number of successes then it has a <strong>binomal distribution</strong> denoted <script type="math/tex">X\sim Bi(n, p)</script>.</p>
+
+<h3 id="probability-function-1">Probability function</h3>
+<p>We require three values. Refer to the primer on <a href="/guide/primers/statistics/permutations_combinations/">combinations</a> for a discussion on
+counting rules and notation.</p>
+
+<p>First, we require the total possible number of ways that <script type="math/tex">x</script> successes can be arranged within <script type="math/tex">n</script> experiments which is</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    \frac{n!}{x!(n-x!)} &= \binom{n}{x}
+  \end{split}
+\end{equation*} %]]></script>
+
+<p>Then the probability of each arrangement is <script type="math/tex">p</script> multiplied <script type="math/tex">x</script> times for successes and likewise for failures</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  \begin{split}
+    p^x(1-p)^{n-x}
+  \end{split}
+\end{equation*}</script>
+
+<p>Therefore,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    f(x; n,p) &=  \binom{n}{x} p^x(1-p)^{n-x} \text{  for }x=0,1,\cdots,n\\
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="moments">Moments</h3>
+<p>The mean of a binomial distribution of sample size <script type="math/tex">n</script> and probability <script type="math/tex">p</script> is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+    E[X] = np
+\end{equation*}</script>
+
+<p>The variance is</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+  Var(X) = np(1-p)
+\end{equation*}</script>
+
+<h3 id="comparison-of-hypergeometric-and-binomial">Comparison of hypergeometric and binomial</h3>
+
+<p>The key difference between the hypergeometric and the binomial distribution is that the hypergeometric involves the probability of an event when selection is made <strong>without replacement</strong>. In other words, the hypergeometric setup assumes some dependence amongst the selection of successes and failures. For example, choosing an ace from a deck and removing it reduces the probability of selecting a remaining ace. In contrast, the binomial distribution assumes independence and can be viewed as appropriate when event selection is made <strong>with replacement</strong>.</p>
+
+<p>There are limiting cases where the hypergeometric can be approximated by the binomial. Consider the hypergeometric case where the total number of possible successes and failures <script type="math/tex">N</script> is large compared to the number of selections <script type="math/tex">n</script>. Then the probability of success <script type="math/tex">p=r/N</script> does not appreciably upon selection without replacement. That is, for <script type="math/tex">N>>n</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation*}
+  \begin{split}
+    \frac{\binom{r}{x}\cdot\binom{N-r}{n-x}}{\binom{N}{n}} &\approx \binom{n}{x}
+     \left(\frac{r}{N}\right)^x \left(1 - \frac{r}{N}\right)^{(n-x)}
+  \end{split}
+\end{equation*} %]]></script>
+
+<h3 id="examples-1">Examples</h3>
+
+<h4 id="a-fair-die">A fair die</h4>
+<p>Toss a fair die 10 times and let <script type="math/tex">X</script> be the number of sixes then <script type="math/tex">X\sim Bi(10,1/6)</script>.</p>
+
+<script type="math/tex; mode=display">f(x) = \binom{10}{x} (1/6)^x(1-(1/6))^{10-x}</script>
+
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

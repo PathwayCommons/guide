@@ -1,5 +1,6 @@
 ---
 title: Fisher's Exact Test
+blurb: Walkthrough of how the test is applied in pathway enrichment analysis
 author: Jeffrey V Wong
 date: June 29, 2016
 output:
