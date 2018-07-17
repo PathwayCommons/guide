@@ -68,7 +68,7 @@ title: Home
         </p>
         <p class="card-text mt-3">
           <small class="text-muted">
-            Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ workflows_archive.url }}">{{ workflows_archive.title }}</a>
+            Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ workflows_archive.url }}">{{ rnaseq_em_workflow_index.group }}</a>
           </small>
         </p>
       </div>
