@@ -16,7 +16,7 @@ title: Home
   <div class="card-group">
     <div class="card">
       <a href="{{ site.baseurl }}{{ fishers.url }}">
-        <img class="card-img-top" src="{{ fishers.url | replace: 'index.html' , fishers.cover }}" alt="{{ fishers.title }}">
+        <img class="card-img-top" src="{{ site.baseurl }}{{ fishers.url | replace: 'index.html' , fishers.cover }}" alt="{{ fishers.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ fishers.title }}</h5>
           <p class="card-text">
@@ -32,7 +32,7 @@ title: Home
     </div>
     <div class="card">
       <a href="{{ site.baseurl }}{{ multitest.url }}">
-        <img class="card-img-top" src="{{ multitest.url | replace: 'index.html' , multitest.cover }}" alt="{{ multitest.title }}">
+        <img class="card-img-top" src="{{ site.baseurl }}{{ multitest.url | replace: 'index.html' , multitest.cover }}" alt="{{ multitest.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ multitest.title }}</h5>
           <p class="card-text">
@@ -60,7 +60,7 @@ title: Home
 
   <div class="card mb-3">
     <a href="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url }}">
-      <img class="card-img-top" src="{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
+      <img class="card-img-top" src="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ rnaseq_em_workflow_index.title }}</h5>
         <p class="card-text">
