@@ -15,7 +15,7 @@ title: Home
   </h1>
   <div class="card-group">
     <div class="card">
-      <a href="{{ fishers.url }}">
+      <a href="{{ site.baseurl }}{{ fishers.url }}">
         <img class="card-img-top" src="{{ fishers.url | replace: 'index.html' , fishers.cover }}" alt="{{ fishers.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ fishers.title }}</h5>
@@ -31,7 +31,7 @@ title: Home
       </a>
     </div>
     <div class="card">
-      <a href="{{ multitest.url }}">
+      <a href="{{ site.baseurl }}{{ multitest.url }}">
         <img class="card-img-top" src="{{ multitest.url | replace: 'index.html' , multitest.cover }}" alt="{{ multitest.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ multitest.title }}</h5>
@@ -59,7 +59,7 @@ title: Home
   </h1>
 
   <div class="card mb-3">
-    <a href="{{ rnaseq_em_workflow_index.url }}">
+    <a href="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url }}">
       <img class="card-img-top" src="{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ rnaseq_em_workflow_index.title }}</h5>
