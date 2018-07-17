@@ -54,7 +54,7 @@ title: Home
 
   <h1 class="display-4">
     <a href="{{ site.baseurl }}/workflows/archive/">
-      <small>Workflows</small>
+      Workflows
     </a>
   </h1>
 
