@@ -17,3 +17,5 @@ cache/
 build/
 .Rproj.user
 .RData
+_site
+build
