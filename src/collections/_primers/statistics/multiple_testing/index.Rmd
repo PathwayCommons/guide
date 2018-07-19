@@ -218,7 +218,7 @@ A common way to summarize the possible outcomes of multiple hypothesis tests is 
 
 **Table 1. Multiple hypothesis testing summary**
 
-![image]({{ page.figures.table_1 }})
+![image]({{ page.figures.table_1 }}){: .narrow }
 
 Of particular interest are the (unknown) number of true null hypotheses that are erroneously declared significant ($$V$$). These are precisely the type I errors that can increase in multiple testing scenarios and the major focus of error control procedures. Below we detail two different perspectives on error control.
 
@@ -282,7 +282,7 @@ Alternatively, 'p-hacking' is the process of creatively organizing data sets in 
 
 Let us revisit the set of null hypotheses declared significant as shown in the right-hand columns of Table 1. Figure 3 is a variation on the Venn diagram showing the intersection of those hypotheses declared significant ($$R$$) with the true ($$m_0$$) and false ($$m_1=m-m_0$$) null hypotheses.
 
-![image]({{ page.figures.figure_3 }})
+![image]({{ page.figures.figure_3 }}){: .narrow }
 
 <div class="card bg-light">
   <div class="card-body">
@@ -469,7 +469,7 @@ To illustrate the BH procedure we adapt a trivial example presented by Glickman 
 
 **Table 2. Example BH calculations**
 
-![image]({{ page.figures.table_2 }})
+![image]({{ page.figures.table_2 }}){: .narrow }
 
 In this case, we examine the final column for the largest case in which $$p_i \leq \frac{i}{100}\cdot0.05$$ which happens in the fourth row. Thus, we declare the genes corresponding to the first four p-values significant with respect to differential expression. Since our $$q=0.05$$ we would expect, on average, at most 5% of our discoveries to be mistaken, which in our case is nil.
 

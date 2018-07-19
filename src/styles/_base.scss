@@ -67,6 +67,10 @@ img.tall {
   max-height: 850px;
 }
 
+img.narrow {
+  max-width: 650px;
+}
+
 /* Spinner */
 #ajax-spinner {
   position: fixed;
