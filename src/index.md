@@ -3,6 +3,34 @@ layout: default
 title: Home
 ---
 <div class="home">
+  {% assign enrichment_workflows = site.workflows | where: 'group' , 'Pathway Enrichment Analysis' %}
+  {% assign workflows_archive = site.workflows | where: 'title' , 'Workflows' |  first %}
+  {% assign rnaseq_em_workflow_index = enrichment_workflows | where: 'title' , 'RNA-Seq to Enrichment Map' | first %}
+
+  <h1 class="display-4">
+    <a href="{{ site.baseurl }}/workflows/archive/">
+      Workflows
+    </a>
+  </h1>
+
+  <div class="card mb-3">
+    <a href="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url }}">
+      <img class="card-img-top" src="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ rnaseq_em_workflow_index.title }}</h5>
+        <p class="card-text">
+          {{ rnaseq_em_workflow_index.subtitle }}
+        </p>
+        <p class="card-text mt-3">
+          <small class="text-muted">
+            Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ workflows_archive.url }}">{{ rnaseq_em_workflow_index.group }}</a>
+          </small>
+        </p>
+      </div>
+    </a>
+  </div>
+
+
   {% assign primers_stats = site.primers | where: 'label' , 'statistics' %}
   {% assign primers_archive = site.primers | where: 'group' , 'statistics' | first  %}
   {% assign fishers = primers_stats | where: 'title' , "Fisher's Exact Test" | first %}
@@ -46,33 +74,6 @@ title: Home
         </div>
       </a>
     </div>
-  </div>
-
-  {% assign enrichment_workflows = site.workflows | where: 'group' , 'Pathway Enrichment Analysis' %}
-  {% assign workflows_archive = site.workflows | where: 'title' , 'Workflows' |  first %}
-  {% assign rnaseq_em_workflow_index = enrichment_workflows | where: 'title' , 'RNA-Seq to Enrichment Map' | first %}
-
-  <h1 class="display-4">
-    <a href="{{ site.baseurl }}/workflows/archive/">
-      Workflows
-    </a>
-  </h1>
-
-  <div class="card mb-3">
-    <a href="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url }}">
-      <img class="card-img-top" src="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ rnaseq_em_workflow_index.title }}</h5>
-        <p class="card-text">
-          {{ rnaseq_em_workflow_index.subtitle }}
-        </p>
-        <p class="card-text mt-3">
-          <small class="text-muted">
-            Filed under <a class="do-decorate" href="{{ site.baseurl }}{{ workflows_archive.url }}">{{ rnaseq_em_workflow_index.group }}</a>
-          </small>
-        </p>
-      </div>
-    </a>
   </div>
 
 </div>
