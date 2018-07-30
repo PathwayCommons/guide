@@ -10,9 +10,10 @@ layout: page
 figures:
   table_1: table_1.png
   table_2: table_2.png
-  figure_1: figure_1.jpg
-  figure_2: figure_2.jpg
-  figure_3: figure_3.jpg
+  table_3: table_3.png
+  figure_1: figure_1.png
+  figure_2: figure_2.png
+  figure_3: figure_3.png
 cover: cover.jpg
 label: statistics
 ---
@@ -22,40 +23,44 @@ label: statistics
   - {:.list-unstyled} [I. Goals](#goals)
   - {:.list-unstyled} [II. Setup for enrichment analysis](#setup)
   - {:.list-unstyled} [III. Fisher's Exact Test](#fishersExactTest)
-  - {:.list-unstyled} [IV. Caveats](#caveats)
+  - {:.list-unstyled} [IV. Calculations in R](#calculationsInR)
+  - {:.list-unstyled} [V. Caveats](#caveats)
 
 <hr/>
 
 ## <a href="#goals" name="goals">I. Goals</a>
 
-Large-scale gene analyses can result in lists of genes whose immediate relevance to the study objective may be unclear. Approaches collectively referred to as 'enrichment' or 'overrepresentation' analyses all aim to distill from more meaningful biological themes from reams of biological data.
+High-throughput experimental measurements can result in lists of genes that are difficult to interpret at face value. 'Enrichment analyses' aim to draw out meaningful, potentially interesting biological themes from the gene-based measurements.
 
-Enrichment methods source candidate sets of genes that share attributes such as membership in a pathway or location within a cell. Gene sets are defined in curated biological databases such as the classes described within the Gene Ontology [GO](http://geneontology.org/) (Ashburner 2000). These sets are tested one after another to determine whether the constituents are overrepresented (or depleted) in a target gene list typically derived from experiments.
+In general, enrichment methods require a collection of candidate sets of genes with shared attributes, for instance membership in a pathway or location on a chromosome. Gene sets are curated in biological databases, most notably the classes described within the Gene Ontology [GO](http://geneontology.org/) (Ashburner 2000). One class of enrichment analysis methods seek to identify those gene sets that share an unusually large number of genes with a list derived from experimental measurements. Below, we describe Fisher's Exact Test, which is a classic statistical test for determining what 'unusually large' might be.
 
-Our overarching goal is to describe the theory underlying many of the enrichment software tools currently in use (Khatri 2012). We use the concrete example of assessing GO term enrichment in the output of a large-scale gene expression analysis although the approaches are found in many other types of analyses.  By then end of this discussion you should:
+By then end of this primer you will:
 
-1. Be familiar with how an enrichment analysis is structured
-2. Be familiar with rationale underlying Fisher's Exact Test
-3. Be aware of the meaning of a p-value arising from Fisher's Exact Test
+1. Be familiar with how Fisher's Exact Test is used to determine enrichment
+2. Be aware of the meaning of a p-value arising from Fisher's Exact Test
 
 ## <a href="#setup" name="setup">II. Setup for enrichment analysis</a>
 
 ### Contingency tables
-Data from experiments can often be classified in several ways, for example, by age, gender and treatment response. One may wonder if the proportions within one category are associated with the proportions of another category. For example, it is common to ask if individuals treated with a drug respond more often than those with a placebo. In the case where there are two categories of interest the data can be displayed as a 2-by-2 *contingency table*.
+
+Data from experiments can often be classified in several ways, for example, by age, gender and treatment response. One may wonder if the proportions within one category are associated with the proportions of another category. In the case where there are two categories of interest the data can be displayed as a 2-by-2 *contingency table*.
 
 > A *contingency table* shows the distribution of one variable in rows and another in columns, used to study the association between the two variables.
 
 ### A gene expression study
-Suppose we undertake a gene expression analysis comparing individuals with cancer to healthy individuals and derive a list of differentially expressed genes. For the purposes of this discussion let us restrict an enrichment analysis to a single gene set, specifically genes involved in the GO biological process ['translation initiation'](http://amigo.geneontology.org/amigo/term/GO:0006413). Table 1 depicts a contingency table corresponding to some hypothetical experimental results.
+
+Suppose we had measured gene expression upon treatment of cells with a drug. We could ask the question: Is there any association between differentially expressed genes and annotations for any given GO term? In other words, are the changes in gene expression enriched for any gene set from GO?
+
+For the purposes of this discussion let us restrict our attention to a single gene set, specifically genes annotated with the GO biological process term ['DNA-templated transcription, elongation (GO:0006354)'](http://amigo.geneontology.org/amigo/term/GO:0006354). Table 1 depicts a contingency table corresponding to some highly-simplified  experimental results.
 
 **Table 1. Contingency table for gene expression data**
 ![image]({{ page.figures.table_1 }})
 
-In this case, the expression of 32 genes has been analyzed: 15 differentially expressed genes were identified and 15 genes were associated with the GO annotation 'translation initiation'. The totals for differential expression and gene set membership are the *marginal values*, as they lie on the periphery of our 2-by-2 table.
+In this case, the expression of 30 genes has been analyzed: 15 differentially expressed genes were identified and 15 genes were associated with the GO term ''DNA-templated transcription, elongation'. The totals for differential expression and gene set membership are the *marginal values*, as they lie on the periphery of our 2-by-2 table.
 
 The middle cells contain *joint values* because they represent genes falling under two categories (Table 1, light blue). Here, 12 genes are both differentially expressed and tagged with 'translation initiation'. This seems like a large proportion of the marginal differentially expressed gene total (12/15 differentially expressed genes) and our intuition might lead us to the opinion that this is a result worth following up on...
 
-We seemed quite confident that observing 12 differentially expressed genes out of 15 in the gene set seemed like enough evidence to suggest that our ovarian cancer subtypes differed in the state of their translation initiation gene expression. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 32. It is clear that we yearn for a way to make our decisions less arbitrary and more scaleable.
+We seemed quite confident that observing 12 differentially expressed genes out of 15 in the gene set seemed like enough evidence to suggest that our drug induced expression changes associated with transcription elongation. However, what would we think if only 9 met both criteria? Furthermore, a more realistic large-scale expression analysis might involved thousands of genes observed rather than just 30. It is clear that we yearn for a way to make our decisions less arbitrary.
 
 ## <a href="#fishersExactTest" name="fishersExactTest">III. Fisher's Exact Test</a>
 
@@ -65,12 +70,12 @@ Fisher's exact test is a statistical procedure developed by R. A. Fisher in the 
   1. The marginal values are fixed
   2. There is no association between categorical values
 
-These assumptions constitute the 'null hypothesis' ($$H_0$$): We take the *a priori* stance that the categories are independent. We simply don't know the ground truth of whether there exists a relationship between cancer-related gene expression and genes involved in 'translation initiation'. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are referred to as 'p-values'.
+These assumptions constitute the 'null hypothesis' ($$H_0$$): We take the *a priori* stance that the categories are independent. We simply don't know the ground truth of whether there exists a relationship between the drug-induced gene expression changes and genes involved in transcription elongation. Consequently, we take our actual contingency table data and calculate the probability that this or any table with more extreme joint values (unobserved) would occur under the null hypothesis. A small probability is interpreted as a discrepancy between the data and the null hypothesis of no association between variables. These calculated probabilities are referred to as 'p-values'.
 
 > Smaller p-values point to an interesting result only if all of the assumptions used to compute the p-value are valid
 
 ### The possibilities are not endless
-Let us return to the cancer gene expression analysis example. Fisher's Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are **in relation to all possible ones that could have given those same marginal totals given no association between categories**. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).
+Let us return to the gene expression analysis example. Fisher's Exact Test provides a statistical basis upon which to establish how extreme our particular table of observations are **in relation to all possible ones that could have given those same marginal totals given no association between categories**. With this in mind, we simply enumerate the different joint values that are possible for the same marginal totals (Figure 1).
 
 ![image]({{ page.figures.figure_1 }})
 <div class="card bg-light">
@@ -82,26 +87,26 @@ Let us return to the cancer gene expression analysis example. Fisher's Exact Tes
 </div>
 
 ### Let us count the ways
-There may exist 16 possible arrangements of joint values for fixed marginal totals, however, this does not imply that each is equally likely. To see why, consider the arrangement in the first row and second column of (Figure 1; R1-C2): This arrangement is reproduced in Table 2 and shows 1 differentially expressed gene that is a member of the gene set leaving 14 outside. To calculate the probability of this (unobserved) arrangement under the null hypothesis, we will make use of the rules for [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/).
+There may exist 16 possible arrangements of joint values for fixed marginal totals, however, this does not imply that each is equally likely. To see why, consider the arrangement in the first row and second column of (Figure 1; R1-C2): This arrangement is reproduced in Table 2 and shows 1 differentially expressed gene that is a member of the gene set. To calculate the probability of this (unobserved) arrangement under the null hypothesis, we will make use of the rules for [combinations]({{ site.baseurl }}/primers/statistics/permutations_combinations/).
 
 **Table 2. Contingency table for arrangement R1-C2**
 ![image]({{ page.figures.table_2 }}){: .img-responsive.slim.left }
 
-R.A. Fisher's insight was to leverage the rules for enumerating combinations to derive an exact probability for any given contingency table under the null hypothesis. For our 32 genes of which 15 are differentially expressed gene and 15 are within a gene set, we must first calculate the ways that each of the joint values could have arisen simply by randomly selecting genes. We illustrate the process for the arrangement in Table 2 and the process proceeds by calculating three values, one for each row:
+R.A. Fisher's insight was to leverage the rules for enumerating combinations to derive an exact probability for any given contingency table under the null hypothesis. Looking back at Table I, we must first calculate the ways that each of the joint values could have arisen simply by randomly selecting genes. We illustrate the process for the arrangement in Table 2 and the process proceeds by calculating three values, one for each row:
 
   1. Ways to select 1 differentially expressed gene *without replacement* out of 15 tagged IN the gene set
-  2. Ways to select 14 differentially expressed genes *without replacement* from 17 tagged NOT IN the gene set
-  3. Ways to select 15 differentially expressed genes *without replacement* from 32 total genes
+  2. Ways to select 14 differentially expressed genes *without replacement* from 15 tagged NOT IN the gene set
+  3. Ways to select 15 differentially expressed genes *without replacement* from 30 total genes
 
-These three values are sufficient to calculate the probability of any particular contingency table. The first number represents the ways 1 differentially expressed gene can be selected from 15 possible 'IN Translation Initiation' (Figure 2, top left). In statistical jargon, this is described as '15 Choose 1'. There are exactly 15 ways this can be done: One for each of the 15 genes with the tag.
+These three values are sufficient to calculate the probability of any particular contingency table. The first number represents the ways 1 differentially expressed gene can be selected from 15 possible 'IN Transcription elongation' (Figure 2, top left). In statistical jargon, this is described as '15 choose 1'. There are exactly 15 ways this can be done: One for each of the 15 genes with the tag.
 
-Similarly, there are '17 Choose 14' or 680 ways that 14 differentially expressed genes can be selected from 17 'NOT IN Translation Initiation'. To see this, consider the 17 genes labeled 16 through 32 in the top right group of Figure 2. We can choose 14 genes by selecting those labelled 16 through 29. Alternatively, one can also select 16 through 28 then 30 or for that matter 16 through 28 then 31 and so on. The third number '32 Choose 15' is precisely 565 722 720.
+Similarly, there are '15 choose 14' or 15  ways that 14 differentially expressed genes can be selected from 15 'NOT IN Transcription elongation'. To see this, consider the 15 genes labeled 16 through 30 in the top right group of Figure 2. We can choose 14 genes by selecting those labelled 16 through 29. Alternatively, one can also select 16 through 28 then 30 and so on. The third number '30 Choose 15' is precisely 155 117 520.
 
 ![image]({{ page.figures.figure_2 }})
 <div class="card bg-light">
   <div class="card-body">
     <p class="card-text">
-      <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing differentially expressed genes from each group: 1 differentially expressed gene from 'IN Translation Initiation'; 14 from 'NOT IN Translation Initiation'; and 15 differentially expressed genes from the 32 total genes.
+      <strong>Figure 2. Calculations underlying the probability of a contingency table.</strong> The three groups correspond to the marginal totals for each row in Table 2. A contingency table's total probability is defined by the three probabilities of choosing differentially expressed genes from each group: 1 differentially expressed gene from 'IN Transcription elongation'; 14 from 'NOT IN Transcription elongation'; and 15 differentially expressed genes from the 30 total genes.
     </p>
   </div>
 </div>
@@ -111,8 +116,8 @@ The probability of observing this arrangement then is given by the quotient:
 $$
 \begin{equation*}
   \begin{split}
-    \frac{(\text{15 Choose 1})\cdot(\text{17 Choose 14})}{(\text{32 Choose 15})}& = \frac{15\cdot680}{565 722 720}\\
-    & = 0.000018
+    \frac{(\text{15 Choose 1})\cdot(\text{15 Choose 14})}{(\text{30 Choose 15})}& = \frac{15\cdot15}{155 117 520}\\
+    & = 1.45\cdot10^{-6}
   \end{split}
 \end{equation*}
 $$
@@ -121,7 +126,7 @@ Some of you may recognize the expression on the left as the probability function
 
 ### What are the probabilities?
 
-At this point we have the basic building blocks to describe Fisher's Exact Test. Referring to our HGS-OvCa example, we have in hand the probability of our contingency table of observed joint values (Table 2). Fisher's Exact Test amounts to summing the probability of observing our table of observed joint values **in addition to those more extreme than our table**. The possible tables and their respective probabilities are displayed in red Figure 3.
+At this point we have the basic building blocks to describe Fisher's Exact Test. Fisher's Exact Test amounts to summing the probability of observing our table of observed joint values **in addition to those more extreme than our table**. The possible tables and their respective probabilities are displayed in red Figure 3.
 
 ![image]({{ page.figures.figure_3 }})
 <div class="card bg-light">
@@ -133,36 +138,122 @@ At this point we have the basic building blocks to describe Fisher's Exact Test.
 </div>
 
 ### One-Sided tests
-Figure 3 shows that our observed result in Table 1 has a probability equal to 0.0005469 (Figure 3, R4-C1). The one-sided test requires us to sum the probabilities of the observed table and those unobserved tables which possess more than 12 genes the are differentially expressed (DE) and IN the gene set (Figure 3, red)
+Figure 3 shows that our observed result in Table 1 has a probability equal to 1.33E-03 (Figure 3, R4-C1). The one-sided test requires us to sum the probabilities of the observed table and those unobserved tables which possess more than 12 genes the are differentially expressed (DE) and IN the gene set (Figure 3, red)
 
 $$
 \begin{equation*}
   \begin{split}
     p& = \sum\limits_{\text{DE & IN}\geq12}p_i\\
-     & = 0.0005469+0.0000252+0.0000005+0.0000000\\
-     & = 0.0005726
+     & = 1.33\cdot10^{-3}+7.11\cdot10^{-5}+1.45\cdot10^{-6}+6.45\cdot10^{-9}\\
+     & = 0.001407159\\
+     & \simeq 0.0014
   \end{split}
 \end{equation*}
 $$
 
-From this result, we claim that the probability of our observed data or that more extreme under the assumption that there is no association between expression and gene set membership is 0.0005726. Whether this represents an interesting discrepancy from the null hypothesis, an experiment worth repeating, or an 'enrichment' of genes in the set amongst differentially expressed genes is left up to the researcher's interest and expertise.
+From this result, we claim that the probability of our observed data or that more extreme under the assumption that there is no association between expression and gene set membership is 0.0014. Whether this represents an interesting discrepancy from the null hypothesis, an experiment worth repeating, or an 'enrichment' of genes in the set amongst differentially expressed genes is left up to the researcher's interest and expertise.
 
 ### Two-Sided tests
-We have not yet considered the possibility that differentially expressed genes may contain fewer members of the gene set than would be expected if genes were sampled randomly, that is, differentially expressed genes are depleted for 'IN Translation Initiation'. The two-sided Fisher's Exact Test accounts for both enrichment and depletion. Although there are several flavours of the test (Rivals 2006), we demonstrate an approach whereby the tables with probabilities smaller than our observed data ($$p=0.0005469$$) are summed
+
+We have not yet considered the possibility that differentially expressed genes may contain fewer members of the gene set than would be expected if genes were sampled randomly, that is, differentially expressed genes are underrepresented for 'IN Transcription elongation'. The two-sided Fisher's Exact Test accounts for both enrichment and depletion. Although there are several flavours of the test (Rivals 2006), we demonstrate an approach whereby the tables with probabilities smaller than our observed data are summed
 
 $$
 \begin{equation*}
   \begin{split}
-    p& = \sum\limits_{p_i\leq0.0005469}p_i\\
-     & = (0.0000002+0.0000180+0.0004417)+0.0005726\\
-     & = 0.0010325
+    p& = \sum\limits_{p_i\leq0.001407159}p_i\\
+     & = 2\cdot(1.33\cdot10^{-3}+7.11\cdot10^{-5}+1.45\cdot10^{-6}+6.45\cdot10^{-9})\\
+     & = 0.002814318\\
+     & \simeq 0.0028
   \end{split}
 \end{equation*}
 $$
 
 This result is just under double the one-sided p-value, resulting from an 'uneven' distribution of p-values about the mean. Once again, whether this represents a valuable discrepancy from the null hypothesis and an observation worth following up on is left up to the discretion of the researcher.
 
-## <a href="#caveats" name="caveats">IV. Caveats</a>
+
+## <a href="#calulationsInR" name="calculationsInR">IV. Calculations in R</a>
+
+The [R project](https://www.r-project.org/) for statistical computing is popular software within the bioinformatics community because of it's wide support and many helpful packages that facilitate common analyses. We can easily perform the calculations described above using the built-in [`stat`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/00Index.html) package which have functions for the `Hypergeometric` distribution:
+
+```
+Hypergeometric {stats}	R Documentation
+# The Hypergeometric Distribution
+
+## Description
+
+Density, distribution function, quantile function and random generation for the hypergeometric distribution.
+
+## Usage
+
+dhyper(x, m, n, k, log = FALSE)
+phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)
+qhyper(p, m, n, k, lower.tail = TRUE, log.p = FALSE)
+rhyper(nn, m, n, k)
+
+## Arguments
+
+x, q
+vector of quantiles representing the number of white balls drawn without replacement from an urn which contains both black and white balls.
+m
+the number of white balls in the urn.
+n
+the number of black balls in the urn.
+k
+the number of balls drawn from the urn.
+...
+```
+
+It may not be obvious how to translate the description of arguments for the Hypergeometric density function `dhyper` to our particular case. Table 3 below summarizes what these mean in terms of our contingency table.
+
+**Table 3. Arguments for the R stat package function dhyper**
+
+![image]({{ page.figures.table_3 }})
+
+With this knowledge in hand, it is trivial to reproduce the p-values described previously.
+
+```{r}
+# Initialize variables
+m <- 15       # Genes IN GO term
+n <- 15       # Genes NOT IN GO term
+k <- 15       # Gene hits, that is, differentially expressed
+x <- c(0:15)  # Genes both IN GO term and differentially expressed 'hits'
+
+# Use the dhyper built-in function for hypergeometric density
+probabilities <- dhyper(x, m, n, k, log = FALSE)
+probabilities
+```
+
+According to Figure 3, our one-sided p-value is the sum of the probabilities of a result at least as extreme as that observed, given the null hypothesis.
+
+
+```{r}
+# Calculate the one-sided p-value for 12 or more genes both DE and IN GO term.
+pvalue <- sum(probabilities[13:16])
+pvalue
+```
+
+Let's plot the results, with our extreme values included in the p-value highlighted in red.
+
+```{r}
+# Bar plot
+library(ggplot2)
+data <- data.frame( x = x, y = probabilities )
+ggplot(data, aes(x=factor(x), y=y)) +
+theme(axis.text=element_text(size=14),
+  axis.title=element_text(size=18,face="bold"),
+  axis.title.x=element_text(margin=margin(20,0,0,0)),
+  axis.title.y=element_text(margin=margin(0,20,0,0))
+) +
+geom_bar(stat="identity", fill=ifelse(data$x < 12,
+                                 rgb(52, 73, 94, maxColorValue=255),
+                                 rgb(231, 76, 60, maxColorValue=255)),
+                               colour="black") +
+labs(x = "DE genes IN GO term", y = "Probability")
+```
+
+
+
+## <a href="#caveats" name="caveats">V. Caveats</a>
 There has been much discussion with regards to the assumptions, limitations, and overall relevance of this class of procedures (Khatri 2005, Goeman 2007). We leave these more nuanced discussions for the reader to follow.
 
 <hr/>
