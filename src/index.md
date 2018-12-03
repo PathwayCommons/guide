@@ -59,7 +59,7 @@ title: Home
       </a>
     </div>
     <div class="card">
-      <a href="{{ site.baseurl }}{{ multitest.url }}">
+      <a href="{{ site.baseurl }}{{ multitest.url | replace: 'index.html' ,  '' }}">
         <img class="card-img-top" src="{{ site.baseurl }}{{ multitest.url | replace: 'index.html' , multitest.cover }}" alt="{{ multitest.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ multitest.title }}</h5>
