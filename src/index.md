@@ -13,9 +13,18 @@ title: Home
     </a>
   </h1>
 
+  <div class="alert alert-secondary" role="alert">
+    <blockquote class="m-0 text-center">
+      <p class="mb-0">Pathway enrichment analysis and visualization of omics data using g:Profiler, GSEA, Cytoscape and EnrichmentMap. Jüri Reimand  <em>et al.</em><br/><small class="text-muted">
+      <a class="do-decorate" href="https://www.nature.com/articles/s41596-018-0103-9" target="_blank">Nature Protocols, Volume 14, 482–517 (2019)</a>
+    </small></p>
+
+    </blockquote>
+  </div>
+
   <div class="card mb-3">
     <a href="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' ,  '' }}">
-      <img class="card-img-top" src="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.cover }}" alt="Card image cap">
+      <img class="card-img-top" src="{{ site.baseurl }}{{ rnaseq_em_workflow_index.url | replace: 'index.html' , rnaseq_em_workflow_index.splash }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ rnaseq_em_workflow_index.title }}</h5>
         <p class="card-text">
