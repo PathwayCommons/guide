@@ -892,3 +892,34 @@ where $$\alpha$$ is a weight given to the common likelihood - the conditional li
 <hr/>
 
 In the end, an estimate of negative binomial parameters enables us to calculate the exact probabilities of RNA-seq mapped read counts and derive a $$P$$ value for each gene, as discussed in the previous section. Dispersion plays an important role in hypothesis tests for DEGs. Underestimates of $$\phi$$ lead to lower estimates of variance relative to the mean, which may generate false evidence that a gene is differentially expressed and *vice versa*.
+
+
+<hr/>
+
+## References
+  - Bullard JH et al. Evaluation of statistical methods for normalization and differential expression
+in mRNA-Seq experiments. BMC Bioinformatics. 2010 Feb 18;11:94. doi: 10.1186/1471-2105-11-94.
+  - Conesa A et al. A survey of best practices for RNA-seq data analysis. Genome Biol. 2016 Jan 26;17:13. doi: 10.1186/s13059-016-0881-8.
+  - Kim JB et al. Polony multiplex analysis of gene expression (PMAGE) in mouse hypertrophic
+cardiomyopathy. Science. 2007 Jun 8;316(5830):1481-4. doi: 10.1126/science.1137325.
+  - Li S et al. Detecting and correcting systematic variation in large-scale RNA sequencing
+data. Nat Biotechnol. 2014 Sep;32(9):888-95. doi: 10.1038/nbt.3000. Epub 2014 Aug
+24.
+  - Marioni JC et al. RNA-seq: an assessment of technical reproducibility and comparison with gene
+expression arrays. Genome Res. 2008 Sep;18(9):1509-17. doi: 10.1101/gr.079558.108. Epub 2008 Jun
+11.
+  - Mortazavi A et al. Mapping and quantifying mammalian transcriptomes by RNA-Seq. Nat Methods. 2008 Jul;5(7):621-8. doi: 10.1038/nmeth.1226. Epub 2008 May 30.
+  - Oshlack A et al. From RNA-seq reads to differential expression results. Genome Biol. 2010;11(12):220. doi: 10.1186/gb-2010-11-12-220. Epub 2010 Dec
+22.
+  - Robinson MD & Smyth GK. Moderated statistical tests for assessing differences in tag abundance. Bioinformatics. 2007 Nov 1;23(21):2881-7. doi: 10.1093/bioinformatics/btm453.
+Epub 2007 Sep 19.
+  - Robinson MD & Smyth GK. Small-sample estimation of negative binomial dispersion, with applications to
+SAGE data. Biostatistics. 2008 Apr;9(2):321-32. doi: 10.1093/biostatistics/kxm030. Epub
+2007 Aug 29.
+  - Robinson MD & Oshlack A. A scaling normalization method for differential expression analysis of RNA-seq
+data. Genome Biol. 2010;11(3):R25. doi: 10.1186/gb-2010-11-3-r25. Epub 2010 Mar 2.
+  - Wang Z et al. RNA-Seq: a revolutionary tool for transcriptomics. Nat Rev Genet. 2009 Jan;10(1):57-63. doi: 10.1038/nrg2484.
+
+
+
+

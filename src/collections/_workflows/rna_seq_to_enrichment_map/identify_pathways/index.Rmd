@@ -365,3 +365,11 @@ We have renamed the enrichment report files and provide them below.
 
   2. Enrichment report for HD
   <a href="{{ page.data.report_hd }}" role="button" class="btn btn-secondary btn-lg btn-block" download>HD report (.xls)</a>
+
+<hr/>
+
+## References
+  - Best MG et al. RNA-Seq of Tumor-Educated Platelets Enables Blood-Based Pan-Cancer, Multiclass,
+and Molecular Pathway Cancer Diagnostics. Cancer Cell. 2015 Nov 9;28(5):666-676. doi: 10.1016/j.ccell.2015.09.018. Epub
+2015 Oct 29.
+
