@@ -21,6 +21,8 @@ static_root:         public
 src_root:            src
 site_root:           _site
 
+include:
+  - .nojekyll
 exclude:
   - atom
 #**************** Override defaults ****************
