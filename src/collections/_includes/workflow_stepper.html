@@ -8,14 +8,14 @@
   <li class="media step">
     <div class="mr-3 numberCircle">{{ doc.step }}</div>
     <div class="media-body">
-      <a target="_blank" href="{{ site.baseurl }}{{ url }}">
+      <a href="{{ site.baseurl }}{{ url }}">
         <h2 class="mt-0 mb-1">{{ doc.title }}</h2>
       </a>
       <p>{{ doc.subtitle }}</p>
     </div>
   </li>
   {% else %}
-    <a target="_blank" href="{{ site.baseurl }}{{ url }}">
+    <a href="{{ site.baseurl }}{{ url }}">
       <h3>{{ doc.title }}</h3>
     </a>
     <p>{{ doc.subtitle }}</p>

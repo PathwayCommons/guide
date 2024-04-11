@@ -85,4 +85,8 @@ title: Home
     </div>
   </div>
 
+  <footer>
+    <p>The content on this site is made freely available to the research community under a public domain-equivalent license <a class="do-decorate" target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/legalcode">(Creative Commons CC0 license).</a></p>
+  </footer>
+
 </div>
