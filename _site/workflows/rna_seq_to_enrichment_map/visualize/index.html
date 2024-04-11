@@ -238,7 +238,7 @@
   </tbody>
 </table>
 
-<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?</p>
+<p>Notice that even under fairly stringent criteria (i.e. p-value &lt; 1%), there are a still hundreds of gene sets that are deemed significantly enriched in BrCa platelets and HD. Furthermore, our GSEA report declares that thousands of genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of thousands of genes for a long list of gene sets?</p>
 
 <h3 id="data-reduction">Data reduction</h3>
 
@@ -287,7 +287,6 @@
 <h4 id="software-requirements">Software requirements</h4>
 
 <ul>
-  <li>Install <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank">Java version 8</a></li>
   <li><a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>: version 3 or higher
     <ul>
       <li>Cytoscape is an indispensable tool for network visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of plugins or <a href="http://apps.cytoscape.org/" target="_blank">apps</a>. Checkout the <a href="http://manual.cytoscape.org/en/stable/index.html" target="_blank">Cytoscape User Manual</a> for full description of function and capabilities.</li>
@@ -295,10 +294,10 @@
   </li>
   <li>Cytoscape apps
     <ul>
-      <li><a href="http://apps.cytoscape.org/apps/enrichmentmap" target="_blank">Enrichment Map</a>: version 3.1.0</li>
-      <li><a href="http://apps.cytoscape.org/apps/clustermaker2" target="_blank">ClusterMaker2</a>: version 1.2.1</li>
-      <li><a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a>: version 3.1.1</li>
-      <li><a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a>: version 1.2</li>
+      <li><a href="http://apps.cytoscape.org/apps/enrichmentmap" target="_blank">Enrichment Map</a></li>
+      <li><a href="http://apps.cytoscape.org/apps/clustermaker2" target="_blank">ClusterMaker2</a></li>
+      <li><a href="http://apps.cytoscape.org/apps/wordcloud" target="_blank">WordCloud</a></li>
+      <li><a href="http://apps.cytoscape.org/apps/autoannotate" target="_blank">AutoAnnotate</a></li>
     </ul>
   </li>
 </ul>
@@ -307,7 +306,7 @@
 
 <p>The base Cytoscape installation will use a collection of apps to generate the Enrichment Map. Apps are loaded into Cytoscape using the built-in App Manager.</p>
 
-<p>From the Cytoscape menu bar, select <code class="highlighter-rouge">'Apps' --&gt; 'App Manager'</code> to bring up an app search panel (Figure 4).</p>
+<p>From the Cytoscape menu bar, select <code class="highlighter-rouge">'Apps' --&gt; 'App Store' --&gt; 'Show App Store'</code> to bring up an app search panel (Figure 4).</p>
 
 <p><img src="figure_visualize_cytoscape_apps_em.png" alt="image" /></p>
 <div class="card bg-light">
@@ -318,7 +317,7 @@
   </div>
 </div>
 
-<p>Search for the app, highlight the correct search result and click <code class="highlighter-rouge">Install</code>. If the installation was successful, you should be able to select it by name in the <code class="highlighter-rouge">Apps</code> menu bar drop-down. Also, if you bring up the <code class="highlighter-rouge">App Manager</code> you should see it as a listing under the <code class="highlighter-rouge">Currently Installed</code> tab.</p>
+<p>Search for the app and install. If the installation was successful it will appear under <code class="highlighter-rouge">Installed apps</code>.</p>
 
 <hr />
 
@@ -341,25 +340,25 @@
 
 <h4 id="gmt-file">GMT File</h4>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Gene Set Database (.gmt)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/Human_GOBP_AllPathways_noPFOCR_no_GO_iea_April_01_2024_symbol.gmt" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Gene Set Database (.gmt)</a></p>
 
 <h4 id="expression">Expression</h4>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Expression (.txt)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_expression.txt" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Expression (.txt)</a></p>
 
 <h4 id="enrichments">Enrichments</h4>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> BrCa report (.xls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_brca.tsv" role="button" class="btn btn-secondary btn-lg btn-block" download=""> BrCa report (.tsv)</a></p>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> HD report (.xls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/identify_pathways/gsea_report_for_hd.tsv" role="button" class="btn btn-secondary btn-lg btn-block" download=""> HD report (.tsv)</a></p>
 
 <h4 id="ranks">Ranks</h4>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Ranks (.rnk)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_ranks.rnk" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Ranks (.rnk)</a></p>
 
 <h4 id="classes">Classes</h4>
 
-<p><a href="/guide/" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Phenotype (.cls)</a></p>
+<p><a href="/guide//workflows/rna_seq_to_enrichment_map/process_data/brca_hd_tep_phenotype.cls" role="button" class="btn btn-secondary btn-lg btn-block" download=""> Phenotype (.cls)</a></p>
 
 <h3 id="analysis">Analysis</h3>
 
