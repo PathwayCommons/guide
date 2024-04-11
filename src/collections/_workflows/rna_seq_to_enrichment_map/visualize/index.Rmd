@@ -35,7 +35,7 @@ comments: yes
 
 <hr/>
 
-{% assign workflow = site.workflows | where: 'group' , 'rna_seq_to_enrichment_map' %}
+{% assign workflow = site.workflows | where: 'label' , 'rna_seq_to_enrichment_map' %}
 {% assign process_data = workflow | where: 'title' , 'Process Data' | first %}
 {% assign identify_pathways = workflow | where: 'title' , 'Identify Pathways' | first %}
 {% assign visualize = workflow | where: 'title' , 'Visualize' | first %}
@@ -47,7 +47,6 @@ comments: yes
   - {:.list-unstyled} [IV. Interpretation](#interpretation)
 
 <hr/>
-
 ## <a href="#goals" name="goals">I. Goals</a>
 
 Previously, we passed a rank list of differentially expressed genes between platelets of healthy donors and breast cancer patients along with a gene set database to the Gene Set Enrichment Analysis (GSEA) software in hopes of identifying significantly altered pathways. We could have simply ended there and examined our GSEA reports for those pathways in the list that peaked our scientific interest. In many instances, however, the results of GSEA are voluminous in part because of a high degree of redundancy amongst pathways. Can we reduce this redundancy and provide a more meaningful, interactive means to reason over the results?
@@ -87,7 +86,7 @@ We used GSEA to distill gene sets enriched in the underlying differences in RNA 
 | IL5%NETPATH%IL5	IL5| 49| 0.7718686| 2.0658088| 0.0| 0.0 | 0.0|
 | ... | ...  | ...  | ...  | ...  | ...  | ...  |
 
-Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still 578 gene sets that are deemed significantly enriched in BrCa platelets and 394 in HD. Furthermore, our GSEA report declares that 8 191 genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of ~8 200 genes for a long list of ~1 000 gene sets?
+Notice that even under fairly stringent criteria (i.e. p-value < 1%), there are a still hundreds of gene sets that are deemed significantly enriched in BrCa platelets and HD. Furthermore, our GSEA report declares that thousands of genes were used as input in our ranked list. Have we simply kicked the can down the road and traded a long list of thousands of genes for a long list of gene sets?
 
 ### Data reduction
 
@@ -137,20 +136,19 @@ Below, we describe the process of loading our file dependencies from previous wo
 
 #### Software requirements
 
-- Install [Java version 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html){: target="_blank"}
 - [Cytoscape](http://www.cytoscape.org/){:target="_blank"}: version 3 or higher
   - Cytoscape is an indispensable tool for network visualization and analysis. The desktop software comes as a base installation and additional capabilities are added in the form of a large ecosystem of plugins or [apps](http://apps.cytoscape.org/){:target="_blank"}. Checkout the [Cytoscape User Manual](http://manual.cytoscape.org/en/stable/index.html){: target="_blank"} for full description of function and capabilities.
 - Cytoscape apps
-  - [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"}: version 3.1.0
-  - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2){:target="_blank"}: version 1.2.1
-  - [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"}: version 3.1.1
-  - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"}: version 1.2
+  - [Enrichment Map](http://apps.cytoscape.org/apps/enrichmentmap){:target="_blank"}
+  - [ClusterMaker2](http://apps.cytoscape.org/apps/clustermaker2){:target="_blank"}
+  - [WordCloud](http://apps.cytoscape.org/apps/wordcloud){:target="_blank"}
+  - [AutoAnnotate](http://apps.cytoscape.org/apps/autoannotate){:target="_blank"}
 
 ##### Loading apps
 
 The base Cytoscape installation will use a collection of apps to generate the Enrichment Map. Apps are loaded into Cytoscape using the built-in App Manager.
 
-From the Cytoscape menu bar, select `'Apps' --> 'App Manager'` to bring up an app search panel (Figure 4).
+From the Cytoscape menu bar, select `'Apps' --> 'App Store' --> 'Show App Store'` to bring up an app search panel (Figure 4).
 
 ![image]({{ page.figures.figure_4 }})
 <div class="card bg-light">
@@ -161,7 +159,7 @@ From the Cytoscape menu bar, select `'Apps' --> 'App Manager'` to bring up an ap
   </div>
 </div>
 
-Search for the app, highlight the correct search result and click `Install`. If the installation was successful, you should be able to select it by name in the `Apps` menu bar drop-down. Also, if you bring up the `App Manager` you should see it as a listing under the `Currently Installed` tab.
+Search for the app and install. If the installation was successful it will appear under `Installed apps`.
 
 ---
 
@@ -196,10 +194,10 @@ Below we provide the dependencies that will be loaded into the Enrichment Map ap
 #### Enrichments
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index.html'  }}{{ identify_pathways.data.report_brca }}" role="button" class="btn btn-secondary btn-lg btn-block" download> BrCa report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_brca }}" role="button" class="btn btn-secondary btn-lg btn-block" download> BrCa report (.tsv)</a>
 
 <a href="{{ site.baseurl }}/{{ identify_pathways.url | remove
-    : 'index.html'  }}{{ identify_pathways.data.report_hd }}" role="button" class="btn btn-secondary btn-lg btn-block" download> HD report (.xls)</a>
+    : 'index.html'  }}{{ identify_pathways.data.report_hd }}" role="button" class="btn btn-secondary btn-lg btn-block" download> HD report (.tsv)</a>
 
 #### Ranks
 
